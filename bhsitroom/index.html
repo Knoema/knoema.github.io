@@ -33,13 +33,15 @@
 		<div class="form-group">
 			<h3 class="text-center">Boko Haram attributes attacks and fatalities</h3>
 			<div id="bh-attributes-chart">
-				CHART
+				<iframe style="display: block; margin: auto; height:400px; width:600px;" src="//knoema.com/resource/embed/wkajzag/166f13ac-8714-8757-7086-63b8549842fd?Region=Nigeria" scrolling="no" frameborder="0"></iframe>
 			</div>
 		</div>
 		<div class="form-group row">
 			<div class="col-md-6">
 				<label>Incidents map, <span class="region-name-placeholder"></span></label>
-				<div id="incidents-map"></div>
+				<div id="incidents-map">
+					<iframe src="//knoema.com/resource/embed/wkajzag/84736ca7-3c8b-0c11-7927-848c0d259b8a?Region=Nigeria&noHeader=1" scrolling="no" frameborder="0" style="height:100%; width:100%;"></iframe>
+				</div>
 			</div>
 			<div class="col-md-6">
 				<label>Number of hits, <span class="region-name-placeholder"></span></label>
@@ -53,28 +55,20 @@
 			<div class="col-md-4">
 				<label>Related Demographic and Economic indicators</label>
 				<div id="indicator-select" class="my-list">
-					<div class="item active">Poverty incidence (count)</div>
-					<div class="item">Unemployment rate(%)</div>
-					<div class="item">Youth literacy rate, males, any language (%)</div>
-					<div class="item">Adult literacy rate, males, any language (%)</div>
-					<div class="item">Military expenditures (constant 2011 million USD)</div>
-					<div class="item">Oil exports (million b/d)</div>
-					<div class="item">Monthly price of Bonny Light crude oil (USD/barrel)</div>
-					<div class="item">Pocket droughts (count, by 5 arc minute area)</div>
-					<div class="item">Year-on-Year price deviations greater than 25%</div>
-					<div class="item">School attendance rate (%)</div>
+					<div class="item active" data-id="wkajzag/14dab34a-9be0-f069-abf4-f79611627f1e">GDP per capita</div>
+					<div class="item" data-id="wkajzag/da2530b2-363d-82b8-4398-b7faad39b088">Unemployment (%)</div>
+					<div class="item" data-id="wkajzag/4dc24083-b247-6b36-5268-a3a394914f8e">Oil exports (million b/d)</div>
+					<div class="item" data-id="wkajzag/e3825714-346d-6cc4-183b-5d0afb1c5078">Monthly price of Bonny Light crude oil (USD/barrel)</div>
 					<div class="text-center">
 						<button id="show-indicators-btn" type="button" class="btn btn-success">Test another indicator</button>
 					</div>
 				</div>
 			</div>
 			<div class="col-md-8">
-				<label>Correlation to conflict, 2014</label>
-				<div class="conflict-correlation">
-					Correlation
-					<div id="conflict-correlation">0.9137</div>
-				</div>
-				<div id="conflict-correlation-chart"></div>
+				<!--label>Correlation to conflict, 2014</label-->
+				<iframe id="conflict-correlation-chart" src="//knoema.com/resource/embed/wkajzag/14dab34a-9be0-f069-abf4-f79611627f1e?Region=Nigeria" scrolling="no" frameborder="0" style="height:402px; width:100%;"></iframe>
+				Correlation
+				<div id="conflict-correlation">0.9137</div>
 			</div>
 		</div>
 		<hr>
@@ -82,18 +76,18 @@
 			<div class="col-md-4">
 				<label>Visualizations</label>
 				<div id="visualization-select" class="my-list">
-					<div class="item active">Economics</div>
-					<div class="item">Politics</div>
-					<div class="item">Oil & Gas</div>
-					<div class="item">Security</div>
+					<div class="item active" data-id="fwhvshc">Economics</div>
+					<div class="item" data-id="sjhrlpc">Politics</div>
+					<div class="item" data-id="fwhvshc">Oil & Gas</div>
+					<div class="item" data-id="yfkakle">Security</div>
 					<div class="text-center">
-						<button id="show-indicators-btn" type="button" class="btn btn-success">Create Visualizations</button>
+						<a href="http://knoema.com/page/new" target="_blank" class="btn btn-success">Create Visualizations</a>
 					</div>
 				</div>
 			</div>
 			<div class="col-md-8">
-				<label>Economics</label>
-				<div id="visualization-chart">CHART</div>
+				<label id="visualization-title">Economics</label>
+				<iframe id="visualization-frame" src="http://knoema.com/resource/embed/fwhvshc" frameborder="0" style="height:400px; width:100%;"></iframe>
 			</div>
 		</div>
 		<hr>

@@ -4,10 +4,22 @@
 	};
 
 	Application.prototype.init = function() {
-		var incidentsMap = new google.maps.Map(document.getElementById('incidents-map'), {
+		/*var incidentsMap = new google.maps.Map(document.getElementById('incidents-map'), {
 			zoom: 4,
 			center: { lat: 10, lng: 10 },
 			mapTypeId: google.maps.MapTypeId.HYBRID
+		});*/
+
+		$('#indicator-select').on('click', '.item', function(event) {
+			var id = $(event.target).data('id');
+			//$('#visualization-title').html($(event.target).html());
+			$('#conflict-correlation-chart').attr('src', 'http://knoema.com/resource/embed/' + id);
+		});
+
+		$('#visualization-select').on('click', '.item', function(event) {
+			var id = $(event.target).data('id');
+			$('#visualization-title').html($(event.target).html());
+			$('#visualization-frame').attr('src', 'http://knoema.com/resource/embed/' + id);
 		});
 
 		$('.my-list').on('click', '.item', function(event) {
