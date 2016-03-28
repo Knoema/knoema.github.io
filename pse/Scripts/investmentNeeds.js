@@ -10,14 +10,14 @@
 		this.getFlagshipProjects().done(function(data) {
 			self.flagshipProjectsData = data;
 			self.renderFlagshipProjects();
-			console.log(data);
 		});
 
 		this.getPlanData().done(function(planData) {
 			self.planData = planData;
 			self.renderPlanTable();
-			console.log(planData);
 		});
+
+		this.chart();
 
 		this.bindEvents();
 	};
@@ -143,31 +143,81 @@
 		return $.post('http://knoema.com/api/1.0/data/pivot?client_id=EZj54KGFo3rzIvnLczrElvAitEyU28DGw9R73tif&page_id=SNEIOFP2016', {
 			"Header":[{"DimensionId":"Time","Members":["2014-2016"],"DimensionName":"Time","DatasetId":"SNEIOFP2016","Order":"0","UiMode":"range"}],"Stub":[{"DimensionId":"project","Members":["1000000","1000010","1000020","1000030","1000040","1000050","1000060","1000070","1000080","1000090","1000100","1000110","1000120","1000130","1000140","1000150","1000160","1000170","1000180","1000190","1000200","1000210","1000220","1000230","1000240","1000250","1000260","1000270","1000280"],"DimensionName":"Project","DatasetId":"SNEIOFP2016","Order":"0"}],"Filter":[{"DimensionId":"indicator","Members":["1000050"],"DimensionName":"Indicator","DatasetId":"SNEIOFP2016","Order":"0"}],"Frequencies":["A"],"Dataset":"SNEIOFP2016","Segments":null,"MeasureAggregations":null
 		});
-		/*return $.post('http://knoema.com/api/1.0/data/pivot?client_id=EZj54KGFo3rzIvnLczrElvAitEyU28DGw9R73tif&page_id=snnmub', {
-			"Header":[{
-				"DimensionId":"Time",
-				"Members":[{"Key":-4791,"Name":"2014-2023","Formula":["2014","2023","sum"]}],
-				"DimensionName":"Time",
-				"UiMode":"individualMembers"
-			}],
-			"Stub":[{
-				"DimensionId":"project",
-				"Members":["1000000","1000010","1000020","1000030","1000040","1000050","1000060","1000070","1000080","1000090","1000100","1000110","1000120","1000130","1000140","1000150","1000160","1000170","1000180","1000190","1000200","1000210","1000220","1000230","1000240","1000250","1000260","1000270"],
-				"DimensionName":"Project"
-			}],
-			"Filter":[{
-				"DimensionId":"indicator",
-				"Members":[{
-					"Key":-4316,
-					"Name":"Total",
-					"Formula":["1000060","0.00","ifNull","1000080","0.00","ifNull","+"]
-				}],
-				"DimensionName":"Indicator"
-			}],
-			"Frequencies":["A"],
-			"FoldDimension":null,
-			"Dataset":"SNEIOFP2016"
-		});*/
+	};
+
+	InvestmentNeedsPage.prototype.chart = function () {
+		$.post('http://knoema.com/api/1.0/data/pivot?client_id=EZj54KGFo3rzIvnLczrElvAitEyU28DGw9R73tif&page_id=snnmub', {
+			"Header":[{"DimensionId":"Time","Members":["2014-2023"],"DimensionName":"Time","UiMode":"range"}],"Stub":[{"DimensionId":"indicator","Members":["1000060","1000080",{"Key":-1808,"Name":"Public and Private","Formula":["1000060","0.00","ifNull","1000080","0.00","ifNull","+"]}],"DimensionName":"Indicator"}],"Filter":[{"DimensionId":"project","Members":["1000270"],"DimensionName":"Project"}],"Frequencies":["A"],"Dataset":"SNEIOFP2016"
+		}).done(function(result) {
+			console.log(result);
+
+			var years;
+			for (var i = 0; i < result.header.length; i++) {
+				if (result.header[i].dimensionId == 'Time') {
+					years = result.header[i].members;
+					break;
+				}
+			}
+
+			var publicValues = [];
+			var privateValues = [];
+			for (var i = 0; i < result.data.length; i++) {
+				var row = result.data[i];
+				switch (row.indicator) {
+					case 'Public': publicValues.push(row.Value); break;
+					case 'Private': privateValues.push(row.Value); break;
+				}
+			}
+
+			$('#capital-chart').highcharts({
+				credits: false,
+				chart: {
+					style: { "fontFamily": "Roboto" }
+				},
+		        title: {
+		            text: null
+		        },
+		        xAxis: {
+		            categories: years
+		        },
+		        yAxis: {
+		        	title: { text: null }
+		        },
+		        labels: {
+		            items: [{
+		                //html: 'Total fruit consumption',
+		                style: {
+		                    left: '50px',
+		                    top: '18px',
+		                    color: (Highcharts.theme && Highcharts.theme.textColor) || 'black'
+		                }
+		            }]
+		        },
+		        plotOptions: {
+		            column: {
+		                stacking: 'normal',
+		                dataLabels: { enabled: false },
+		            }
+		        },
+		        series: [{
+		            type: 'column',
+		            name: 'Public',
+		            color: 'rgb(136, 204, 169)',
+		            data: publicValues
+		        }, {
+		            type: 'column',
+		            name: 'Private',
+		            color: 'rgb(146, 205, 220)',
+		            data: privateValues
+		        }, {
+		            type: 'line',
+		            name: 'Public and Private',
+		            data: publicValues.map(function(v, i) { return v + privateValues[i]; }),
+		            color: 'rgb(147, 137, 83)',
+		            marker: { symbol: 'diamond' }
+		        }]
+		    });
+		});
 	};
 
 	var flagshipProjectsPages = {
