@@ -1,0 +1,46 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<script type="text/javascript" src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
+	<script type="text/javascript" src="http://knoema.com/app-script?version=2.0"></script>	
+	<script type="text/javascript" src="js/fyn.js?version=1.1"></script>
+	<link rel="stylesheet" href="css/site.css" type="text/css" />
+	<title>Fortune 500 </title>
+</head>
+<body>
+	<div id="app-holder">
+		<div id="steps">
+			<div id="company">
+				<span>COMPANY</span>
+				<img src="img/separator.png" alt="" />
+			</div>
+			<div id="indicator">
+				<span>INDICATOR</span>
+				<img src="img/separator.png" alt="" />
+			</div>
+			<div id="options">
+				<span id="A" class="active">ANNUAL</span>
+				<span id="Q">QUARTERLY</span>
+			</div>
+		</div>
+		<div class="step-container company">
+			<input type="text" id="filter-company" value="Just type..." />
+			<div id="list-company">
+			</div>
+		</div>
+		<div class="step-container indicator">
+			<div id="list-indicator">
+			</div>
+		</div>
+		<div class="last-step-container">
+			<div id="visualization">
+			</div>
+			<a id ="explore-button"class="explore-button" >Explore data</a>
+		</div>
+		<form action="http://knoema.com/gtquryc/america-s-fortune-500-companies-key-financials-data-2013" name="explore-data" method="post" target="_blank">
+			<input id="pivot-descriptor" name="datadescriptor" type="hidden" value="" />
+			<input id="view-state" class="map" name="viewstate" type="hidden" value="" />
+		</form>
+	</div>
+</body>
+</html>

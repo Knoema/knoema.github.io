@@ -1,0 +1,233 @@
+﻿body
+{
+	height: 550px;
+	margin: 8px 0px 0px 20px;
+	background: transparent  url('../img/bg.png') no-repeat;
+	background-position-x: 16px;
+}
+
+div#app-holder div#steps
+{
+	height: 40px;
+	background-color: #5486a9;
+	width: 902px;
+	font: bold 12pt Trebuchet MS;
+	color: white;
+}
+
+div#app-holder div#steps div
+{
+	display: inline-block;
+	text-align: center;
+	padding-top: 5px;
+}
+
+div#app-holder div#steps span
+{
+	height: 25px;	
+}
+
+div#app-holder div#steps div
+{
+	margin-top: 3px;
+}
+
+div#app-holder div#steps img
+{
+	float: right;
+	margin-top:-3px;
+}
+
+div#app-holder div#steps div#company
+{
+	width: 183px;
+}
+
+div#app-holder div#steps div#indicator
+{
+	width: 243px;
+}
+
+div#app-holder div#steps div#number
+{
+	width: 255px;
+}
+
+div#app-holder  div#options
+{
+	margin-left: 100px;
+}
+
+div#app-holder  div#options span
+{
+	margin-left: 30px;
+	cursor: pointer;
+}
+
+div#app-holder  .active
+{
+	font: bold 12pt Trebuchet MS;
+	color: white;
+	opacity: 0.5;
+}
+
+div#app-holder  div#options img
+{
+	float: center;
+	padding-right: 5px;
+	margin-top: 3px;
+}
+
+div#app-holder div.step-container
+{
+	float: left;
+	background: rgba(245,245,245,0.7)
+}
+
+div#app-holder div.step-container.company
+{
+	margin-top: 10px;
+	margin-left: 10px;
+	width: 170px;
+}
+
+div#app-holder div.step-container.company input
+{
+	height: 25px;
+	padding: 0px;
+	color: #c8c8c8;
+	width: 160px;
+}
+
+div#app-holder div.step-container.company div
+{
+	margin: 10px 10px 0 0px;
+}
+
+div#app-holder div.step-container.indicator
+{
+	margin-top: 10px;
+	margin-left:10px;
+	width: 230px;
+}
+
+div#app-holder div.step-container.indicator input
+{
+	height: 25px;
+	padding: 0px;
+	color: #c8c8c8;
+	width: 290px;
+	margin:0px 10px;
+}
+
+div#app-holder div.step-container.indicator div
+{
+	margin: 0px 10px 0 10px;
+}
+
+div.step-container.indicator div
+{
+	height: 484px;
+}
+div.step-container.company div
+{
+	height: 444px;
+	overflow-y: auto;
+}
+div#app-holder div.last-step-container
+{
+	display: inline-block;
+	width: 480px;
+	height: 300px;
+	float: none;
+	margin-top: 2px;
+}
+
+div#app-holder  div.last-step-container div.chart
+{
+	width: 285px;
+	height: 170px;
+	margin: 20px 0 0 20px;
+}
+
+div#app-holder div.step-container ul
+{
+	padding: 0px;
+	margin: 0px;
+	list-style-type: none;
+}
+
+div#app-holder div.step-container.company ul li
+{
+	margin: 0 2px;
+	padding: 2px 1px 1px 1px;
+	cursor: pointer;
+	font: 10pt Arial;
+}
+div#app-holder div.step-container.indicator ul li
+{
+	margin: 0 2px;
+	padding: 2px 1px 1px 1px;
+	cursor: pointer;
+	font: 10pt Arial;
+}
+
+div#app-holder div.step-container.indicator ul li.field1
+{
+	margin-left: 6px;
+}
+
+div#app-holder div.step-container.indicator ul li.field2
+{
+	margin-left: 12px;
+}
+
+div#app-holder div.step-container ul li:hover
+{
+	background-color: #F0F0F0;
+	color: #000;
+}
+
+div#app-holder .selected
+{
+	background-color: #5486a9;
+	text-color: #000;
+	color:#fff;
+}
+
+div#app-holder div.step-container ul li.capital
+{
+	font-weight: bold;
+}
+
+div#app-holder div.step-container ul li.capital1
+{
+	font-weight: bold;
+	margin-left: 6px;
+}
+
+div#app-holder div.last-step-container  div.field 
+{
+	margin-bottom:5px;
+}
+
+div#app-holder div.last-step-container  div.field  span.property
+{
+	font-weight:bold;	
+	margin-right:5px;
+}
+a.explore-button
+{
+	margin: 0px 10px;
+	background-color: #5486a9;
+	color: white;
+	padding: 4px 12px;
+	font-size: 9pt;
+	text-decoration: none;
+	display: none;
+	cursor: pointer;
+}
+a.inline
+{
+	display: inline;
+}

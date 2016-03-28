@@ -1,0 +1,121 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no"/>
+    <meta charset="utf-8"/>
+    <title>US Mass Shootings in 2015</title>
+    <style>
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+      #map {
+        height: 100%;
+      }
+    </style>
+</head>
+<body>
+	<div id="map"></div>
+	<script>
+		function initMap() {
+			var infowindow = new google.maps.InfoWindow();
+
+			var map = new google.maps.Map(document.getElementById('map'), {
+				zoom: 4,
+				center: {lat: 37.090, lng: -95.712},
+				mapTypeId: google.maps.MapTypeId.TERRAIN
+			});
+
+			$.post('http://knoema.com/api/1.0/data/details?client_id=EZj54KGFo3rzIvnLczrElvAitEyU28DGw9R73tif&page_id=koysadc&accesskey=zzhjatg', {
+				"Header":[],"Stub":[],"Filter":[{"DimensionId":"measure","Members":[{"Key":-4967,"Name":"Sum(Dead)","Formula":["4031630","sum"],"Transform":null}],"DimensionName":"Measure","DatasetId":"koysadc","Order":"0"},{"DimensionId":"location","Members":["1000000","1000010","1000020","1000030","1000040","1000050","1000060","1000070","1000080","1000090","1000100","1000110","1000120","1000130","1000140","1000150","1000160","1000170","1000180","1000190","1000200","1000210","1000220","1000230","1000240","1000250","1000260","1000270","1000280","1000290","1000300","1000310","1000320","1000330","1000340","1000350","1000360","1000370","1000380","1000390","1000400","1000410","1000420","1000430","1000440","1000450","1000460","1000470","1000480","1000490","1000500","1000510","1000520","1000530","1000540","1000550","1000560","1000570","1000580","1000590","1000600","1000610","1000620","1000630","1000640","1000650","1000660","1000670","1000680","1000690","1000700","1000710","1000720","1000730","1000740","1000750","1000760","1000770","1000780","1000790","1000800","1000810","1000820","1000830","1000840","1000850","1000860","1000870","1000880","1000890","1000900","1000910","1000920","1000930","1000940","1000950","1000960","1000970","1000980","1000990","1001000","1001010","1001020","1001030","1001040","1001050","1001060","1001070","1001080","1001090","1001100","1001110","1001120","1001130","1001140","1001150","1001160","1001170","1001180","1001190","1001200","1001210","1001220","1001230","1001240","1001250","1001260","1001270","1001280","1001290","1001300","1001310","1001320","1001330","1001340","1001350","1001360","1001370","1001380","1001390","1001400","1001410","1001420","1001430","1001440","1001450","1001460","1001470","1001480","1001490","1001500","1001510","1001520","1001530","1001540","1001550","1001560","1001570","1001580","1001590","1001600","1001610","1001620","1001630","1001640","1001650","1001660","1001670","1001680","1001690","1001700","1001710","1001720","1001730","1001740","1001750","1001760","1001770","1001780","1001790","1001800","1001810","1001820","1001830","1001840","1001850","1001860","1001870","1001880","1001890","1001900","1001910","1001920","1001930","1001940","1001950","1001960","1001970","1001980","1001990","1002000","1002010","1002020","1002030","1002040","1002050","1002060","1002070","1002080","1002090","1002100","1002110","1002120","1002130","1002140","1002150","1002160","1002170","1002180","1002190","1002200","1002210","1002220","1002230"],"DimensionName":"Location","DatasetId":"koysadc","Order":"1","isGeo":true}],"Frequencies":["D"],"Dataset":"koysadc","Segments":null,"MeasureAggregations":null
+			})
+			.done(function (data)
+			{
+				var rowCount = data.data.length / data.columns.length;
+
+				for (var rowIndex = 0; rowIndex < rowCount; rowIndex++) 
+				{
+					var lat, lng, dead = 0;
+					var html = '<table>';
+					for (var colIndex = 0; colIndex < data.columns.length; colIndex++)
+					{
+						var value = data.data[rowIndex * data.columns.length + colIndex];
+						switch (data.columns[colIndex].type) {
+							case 'Latitude': lat = value * 1; break;
+							case 'Longitude': lng = value * 1; break;
+							default:
+								switch (data.columns[colIndex].name) {
+									case 'Date':
+										value = value.value;
+										break;
+
+									case 'Dead':
+										dead = value * 1;
+										break;
+								}
+
+								if (data.columns[colIndex].name == 'Article') {
+									html += '<tr><td colspan="2" style="text-align: left;"><a href="' + value + '" target="_blank">Go to article</a></td></tr>';
+								} else {
+									html += '<tr><th style="text-align: left;">' + data.columns[colIndex].name + '</th><td>' + value + '</td></tr>';
+								}
+						}
+					}
+					html += '</table>';
+					
+					var color;
+					if (dead <= 1) {
+						color = '#1a9850';
+					} else if (dead <= 3) {
+						color = '#91cf60';
+					} else if (dead <= 5) {
+						color = '#d9ef8b';
+					} else if (dead <= 7) {
+						color = '#fee08b';
+					} else if (dead <= 9) {
+						color = '#fc8d59';
+					} else {
+						color = '#d73027';
+					}
+
+					/*var circle = new google.maps.Circle({
+						strokeColor: '#006E3E',
+						strokeOpacity: 0.5,
+						strokeWeight: 1,
+						fillColor: color,
+						fillOpacity: 0.7,
+						map: map,
+						center: new google.maps.LatLng(lat, lng),
+						radius: 60000,
+						html: html
+					});*/
+
+					var circle = new google.maps.Marker({
+						position: new google.maps.LatLng(lat, lng),
+						map: map,
+						html: html,
+						icon: {
+							path: google.maps.SymbolPath.CIRCLE,
+							strokeColor: '#006E3E',
+							strokeOpacity: 0.5,
+							strokeWeight: 1,
+							fillColor: color,
+							fillOpacity: 0.7,
+							scale: 9 //pixels
+						}
+					});
+
+					circle.addListener('click', function () {
+						//infowindow.setPosition(this.getCenter())
+						infowindow.setContent(this.html);
+						infowindow.open(map, this);
+					});
+				}
+			});
+		}
+	</script>
+	<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+	<script async defer src="https://maps.googleapis.com/maps/api/js?&callback=initMap"></script>
+</body>
+</html>

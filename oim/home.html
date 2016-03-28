@@ -1,0 +1,356 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+
+	<title>Home</title>
+	<script src="js/jquery-1.11.3.min.js" type="text/javascript"></script>
+	<script src="http://code.jquery.com/ui/1.11.4/jquery-ui.min.js" type="text/javascript"></script>
+	<script src="http://cdn.firstchurchofatheism.com/wp-content/plugins/generalstats/js/jshashtable/jshashtable.js" type="text/javascript"></script>
+	<script src="https://jquery-numberformatter.googlecode.com/files/jquery.numberformatter-1.2.4.min.js" type="text/javascript"></script>
+	<link href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css" rel="stylesheet">
+	<link href="main.css" rel="stylesheet">
+</head>
+<body>
+	<div class="site-holder">
+		<div class="site-header">
+			<div class="logo">
+				<img src="img/head_logo_with_name.png" alt="" />
+			</div>
+			<div class="nav-menu">
+				<ul class="nav">
+					<li class="">
+						<a href="overview.html">OVERVIEW</a>
+					</li>		
+					<li class="">
+						<a href="ranking.html">GLOBAL RANKING</a>
+					</li>					
+					<li class="">
+						<a href="globalstanding.html">KEY DRIVERS</a>
+					</li>
+					<li class="">
+						<a href="projects.html">PROJECTS</a>
+					</li>
+					<li class="">
+						<a href="capacity.html">CAPACITY</a>
+					</li>
+					<li class="active">
+						<a href="home.html">RECOMMENDATIONS</a>
+					</li>
+				</ul>
+			</div>
+			<div class="profile-holder">
+				<ul>
+					<li><img src="img/head_user_ico.png" /> Administrator</li>
+					<li>
+						<img src="img/head_logout_ico.png" />
+						<a href="index.html">Logout</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="header-line">
+
+		</div>
+		<div class="site-main">
+			<div class="panel-left">
+				<div class="map-holder">
+					<img src="img/img/map1.png" width="250" alt="" />
+				</div>
+				<div class="map-action">
+					<label>POPULATION</label>
+					<div id="map-slider" class="map-slider"></div>
+					<div class="slider-label-value">
+						<span class="label-start">0</span>
+						<span class="label-end">5,000,000</span>
+					</div>
+					<div class="input-number">
+						<input class="map-number" type="text" value="0" />
+						<!--<div class="input-arrow">
+							<div class="input-arrow-up" data-val="1"></div>
+							<div class="input-arrow-down" data-val="-1"></div>
+						</div>-->
+					</div>
+					<div class="map-value">
+						<span class="label">Current value</span>
+						<span id="value" class="value"></span>
+					</div>
+				</div>
+
+			</div>
+			<div class="panel-right">
+				<div class="widget-panel">
+					<div class="widget-row">
+
+						<a href="projects.html" class="widget-block">
+							<div class="widget-block">
+								<div class="widget-title">PORTS CAPACITY, TEU</div>
+								<div class="widget-body">
+									<img class="widget-image" src="img/home_blue_frame_ico1.png" />
+									<div class="widget-values" id="ports_values">
+										<div class="actual">
+											<div class="label">ACTUAL VALUE</div>
+											<div class="value">20,000</div>
+										</div>
+										<div class="standards">
+											<div class="label">
+												INTERNATIONAL<br />STANDARDS
+											</div>
+											<div class="value">25,000</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</a>
+						<a href="projects.html" class="widget-block">
+							<div class="widget-block">
+								<div class="widget-title">HOSPITALS CAPACITY, BEDS</div>
+								<div class="widget-body">
+									<img class="widget-image" src="img/home_blue_frame_ico2.png" />
+									<div class="widget-values" id="hospitals_values">
+										<div class="actual">
+											<div class="label">ACTUAL VALUE</div>
+											<div class="value">25,000</div>
+										</div>
+										<div class="standards">
+											<div class="label">
+												INTERNATIONAL<br />STANDARDS
+											</div>
+											<div class="value">28,000</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</a>
+						<a href="projects.html" class="widget-block">
+							<div class="widget-block">
+								<div class="widget-title">ROAD NETWORK, KM</div>
+								<div class="widget-body">
+									<img class="widget-image" src="img/home_blue_frame_ico3.png" />
+									<div class="widget-values" id="road_values">
+										<div class="actual">
+											<div class="label">ACTUAL VALUE</div>
+											<div class="value">209,000</div>
+										</div>
+										<div class="standards">
+											<div class="label">INTERNATIONAL<br />STANDARDS</div>
+											<div class="value">280,000</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</a>
+					</div>
+					<div class="widget-row">
+						<a href="projects.html" class="widget-block">
+							<div class="widget-block">
+								<div class="widget-title">AIRPORTS ANNUAL TRAFFIC, PASSENGERS</div>
+								<div class="widget-body">
+									<img class="widget-image" src="img/home_blue_frame_ico4.png" />
+									<div class="widget-values" id="airports_values">
+										<div class="actual">
+											<div class="label">ACTUAL VALUE</div>
+											<div class="value">3,000,000</div>
+										</div>
+										<div class="standards">
+											<div class="label">
+												INTERNATIONAL<br />STANDARDS
+											</div>
+											<div class="value">2,500,000</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</a>
+						<a href="projects.html" class="widget-block">
+							<div class="widget-title">HOTELS CAPACITY, ROOMS</div>
+							<div class="widget-body">
+								<img class="widget-image" src="img/home_blue_frame_ico5.png" />
+								<div class="widget-values" id="hotels_values">
+									<div class="actual">
+										<div class="label">ACTUAL VALUE</div>
+										<div class="value">798,000</div>
+									</div>
+									<div class="standards">
+										<div class="label">
+											INTERNATIONAL<br />STANDARDS
+										</div>
+										<div class="value">650,000</div>
+									</div>
+								</div>
+							</div>
+						</a>
+						<a href="projects.html" class="widget-block">
+							<div class="widget-block">
+								<div class="widget-title">SCHOOLS, NUMBER OF STUDENTS</div>
+								<div class="widget-body">
+									<img class="widget-image" src="img/home_blue_frame_ico6.png" />
+									<div class="widget-values" id="schools_values">
+										<div class="actual">
+											<div class="label">ACTUAL VALUE</div>
+											<div class="value">720,000</div>
+										</div>
+										<div class="standards">
+											<div class="label">
+												INTERNATIONAL<br />STANDARDS
+											</div>
+											<div class="value">460,000</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</a>
+					</div>
+				</div>
+				<div class="slider-holder">
+					<div class="timeline-image"></div><!-- .active -->
+					<div id="timeline-slider">
+						<div class="ui-slider-range ui-widget-header ui-corner-all" style="width: 12%; left: -85px;"></div>
+						<div class="ui-slider-range ui-widget-header ui-corner-all" style="width: 12%; left: 715px; background: rgb(221, 227, 232);"></div>
+					</div>
+					<div class="timeline-label-value">
+						<span class="time" data-val="0">2015</span>
+						<span class="time" data-val="1">2020</span>
+						<span class="time" data-val="2">2025</span>
+						<span class="time" data-val="3">2030</span>
+					</div>
+				</div>
+
+			</div>
+		</div>
+
+	</div>
+	<script>
+		$(function () {
+			$("#map-slider").slider({
+				range: "min",
+				value: 1235230,
+				min: 0,
+				max: 5000000,
+				slide: function (event, ui) {
+					$(".panel-left .value").html($.formatNumber(ui.value, { format: "#,###,###", locale: "us" }));
+					$(".panel-left .input-number input.map-number").val(ui.value);
+
+					var y1 = (ui.value * 25000) / 1235230;
+					$('#ports_values .standards .value').html(y1 == 0 ? 0 : $.formatNumber(y1, { format: "#,###,###", locale: "us" }));
+					var y2 = (ui.value * 28000) / 1235230;
+					$('#hospitals_values .standards .value').html(y2 == 0 ? 0 : $.formatNumber(y2, { format: "#,###,###", locale: "us" }));
+					var y3 = (ui.value * 380000) / 1235230;
+					$('#road_values .standards .value').html(y3 == 0 ? 0 : $.formatNumber(y3, { format: "#,###,###", locale: "us" }));
+					var y4 = (ui.value * 2500000) / 1235230;
+					$('#airports_values .standards .value').html(y4 == 0 ? 0 : $.formatNumber(y4, { format: "#,###,###", locale: "us" }));
+					var y5 = (ui.value * 650000) / 1235230;
+					$('#hotels_values .standards .value').html(y5 == 0 ? 0 : $.formatNumber(y5, { format: "#,###,###", locale: "us" }));
+					var y6 = (ui.value * 460000) / 1235230;
+					$('#schools_values .standards .value').html(y6 == 0 ? 0 : $.formatNumber(y6, { format: "#,###,###", locale: "us" }));
+				},
+				change: function (event, ui) {
+					$(".panel-left .value").html($.formatNumber(ui.value, { format: "#,###,###", locale: "us" }));
+					$(".panel-left .input-number input.map-number").val(ui.value);
+					if (ui.value <= 0) ui.value = 0;
+					var y1 = (ui.value * 25000) / 1235230;
+					$('#ports_values .standards .value').html(y1 == 0 ? 0 : $.formatNumber(y1, { format: "#,###,###", locale: "us" }));
+					var y2 = (ui.value * 28000) / 1235230;
+					$('#hospitals_values .standards .value').html(y2 == 0 ? 0 : $.formatNumber(y2, { format: "#,###,###", locale: "us" }));
+					var y3 = (ui.value * 380000) / 1235230;
+					$('#road_values .standards .value').html(y3 == 0 ? 0 : $.formatNumber(y3, { format: "#,###,###", locale: "us" }));
+					var y4 = (ui.value * 2500000) / 1235230;
+					$('#airports_values .standards .value').html(y4 == 0 ? 0 : $.formatNumber(y4, { format: "#,###,###", locale: "us" }));
+					var y5 = (ui.value * 650000) / 1235230;
+					$('#hotels_values .standards .value').html(y5 == 0 ? 0 : $.formatNumber(y5, { format: "#,###,###", locale: "us" }));
+					var y6 = (ui.value * 460000) / 1235230;
+					$('#schools_values .standards .value').html(y6 == 0 ? 0 : $.formatNumber(y6, { format: "#,###,###", locale: "us" }));
+				}
+			});
+			$(".panel-left .value").html($.formatNumber($("#map-slider").slider("value"), { format: "#,###,###", locale: "us" }));
+			$(".panel-left .input-number input.map-number").val($("#map-slider").slider("value"));
+		});
+		$(".panel-left .input-number input.map-number").spinner({
+			spin: function (event, ui) {
+				$("#map-slider").slider('value', ui.value);
+				$(".panel-left .value").html($.formatNumber(ui.value, { format: "#,###,###", locale: "us" }));
+				if (ui.value <= 0) {
+					$('.panel-left .input-number input.map-number').val('0');
+					$(".panel-left .value").html(0);
+				}
+
+			}
+		});
+		$(".panel-left .input-number input.map-number").change(function () {
+			$("#map-slider").slider('value', $(this).val());
+			$(".panel-left .value").html($.formatNumber($(this).val(), { format: "#,###,###", locale: "us" }));
+		}).focus(function () {
+			$(this).parent().css("border", "1px solid rgb(150, 212, 225)");
+		}).blur(function () {
+			$(this).parent().css("border", "1px solid rgb(209, 211, 217)");
+			if ($(this).val() <= 0) {
+				$(this).val(0);
+				$(".panel-left .value").html(0);
+			}
+		});
+		$(function () {
+			var myData = [2015, 2020, 2025, 2030];
+			$("#timeline-slider").slider({
+				range: "min",
+				value: 0,
+				min: 0,
+				max: myData.length - 1,
+				step: 1,
+				slide: function (event, ui) {
+					if (ui.value == 0) {
+						$("#map-slider").slider('value', 1235230);
+						$('#ports_values .actual .value').html('20,000');
+						$('#hospitals_values .actual .value').html('25,000');
+						$('#road_values .actual .value').html('209,000');
+						$('#airports_values .actual .value').html('3,000,000');
+						$('#hotels_values .actual .value').html('798,000');
+						$('#schools_values .actual .value').html('720,000');
+					}
+					if (ui.value == 1) {
+						$("#map-slider").slider('value', 2300000);
+						$('#ports_values .actual .value').html('25,000');
+						$('#hospitals_values .actual .value').html('36,000');
+						$('#road_values .actual .value').html('278,000');
+						$('#airports_values .actual .value').html('4,400,000');
+						$('#hotels_values .actual .value').html('980,000');
+						$('#schools_values .actual .value').html('1,300,000');
+					}
+
+					$(".slider-holder .timeline-label-value span").removeClass("active");
+					$('.slider-holder .timeline-label-value span[data-val=' + ui.value + ']').addClass("active");
+				},
+				change: function (event, ui) {
+					if (ui.value == 0) {
+						$("#map-slider").slider('value', 1235230);
+
+						$('#ports_values .actual .value').html('20,000');
+						$('#hospitals_values .actual .value').html('25,000');
+						$('#road_values .actual .value').html('209,000');
+						$('#airports_values .actual .value').html('3,000,000');
+						$('#hotels_values .actual .value').html('798,000');
+						$('#schools_values .actual .value').html('720,000');
+					}
+					if (ui.value == 1) {
+						$("#map-slider").slider('value', 2300000);
+						$('#ports_values .actual .value').html('25,000');
+						$('#hospitals_values .actual .value').html('36,000');
+						$('#road_values .actual .value').html('278,000');
+						$('#airports_values .actual .value').html('4,400,000');
+						$('#hotels_values .actual .value').html('980,000');
+						$('#schools_values .actual .value').html('1,300,000');
+					}
+					$(".slider-holder .timeline-label-value span").removeClass("active");
+					$('.slider-holder .timeline-label-value span[data-val=' + ui.value + ']').addClass("active");
+				}
+			});
+			$(".slider-holder .timeline-label-value span").removeClass("active");
+			$('.slider-holder .timeline-label-value span[data-val=' + 0 + ']').addClass("active");
+			$(".slider-holder .timeline-label-value span").on("click", function () {
+				$("#timeline-slider").slider('value', $(this).data('val'));
+			});
+		});
+	</script>
+
+</body>
+
+</html>

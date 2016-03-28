@@ -1,0 +1,190 @@
+﻿<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>Plan Senegal emergent</title>
+    <link rel='stylesheet' type='text/css' href='https://fonts.googleapis.com/css?family=Roboto'>
+    <link rel='stylesheet' type='text/css' href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,700'>
+	<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.7.3/css/bootstrap-select.min.css"/>
+	<link rel="stylesheet" type="text/css" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+	<link rel="stylesheet" type="text/css" href="app.css"/>	
+</head>
+<body class="loading">
+	<div class="main-menu">
+		<div class="logo">Plan Senegal emergent</div>
+		<ul class="items nav nav-tabs" role="tablist">
+			<!--<li>
+				<img src="./Images/menu_divider_selectedbg.png" />
+			</li>
+    		<li class="short">
+    			<a href="index.html" data-toggle="tab">
+					<img src="./Images/icon_home.png" />
+					Home
+    			</a>
+    		</li>-->
+			<li>
+				<img src="./Images/menu_divider_selectedbg.png" />
+			</li>
+    		<li>
+				<a href="overview.html" data-toggle="tab">
+					<img src="./Images/icon_co.png" />
+					Country Overview
+				</a>
+			</li>
+			<li>
+				<img src="./Images/menu_divider_selectedbg.png" />
+			</li>
+			<li class="wide-item active">
+				<a href="targetProfile.html" data-toggle="tab">
+					<img src="./Images/icon_tp.png" />
+					Target Profiles by Sub-Sector
+				</a>
+			</li>
+			<li>
+				<img src="./Images/menu_divider_selectedbg.png" />
+			</li>
+			<li class="sm">
+				<a href="sectorMonitor.html" data-toggle="tab">
+					<img src="./Images/icon_sectormonitor.png" />
+					Sector Monitor
+				</a>
+			</li>
+			<li>
+				<img src="./Images/menu_divider_selectedbg.png" />
+			</li>
+			<li>
+				<a href="investmentNeeds.html" data-toggle="tab">
+					<img src="./Images/icon_in.png" />
+					Investment Needs
+				</a>
+			</li>
+			<li>
+				<img src="./Images/menu_divider_selectedbg.png" />
+			</li>
+			<li class="short">
+				<a href="scenarios.html" data-toggle="tab">
+					<img src="./Images/icon_sc.png" />
+					Scenarios
+				</a>
+			</li>
+			<li>
+				<img src="./Images/menu_divider_selectedbg.png" />
+			</li>
+			<li class="short more">
+				<a href="#" class="more-item">
+					<img src="./Images/icon_more.png" />
+					More
+				</a>
+			</li>
+		</ul>
+
+		<div class="more-menu-items">
+			<ul>
+    			<li>
+					<a href="globalStanding.html" data-toggle="tab">
+						<img src="./Images/icon_list_globalstanding.png" />
+						Global Standing
+					</a>
+				</li>
+    			<li>
+					<a href="economy2020.html" data-toggle="tab">
+						<img src="./Images/icon_list_economy2020.png" />
+						Economy 2020
+					</a>
+				</li>
+				<li>
+					<a href="informationHighway.html" data-toggle="tab">
+						<img src="./Images/icon_list_infohighway.png" />
+						Information Highway
+					</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+
+	<div class="tab-content target-profile">
+		<div class="menu">
+			<div class="left-column">
+				<img src="./Images/map.png" />
+
+				<div>
+					<img src="./Images/marker.png" /><p>Senegal</p>
+					<table>
+						<tr>
+							<td><a href="#">Dakar</a></td>
+							<td><a href="#">Louga</a></td>
+						</tr>
+						<tr>
+							<td><a href="#">Ziguinchor</a></td>
+							<td><a href="#">Fatick</a></td>
+						</tr>
+						<tr>
+							<td><a href="#">Diorbel</a></td>
+							<td><a href="#">Kolda</a></td>
+						</tr>
+						<tr>
+							<td><a href="#">Saint-Louis</a></td>
+							<td><a href="#">Matam</a></td>
+						</tr>
+						<tr>
+							<td><a href="#">Tambacounda</a></td>
+							<td><a href="#">Kaffrine</a></td>
+						</tr>
+						<tr>
+							<td><a href="#">Kaokack</a></td>
+							<td><a href="#">Kedougou</a></td>
+						</tr>
+						<tr>
+							<td><a href="#">Thies</a></td>
+							<td><a href="#">Sedhion</a></td>
+						</tr>
+					</table>
+				</div>
+			</div>
+			<div class="right-column">
+				<table>
+					<tr>
+						<td class="clicable"><img src="./Images/btn_energy.png" /><img class="hover" src="./Images/btn_energy_hover.png" id="energy-profile" /></td>
+						<td><img src="./Images/btn_infrastructure.png" /></td>
+					</tr>
+					<tr>
+						<td><img src="./Images/btn_education.png" /></td>
+						<td><img src="./Images/btn_health.png" /></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+		<div class="energy-profile">
+			<img src="./Images/PSE-target-profile-table.jpg" />
+		</div>
+    </div>
+
+	<div id="footer">
+		<div>The Office of the President</div>
+	</div>
+
+	<script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
+	<script>
+		(function () {
+			$('#energy-profile').on('click', function () {
+
+				$('.menu').hide();
+				$('.energy-profile').show();
+			});
+		})()
+	</script>
+	<script>
+		(function () {
+			$('.more-item').on('click', function (e) {
+
+				$('.more-menu-items').toggleClass('show');
+
+				e.stopPropagation();
+				return false;
+			});
+		})()
+	</script>
+</body>
+</html>

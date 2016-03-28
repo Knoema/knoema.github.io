@@ -1,0 +1,234 @@
+#site-main {
+    width: 930px;
+    margin: auto;
+    box-shadow: 0 60px 100px 0 #ecece7;
+    font-family: 'PT Serif';
+}
+
+/**************************************/
+/*******  matrix.less content *********/
+
+.disable-text-selection {
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -webkit-user-select: none;
+    user-select: none
+}
+
+#atlas-header {
+    padding: 0 10px;
+}
+
+div#site-holder div#atlas-header h1 {
+    text-align: center;
+    font: bold 2em 'PT Sans', Trebuchet MS
+}
+
+div#site-holder div#atlas h2 {
+    text-align: center;
+    font: normal 16pt 'PT Sans', Trebuchet MS
+}
+
+div#atlas p {
+    color: #777;
+    padding: 0 1em;
+    text-align: justify;
+    font-size: 90%
+}
+
+div#atlas p a {
+    color: #0077ca;
+}
+div#atlas p a:visited {
+    color: #0077ca;
+}
+div#atlas p a:hover {
+    color: #479DD9;
+}
+
+div.stickyHeader {
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+table.stickyHeader {
+    font-size: 90%;
+    margin: 10px;
+}
+
+th {
+    font-weight: normal;
+    color: #0077ca;
+    font-size: .8em
+}
+
+th span {
+    display: inline-block;
+    -moz-transform: rotate(-90deg);
+    -ms-transform: rotate(-90deg);
+    -o-transform: rotate(-90deg);
+    -webkit-transform: rotate(-90deg);
+    transform: rotate(-90deg);
+    float: left;
+    width: 35px;
+    white-space: nowrap
+}
+
+html[dir=rtl] th span {
+    -moz-transform: rotate(90deg);
+    -ms-transform: rotate(90deg);
+    -o-transform: rotate(90deg);
+    -webkit-transform: rotate(90deg);
+    transform: rotate(90deg)
+}
+
+thead {
+    background: white
+}
+
+thead th {
+    vertical-align: bottom;
+    padding-bottom: 1.5em;
+    height: 180px
+}
+
+thead th.sortable {
+    cursor: pointer;
+    overflow: hidden
+}
+
+thead th.sortable.headerSortUp, thead th.sortable.headerSortDown, thead th.sortable.active {
+    background: #0077ca;
+    color: white
+}
+
+thead th.countries {
+    padding-bottom: 5px;
+    text-align: left
+}
+
+html[dir=rtl] thead th.countries {
+    text-align: right;
+    padding-left: 0;
+    padding-right: 5px
+}
+
+thead th.even {
+    background: #eee
+}
+
+thead .countries-filter-field {
+    background-position: -2px -3px;
+    padding: 5px 5px 3px 27px;
+    background-repeat: no-repeat;
+    background-color: #fff;
+    background-image: url("/img/v4/matrix-search-icon.png");
+    width: 81%;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 3px;
+    font-size: 10pt;
+    margin: 0 2px
+}
+
+html[dir=rtl] thead .countries-filter-field {
+    background-position: right -2px;
+    padding: 5px 27px 3px 5px
+}
+
+@media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2 ppx), only screen and (min-device-pixel-ratio: 2) {
+    thead .countries-filter-field {
+        background-image: url("/img/v4/matrix-search-icon-x2.png");
+        background-size: cover
+    }
+}
+
+thead .placeholder {
+    color: #aaa
+}
+
+tbody th {
+    text-align: right;
+    height: 35px;
+    padding-right: .5em
+}
+
+tbody th a, tbody th a:visited {
+    color: #0077ca
+}
+
+td {
+    text-align: center
+}
+
+td a {
+    color: black;
+    text-decoration: none
+}
+
+td.scale0 {
+    background: white
+}
+
+td.scale1 {
+    background: #edf8fb
+}
+
+td.scale2 {
+    background: #ccece6
+}
+
+td.scale3 {
+    background: #99d8c9
+}
+
+td.scale4 {
+    background: #66c2a4
+}
+
+td.scale5 {
+    background: #129447
+}
+
+td.scale5 a {
+    color: white
+}
+
+tbody tr.odd {
+    background: #eee
+}
+
+tbody tr.hidden {
+    display: none
+}
+
+div#atlas {
+    position: relative
+}
+
+div#atlas div.stickyHeader {
+    position: fixed;
+    _position: absolute;
+    top: -1px;
+    overflow: hidden;
+    height: 210px !important;
+    z-index: 2
+}
+
+div#atlas div.stickyHeader table {
+    border-collapse: separate;
+    -moz-box-shadow: 0px 3px 10px 0px #999;
+    -webkit-box-shadow: 0px 3px 10px 0px #999;
+    box-shadow: 0px 3px 10px 0px #999;
+    border-radius: 1px
+}
+
+div#atlas div.stickyHeader.hide {
+    display: none
+}
+
+div#atlas #not-found-container {
+    color: #777;
+    margin: 50px 250px;
+    width: 100%
+}

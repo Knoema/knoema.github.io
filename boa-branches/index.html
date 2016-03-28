@@ -1,0 +1,367 @@
+﻿<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>Bank of Agriculture</title>
+    <link rel='stylesheet' type='text/css' href='https://fonts.googleapis.com/css?family=Roboto'>
+    <link rel='stylesheet' type='text/css' href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,700'>
+	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.7.3/css/bootstrap-select.min.css"/>
+	<link rel="stylesheet" type="text/css" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/css/bootstrap-select.min.css">
+	<link rel="stylesheet" type="text/css" href="slick.grid.css"/>
+	<link rel="stylesheet" type="text/css" href="style.css"/>
+</head>
+<body class="loading">
+	<div id="widthCalc" style="position: absolute; float: left; visibility: hidden; white-space: nowrap;"></div>
+
+	<div class="ajax-loader"></div>
+
+	<div id="search-control">
+		<input placeholder="Search" class="form-control" />
+	</div>
+
+	<div id="header">
+		<div class="logo"></div>
+		<div class="logo-title"></div>
+	</div>
+
+	<div id="content">
+		<div id="main-menu" class="btn-group">
+			<div class="btn btn-default active" id="map-view">Map</div>
+			<div class="btn btn-default" id="table-view">Table</div>
+		</div>
+		<div id="filters">
+			<h1>FILTERS</h1>
+
+			<div class="form-group count">
+				<label class="form-label"></label>
+			</div>
+
+			<div class="form-group">
+				<label for="size" class="form-label" style="text-transform: uppercase;">Circle size reflects</label>&nbsp;
+				<select id="size" class="selectpicker">
+					<option selected="selected" value="branches">Number of clients</option>
+					<option value="branches-credit">Credit rating</option>
+					<option value="branches-savings">Savings rating</option>
+					<option value="branches-total">Total rating</option>
+				</select>
+			</div>
+
+			<div class="form-group clients">
+				<label class="form-label">NUMBER OF CLIENTS</label>
+				<input type="text" class="min form-control">
+				<input type="text" class="max form-control right">
+				<div class="slider"></div>
+			</div>
+
+			<div class="form-group credit">
+				<label class="form-label">TOTAL CREDIT RATING</label>
+				<input type="text" class="min form-control">
+				<input type="text" class="max form-control right">
+				<div class="slider"></div>
+			</div>
+
+			<div class="form-group savings">
+				<label class="form-label">TOTAL SAVINGS RATING</label>
+				<input type="text" class="min form-control">
+				<input type="text" class="max form-control right">
+				<div class="slider"></div>
+			</div>
+
+			<div class="form-group total">
+				<label class="form-label">TOTAL RATING</label>
+				<input type="text" class="min form-control">
+				<input type="text" class="max form-control right">
+				<div class="slider"></div>
+			</div>
+
+			<div class="form-group">
+				<label for="rating-grade" class="form-label">TOTAL RATING GRADE</label>&nbsp;
+				<select id="rating-grade" class="selectpicker" multiple>
+					<option selected="selected" value="A">A</option>
+					<option selected="selected" value="B">B</option>
+					<option selected="selected" value="C">C</option>
+					<option selected="selected" value="D">D</option>
+				</select>
+			</div>
+
+			<div class="form-group projects">
+				<input type="checkbox" checked id="projects" /><img src="http://th.knoema.com/production/images/1044160/4z5penk4.png"><label for="projects">DISPLAY PROJECTS</label>
+			</div>
+		</div>		
+
+		<div id="map-canvas"></div>
+
+		<div id="regions-control" class="form-inline">
+			<div class="input-group">
+				<span class="input-group-addon">REGIONS:</span>
+				<select id="regions">
+					<option value="-1">Select a region</option>
+					<option value="Abia">Abia</option>
+					<option value="Adamawa">Adamawa</option>
+					<option value="Akwa Ibom">Akwa Ibom</option>
+					<option value="Anambra">Anambra</option>
+					<option value="Bauchi">Bauchi</option>
+					<option value="Bayelsa">Bayelsa</option>
+					<option value="Benue">Benue</option>
+					<option value="Borno">Borno</option>
+					<option value="Cross River">Cross River</option>
+					<option value="Delta">Delta</option>
+					<option value="Ebonyi">Ebonyi</option>
+					<option value="Edo">Edo</option>
+					<option value="Ekiti">Ekiti</option>
+					<option value="Enugu">Enugu</option>
+					<option value="FCT">FCT</option>
+					<option value="Gombe">Gombe</option>
+					<option value="Imo">Imo</option>
+					<option value="Jigawa">Jigawa</option>
+					<option value="Kaduna">Kaduna</option>
+					<option value="Kano">Kano</option>
+					<option value="Katsina">Katsina</option>
+					<option value="Kebbi">Kebbi</option>
+					<option value="Kogi">Kogi</option>
+					<option value="Kwara">Kwara</option>
+					<option value="Lagos">Lagos</option>
+					<option value="Nasarawa">Nasarawa</option>
+					<option value="Nassarawa">Nassarawa</option>
+					<option value="Niger">Niger</option>
+					<option value="Ogun">Ogun</option>
+					<option value="Ondo">Ondo</option>
+					<option value="Osun">Osun</option>
+					<option value="Oyo">Oyo</option>
+					<option value="Plateau">Plateau</option>
+					<option value="Rivers">Rivers</option>
+					<option value="Sokoto">Sokoto</option>
+					<option value="Taraba">Taraba</option>
+					<option value="Yobe">Yobe</option>
+					<option value="Abia">Zamfara</option>
+				</select>
+			</div>
+
+			<div class="input-group" style="background-color: transparent;">
+				<button class="region-profile-button">Show region profile</button>
+			</div>
+		</div>
+
+		<div id="table">
+			<table class="table">
+				<thead>
+					<tr class="header">
+						<th>Name</th>
+						<th>Location</th>
+						<th>State</th>
+						<th>Number of clients</th>
+						<th>SME, NGN</th>
+						<th>Rating</th>
+						<th>Micro Agriculture, NGN</th>
+						<th>Rating</th>
+						<th>Micro Non-Agriculture, NGN</th>
+						<th>Rating</th>
+						<th>Principal, NGN</th>
+						<th>Interest, NGN</th>
+						<th>Total, NGN</th>
+						<th>Rating</th>
+						<th>Credit</th>
+						<th>Savings</th>
+						<th>Total</th>
+						<th>Grade</th>
+					</tr>
+				</thead>
+				<tbody>
+			</table>
+		</div>
+
+		<div id="branch-profile">
+			<h1></h1>
+			<ul class="nav nav-tabs profile-tabs"> 
+				<li class="active"><a data-tab-name="general" href="#">GENERAL INFORMATION</a></li>
+				<li><a data-tab-name="loans2" href="#">LOANS</a></li>
+			</ul>
+			<div class="tab general active"></div>
+			<div class="tab loans2">
+				<div class="wait">Please wait...</div>
+				<div id="loan-table" class="grid-container" style="width: 100%; height: 685px;"></div>
+			</div>
+			<button type="button" class="btn btn-primary" style="position: absolute; left: 20px; bottom: 20px;">Export to XLS</button>
+			<div class="back-button"><a href="#">Back</a></div>
+		</div>
+	</div>
+
+	<script id="tmpl-branch" type="text/x-jQuery-tmpl">
+		<tr >
+			<td class="name">${data['Business Outlets']}</td>
+			<td>${data['Location']}</td>
+			<td>${data['State']}</td>
+			<td>${data['Number of Clients']}</td>
+			<td>${data['Disbursement, SME, NGN']}</td>
+			<td>${data['Disbursement, SME, NGN - Rating']}</td>
+			<td>${data['Disbursement, Micro Agriculture, NGN']}</td>
+			<td>${data['Disbursement, Micro Agriculture, NGN - Rating']}</td>
+			<td>${data['Disbursement, Micro Non-Agriculture, NGN']}</td>
+			<td>${data['Disbursement, Micro Non-Agriculture, NGN - Rating']}</td>
+			<td>${data['Outstanding, Principal, NGN']}</td>
+			<td>${data['Outstanding, Interest, NGN']}</td>
+			<td>${data['Outstanding, Total, NGN']}</td>
+			<td>${data['Outstanding: Rating']}</td>
+			<td>${data['Total ratings, Credit']}</td>
+			<td>${data['Total ratings, Savings']}</td>
+			<td>${data['Total ratings, Total']}</td>
+			<td>${data['Total ratings, Grade']}</td>
+		</tr>
+	</script>
+
+	<script id="tmpl-branch-profile" type="text/x-jQuery-tmpl">				
+		<table>
+			<tr class="header">
+				<td>General information:</td>
+				<td></td>
+			</tr>
+			<tr>
+				<td>Location:</td>
+				<td>${data['Location']}</td>
+			</tr>
+			<tr>
+				<td>State:</td>
+				<td>${data['State']}</td>
+			</tr>
+			<tr>
+				<td>Number of clients:</td>
+				<td>${data['Number of Clients']}</td>
+			</tr>
+			<tr class="header">
+				<td>Disbursement:</td>
+				<td></td>
+			</tr>
+			<tr>
+				<td>SME, NGN:</td>
+				<td>${data['Disbursement, SME, NGN']}</td>
+			</tr>
+			<tr>
+				<td>Rating:</td>
+				<td>${data['Disbursement, SME, NGN - Rating']}</td>
+			</tr>
+			<tr>
+				<td>Micro Agriculture, NGN:</td>
+				<td>${data['Disbursement, Micro Agriculture, NGN']}</td>
+			</tr>
+			<tr>
+				<td>Rating:</td>
+				<td>${data['Disbursement, Micro Agriculture, NGN - Rating']}</td>
+			</tr>
+			<tr>
+				<td>Micro Non-Agriculture, NGN:</td>
+				<td>${data['Disbursement, Micro Non-Agriculture, NGN']}</td>
+			</tr>
+			<tr>
+				<td>Rating:</td>
+				<td>${data['Disbursement, Micro Non-Agriculture, NGN - Rating']}</td>
+			</tr>
+			<tr class="header">
+				<td>Ratings (Outstanding):</td>
+				<td></td>
+			</tr>
+			<tr class="white">
+				<td>Principal, NGN:</td>
+				<td>${data['Outstanding, Principal, NGN']}</td>
+			</tr>
+			<tr>
+				<td>Interest, NGN:</td>
+				<td>${data['Outstanding, Interest, NGN']}</td>
+			</tr>
+			<tr>
+				<td>Total, NGN:</td>
+				<td>${data['Outstanding, Total, NGN']}</td>
+			</tr>
+			<tr>
+				<td>Rating:</td>
+				<td>${data['Outstanding: Rating']}</td>
+			</tr>
+			<tr class="header">
+				<td>Total ratings:</td>
+				<td></td>
+			</tr>
+			<tr class="white">
+				<td>Credit:</td>
+				<td>${data['Total ratings, Credit']}</td>
+			</tr>
+			<tr>
+				<td>Savings:</td>
+				<td>${data['Total ratings, Savings']}</td>
+			</tr>
+			<tr>
+				<td>Total:</td>
+				<td>${data['Total ratings, Total']}</td>
+			</tr>
+			<tr>
+				<td>Grade:</td>
+				<td>${data['Total ratings, Grade']}</td>
+			</tr>
+		</table>
+	</script>
+
+	<script id="tmpl-loans" type="text/x-jQuery-tmpl">
+		<iframe src="http://knoema.com/resource/embed/ihojpsg/first?boa-branch=${data['Business Outlets']}&noHeader=1" scrolling="no" frameborder="0" style="height:600px; width:100%"></iframe>
+	</script>
+
+	<script id="tmpl-region-profile" type="text/x-jQuery-tmpl">
+		<div id="region-profile-popup" class="passport-popup">
+			<div class="passport__title" style="text-transform: uppercase;">${regionId} region profile</div>
+    		<div class="passport__close"></div>
+    		<div class="passport__content">
+				<iframe src="http://knoema.com/resource/embed/vdttdad?state=${regionId}" scrolling="yes" frameborder="0" style="height:100%; width:100%"></iframe>
+    		</div>
+		</div>
+	</script>
+
+	<script id="tmpl-project-profile" type="text/x-jQuery-tmpl">
+		<div class="project-profile">
+			<div class="title">${data['Name of Project']}</div>
+			<table>
+				{{each(key, val) data}}
+					{{if key != 'Name of Project'}}
+						<tr>
+							<td width="150">${key}</td>
+							<td>${data[key]}</td>
+						</tr>
+					{{/if}}
+				{{/each}}				
+			</table>
+		</div>
+	</script>
+
+	<script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.7.3/js/bootstrap-select.min.js"></script>
+	<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=visualization,drawing"></script>
+	<script src="http://code.jquery.com/ui/1.11.4/jquery-ui.min.js" type="text/javascript"></script>
+
+	<!-- for cross-domain requests and authent -->
+	<script src="http://knoema.com/app-script?version=2.0"></script>
+
+	<!-- dependencies of layer. I think we need to get rid of them -->
+	<script src="http://knoema.com/js/googlemap/bubbleslayer.js"></script>
+	<script src="http://knoema.com/js/googlemap/canvaslayer.js"></script>
+
+	<!-- basic script for rendering map layers -->
+	<script src="http://knoema.com/js/geoplayground/geo-playground-layer.js?v=1"></script>
+
+	<!-- Latest compiled and minified JavaScript -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/js/bootstrap-select.min.js"></script>
+
+	<script>
+		Knoema.Helpers.clientId = 'EZj54KGFo3rzIvnLczrElvAitEyU28DGw9R73tif';
+	</script>
+	<script src="jquery.tmpl.js"></script>
+	<script src="jquery.stickytableheaders.min.js"></script>
+	<script src="jquery.event.drag-2.2.js"></script>
+	<script src="slick.core.js"></script>
+	<script src="slick.grid.js"></script>
+	<script src="numeral.min.js"></script>
+
+	<script src="boa.js"></script>
+
+
+</body>
+</html>

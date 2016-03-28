@@ -1,0 +1,396 @@
+html, body
+{
+	position: relative;
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	padding: 0;
+}
+
+body
+{
+	font-family: 'Roboto', sans-serif;
+	color: black;
+}
+
+.ajax-loader
+{
+	display: none;
+	position: absolute;
+	left: 0;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	background: rgba(0, 0, 0, 0.65) url(img/ajax-loader.gif) center center no-repeat;
+	z-index: 100500;
+}
+
+body.loading > .ajax-loader
+{
+	display: block;
+}
+
+#header
+{
+	height: 76px;
+	background-color: #f6f6f6;
+}
+
+	#header .logo
+	{
+		display: inline-block;
+		background: url(img/logo.png);
+		height: 65px;
+		width: 98px;
+		margin: 6px 20px;
+	}
+
+	#header .logo-title
+	{
+		display: inline-block;
+		background: url(img/title.png);
+		height: 24px;
+		width: 390px;
+		margin: 25px 0;
+	}
+
+#main-menu
+{
+	position: absolute;
+	top: 15px;
+	right: 20px;
+	z-index: 1;
+}
+
+#content
+{
+	position: absolute;
+	top: 76px;
+	bottom: 0;
+	right: 0;
+	left: 0;
+}
+
+#filters
+{
+	width: 300px;
+	padding: 0 20px;
+	display: none;
+}
+
+	#filters h1
+	{
+		font-size: 16pt;
+		margin: 20px 0 10px;
+	}
+
+.form-group .form-label, .form-inline .form-label
+{
+	color: #7A94A3;
+	display: block;
+}
+
+.form-group input.form-control
+{
+	width: 110px;
+	display: inline-block;
+}
+
+	.form-group input.form-control.right
+	{
+		float: right;
+	}
+
+.form-group .slider
+{
+	margin: 10px;
+}
+
+.form-group.count
+{
+	background-color: #E4F6FF;
+	padding: 10px;
+	text-align: center;
+}
+
+.form-group.projects label
+{
+	cursor: pointer;
+}
+
+.form-group.projects input
+{
+	top: 1px;
+	position: relative;
+	display: inline-block;
+}
+
+.form-group.projects img
+{
+	margin: 0 5px;
+	width: 12px;
+}
+
+.form-group.count label
+{
+	color: black;
+	margin-bottom: 0;
+}
+
+#map-canvas
+{
+	position: absolute;
+	left: 300px;
+	top: 53px;
+	right: 0;
+	bottom: 0;
+}
+
+#table
+{
+	display: none;
+	position: absolute;
+	left: 300px;
+	top: 53px;
+	right: 0;
+	bottom: 0;
+}
+
+	#table table tbody tr
+	{
+		cursor: pointer;
+	}
+
+table thead tr th
+{
+	background-color: #E4F6FF;
+	font-weight: bold;
+	border-bottom: 0;
+}
+
+.table > thead > tr > th
+{
+	border-bottom: 0;
+	vertical-align: top;
+}
+
+.grid-container {
+	font-family: Calibri;
+	font-size: 14px;
+}
+.slick-header-columns {
+	background: none;
+}
+.slick-header-column {
+	background: rgb(228, 246, 255);
+	box-sizing: content-box;
+	font-weight: bold;
+}
+.slick-cell.highlight {
+	background-color: lightgreen;
+}
+
+#search-control
+{
+	position: absolute;
+	top: 30px;
+	right: 20px;
+}
+
+#search-control .form-control
+{
+	width: 700px;
+}
+
+#branch-profile
+{
+	display: none;
+	height: 100%;
+	width: 100%;
+	position: absolute;
+	top: 0;
+	background-color: #fff;
+	z-index: 2;
+	padding: 20px;
+}
+
+#branch-profile .nav-tabs
+{
+	cursor: pointer;
+}
+
+#branch-profile .tab
+{
+	display: none;
+	padding: 15px 0;
+}
+
+#branch-profile .tab.active
+{
+	display: block;
+}
+
+#branch-profile h1 
+{
+	font-size: 16pt;
+	color:#0077ca;
+	margin: 0 0 20px 0;
+}
+
+#branch-profile .back-button a
+{
+	position: absolute;
+	top: 20px;
+	right: 30px;
+	font-size: 16pt;
+}
+
+#branch-profile table td
+{
+	padding: 5px 10px;
+}
+
+#branch-profile table tr:nth-child(odd) 
+{
+    background-color: #f9f9f9;
+}
+
+#branch-profile table tr.white
+{
+	background-color: #fff;
+}
+
+.project-profile .title
+{
+	text-transform: uppercase;
+	color: #0077ca;
+	font-weight: bold;
+	margin-bottom: 10px;
+}
+
+.project-profile table td
+{
+	padding: 5px 10px;
+}
+
+.project-profile table tr:nth-child(odd)
+{
+	background-color: #f9f9f9;
+}
+
+.project-profile table tr.white
+{
+	background-color: #fff;
+}
+
+#regions-control
+{
+	position: absolute;
+	top: 60px;
+	left: 430px;
+	font-size: 9.5pt;
+}
+
+#regions-control .input-group
+{
+	background-color: #fff;
+    border-radius: 3px;
+	padding: 2px;
+}
+
+#regions-control .input-group-addon
+{
+	padding: 9px 15px;
+	background-color: #fff;
+	color: #000;
+	font-size: 9.0pt;
+	border: none;
+}
+
+#regions
+{
+	font-size: 10pt;
+	padding: 5px 10px 6px 10px;
+    font-weight: bold;
+}
+
+#regions-control .region-profile-button
+{
+	padding: 5px 15px 6px 15px;
+	border-radius: 3px;
+	border: 1px solid #FFDC00;
+	font-weight: bold;
+	background-color: #FFDC00;
+	margin-left: 12px;
+	font-size: 9pt;
+}
+
+.passport-popup {
+	position: absolute;
+	left: 0;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	background-color: rgba(0,0,0,0.5);
+	z-index: 3;
+}
+.passport__content {
+	position: absolute;
+	left: 10px;
+	right: 10px;
+	top: 75px;
+	bottom: 10px;
+	padding: 20px;
+	background-color: #fff;
+	overflow: auto;
+}
+.passport__title
+{
+	position: absolute;
+	top: 10px;
+	left: 10px;
+	right: 10px;
+	padding: 20px;
+	background-color: #EBFAFF;
+	overflow: auto;
+}
+.passport__content hr {
+	margin: 20px 0;
+	border-top: 1px solid #e6e6e6;
+}
+.passport__close {
+	position: absolute;
+    right: 30px;
+    top: 20px;
+    width: 40px;
+    height: 40px;
+    background: #fff url(./img/icon_close.png) no-repeat center center;
+    cursor: pointer;
+    z-index: 1;
+    border-radius: 50%;
+    box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.15);
+}
+.passport__close:hover {
+	background-image: url(./img/icon_close_hover.png);
+}
+.passport__title {
+	font-family: 'Roboto', sans-serif;
+	font-size: 18px;
+	font-weight: bold;
+    margin-bottom: 15px;
+}
+
+.tab.loans2 {
+	position: relative;
+}
+.tab.loans2 > .wait {
+	display: none;
+	position: absolute;
+	width: 100%;
+	top: 30%;
+	text-align: center;
+	z-index: 1;
+}
+.tab.loans2.loading > .wait {
+	display: block;
+}

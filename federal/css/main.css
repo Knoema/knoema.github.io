@@ -1,0 +1,651 @@
+﻿/*! HTML5 Boilerplate v5.2.0 | MIT License | https://html5boilerplate.com/ */
+/*
+ * What follows is the result of much research on cross-browser styling.
+ * Credit left inline and big thanks to Nicolas Gallagher, Jonathan Neal,
+ * Kroc Camen, and the H5BP dev community and team.
+ */
+/* ==========================================================================
+   Base styles: opinionated defaults
+   ========================================================================== */
+html {
+  color: #222;
+  font-size: 1em;
+  line-height: 1.4;
+  font-family: 'Raleway', sans-serif;
+}
+h2 {
+  font: bold 1.7em 'Raleway';
+}
+h2 span {
+  color: #0077ca;
+}
+h3 {
+  font: bold 1.2em 'Raleway';
+}
+/*
+ * Remove text-shadow in selection highlight:
+ * https://twitter.com/miketaylr/status/12228805301
+ *
+ * These selection rule sets have to be separate.
+ * Customize the background color to match your design.
+ */
+::-moz-selection {
+  background: #b3d4fc;
+  text-shadow: none;
+}
+::selection {
+  background: #b3d4fc;
+  text-shadow: none;
+}
+/*
+ * A better looking default horizontal rule
+ */
+hr {
+  display: block;
+  height: 1px;
+  border: 0;
+  border-top: 1px solid #ccc;
+  margin: 1em 0;
+  padding: 0;
+}
+/*
+ * Remove the gap between audio, canvas, iframes,
+ * images, videos and the bottom of their containers:
+ * https://github.com/h5bp/html5-boilerplate/issues/440
+ */
+audio,
+canvas,
+iframe,
+img,
+svg,
+video {
+  vertical-align: middle;
+}
+/*
+ * Remove default fieldset styles.
+ */
+fieldset {
+  border: 0;
+  margin: 0;
+  padding: 0;
+}
+/*
+ * Allow only vertical resizing of textareas.
+ */
+textarea {
+  resize: vertical;
+}
+ul {
+  padding-left: 0;
+}
+/* ==========================================================================
+   Browser Upgrade Prompt
+   ========================================================================== */
+.browserupgrade {
+  margin: 0.2em 0;
+  background: #ccc;
+  color: #000;
+  padding: 0.2em 0;
+}
+/* ==========================================================================
+   Author's custom styles
+   ========================================================================== */
+.header,
+.content,
+.footer {
+  width: 1200px;
+  margin: 0 auto;
+}
+.wrapper {
+  width: 1000px;
+  margin: 0 auto;
+  padding: 20px 0;
+}
+.header {
+  width: 1200px;
+  height: 520px;
+  background-image: url("../img/head_home.jpg");
+  color: white;
+  padding: 50px 0;
+}
+@media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2ppx), only screen and (min-device-pixel-ratio: 2) {
+  .header {
+    background-image: url("../img/head_home@x2.jpg");
+    background-size: cover;
+  }
+}
+.header.about {
+  height: 40px;
+}
+.header a.logo {
+  display: inline-block;
+  width: 260px;
+  height: 26px;
+}
+.header .logo span {
+  display: inline-block;
+  width: 260px;
+  height: 26px;
+  background-image: url("../img/logo_knoema_federal.png");
+}
+@media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2ppx), only screen and (min-device-pixel-ratio: 2) {
+  .header .logo span {
+    background-image: url("../img/logo_knoema_federal@x2.png");
+    background-size: cover;
+  }
+}
+.header ul.menu {
+  float: right;
+  list-style: outside none none;
+  margin: 0;
+}
+.header ul.menu li {
+  display: inline-block;
+  margin: 0 5px;
+}
+.header ul.menu li.active {
+  font-weight: bold;
+}
+.header ul.menu li a {
+  color: white;
+}
+.header ul.menu li a:hover {
+  text-decoration: none;
+}
+.header ul.menu li.divider {
+  color: #85a0ba;
+}
+.header ul.stats {
+  margin-top: 30px;
+  list-style: outside none none;
+}
+.header ul.stats li {
+  display: inline-block;
+  margin-right: 25px;
+}
+.header ul.stats li span.number {
+  border-radius: 50%;
+  display: inline-block;
+  border: 2px solid white;
+  min-width: 60px;
+  height: 60px;
+  line-height: 60px;
+  text-align: center;
+  margin-right: 5px;
+}
+.header .video-preview {
+  float: right;
+  margin: 90px -30px 100px 50px;
+  background-image: url("../img/video_preview.png");
+  height: 231px;
+  width: 400px;
+  display: inline-block;
+  cursor: pointer;
+  position: relative;
+  z-index: 1;
+}
+@media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2ppx), only screen and (min-device-pixel-ratio: 2) {
+  .header .video-preview {
+    background-image: url("../img/video_preview@x2.png");
+    background-size: cover;
+  }
+}
+.header .video-preview .video-btn {
+  background-image: url("../img/video_btn.png");
+  position: absolute;
+  z-index: 2;
+  left: 50%;
+  top: 50%;
+  margin-left: -40px;
+  margin-top: -40px;
+  display: block;
+  height: 80px;
+  width: 80px;
+}
+@media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2ppx), only screen and (min-device-pixel-ratio: 2) {
+  .header .video-preview .video-btn {
+    background-image: url("../img/video_btn@x2.png");
+    background-size: cover;
+  }
+}
+.header .description {
+  width: 560px;
+  margin-top: 70px;
+}
+.content.home h2 {
+  text-align: center;
+}
+.content.home .companies {
+  background-image: url("../img/usaid.jpg");
+  height: 130px;
+}
+@media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2ppx), only screen and (min-device-pixel-ratio: 2) {
+  .content.home .companies {
+    background-image: url("../img/usaid@x2.jpg");
+    background-size: cover;
+  }
+}
+.content.home .recent-projects {
+  background-color: #e6f5ff;
+}
+.content.home .recent-projects h2 {
+  margin-bottom: 0;
+}
+.content.home .recent-projects p {
+  text-align: center;
+  font: italic 1em 'PT Serif';
+  color: #8c8c8c;
+  margin-bottom: 30px;
+}
+.content.home .recent-projects div.wrapper {
+  width: 1100px;
+}
+.content.home .recent-projects span#prev {
+  display: inline-block;
+  width: 18px;
+  height: 32px;
+  background-image: url("../img/arrows.png");
+  background-repeat: no-repeat;
+  cursor: pointer;
+  margin-right: 20px;
+}
+@media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2ppx), only screen and (min-device-pixel-ratio: 2) {
+  .content.home .recent-projects span#prev {
+    background-image: url("../img/arrows@x2.png");
+    background-size: cover;
+  }
+}
+.content.home .recent-projects span#prev:hover {
+  background-position: 0 -32px;
+}
+.content.home .recent-projects span#next {
+  display: inline-block;
+  width: 18px;
+  height: 32px;
+  background-image: url("../img/arrows.png");
+  background-repeat: no-repeat;
+  cursor: pointer;
+  background-position: -18px 0;
+  margin-left: 20px;
+}
+@media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2ppx), only screen and (min-device-pixel-ratio: 2) {
+  .content.home .recent-projects span#next {
+    background-image: url("../img/arrows@x2.png");
+    background-size: cover;
+  }
+}
+.content.home .recent-projects span#next:hover {
+  background-position: -18px -32px;
+}
+.content.home .recent-projects div.projects {
+  width: 950px;
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: middle;
+}
+.content.home .recent-projects div.slider {
+  width: 2000px;
+  position: relative;
+}
+.content.home .recent-projects div.slider div.project {
+  width: 280px;
+  height: 240px;
+  display: inline-block;
+  margin-right: 50px;
+}
+.content.home .recent-projects div.slider div.project.zambiainfohighway {
+  background-image: url("../img/projects_zambiaih.jpg");
+  margin-right: 0;
+}
+@media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2ppx), only screen and (min-device-pixel-ratio: 2) {
+  .content.home .recent-projects div.slider div.project.zambiainfohighway {
+    background-image: url("../img/projects_zambiaih@x2.jpg");
+    background-size: cover;
+  }
+}
+.content.home .recent-projects div.slider div.project.world2020 {
+  background-image: url("../img/projects_worldin2020.jpg");
+}
+@media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2ppx), only screen and (min-device-pixel-ratio: 2) {
+  .content.home .recent-projects div.slider div.project.world2020 {
+    background-image: url("../img/projects_worldin2020@x2.jpg");
+    background-size: cover;
+  }
+}
+.content.home .recent-projects div.slider div.project.opendataforafrica {
+  background-image: url("../img/projects_odfa.jpg");
+}
+@media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2ppx), only screen and (min-device-pixel-ratio: 2) {
+  .content.home .recent-projects div.slider div.project.opendataforafrica {
+    background-image: url("../img/projects_odfa@x2.jpg");
+    background-size: cover;
+  }
+}
+.content.home .recent-projects div.slider div.project.senegalinfohighway {
+  background-image: url("../img/projects_senegalih.jpg");
+}
+@media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2ppx), only screen and (min-device-pixel-ratio: 2) {
+  .content.home .recent-projects div.slider div.project.senegalinfohighway {
+    background-image: url("../img/projects_senegalih@x2.jpg");
+    background-size: cover;
+  }
+}
+.content.home .recent-projects div.slider div.project.globalstanding {
+  background-image: url("../img/projects_oman.jpg");
+}
+@media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2ppx), only screen and (min-device-pixel-ratio: 2) {
+  .content.home .recent-projects div.slider div.project.globalstanding {
+    background-image: url("../img/projects_oman@x2.jpg");
+    background-size: cover;
+  }
+}
+.content.home .comment {
+  font-family: 'PT Serif';
+  font-style: italic;
+  text-align: center;
+  margin: 20px 0;
+}
+.content.about h2 {
+  text-align: center;
+}
+.content.about div.persons {
+  width: 700px;
+  margin: 20px auto 40px auto;
+}
+.content.about div.persons div.person {
+  box-shadow: 0 0 15px 1px #eaeaea;
+  width: 260px;
+  padding: 20px;
+  text-align: center;
+  display: inline-block;
+  margin-right: 40px;
+}
+.content.about div.persons div.person div.pic {
+  background-image: url("../img/photo_tsmetzer.png");
+  margin: 0 auto 15px auto;
+  width: 100px;
+  height: 100px;
+}
+@media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2ppx), only screen and (min-device-pixel-ratio: 2) {
+  .content.about div.persons div.person div.pic {
+    background-image: url("../img/photo_tsmetzer@x2.png");
+    background-size: cover;
+  }
+}
+.content.about div.persons div.person.jkasputys {
+  margin-right: 0;
+}
+.content.about div.persons div.person.jkasputys div.pic {
+  background-image: url("../img/photo_placeholder.png");
+}
+@media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2ppx), only screen and (min-device-pixel-ratio: 2) {
+  .content.about div.persons div.person.jkasputys div.pic {
+    background-image: url("../img/photo_placeholder@x2.png");
+    background-size: cover;
+  }
+}
+.content.about div.persons div.person div.specialities {
+  color: #787878;
+  font: italic 0.9em 'PT Serif';
+  margin-top: 20px;
+}
+.content.about div.persons div.person div.description {
+  font-size: 0.9em;
+  margin-top: 20px;
+}
+.content.about div.persons div.person div.email {
+  font-size: 0.9em;
+  margin-top: 20px;
+}
+.content.about div.persons div.person div.email a {
+  color: #0077ca;
+}
+.content.offerings h2 {
+  text-align: center;
+}
+.content.offerings div.offer {
+  width: 400px;
+  display: inline-block;
+  margin: 20px 50px 40px 0;
+}
+.content.offerings div.offer h3 {
+  margin-top: 0;
+}
+.content.offerings div.offer hr {
+  width: 50px;
+}
+.content.offerings div.offer p {
+  font-size: 0.95em;
+}
+.content.clients h2 {
+  text-align: center;
+}
+.content.clients div.client {
+  display: inline-block;
+  vertical-align: top;
+  width: 250px;
+  margin: 0 50px 20px 0;
+}
+.content.clients div.client div.pic {
+  width: 200px;
+  height: 200px;
+  background-repeat: no-repeat;
+}
+.content.clients div.client.federal div.pic {
+  background-image: url("../img/client_icon_01.png");
+}
+@media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2ppx), only screen and (min-device-pixel-ratio: 2) {
+  .content.clients div.client.federal div.pic {
+    background-image: url("../img/client_icon_01@x2.png");
+    background-size: cover;
+  }
+}
+.content.clients div.client.contractors div.pic {
+  background-image: url("../img/client_icon_02.png");
+}
+@media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2ppx), only screen and (min-device-pixel-ratio: 2) {
+  .content.clients div.client.contractors div.pic {
+    background-image: url("../img/client_icon_02@x2.png");
+    background-size: cover;
+  }
+}
+.content.clients div.client.research div.pic {
+  background-image: url("../img/client_icon_03.png");
+}
+@media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2ppx), only screen and (min-device-pixel-ratio: 2) {
+  .content.clients div.client.research div.pic {
+    background-image: url("../img/client_icon_03@x2.png");
+    background-size: cover;
+  }
+}
+.content.clients div.client div.title {
+  font-weight: bold;
+  font-size: 1.1em;
+  margin-top: 10px;
+  width: 150px;
+}
+.content.clients div.client hr {
+  width: 50px;
+  margin: 10px 0;
+}
+.content.clients div.client div.description {
+  margin-top: 10px;
+  font-size: 0.9em;
+}
+.content.clients div.client div.more {
+  margin-top: 10px;
+}
+.content.clients div.client div.more a {
+  color: #0077ca;
+  font-size: 0.9em;
+}
+.footer {
+  background-color: #203848;
+  color: #8c8ca0;
+  font-size: 10pt;
+  padding: 20px 0;
+}
+.footer .block {
+  display: inline-block;
+  vertical-align: top;
+  width: 150px;
+}
+.footer h4 {
+  color: white;
+  margin: 0 20px 10px 0;
+}
+.footer ul {
+  list-style: outside none none;
+}
+.footer a {
+  color: #8c8ca0;
+}
+.footer a:hover {
+  text-decoration: none;
+  color: white;
+}
+.footer #copyright {
+  float: right;
+}
+/* ==========================================================================
+   Helper classes
+   ========================================================================== */
+/*
+ * Hide visually and from screen readers:
+ */
+.hidden {
+  display: none !important;
+}
+/*
+ * Hide only visually, but have it available for screen readers:
+ * http://snook.ca/archives/html_and_css/hiding-content-for-accessibility
+ */
+.visuallyhidden {
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+}
+/*
+ * Extends the .visuallyhidden class to allow the element
+ * to be focusable when navigated to via the keyboard:
+ * https://www.drupal.org/node/897638
+ */
+.visuallyhidden.focusable:active,
+.visuallyhidden.focusable:focus {
+  clip: auto;
+  height: auto;
+  margin: 0;
+  overflow: visible;
+  position: static;
+  width: auto;
+}
+/*
+ * Hide visually and from screen readers, but maintain layout
+ */
+.invisible {
+  visibility: hidden;
+}
+/*
+ * Clearfix: contain floats
+ *
+ * For modern browsers
+ * 1. The space content is one way to avoid an Opera bug when the
+ *    `contenteditable` attribute is included anywhere else in the document.
+ *    Otherwise it causes space to appear at the top and bottom of elements
+ *    that receive the `clearfix` class.
+ * 2. The use of `table` rather than `block` is only necessary if using
+ *    `:before` to contain the top-margins of child elements.
+ */
+.clearfix:before,
+.clearfix:after {
+  content: " ";
+  /* 1 */
+
+  display: table;
+  /* 2 */
+
+}
+.clearfix:after {
+  clear: both;
+}
+/* ==========================================================================
+   EXAMPLE Media Queries for Responsive Design.
+   These examples override the primary ('mobile first') styles.
+   Modify as content requires.
+   ========================================================================== */
+@media only screen and (min-width: 35em) {
+  /* Style adjustments for viewports that meet the condition */
+}
+@media print, (-webkit-min-device-pixel-ratio: 1.25), (min-resolution: 1.25dppx), (min-resolution: 120dpi) {
+  /* Style adjustments for high resolution devices */
+}
+/* ==========================================================================
+   Print styles.
+   Inlined to avoid the additional HTTP request:
+   http://www.phpied.com/delay-loading-your-print-css/
+   ========================================================================== */
+@media print {
+  *,
+  *:before,
+  *:after {
+    background: transparent !important;
+    color: #000 !important;
+    /* Black prints faster:
+                                     http://www.sanbeiji.com/archives/953 */
+  
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+  a,
+  a:visited {
+    text-decoration: underline;
+  }
+  a[href]:after {
+    content: " (" attr(href) ")";
+  }
+  abbr[title]:after {
+    content: " (" attr(title) ")";
+  }
+  /*
+       * Don't show links that are fragment identifiers,
+       * or use the `javascript:` pseudo protocol
+       */
+  a[href^="#"]:after,
+  a[href^="javascript:"]:after {
+    content: "";
+  }
+  pre,
+  blockquote {
+    border: 1px solid #999;
+    page-break-inside: avoid;
+  }
+  /*
+       * Printing Tables:
+       * http://css-discuss.incutio.com/wiki/Printing_Tables
+       */
+  thead {
+    display: table-header-group;
+  }
+  tr,
+  img {
+    page-break-inside: avoid;
+  }
+  img {
+    max-width: 100% !important;
+  }
+  p,
+  h2,
+  h3 {
+    orphans: 3;
+    widows: 3;
+  }
+  h2,
+  h3 {
+    page-break-after: avoid;
+  }
+}

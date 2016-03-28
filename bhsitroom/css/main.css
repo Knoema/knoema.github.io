@@ -1,0 +1,66 @@
+#incidents-map {
+	height: 455px;
+}
+
+hr {
+	border-color: #D5D5D5;
+    margin: 15px 0;
+}
+
+.country-block {
+	padding: 15px;
+	text-align: center;
+	background-color: #F3F3F3;
+}
+
+.group-option {
+	font-weight: bold !important;
+	padding: 3px 15px !important;
+}
+
+.my-list {
+	padding: 15px 0;
+	background-color: #F3F3F3;
+}
+.my-list > .item {
+	padding: 5px;
+	cursor: pointer;
+}
+.my-list > .item.active {
+	background-color: #B9070F;
+	color: #fff;
+}
+.my-list .btn-success {
+	border: none;
+	border-radius: 2px;
+	padding-left: 30px;
+	padding-right: 30px;
+	background-color: #206323;
+	font-weight: bold;
+	margin-top: 5px;
+}
+.my-list .btn-success:focus {
+	background-color: #206323;
+}
+
+.feed {
+	padding: 15px;
+	background-color: #F3F3F3;
+}
+
+.publications {
+	padding-left: 15px;
+	padding-top: 15px;
+	background-color: #F3F3F3;
+	font-size: 11px;
+}
+.publications > .publication {
+	float: left;
+	width: 90px;
+	margin-right: 15px;
+	margin-bottom: 15px;
+	color: #000;
+}
+.publications > .publication > img {
+    padding-bottom: 4px;
+}

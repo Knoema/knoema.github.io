@@ -1,0 +1,250 @@
+html, body
+{
+	position: relative;
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	padding: 0;
+}
+
+body
+{
+	font-family: 'Roboto', sans-serif;
+	color: black;
+}
+
+.ajax-loader
+{
+	display: none;
+	position: absolute;
+	left: 0;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	background: rgba(0, 0, 0, 0.65) url(../img/ajax-loader.gif) center center no-repeat;
+	z-index: 100500;
+}
+
+body.loading > .ajax-loader
+{
+	display: block;
+}
+
+.modal .modal-dialog {
+	width: 85%;
+	padding-left: 0;
+}
+
+.modal-body {
+	margin-bottom: 14%;
+}
+
+.modal-content {
+	margin-bottom: 30px;
+}
+
+#filter-objects {
+	width: 250px;
+}
+
+#preview-image {
+	//width: 170px;
+}
+
+.thumbnail-list {
+	height: 20%;
+	margin-right: 5px;
+	/*TODO Repcae with scroller*/
+	overflow-x: scroll;
+}
+
+.thumbnail-list .thumbnail {
+	display: inline-block;
+	width: 20%;
+}
+
+.tab-content {
+	margin-top: 10px;
+}
+
+.input-group button:focus {
+	outline: none;
+}
+
+.drug-list {
+	overflow-y: scroll;
+}
+
+.item-header {
+	color: #00a3dd;
+}
+
+.inline-header {
+	display: inline-block;
+	margin-right: 15px;
+}
+.inline-value {
+	display: inline-block;
+}
+
+.navbar-header {
+	background-color: #1eb53a;
+}
+
+.tabpanel {
+	background-color: red;
+}
+
+.table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th {
+	padding: 8px;
+	line-height: 1.42857143;
+	vertical-align: top;
+	border: none;
+}
+
+.navbar .container-fluid {
+	padding-left: 0;
+}
+
+.navbar a.logo{
+	background-color: #1eb53a;
+	margin-left: -1px;
+	margin-top: -1px;
+	line-height: 50px;
+	height: 50px;
+	display: block;
+	float: left;
+	outline: none;
+}
+
+.navbar a.logo:focus{
+	outline: none;
+}
+
+.navbar-right {
+	background-color: #00a3dd;
+}
+.navbar {
+	border-radius: 0;
+	margin-bottom: 0;
+	background-color: #00a3dd;
+}
+.navbar-inverse .navbar-brand {
+	color: #efefef;
+}
+
+#map-legend {
+	z-index: 1000;
+	width: 128px;
+	padding: 5px;
+	background-color: #efefef;
+	opacity: 0.9;
+	position: absolute;
+	top: 70px;
+	right: 20px;
+	color: #2D2D2D;
+}
+
+#map-legend img {
+	width: 21px;
+	float: left;
+	margin-right: 6px;
+}
+
+#map-legend div {
+	line-height: 30px;
+	font-weight: bold;
+	-moz-user-select: none;
+	-webkit-user-select: none;
+	-ms-user-select: none;
+	-o-user-select: none;
+	user-select: none;
+}
+
+#table tbody tr {
+	cursor: pointer;
+}
+
+#table tbody tr:hover{
+	background-color: lightgray;
+}
+
+#back-button {
+	position: absolute;
+	right: 19px;
+	top: 70px;
+}
+
+#back-button a:hover {
+	color: #dd0000;
+}
+
+.form-group .form-label, .form-inline .form-label
+{
+	color: #7A94A3;
+	display: block;
+}
+
+.form-group input.form-control
+{
+	width: 110px;
+	display: inline-block;
+}
+
+	.form-group input.form-control.right
+	{
+		float: right;
+	}
+
+.form-group .slider
+{
+	margin: 10px;
+}
+
+.form-group.count
+{
+	background-color: #E4F6FF;
+	padding: 10px;
+	text-align: center;
+}
+
+.form-group.projects label
+{
+	cursor: pointer;
+}
+
+.form-group.projects input
+{
+	top: 1px;
+	position: relative;
+	display: inline-block;
+}
+
+.form-group.projects img
+{
+	margin: 0 5px;
+	width: 12px;
+}
+
+.form-group.count label
+{
+	color: black;
+	margin-bottom: 0;
+}
+
+#map-canvas
+{
+	position: absolute;
+	left: 0;
+	top: 50px;
+	right: 0;
+	bottom: 0;
+}
+
+#search-holder .search-input {
+	width: 300px;
+}
+
+tr.header {
+	background-color: lightgray;
+}

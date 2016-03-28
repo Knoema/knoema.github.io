@@ -1,0 +1,189 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+
+	<title>Home</title>
+	<script src="js/jquery-1.11.3.min.js" type="text/javascript"></script>
+	<script src="http://code.jquery.com/ui/1.11.4/jquery-ui.min.js" type="text/javascript"></script>
+	<script src="http://cdn.firstchurchofatheism.com/wp-content/plugins/generalstats/js/jshashtable/jshashtable.js" type="text/javascript"></script>
+	<script src="https://jquery-numberformatter.googlecode.com/files/jquery.numberformatter-1.2.4.min.js" type="text/javascript"></script>
+	<link href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css" rel="stylesheet">
+	<link href="main.css" rel="stylesheet">
+</head>
+<body>
+	<div class="site-holder">
+		<div class="site-header">
+			<div class="logo">
+				<img src="img/head_logo_with_name.png" alt="" />
+			</div>
+			<div class="nav-menu">
+				<ul class="nav">
+					<li class="">
+						<a href="overview.html">OVERVIEW</a>
+					</li>		
+					<li class="">
+						<a href="ranking.html">GLOBAL RANKING</a>
+					</li>					
+					<li class="">
+						<a href="globalstanding.html">KEY DRIVERS</a>
+					</li>
+					<li class="">
+						<a href="projects.html">PROJECTS</a>
+					</li>
+					<li class="active">
+						<a href="capacity.html">CAPACITY</a>
+					</li>
+					<li class="">
+						<a href="home.html">RECOMMENDATIONS</a>
+					</li>
+				</ul>
+			</div>
+			<div class="profile-holder">
+				<ul>
+					<li><img src="img/head_user_ico.png" /> Administrator</li>
+					<li>
+						<img src="img/head_logout_ico.png" />
+						<a href="index.html">Logout</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<!--<div class="header-line">
+		</div>-->
+		<div class="site-main">
+			<div class="gb-capacity">
+				<div class="action-menu">
+					<div class="menu-group">
+						<ul>
+							<li class="active">
+								CAPACITY MODEL
+							</li>
+							<li>
+								ECONOMIC IMPACT ANALYSIS
+							</li>
+							<li>
+								MODELLING TOOLS
+							</li>
+						</ul>
+					</div>
+				</div>
+				<div class="content">
+					<div class="left-panel">
+						<div class="title">PARAMETERS</div>
+						<div class="items">
+							<div class="block">
+								<div class="title">ROADS, TOTAL NETWORK, KM</div>
+								<div class="input-group">
+									<div class="slider">
+										<div class="slider-label-value">
+											<span class="label-start">0</span>
+											<span class="label-end">10,000</span>
+										</div>
+									</div>
+									<div class="input-number">
+										<input class="number" type="text" name="name" value="56" />
+									</div>
+									<div class="value">
+										Current value: <span>56</span>
+									</div>
+								</div>
+							</div>
+							<div class="block">
+								<div class="title">CAR OWNERSHIP, PER 1,000 PEOPLE</div>
+
+								<div class="input-group">
+									<div class="slider">
+										<div class="slider-label-value">
+											<span class="label-start">0</span>
+											<span class="label-end">10,000</span>
+										</div>
+									</div>
+									<div class="input-number">
+										<input class="number" type="text" name="name" value="56" />
+									</div>
+									<div class="value">
+										Current value: <span>56</span>
+									</div>
+								</div>
+							</div>
+							<div class="block">
+								<div class="title">TAXI CARS, PER 1,000 PEOPLE</div>
+
+								<div class="input-group">
+									<div class="slider">
+										<div class="slider-label-value">
+											<span class="label-start">0</span>
+											<span class="label-end">10,000</span>
+										</div>
+									</div>
+									<div class="input-number">
+										<input class="number" type="text" name="name" value="56" />
+									</div>
+									<div class="value">
+										Current value: <span>56</span>
+									</div>
+								</div>
+							</div>
+						</div>
+
+					</div>
+					<div class="right-panel">
+						<div class="widget-holder">
+							<div class="widget-row">
+								<div class="widget">
+									<img src="img/indicators_ico3_2x.png" alt="" />
+									<div class="item">
+										<div class="title">AVERAGE<br /> TIME TO WORK,<br />MIN</div>
+										<div class="value">42</div>
+									</div>
+								</div>
+								<div class="widget">
+									<img src="img/indicators_ico4_2x.png" alt="" />
+									<div class="item">
+										<div class="title">PARKING SPACE AVAILABILITY,<br/>%</div>
+										<div class="value">12</div>
+									</div>
+								</div>
+							</div>
+							<div class="big-widget">
+								<div>
+									<div class="title">OMANI OVERCAPACITY INDEX</div>
+									<div class="value">98</div>
+								</div>
+								<div id="big-slider" class="big-slider"></div>
+								<!--<img src="img/img/slider1.png" alt="" />-->
+							</div>
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+
+	</div>
+	<script>
+		$(function () {
+			$(".slider").slider({
+				range: "min",
+				value: 5000,
+				min: 0,
+				max: 10000
+			});
+			$(".big-slider").slider({
+				range: "min",
+				value: 98,
+				min: 0,
+				max: 100,
+				slide: function (event, ui) {
+					$(".big-widget .value").html(ui.value);
+				}
+			});
+			$(".input-number input").spinner({
+			});
+		});
+	</script>
+
+</body>
+
+</html>

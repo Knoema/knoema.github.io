@@ -1,0 +1,533 @@
+﻿<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>NIGERIA FOOD and WATER SECURITY</title>
+    <link rel='stylesheet' type='text/css' href='https://fonts.googleapis.com/css?family=Roboto'>
+    <link rel='stylesheet' type='text/css' href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,700'>
+	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.7.3/css/bootstrap-select.min.css"/>
+	<link rel="stylesheet" type="text/css" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+	<link rel="stylesheet" type="text/css" href="style.css"/>	
+</head>
+<body class="loading">
+	<div class="ajax-loader"></div>
+
+	<div class="main-menu">
+		<div class="logo"></div>
+		<div id="demo-div">DEMONSTRATION SITE</div>
+		<ul class="items nav nav-tabs" role="tablist">
+			<li><img src="./img/menu_divider.png" /></li>
+    		<li class="active">
+    			<a href="index.html" data-toggle="tab"><img src="./img/ico_overview.png" />Nigeria Overview</a>
+    		</li>
+			<li><img src="./img/menu_divider.png" /></li>
+    		<li>
+				<a href="mydashboard.html" data-toggle="tab"><img src="./img/ico_dashboard.png" />My Dashboards</a>
+			</li>
+			<li><img src="./img/menu_divider.png" /></li>
+    		<li>
+				<a href="factfinder.html" data-toggle="tab"><img src="./img/ico_factfinder.png" />Fact Finder</a>
+			</li>
+			<li><img src="./img/menu_divider.png" /></li>
+    		<li>
+				<a href="bokoharamsitroom.html" data-toggle="tab"><img src="./img/ico_bharam.png" />Boko Haram Sit Room</a>
+			</li>
+		</ul>
+	</div>
+
+	<div class="tab-content">
+		<!-- Nigeria Overview -->
+		<div id="overviewTab" class="tab-pane active">
+			<a href="#" class="btn btn-lg" id="clear-all-filters">CLEAR ALL FILTERS</a>
+
+			<div class="sidebar-topic first" data-topic-id="violence">
+				<img src="./img/topicico_violence.png" />Violence<div class="arrow down"></div>
+			</div>
+			<ul class="topic-content" data-topic-id="violence">
+				<li><label><input type="checkbox" value="fatalities" /><span class="custom-checkbox"></span><img class="indicator-image" src="img/ind_fatalities.png" />Reported fatalities</label></li>
+				<li><label><input type="checkbox" value="bocoharam" /><span class="custom-checkbox"></span><img class="indicator-image" src="img/ind_bokoharam.png" />Boko Haram attack</label></li>
+				<li><label><input type="checkbox" value="refugee" /><span class="custom-checkbox"></span><img class="indicator-image" src="img/ind_refugee.png" />Refugee camps</label></li>
+			</ul>
+
+			<div class="sidebar-topic" data-topic-id="water">
+				<img src="./img/topicico_water.png" />Water<div class="arrow down"></div>
+			</div>
+			<ul class="topic-content" data-topic-id="water">
+				<li><label><input type="checkbox" value="rain2" /><span class="custom-checkbox m"></span>Water-stress on crops<img class="info-icon" src="img/info-icon.png"  data-toggle="tooltip" title="Virtual weather station data provide measurement of potential stress from lack of water. In areas that the ratio of rainfall to the potential drying power of the atmosphere is 0.2 or more lower than expected, an area is under stress" /></label></li>
+			</ul>
+
+			<div class="sidebar-topic" data-topic-id="food">
+				<img src="./img/topicico_prices.png" />Markets<div class="arrow down"></div>
+			</div>
+			<ul class="topic-content" data-topic-id="food">
+				<li><label><input type="checkbox" value="markets" /><span class="custom-checkbox m"></span>General</label></li>
+				<li>
+					<select class="form-control input-sm" id="products">
+						<option value="-1">View price for:</option>
+					</select>
+				</li>
+				<li><label><input type="checkbox" value="alcohol" /><span class="custom-checkbox m"></span>Alcohol</label></li>
+				<li><label><input type="checkbox" value="grain" /><span class="custom-checkbox m"></span>Grain</label></li>
+			</ul>
+
+			<div class="sidebar-topic" data-topic-id="infrastructure">
+				<img src="./img/topicico_infrastructure.png" />Productive Infrastructure<div class="arrow down"></div>
+			</div>
+			<ul class="topic-content" data-topic-id="infrastructure">
+				<li><label><input type="checkbox" value="farms" /><span class="custom-checkbox"></span><img class="indicator-image" src="img/ind_farms.png" />Farms</label></li>
+				<li><label><input type="checkbox" value="refineries" /><span class="custom-checkbox m"></span>Oil refineries</label></li>
+				<li><label><input type="checkbox" value="platforms" /><span class="custom-checkbox m"></span>Oil and Gas facilities</label></li>
+				<li><label><input type="checkbox" value="power" /><span class="custom-checkbox m"></span>Power station</label></li>
+				<li><label><input type="checkbox" value="road" /><span class="custom-checkbox m"></span>Roads</label></li>
+				<li><label><input type="checkbox" value="railroad" /><span class="custom-checkbox m"></span>Rail roads</label></li>
+			</ul>
+
+			<div class="sidebar-topic" data-topic-id="social-infrastructure">
+				<img src="./img/topicico_infrastructure.png" />Social Institutions<div class="arrow down"></div>
+			</div>
+			<ul class="topic-content" data-topic-id="social-infrastructure">
+				<li><label><input type="checkbox" value="schools" /><span class="custom-checkbox m"></span>Schools</label></li>
+				<li><label><input type="checkbox" value="hospital" /><span class="custom-checkbox m"></span>Hospitals</label></li>
+				<li><label><input type="checkbox" value="buildings" /><span class="custom-checkbox m"></span>Government buildings</label></li>
+				<li><label><input type="checkbox" value="churches" /><span class="custom-checkbox m"></span>Churches</label></li>
+				<li><label><input type="checkbox" value="mosques" /><span class="custom-checkbox m"></span>Mosques</label></li>
+			</ul>
+
+			<div class="sidebar-topic" data-topic-id="population">
+				<img src="./img/topicico_population.png" />Population<img class="info-icon" src="img/info-icon.png"  data-toggle="tooltip3" /><div class="arrow down"></div>
+			</div>
+			<ul class="topic-content" data-topic-id="population">
+				<li><label><input type="checkbox" value="density" /><span class="custom-checkbox m"></span>Density (per sq/km)</label></li>
+				<li><label><input type="checkbox" value="ethnicities" /><span class="custom-checkbox m"></span>Ethnicities</label></li>
+				<li><label><input type="checkbox" value="cities" /><span class="custom-checkbox"></span><img class="indicator-image" src="img/ind_cities.png" />Cities</label></li>
+				<li><label><input type="checkbox" value="livelihood" /><span class="custom-checkbox m"></span>Livelihood zones<img class="info-icon" src="img/info-icon.png"  data-toggle="tooltip-lh" title="Livelihood zones describe the main sources of livelihood of rural populations in a given area" /></label></li>
+				<li><label><input type="checkbox" value="displaced-persons" /><span class="custom-checkbox"></span><img class="indicator-image" src="img/ind_displaced.png" />Internally displaced persons</label></li>
+				<li><label class="m"><input type="checkbox" value="displaced-persons-conflict" /><span class="custom-checkbox"></span>by conflict</label></li>
+				<li><label class="m"><input type="checkbox" value="displaced-persons-natural" /><span class="custom-checkbox"></span>by natural disaster</label></li>
+				<li><label><input type="checkbox" value="fews" /><span class="custom-checkbox m"></span>Phase of Acute Food Insecurity</label></li>
+			</ul>
+
+			<div id="radius-button" class="btn btn-lg" data-toggle="tooltip1" title="Select an area on the map">REQUEST LOCAL DATA</div>
+
+			<div id="static-legend"><img src="img/scale2.png" /></div>
+
+			<form id="overviewFilter" class="filter-form">
+			</form>
+    		<div id="map-canvas" class="filtered-content"></div>
+			<div id="calendar">
+				<div class="v-arrow left"></div>
+				<div class="calendar-content">
+					<div class="item" data-date="2014.01" data-month="1">
+						<p class="month">JAN</p>
+						<p class="year">2015</p>
+					</div>
+					<div class="item" data-date="2014.02" data-month="2">
+						<p class="month">FEB</p>
+						<p class="year">2015</p>
+					</div>
+					<div class="item" data-date="2014.03" data-month="3">
+						<p class="month">MAR</p>
+						<p class="year">2015</p>
+					</div>
+					<div class="item" data-date="2014.04" data-month="4">
+						<p class="month">APR</p>
+						<p class="year">2015</p>
+					</div>
+					<div class="item" data-date="2014.05" data-month="5">
+						<p class="month">MAY</p>
+						<p class="year">2015</p>
+					</div>
+					<div class="item active" data-date="2014.06" data-month="6">
+						<p class="month">JUN</p>
+						<p class="year">2015</p>
+					</div>
+					<div class="item" data-date="2014.07" data-month="7">
+						<p class="month">JUL</p>
+						<p class="year">2015</p>
+					</div>
+					<div class="item" data-date="2014.08" data-month="8">
+						<p class="month">AUG</p>
+						<p class="year">2015</p>
+					</div>
+					<div class="item" data-date="2014.09" data-month="9">
+						<p class="month">SEP</p>
+						<p class="year">2015</p>
+					</div>
+					<div class="item" data-date="2014.10" data-month="10">
+						<p class="month">OCT</p>
+						<p class="year">2015</p>
+					</div>
+					<div class="item" data-date="2014.11" data-month="11">
+						<p class="month">NOV</p>
+						<p class="year">2015</p>
+					</div>
+					<div class="item" data-date="2014.12" data-month="12">
+						<p class="month">DEC</p>
+						<p class="year">2015</p>
+					</div>
+				</div>
+				<div class="v-arrow right"></div>
+			</div>
+
+    		
+    	</div>
+    </div>
+
+	<script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
+	<script src="http://code.jquery.com/ui/1.11.4/jquery-ui.min.js" type="text/javascript"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.7.3/js/bootstrap-select.min.js"></script>
+	<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=visualization,drawing"></script>
+	<script src="http://ajax.microsoft.com/ajax/jquery.templates/beta1/jquery.tmpl.min.js"></script>
+
+	<script src="globalize.js"></script>
+	<script src="marketwithlabel.js"></script>
+	
+	 <!-- for cross-domain requests and authent -->
+	<script src="http://knoema.com/app-script?version=2.0"></script>
+
+	<!-- dependencies of layer. I think we need to get rid of them -->
+	<script src="http://knoema.com/js/googlemap/bubbleslayer.js"></script> 
+	<script src="http://knoema.com/js/googlemap/markerclusterer.js"></script> 
+	<script src="http://knoema.com/js/googlemap/canvaslayer.js"></script> 
+
+	<!-- basic script for rendering map layers -->
+	<script src="http://knoema.com/js/geoplayground/geo-playground-layer.js?v=1"></script>
+
+	<script src="nfws.js"></script>
+
+	<script>
+		Knoema.Helpers.clientId = 'EZj54KGFo3rzIvnLczrElvAitEyU28DGw9R73tif';
+	</script>
+
+	<script id="legend-ranges" type="text/x-jQuery-tmpl">
+		<div id="legend-background"></div>
+		<div id="scale">
+			{{each(i, r) ranges}}
+				<span style="background-color:#${r.color}"></span>
+			{{/each}}
+			<div>
+				<span id="low">${ranges[0].low}</span>
+				<span id="high">${ranges[ranges.length - 1].high}</span>
+			</div>
+		</div>
+	</script>
+
+	<script id="legend-shape" type="text/x-jQuery-tmpl">
+		<div id="legend-background"></div>
+		<div id="shapes">			
+			{{each(key, value) colors}}
+				<div>
+					<span style="background-color:#${colors[key]}"></span><label>${key}</label>
+				</div>
+			{{/each}}
+		</div>
+	</script>
+
+	<script id="tooltip-ethnicities" type="text/x-jQuery-tmpl">	
+		<div><label>Family:</label>&nbsp;${data['FAMILY']}</div>
+		<div><label>Ethnicity:</label>&nbsp;${data['ETHNICITY']}</div>		
+	</script>
+
+	<script id="tooltip-density" type="text/x-jQuery-tmpl">
+		<b>${data['name']}</b><br />
+		${data['value']}
+	</script>
+
+	<script id="tooltip-livelihood" type="text/x-jQuery-tmpl">
+		<b>Livelihood zone:</b>&nbsp;${data['LZNAME']}
+	</script>
+
+	<script id="tooltip-fews" type="text/x-jQuery-tmpl">
+		<b>Level:</b>&nbsp;${data['level']}
+	</script>
+
+	<script id="tooltip-farms" type="text/x-jQuery-tmpl">
+		<div class="map-tooltip farms">
+			<p class="tooltip-header">${data['Name']}</p>
+			<div class="general-block">
+
+				<div class="img-block">
+					<img src="img/farm${Math.floor((Math.random() * 5), 10) + 1}.jpg" />
+				</div>
+
+				<div class="data-block">
+					<div><label>Head of farm:</label>${data['HeadName']} (<a href="http://6grain.com/api/farmSurvey/1090/image/farmer" target="_blank">photo</a>)</div>
+					<div><label>Ethnicity:</label></div>
+					<div><label>Languages spoken:</label></div>
+					<div><label>Year of schooling:</label></div>
+					<div><label>Years farming current land:</label></div>
+					<div><label>Farm size:</label>${data['FarmSize']}</div>
+				</div>
+
+				<div class="data-block">
+					<div><label>Farm implements available:</label></div>
+					<div><label>Water source:</label>${data['WaterSource']}</div>
+					<div><label>Fertilizer per hectare (kg):</label></div>
+					<div><label>Primary market/buyer:</label></div>
+					<div><label>Distance to nearest market:</label></div>
+					<div><label>Method of transport:</label></div>
+				</div>
+
+			</div>
+
+			<table>
+				<thead>
+					<tr>
+						<th>Crop list</th>
+						<th>Current yield</th>
+						<th>Last season yield</th>
+					</tr>
+				</thead>
+				<tbody>
+				<tr>
+					<td>${data['Crop Name']} (<a href="http://6grain.com/api/farmSurvey/1083/image/crop/0" target="_blank">photo</a>)</td>
+					<td>&nbsp</td>
+					<td>&nbsp</td>
+				</tr>
+				</tbody>
+			</table>
+		</div>
+	</script>
+	
+	<script id="tooltip-markets" type="text/x-jQuery-tmpl">
+		<div class="map-tooltip markets">
+			<p class="tooltip-header"></p>
+			<div class="img-block">
+				<img src="img/market${Math.floor((Math.random() * 3), 10) + 1}.jpg" />
+			</div>
+			<div class="data-block">
+				<div><label>Market name:</label></div>
+				<div><label>Type of market:</label></div>
+				<div class="prices-block"><a href="http://knoema.com/xkfllfd/nigeria-local-food-prices" target="_blank">Prices ></a></div>
+			</div>
+		</div>
+	</script>
+
+	<script id="tooltip-churches" type="text/x-jQuery-tmpl">
+		<div class="map-tooltip churches">
+
+			<p class="tooltip-header">${data['Church Name']}</p>
+
+			<div class="img-block">
+				<img src="img/church.jpg" />
+			</div>
+
+			<div class="data-block">
+				<div><label>Name of pastor/minister/overseer:</label></div>
+				<div><label>Built on date:</label></div>
+				<div><label>Religious affiliation:</label></div>
+				<div><label>Capacity:</label></div>
+				<div><label>Amenities:</label></div>
+				<div><label>Holding services (Y/N):</label></div>
+				<div><label>External speaker system (Y/N):</label></div>
+			</div>
+		</div>
+	</script>
+
+	<script id="tooltip-mosques" type="text/x-jQuery-tmpl">
+		<div class="map-tooltip mosques">
+
+			<p class="tooltip-header">${data['Mosque Name']}</p>
+
+			<div class="img-block">
+				<img src="img/mosque.jpg" />
+			</div>
+
+			<div class="data-block">
+				<div><label>Name of Imam:</label></div>
+				<div><label>Built on date:</label></div>
+				<div><label>Capacity (avg. headcount during prayer):</label></div>
+				<div><label>Amenities (school, library, conference center, market):</label></div>
+				<div><label>External speaker system (Y/N):</label></div>
+			</div>
+		</div>
+	</script>
+
+	<script id="tooltip-bocoharam" type="text/x-jQuery-tmpl">
+		<div class="map-tooltip bocoharam">
+			<div><label>Event type:</label>${data['EVENT_TYPE']}</div>
+			<div><label>Interaction:</label>${data['INTERACTION']}</div>
+			<div><label>Fatalities:</label>${data['FATALITIES']}</div>
+			<div><label>Source:</label>${data['SOURCE']}</div>
+			<div>${data['NOTES']}</div>
+		</div>
+	</script>
+
+	<script id="tooltip-schools" type="text/x-jQuery-tmpl">		
+		<div class="map-tooltip schools">
+			<p class="tooltip-header">${data['School Name']}</p>
+			<div class="img-block">
+				<img src="img/school.jpg" />			
+			</div>
+			<div class="data-block">
+				<div><label>Year build:</label></div>
+				<div><label>Type of school:</label>${data['Education Type']}</div>
+				<div><label>Public or private:</label></div>
+				<div><label>Number of teachers:</label>${data['Number of Teachers, Total']}</div>
+				<div><label>Power source:</label>{powerSource}</div>
+			</div>
+		</div>
+	</script>
+
+	<script id="tooltip-hospital" type="text/x-jQuery-tmpl">
+		<div class="map-tooltip hospital">
+
+			<p class="tooltip-header">${data['Facility Name']}</p>
+
+			<div class="img-block">
+				<img src="img/hospital.jpg" />
+			</div>
+
+			<div class="data-block">
+				<div><label>Built on date:</label></div>
+				<div><label>Accreditations, Affiliations:</label></div>
+				<div><label>Service departments:</label></div>
+				<div><label>Number of beds:</label></div>
+				<div><label>Pharmacy onsite (Y/N):</label></div>
+				<div><label>Power source:</label></div>
+			</div>
+		</div>
+	</script>
+
+	<script id="tooltip-buildings" type="text/x-jQuery-tmpl">
+		<div class="map-tooltip buildings">
+			<p>${data['Governemnt office']}</p>
+			<div><label>Address:</label>${data['Address']}</div>
+		</div>
+	</script>
+
+	<script id="tooltip-refineries" type="text/x-jQuery-tmpl">
+		<div class="map-tooltip refineries">
+
+			<p class="tooltip-header"></p>
+
+			<div class="img-block">
+				<img src="img/oil_refinery.jpg" />
+			</div>
+
+			<div class="data-block">
+				<div><label>Built on date:</label></div>
+				<div><label>Dates of expansions, upgrades:</label></div>
+				<div><label>Installed capacity (b/d):</label></div>
+				<div><label>Operating capacity (b/d):</label></div>
+				<div><label>Operator (company name):</label></div>
+				<div><label>Owners:</label></div>
+				<div><label>Feedstock:</label></div>
+				<div><label>Petroleum product yield (share by type):</label></div>
+			</div>
+		</div>
+	</script>
+
+	<script id="tooltip-refugee" type="text/x-jQuery-tmpl">
+		<div class="map-tooltip refugee">
+			<p class="tooltip-header">${data['Name of Location']}</p>
+			<div class="data-block">
+				<div><label>Survey date:</label>${data['1.1.a.1 Survey date (DD.MM.YYYY)']}</div>
+				<div><label>Camp size (square meters):</label></div>
+				<div><label>Camp capacity (individuals, planned and actual):</label></div>
+				<div><label>Organization managing site:</label>${data['1.2.d Type of organization managing the site']}</div>
+				<div><label>Site opening date:</label>${data['1.4.a Site start/open date']}</div>
+				<div><label>Access to food (Y/N):</label>${data['5.1.a Is there access to food (distribution, trade, fishing…)']}</div>
+				<div><label>Water available per day, per person (liters):</label>${data['4.2.a Average amount of water available per day and per person']}</div>
+				<div><label>Security onsite (Y/N):</label>${data['10.1.a Is there security on-site/settlement areas']}</div>
+				<div><label>Security provider:</label>${data['10.1.b Who provides main security in the site']}</div>
+			</div>
+		</div>
+	</script>
+
+	<script id="tooltip-displaced-persons" type="text/x-jQuery-tmpl">
+		<div class="map-tooltip refugee">
+			<p class="tooltip-header">${data['Ward Name']}</p>
+			<div class="data-block">
+				<div><label>Number of individuals:</label>${data['Estimated number of individuals by Ward']}</div>
+				<div><label>Number of families:</label>${data['Estimated number of households by Ward']}</div>
+				<div><label>State of origin of majority:</label>${data['State of origin of majority']}</div>
+				<div><label>Displaced by insurgency (Y/N):</label>${((data['Reason of displacement Insurgency_Yes or No'] == 'Yes' || data['Reason of displacement Commnunity clash_Yes or No'] == 'Yes') ? 'Yes' : 'No')}</div>
+				<div><label>Displaced by natural disaster (Y/N):</label>${(data['Reason of displacement Natural disasters_Yes or No'] == 'Yes' ? 'Yes' : 'No')}</div>
+				<div><label>Expected crop conditions during next six months in State of Origin:</label></div>
+			</div>
+		</div>
+	</script>
+
+	<script id="tooltip-cities" type="text/x-jQuery-tmpl">
+		<div class="map-tooltip refineries">
+			<div><label>Name:</label>${data['Local Government Areas']}</div>
+			<div><label>State:</label>${data['States']}</div>
+			<div><label>Latitude:</label>${data['Latitude']}</div>
+			<div><label>Longitude:</label>${data['Longitude']}</div>
+			<div><label>Population (2006):</label>${data['Population (2006)']}</div>
+			<div><label>Area (sq. km):</label>${data['Area (sq. km)']}</div>
+			<div><label>Population density (People per sq. km):</label>${data['Population density (People per sq. km)']}</div>
+			<div><label>Primary health clinics:</label>${data['Primary health clinics']}</div>
+			<div><label>Total number of schools:</label>${data['Total number of schools']}</div>
+		</div>
+	</script>
+
+	<script id="trade-request" type="text/x-jQuery-tmpl">
+
+		<p><b>Describe your information request:</b></p>
+		<textarea></textarea>
+
+		<div class="form-group">
+			<label>Photograph required:</label>
+			<label class="radio-inline">
+				<input type="radio" name="photo-required" value="yes">Yes
+			</label>
+			<label class="radio-inline">
+				<input type="radio" name="photo-required" checked="checked" value="no">No
+			</label>
+		</div>
+
+		<div class="form-group" id="last-form-group">
+			<label>One time request:</label>
+			<label class="radio-inline">
+				<input type="radio" name="one-time" id="one-time" value="yes">Yes
+			</label>
+			<label class="radio-inline">
+				<input type="radio" name="one-time" id="multipe-times" checked="checked" value="no">No
+			</label>
+		</div>
+
+		<div class="form-group" id="duration">
+			<label for="duration" class="">Duration:</label>
+			<div class="">
+				<input type="text" class="form-control">
+			</div>
+		</div>
+
+		<div class="form-group" id="periodicity">
+			<label for="periodicity" class="">Periodicity:</label>
+			<div class="">
+				<input type="text" class="form-control">
+			</div>
+		</div>
+	</script>
+
+	<script id="trade-list" type="text/x-jQuery-tmpl">
+		
+		<div class="trade-markup">
+			
+			<p><b>Deadline:</b></p>
+			<input type="date" value="${date}" />
+			<textarea placeholder="Type comment"></textarea>
+
+			{{each(key, value) tradelist }}
+				<div class="trade-group">				
+					<p class="group-title"><b>${key}</b></p>
+					{{each(i) tradelist[key]}}
+						<label class="trade-label"><input type="checkbox" class="trade-item" />${tradelist[key][i]}</label></br>
+					{{/each}}				
+				</div>
+			{{/each}}
+			
+		</div>
+		
+		<a href="#" id="close-trade-list" class="btn btn-primary btn-sm">OK</a>		
+		<a href="#" id="other-data" class="btn btn-primary btn-sm">Submit other data request</a>
+
+	</script>
+</body>
+</html>

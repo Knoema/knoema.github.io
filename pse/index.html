@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>Plan Senegal emergent</title>
+    <link rel='stylesheet' type='text/css' href='https://fonts.googleapis.com/css?family=Roboto'>
+    <link rel='stylesheet' type='text/css' href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,700'>
+	<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.7.3/css/bootstrap-select.min.css"/>
+	<link rel="stylesheet" type="text/css" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+	<link rel="stylesheet" type="text/css" href="app.css"/>	
+</head>
+<body class="landing">
+
+	<div id="landing-content">
+		<div class="logo-container">
+			<img src="./Images/coat_home.png" />
+			<h1>Plan Senegal emergent</h1>
+			<h2>The Office of the President</h2>
+		</div>
+		<div class="first-line">
+			<div class="one-of-button" data-link="overview">
+				<img src="./Images/icon_home_co.png" />
+				Country Overview
+			</div>
+			<div class="one-of-button" data-link="globalStanding">
+				<img src="./Images/icon_home_gs.png" />
+				Global Standing
+			</div>
+			<div class="one-of-button" data-link="economy2020">
+				<img src="./Images/icon_home_eg.png" />
+				Economy 2020
+			</div>
+			<div class="one-of-button" data-link="informationHighway">
+				<img src="./Images/icon_home_ih.png" />
+				Information Highway
+			</div>
+		</div>
+		<div class="second-line">
+			<div class="one-of-button" data-link="scenarios">
+				<img src="./Images/icon_home_sc.png" />
+				<div>Scenarios</div>
+			</div>
+			<div class="one-of-button tp" data-link="targetProfile">
+				<img src="./Images/icon_home_tp.png" />
+				<div>Target Profiles by Sub-Sector</div>
+			</div>
+			<div class="one-of-button" data-link="investmentNeeds">
+				<img src="./Images/icon_home_in.png" />
+				<div>Investment Needs</div>
+			</div>
+		</div>
+	</div>
+
+	<script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
+	<script>
+		(function () {
+			$('.one-of-button').on('click', function () {
+
+				var pageName = $(this).data('link');
+				window.location = './' + pageName + '.html';
+			});
+		})();
+	</script>
+
+</body>
+</html>

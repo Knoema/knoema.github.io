@@ -1,0 +1,128 @@
+﻿<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>Plan Senegal emergent</title>
+    <link rel='stylesheet' type='text/css' href='https://fonts.googleapis.com/css?family=Roboto'>
+    <link rel='stylesheet' type='text/css' href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,700'>
+	<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.7.3/css/bootstrap-select.min.css"/>
+	<link rel="stylesheet" type="text/css" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+	<link rel="stylesheet" type="text/css" href="app.css"/>	
+</head>
+<body class="loading">
+	<div class="main-menu">
+		<div class="logo">Plan Senegal emergent</div>
+		<ul class="items nav nav-tabs" role="tablist">
+			<!--<li>
+				<img src="./Images/menu_divider_selectedbg.png" />
+			</li>
+    		<li class="short">
+    			<a href="index.html" data-toggle="tab">
+					<img src="./Images/icon_home.png" />
+					Home
+    			</a>
+    		</li>-->
+			<li>
+				<img src="./Images/menu_divider_selectedbg.png" />
+			</li>
+    		<li>
+				<a href="overview.html" data-toggle="tab">
+					<img src="./Images/icon_co.png" />
+					Country Overview
+				</a>
+			</li>
+			<li>
+				<img src="./Images/menu_divider_selectedbg.png" />
+			</li>
+			<li class="wide-item">
+				<a href="targetProfile.html" data-toggle="tab">
+					<img src="./Images/icon_tp.png" />
+					Target Profiles by Sub-Sector
+				</a>
+			</li>
+			<li>
+				<img src="./Images/menu_divider_selectedbg.png" />
+			</li>
+			<li class="sm">
+				<a href="sectorMonitor.html" data-toggle="tab">
+					<img src="./Images/icon_sectormonitor.png" />
+					Sector Monitor
+				</a>
+			</li>
+			<li>
+				<img src="./Images/menu_divider_selectedbg.png" />
+			</li>
+			<li>
+				<a href="investmentNeeds.html" data-toggle="tab">
+					<img src="./Images/icon_in.png" />
+					Investment Needs
+				</a>
+			</li>
+			<li>
+				<img src="./Images/menu_divider_selectedbg.png" />
+			</li>
+			<li class="short">
+				<a href="scenarios.html" data-toggle="tab">
+					<img src="./Images/icon_sc.png" />
+					Scenarios
+				</a>
+			</li>
+			<li>
+				<img src="./Images/menu_divider_selectedbg.png" />
+			</li>
+			<li class="short more">
+				<a href="#" class="more-item">
+					<img src="./Images/icon_more.png" />
+					More
+				</a>
+			</li>
+		</ul>
+
+		<div class="more-menu-items">
+			<ul>
+    			<li>
+					<a href="globalStanding.html" data-toggle="tab">
+						<img src="./Images/icon_list_globalstanding.png" />
+						Global Standing
+					</a>
+				</li>
+    			<li>
+					<a href="economy2020.html" data-toggle="tab">
+						<img src="./Images/icon_list_economy2020.png" />
+						Economy 2020
+					</a>
+				</li>
+				<li class="active">
+					<a href="informationHighway.html" data-toggle="tab">
+						<img src="./Images/icon_list_infohighway.png" />
+						Information Highway
+					</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+
+	<div class="tab-content">
+		<iframe src="http://senegalinfohighway.opendataforafrica.org/"  frameborder="0" style="height: 100%; width: 100%;"></iframe>
+    </div>
+
+	<div id="footer">
+		<div>The Office of the President</div>
+	</div>
+
+	<script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
+	<script>
+		(function () {
+			$('.more-item').on('click', function (e) {
+
+				$('.more-menu-items').toggleClass('show');
+
+				e.stopPropagation();
+				return false;
+			});
+		})()
+	</script>
+</body>
+</html>

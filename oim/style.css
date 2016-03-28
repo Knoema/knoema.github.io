@@ -1,0 +1,135 @@
+body {
+	/*background-image: url("img/login_bg_img.png") ;
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+	background-position: center;*/
+	background: url("img/login_bg_img.png") no-repeat center center fixed;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+	font-family: 'PT Sans', Trebuchet MS;
+}
+
+
+.login-content {
+	padding-top: 140px;
+	padding-left: 100px;
+	max-width: 1400px;
+	margin: auto;
+}
+
+.left-block {
+	width: 577px;
+	background: url('img/login_figures_img.png') no-repeat 0 120px;
+	background-size: 577px 364px;
+	padding-left: 150px;
+}
+
+.login-head {
+	background: url('img/login_page_logo.png') no-repeat 0 0;
+	position: relative;
+	height: 137px;
+}
+
+.login-body {
+	margin-top: 80px;
+	height: 500px;
+}
+
+.login-form {
+	width: 250px;
+}
+
+.login-figure {
+	position: relative;
+	top: 20%;
+	left: 10%;
+	z-index: 10;
+}
+
+.login-title {
+	font-size: 22px;
+	margin-bottom: 35px;
+}
+
+.input-group {
+	margin-top: 10px;
+}
+
+	.input-group input {
+		width: 100%;
+		height: 20px;
+		padding: 5px 10px;
+		border: 1px solid;
+		border-color: rgb(209, 211, 217);
+	}
+
+		.input-group input:focus {
+			outline: none;
+			border: 1px solid rgb(123, 211, 214);
+			/*border-color: rgb(150, 212, 225);*/
+			/*color: rgb(150, 212, 225);*/
+		}
+
+.login-btn {
+	-webkit-border-radius: 3;
+	-moz-border-radius: 3;
+	border-radius: 3px;
+	color: #ffffff;
+	font-size: 10px;
+	background: #5091dc;
+	padding: 10px 15px 10px 15px;
+	text-decoration: none;
+	float: right;
+	border: 0;
+}
+
+	.login-btn:hover {
+		text-decoration: none;
+	}
+
+input[type="checkbox"].login-checkbox {
+	display: none;
+}
+
+	input[type="checkbox"].login-checkbox + label span {
+		display: inline-block;
+		width: 16px;
+		height: 16px;
+		margin: -1px 4px 0 0;
+		vertical-align: middle;
+		background: url('img/checkbox.png') no-repeat 0 0;
+		cursor: pointer;
+	}
+
+	input[type="checkbox"].login-checkbox:checked + label span {
+		background: url('img/checkbox.png') no-repeat 0 -16px;
+	}
+
+.btn-group {
+	margin-top: 30px;
+	width: 272px;
+	border-bottom: 1px solid rgb(226,232,232);
+	padding-bottom: 30px;
+	margin-bottom: 10px;
+}
+
+	.btn-group label {
+		font-size: 12px;
+		position: relative;
+		top: 5px;
+	}
+
+
+.login-forgot {
+	font-size: 13px;
+	text-decoration: underline;
+	color: rgb(93, 188, 183);
+}
+
+	.login-forgot:hover {
+		text-decoration: none;
+	}
+
+

@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>Boko Haram Situation Room</title>
+	<link href='https://fonts.googleapis.com/css?family=Roboto:400,500,700' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/css/bootstrap-select.min.css">
+	<link rel="stylesheet" href="./css/main.css" type="text/css" />
+</head>
+<body>
+	<div class="container">
+		<h2 class="text-center" style="position: relative;">
+			Boko Haram Situation Room
+			<a href="#" style="position: absolute; right: 0; top: 0;">Logout</a>
+		</h2>
+		<p>Here you will find official data on incidents attributed to Boko Haram throughout Nigeria along with related socio-demographic and
+		economic performance indicators. You may also use data from your private data catalog. Knoema's local collection network, and public sources to create auto-updating data visualizations to support your analysis.</p>
+		<div class="form-group country-block">
+			<span>Country:</span>
+			<select id="country-select" class="selectpicker" data-show-tick="true">
+				<option class="group-option" value="-1">All countries</option>
+				<option class="group-option" value="">Nigeria</option>
+				<option value="">Adamawa</option>
+				<option value="">Akwa</option>
+				<option class="group-option" value="">Cameroon</option>
+				<option value="">Adamawa</option>
+				<option value="">Centre</option>
+				<option value="">East</option>
+			</select>
+		</div>
+		<div class="form-group">
+			<h3 class="text-center">Boko Haram attributes attacks and fatalities</h3>
+			<div id="bh-attributes-chart">
+				CHART
+			</div>
+		</div>
+		<div class="form-group row">
+			<div class="col-md-6">
+				<label>Incidents map, <span class="region-name-placeholder"></span></label>
+				<div id="incidents-map"></div>
+			</div>
+			<div class="col-md-6">
+				<label>Number of hits, <span class="region-name-placeholder"></span></label>
+				<div id="hits-map">
+					<label><input type="radio" name="HitsType" value="attacks" checked> Attacks</label>
+					<label><input type="radio" name="HitsType" value="fatalities"> Fatalities</label>
+				</div>
+			</div>
+		</div>
+		<div class="form-group row">
+			<div class="col-md-4">
+				<label>Related Demographic and Economic indicators</label>
+				<div id="indicator-select" class="my-list">
+					<div class="item active">Poverty incidence (count)</div>
+					<div class="item">Unemployment rate(%)</div>
+					<div class="item">Youth literacy rate, males, any language (%)</div>
+					<div class="item">Adult literacy rate, males, any language (%)</div>
+					<div class="item">Military expenditures (constant 2011 million USD)</div>
+					<div class="item">Oil exports (million b/d)</div>
+					<div class="item">Monthly price of Bonny Light crude oil (USD/barrel)</div>
+					<div class="item">Pocket droughts (count, by 5 arc minute area)</div>
+					<div class="item">Year-on-Year price deviations greater than 25%</div>
+					<div class="item">School attendance rate (%)</div>
+					<div class="text-center">
+						<button id="show-indicators-btn" type="button" class="btn btn-success">Test another indicator</button>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-8">
+				<label>Correlation to conflict, 2014</label>
+				<div class="conflict-correlation">
+					Correlation
+					<div id="conflict-correlation">0.9137</div>
+				</div>
+				<div id="conflict-correlation-chart"></div>
+			</div>
+		</div>
+		<hr>
+		<div class="form-group row">
+			<div class="col-md-4">
+				<label>Visualizations</label>
+				<div id="visualization-select" class="my-list">
+					<div class="item active">Economics</div>
+					<div class="item">Politics</div>
+					<div class="item">Oil & Gas</div>
+					<div class="item">Security</div>
+					<div class="text-center">
+						<button id="show-indicators-btn" type="button" class="btn btn-success">Create Visualizations</button>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-8">
+				<label>Economics</label>
+				<div id="visualization-chart">CHART</div>
+			</div>
+		</div>
+		<hr>
+		<div class="row">
+			<div class="col-md-6">
+				<label>Feed</label>
+				<div class="feed">
+					<p>Stay current on new data releases and news about Boko Haram in Nigeria.</p>
+					
+					<a class="twitter-timeline" href="https://twitter.com/search?q=Boko%20Haram%20from%3Aindependentngr%2C%20OR%20from%3Avanguardngrnews%2C%20OR%20from%3AAFP%2C%20OR%20from%3Aloeil_du_sahel%2C%20OR%20from%3AXHNews" data-widget-id="713219351718006784" height="300" data-chrome="noheader">Tweets about Boko Haram from:independentngr, OR from:vanguardngrnews, OR from:AFP, OR from:loeil_du_sahel, OR from:XHNews</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+				</div>
+			</div>
+			<div class="col-md-6">
+				<label>Related Publications</label>
+				<div class="publications">
+					<a href="https://www.amnesty.org/en/countries/africa/nigeria/report-nigeria/" target="_blank" class="publication">
+						<img src="./img/pub/amnesty.png">
+						Amnesty International, Nigeria Report
+					</a>
+					<a href="https://www.hrw.org/world-report/2015/country-chapters/nigeria" target="_blank" class="publication">
+						<img src="./img/pub/human.png">
+						Human Rights Watch, World Report 2015: Nigeria
+					</a>
+					<a href="https://www.start.umd.edu/pubs/START_SMA-AFRICOM_StatisticalAnalysis_Jan2015.pdf" target="_blank" class="publication">
+						<img src="./img/pub/start.png">
+						Statistical Analysis of Event Data Concerning Boko Haram in Nigeria, January 2015
+					</a>
+					<a href="http://www.cfr.org/nigeria/nigeria-security-tracker/p29483" target="_blank" class="publication">
+						<img src="./img/pub/council.png">
+						US Council on Foreign Relations, Nigeria Security Tracker
+					</a>
+					<div class="clearfix"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script src="http://code.jquery.com/jquery-2.2.1.min.js"></script>
+	<script src="https://maps.googleapis.com/maps/api/js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/js/bootstrap-select.min.js"></script>
+	<script src="./js/app.js"></script>
+	<script>
+		new App().init();
+	</script>
+</body>
+</html>
