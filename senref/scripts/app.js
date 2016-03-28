@@ -1,5 +1,19 @@
-///<reference path='./defs/google.maps.d.ts' />
+﻿///<reference path='./defs/google.maps.d.ts' />
 ///<reference path='./defs/jquery.d.ts' />
+
+var access_token = "";
+
+$(function () {
+    /* Authentication via access token  */
+    var params = Knoema.Helpers.parseHashParams();
+    if (params == null)
+    	Knoema.Helpers.getAccessToken('Ysyd9Tw', window.location, false, 'read_resources');
+    else {
+        if (params["access_token"] != undefined)
+            access_token = params["access_token"];
+    }
+});
+
 var App = (function () {
     function App() {
     }
@@ -326,8 +340,8 @@ var App = (function () {
     App.getData = function () {
         var _this = this;
         var def = $.Deferred();
-        $.getJSON('http://knoema.com/api/1.0/meta/dataset/' + this.datasetId + '/dimension/region').done(function (dimension) {
-            $.post('http://knoema.com/api/1.0/data/details?client_id=EZj54KGFo3rzIvnLczrElvAitEyU28DGw9R73tif&page_id=' + _this.datasetId, {
+        $.getJSON('http://knoema.com/api/1.0/meta/dataset/' + this.datasetId + '/dimension/region?access_token=' + access_token).done(function (dimension) {
+        	$.post('http://knoema.com/api/1.0/data/details?page_id=' + _this.datasetId + '&access_token=' + access_token, {
                 "Header": [],
                 "Stub": [],
                 "Filter": [{
