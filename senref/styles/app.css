@@ -291,3 +291,13 @@
 	top: 100%;
 	right: 0;
 }
+
+#statistics.error
+{
+	position: absolute;
+    top: 50%;
+    bottom: 0;
+    text-align: center;
+    right: 0;
+    left: 0;
+}

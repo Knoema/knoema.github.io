@@ -341,22 +341,26 @@ var App = (function () {
         var _this = this;
         var def = $.Deferred();
         $.getJSON('http://knoema.com/api/1.0/meta/dataset/' + this.datasetId + '/dimension/region?access_token=' + access_token).done(function (dimension) {
-        	$.post('http://knoema.com/api/1.0/data/details?page_id=' + _this.datasetId + '&access_token=' + access_token, {
-                "Header": [],
-                "Stub": [],
-                "Filter": [{
-                    "DimensionId": "region",
-                    "Members": dimension.items.map(function (i) { return i.key; }),
-                    "DimensionName": "region",
-                    "DatasetId": _this.datasetId,
-                    "Order": "0",
-                    "isGeo": true
-                }],
-                "Frequencies": [],
-                "Dataset": _this.datasetId,
-                "Segments": null,
-                "MeasureAggregations": null
-            }).done(function (data) { return def.resolve(data); });
+        	if (typeof dimension == "string") {
+        		$("#statistics").addClass("error").html(dimension).append("<p><a href='https://knoema.com/sys/login?returnUrl=" + location.protocol + '//' + location.host + location.pathname + "'>Try to use</a> different account</p>");
+        	}
+			else
+        		$.post('http://knoema.com/api/1.0/data/details?page_id=' + _this.datasetId + '&access_token=' + access_token, {
+					"Header": [],
+					"Stub": [],
+					"Filter": [{
+						"DimensionId": "region",
+						"Members": dimension.items.map(function (i) { return i.key; }),
+						"DimensionName": "region",
+						"DatasetId": _this.datasetId,
+						"Order": "0",
+						"isGeo": true
+					}],
+					"Frequencies": [],
+					"Dataset": _this.datasetId,
+					"Segments": null,
+					"MeasureAggregations": null
+				}).done(function (data) { return def.resolve(data); });
         });
         return def;
     };
