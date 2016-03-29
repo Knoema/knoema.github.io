@@ -183,16 +183,15 @@
 		        yAxis: {
 		        	title: { text: null }
 		        },
-		        labels: {
+		        /*labels: {
 		            items: [{
-		                //html: 'Total fruit consumption',
 		                style: {
 		                    left: '50px',
 		                    top: '18px',
 		                    color: (Highcharts.theme && Highcharts.theme.textColor) || 'black'
 		                }
 		            }]
-		        },
+		        },*/
 		        plotOptions: {
 		            column: {
 		                stacking: 'normal',
@@ -206,15 +205,9 @@
 		            data: publicValues
 		        }, {
 		            type: 'column',
-		            name: 'Private',
+		            name: 'Private-Public Partnership',
 		            color: 'rgb(146, 205, 220)',
 		            data: privateValues
-		        }, {
-		            type: 'line',
-		            name: 'Public and Private',
-		            data: publicValues.map(function(v, i) { return v + privateValues[i]; }),
-		            color: 'rgb(147, 137, 83)',
-		            marker: { symbol: 'diamond' }
 		        }]
 		    });
 		});
