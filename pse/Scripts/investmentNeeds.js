@@ -35,6 +35,33 @@
 			self.renderPlanTable();
 		});
 
+		function endTimelinePalyback($timeline) {
+			$timeline.toggleClass('playback', false);
+			clearInterval($timeline.data('interval'));
+			$timeline.data('interval', null);
+		}
+
+		$('.timeline').on('click', '.play', function(event) {
+			var timeline = $(event.delegateTarget);
+			
+			if (timeline.data('interval') != null) {
+				endTimelinePalyback(timeline);
+			} else {
+				timeline.toggleClass('playback', true);
+				var interval = setInterval(function() {
+					var nextItem = timeline.find('.item.active').next();
+					if (nextItem.length > 0) {
+						nextItem.trigger('click');
+					} else {
+						endTimelinePalyback(timeline);
+						timeline.find('.item').first().trigger('click');
+					}
+				}, 3000);
+				
+				timeline.data('interval', interval);
+			}
+		});
+
 		$('.timeline').on('click', '.item', function(event) {
 			$(event.delegateTarget).find('.item.active').removeClass('active');
 			$(event.target).toggleClass('active', true);
