@@ -131,6 +131,8 @@
 		var $container = $('#plan-table');
 		var currentYearValues = {};
 
+		$container.find('tr[data-domaine] > td[data-financement]').html('<div class="plan-item"></div>');
+
 		this.planData.data.forEach(function(item) {
 			if (item.Time.substr(0, 4) == self.currentYear) {
 				var financement = item['mode-de-financement'];
@@ -139,10 +141,9 @@
 				currentYearValues[domaine + '|' + financement] = item.Value;
 
 				$container
-					.find('tr[data-domaine="' + domaine + '"] > td[data-financement="' + financement + '"]')
-					.html('<div class="plan-item">'
-						+ '<span class="value">' + numeral(item.Value).format('0,0') + '</span>'
-						+ '<span class="unit">million CFA francs</span><span class="percent">0%</span></div>');
+					.find('tr[data-domaine="' + domaine + '"] > td[data-financement="' + financement + '"] > .plan-item')
+					.html('<span class="value">' + numeral(item.Value).format('0,0') + '</span>'
+						+ '<span class="unit">million CFA francs</span><span class="percent">0%</span>');
 			}
 		});
 
@@ -151,7 +152,8 @@
 				if (item.Time.substr(0, 4) == self.currentYear - 1) {
 					var financement = item['mode-de-financement'];
 					var domaine = item['sous-secteur-domaine'];
-					var percent = Math.round(currentYearValues[domaine + '|' + financement] / item.Value * 10) / 10;
+					var currentYearValue = currentYearValues[domaine + '|' + financement] || 0;
+					var percent = Math.round(currentYearValue / item.Value * 10) / 10;
 					$container
 						.find('tr[data-domaine="' + domaine + '"] > td[data-financement="' + financement + '"] > .plan-item > .percent')
 						.html(percent + '%');
@@ -162,13 +164,13 @@
 
 	InvestmentNeedsPage.prototype.getPlanData = function() {
 		return $.post('http://knoema.com/api/1.0/data/pivot?client_id=EZj54KGFo3rzIvnLczrElvAitEyU28DGw9R73tif&page_id=btlqkub', {
-			"Header":[{"DimensionId":"Time","Members":["2014-2018"],"DimensionName":"Time","DatasetId":"ebgyazf","Order":"0","UiMode":"range"}],"Stub":[{"DimensionId":"sous-secteur-domaine","Members":["1000340","1000300","1000260","1000240"],"DimensionName":"Sous-secteur/Domaine","DatasetId":"ebgyazf","Order":"0"},{"DimensionId":"mode-de-financement","Members":["1000000","1000010"],"DimensionName":"Mode de financement","DatasetId":"ebgyazf","Order":"1"}],"Filter":[{"DimensionId":"titre-du-projet-programme","Members":["1001630"],"DimensionName":"Titre du Projet / programme","DatasetId":"ebgyazf","Order":"0"}],"Frequencies":["A"],"Dataset":"ebgyazf","Segments":null,"MeasureAggregations":null
+			"Header":[{"DimensionId":"Time","Members":["2014-2023"],"DimensionName":"Time","DatasetId":"ebgyazf","Order":"0","UiMode":"range"}],"Stub":[{"DimensionId":"sous-secteur-domaine","Members":["1000340","1000300","1000260","1000240"],"DimensionName":"Sous-secteur/Domaine","DatasetId":"ebgyazf","Order":"0"},{"DimensionId":"mode-de-financement","Members":["1000000","1000010"],"DimensionName":"Mode de financement","DatasetId":"ebgyazf","Order":"1"}],"Filter":[{"DimensionId":"titre-du-projet-programme","Members":["1001630"],"DimensionName":"Titre du Projet / programme","DatasetId":"ebgyazf","Order":"0"}],"Frequencies":["A"],"Dataset":"ebgyazf","Segments":null,"MeasureAggregations":null
 		});
 	};
 
 	InvestmentNeedsPage.prototype.getFlagshipProjects = function() {
 		return $.post('http://knoema.com/api/1.0/data/pivot?client_id=EZj54KGFo3rzIvnLczrElvAitEyU28DGw9R73tif&page_id=SNEIOFP2016', {
-			"Header":[{"DimensionId":"Time","Members":["2014-2016"],"DimensionName":"Time","DatasetId":"SNEIOFP2016","Order":"0","UiMode":"range"}],"Stub":[{"DimensionId":"project","Members":["1000000","1000010","1000020","1000030","1000040","1000050","1000060","1000070","1000080","1000090","1000100","1000110","1000120","1000130","1000140","1000150","1000160","1000170","1000180","1000190","1000200","1000210","1000220","1000230","1000240","1000250","1000260","1000270","1000280"],"DimensionName":"Project","DatasetId":"SNEIOFP2016","Order":"0"}],"Filter":[{"DimensionId":"indicator","Members":["1000050"],"DimensionName":"Indicator","DatasetId":"SNEIOFP2016","Order":"0"}],"Frequencies":["A"],"Dataset":"SNEIOFP2016","Segments":null,"MeasureAggregations":null
+			"Header":[{"DimensionId":"Time","Members":["2014-2023"],"DimensionName":"Time","DatasetId":"SNEIOFP2016","Order":"0","UiMode":"range"}],"Stub":[{"DimensionId":"project","Members":["1000000","1000010","1000020","1000030","1000040","1000050","1000060","1000070","1000080","1000090","1000100","1000110","1000120","1000130","1000140","1000150","1000160","1000170","1000180","1000190","1000200","1000210","1000220","1000230","1000240","1000250","1000260","1000270","1000280"],"DimensionName":"Project","DatasetId":"SNEIOFP2016","Order":"0"}],"Filter":[{"DimensionId":"indicator","Members":["1000050"],"DimensionName":"Indicator","DatasetId":"SNEIOFP2016","Order":"0"}],"Frequencies":["A"],"Dataset":"SNEIOFP2016","Segments":null,"MeasureAggregations":null
 		});
 	};
 
