@@ -133,32 +133,40 @@
 
 		$container.find('tr[data-domaine] > td[data-financement]').html('<div class="plan-item"></div>');
 
+		// collect data
 		this.planData.data.forEach(function(item) {
 			if (item.Time.substr(0, 4) == self.currentYear) {
 				var financement = item['mode-de-financement'];
 				var domaine = item['sous-secteur-domaine'];
 
-				currentYearValues[domaine + '|' + financement] = item.Value;
+				if (!(financement in currentYearValues)) {
+					currentYearValues[financement] = {};
+				}
 
-				$container
-					.find('tr[data-domaine="' + domaine + '"] > td[data-financement="' + financement + '"] > .plan-item')
-					.html('<span class="value">' + numeral(item.Value).format('0,0') + '</span>'
-						+ '<span class="unit">million CFA francs</span><span class="percent">0%</span>');
+				if (!(domaine in currentYearValues[financement])) {
+					currentYearValues[financement][domaine] = item.Value;
+				}
 			}
 		});
 
-		if (self.currentYear > 2014) {
-			this.planData.data.forEach(function(item) {
-				if (item.Time.substr(0, 4) == self.currentYear - 1) {
-					var financement = item['mode-de-financement'];
-					var domaine = item['sous-secteur-domaine'];
-					var currentYearValue = currentYearValues[domaine + '|' + financement] || 0;
-					var percent = Math.round(currentYearValue / item.Value * 10) / 10;
-					$container
-						.find('tr[data-domaine="' + domaine + '"] > td[data-financement="' + financement + '"] > .plan-item > .percent')
-						.html(percent + '%');
-				}
-			});
+		console.log(currentYearValues);
+
+		for (var financement in currentYearValues) {
+			var financementValues = currentYearValues[financement];
+			
+			var financementSum = 0;
+			for (var domaine in financementValues) {
+				financementSum += financementValues[domaine];
+			}
+
+			for (var domaine in financementValues) {
+				var value = financementValues[domaine];
+				var percent = Math.round(value / financementSum * 1000) / 10;
+				$container
+					.find('tr[data-domaine="' + domaine + '"] > td[data-financement="' + financement + '"] > .plan-item')
+					.html('<span class="value">' + numeral(value).format('0,0') + '</span>'
+						+ '<span class="unit">million CFA francs</span><span class="percent">' + percent + '%</span>');
+			}
 		}
 	};
 
