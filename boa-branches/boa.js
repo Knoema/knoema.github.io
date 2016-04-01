@@ -53,13 +53,15 @@
 		});
 
 		google.maps.event.addListener(this.map, 'zoom_changed', function() {
+			self.count = 0;
 		});
 
 		google.maps.event.addListener(this.map, 'dragstart', function() {
+			self.count = 0;
 		});
 
 		google.maps.event.addListener(this.map, 'dragend', function() {
-			//self.update('branches');
+			self.count = 0;
 		});
 
 		google.maps.event.addListenerOnce(this.map, 'idle', function () {
@@ -75,9 +77,17 @@
 
 	};
 
-	app.prototype.load = function (id) {
+	app.prototype.loadFirstOption = _.once(function() {
+		$('#size').val('branches-0').trigger('change');
+	});
+
+	app.prototype.load = function (id, eventName) {
 
 		var self = this;
+
+		if (id == 'branches-0' || id == 'branches-1') {
+			id = 'branches';
+		}
 	
 		var layer = this.layers[id];
 
@@ -103,10 +113,6 @@
 
 			layer.on('loaded', function (loadedLayer) {
 
-				_.once(function() {
-					self.map.fitBounds(loadedLayer.layer.bounds);
-				});
-
 				if (id.indexOf('branches') > -1) {
 					$('.count label').text('NUMBER OF BRANCHES: ' + self.count);
 					self.fillFilters();
@@ -119,6 +125,13 @@
 					});
 
 					$(document.body).removeClass('loading');
+
+					if (loadedLayer.layerId === "8576b262-f9be-684a-b2e8-002339c4bf36" && _.isUndefined(eventName)) {
+						//First option of #size select should be 'Total amount, NGN' which is computed property
+						//We can't load it directly because we need loaded layer to compute the value
+						//So will load 'branches' layer first (Number of clients) and trigger 'change' event to load first option
+						self.loadFirstOption();
+					}
 				})
 
 			});
@@ -404,7 +417,10 @@
 					copy[key] = parseFloat(copy[key]).toLocaleString();
 			};
 
-			this.count++;
+			if (id !== 'projects') {
+				feature.data.DDD = true;
+				this.count++;
+			}
 
 			var row = $('#tmpl-branch').tmpl({ data: copy });
 			
@@ -519,7 +535,7 @@
 				if (id.indexOf('branches') > -1) {
 					self.clean(id);
 				}
-			self.load(layerId);
+			self.load(layerId, 'change');
 		});
 
 		//TODO Refactor using debounce
