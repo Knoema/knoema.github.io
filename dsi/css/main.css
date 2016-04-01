@@ -1,0 +1,107 @@
+html, body { margin: 0; padding: 0; }
+body {
+	font-family: 'PT Sans';
+	background-color: #16576d;
+}
+
+.header {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 70px;
+	background-color: #fff;
+	overflow: hidden;
+	z-index: 1;
+}
+.header > .logo {
+	margin-left: 30px;
+	margin-top: 4px;
+	width: 127px;
+	height: 62px;
+	background: url(../img/logo.png) center center no-repeat;
+}
+.header > .menu {
+	position: absolute;
+	top: 0;
+	right: 0;
+	height: 100%;
+}
+.header > .menu > a {
+	margin: 25px 30px 0 0;
+    display: inline-block;
+	font-size: 16px;
+	color: #061689;
+	text-decoration: none;
+	text-transform: uppercase;
+}
+.header > .menu > a:hover {
+	color: #3caf28;
+}
+
+.page {
+	margin-top: 70px;
+}
+
+.banner {
+	height: 715px;
+	background: #0D3C58 url(../img/pic.jpg) center center no-repeat;
+}
+
+.content {
+	padding: 70px 0;
+	background-color: #e6e6e6;
+}
+
+.content-body {
+	position: relative;
+	left: 30%;
+	padding: 5px 30px;
+	border-left: 1px solid #b4b4b4;
+}
+.content-body > .content-title {
+	position: absolute;
+	right: 100%;
+	margin-right: 30px;
+	font-size: 27px;
+	text-transform: uppercase;
+	white-space: nowrap;
+}
+
+.footer {
+	padding: 70px 0;
+	color: #fff;
+	overflow: hidden;
+}
+
+.footer > .content-body {
+	border-color: #fff;
+}
+
+.contacts {
+	overflow: hidden;
+}
+.contacts > .item {
+	float: left;
+	margin-right: 60px;
+	padding-top: 60px;
+	background-repeat: no-repeat;
+	background-position: center top;
+	text-transform: uppercase;
+}
+.contacts > .item a {
+	color: #fff;
+	text-decoration: none;
+}
+.contacts > .item.mail {
+	background-image: url(../img/ico-mail.png);
+}
+.contacts > .item.site {
+	background-image: url(../img/ico-site.png);
+}
+.contacts > .item.phone {
+	background-image: url(../img/ico-phone.png);
+}
+.contacts > .item.phone > div {
+	margin-bottom: 5px
+}

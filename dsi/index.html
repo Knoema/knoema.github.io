@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>DSI</title>
+    <link href="//fonts.googleapis.com/css?family=PT+Sans:400,400italic,700,700italic&subset=latin,cyrillic" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="./css/main.css"/>
+</head>
+<body>
+	<div class="header">
+		<div class="logo"></div>
+		<div class="menu">
+			<a href="#aboutUs">About us</a>
+			<a href="#contactUs">Contact us</a>
+		</div>
+	</div>
+	<div class="page">
+		<div class="banner"></div>
+		<div id="aboutUs" class="content">
+			<div class="content-body" style="width: 40%;">
+				<div class="content-title">About us</div>
+				<em style="font-size: 18px;">At DSI we provide IT consulting for both the private and<brr>
+				public sectors. We specialize in African region and we<brr>
+				offer service and software soultions for collecting and<brr>
+				managing data that meet our client needs</em>
+			</div>
+		</div>
+		<div id="contactUs" class="footer">
+			<div class="content-body">
+				<div class="content-title">Contact us</div>
+				<div class="contacts">
+					<div class="item mail">
+						<a href="mailto:info@dsi-africa.com">info@dsi-africa.com</a>
+					</div>
+					<div class="item site">
+						<a href="http://dsi-africa.com">dsi-africa.com</a>
+					</div>
+					<div class="item phone">
+						<div>00216 98 694 749</div>
+						<div>00216 55 848 095</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript" src="https://code.jquery.com/jquery-2.2.2.min.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function(){
+			$('a[href^="#"]').on('click',function (e) {
+			    e.preventDefault();
+
+			    var target = this.hash;
+			    var $target = $(target);
+
+			    $('html, body').stop().animate({
+			        'scrollTop': $target.offset().top - 70
+			    }, 900, 'swing', function () {
+			        window.location.hash = target;
+			    });
+			});
+		});
+	</script>
+</body>
+</html>
