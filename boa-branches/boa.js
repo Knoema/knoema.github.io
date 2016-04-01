@@ -601,6 +601,8 @@
 
 			var bounds = new google.maps.LatLngBounds();
 
+			var countOfVisibleFeatures = 0;
+
 			self.map.data.forEach(function(feature) {
 
 				self.map.data.revertStyle(feature);
@@ -609,12 +611,14 @@
 				self.map.data.overrideStyle(feature, { visible: visible });
 
 				if (visible) {
+					countOfVisibleFeatures += 1;
 					self.extendBoundsByGeometry(bounds, feature.getGeometry());
 				}
 			});
-
+			if (countOfVisibleFeatures == 0) {
+				bounds = self.layers.branches.layer.bounds;
+			}
 			self.map.fitBounds(bounds);
-
 		});
 	};
 	
