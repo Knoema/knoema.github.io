@@ -14,8 +14,15 @@
 		this.total = [];	
 		this.layers = {};
 		this.flag = false;
-		this.settings = {};
+		this.settings = {
+			//Bubble radius will be calculated using .data[settings.bubbleRadiusAttribute]
+			bubbleRadiusAttribute: null
+		};
 		this.count = 0;
+
+		this.getRadius = null;
+
+		//TODO Load these layers as part of the geoplayground object
 		this.meta = {
 			'branches': '8576b262-f9be-684a-b2e8-002339c4bf36',
 			'branches-credit': '9bc1f577-16c9-097c-3f2d-debfd645d5bb',
@@ -45,40 +52,28 @@
 			clickable: false
 		});
 
-		google.maps.event.addListenerOnce(this.map, 'idle', function () {
-			var idleTimeout = window.setTimeout(function () {				
+		google.maps.event.addListener(this.map, 'zoom_changed', function() {
+		});
 
-				self.bubblesLayer = new Knoema.GeoPlayground.BubblesLayer(self.map);
+		google.maps.event.addListener(this.map, 'dragstart', function() {
+		});
+
+		google.maps.event.addListener(this.map, 'dragend', function() {
+			//self.update('branches');
+		});
+
+		google.maps.event.addListenerOnce(this.map, 'idle', function () {
+			window.setTimeout(function () {
 				self.load('branches');
 				self.load('projects');
-
 			}, 300);
 		});
 
 		this.bindEvents();
+
+		$(window).trigger('resize');
+
 	};
-
-	/*app.prototype.loadLoan = function (member, callback) {
-
-		Knoema.Helpers.post('/api/1.0/data/details', {	
-			"Filter": [
-				{
-					"DimensionId": "boa-branch",
-					"Members": [
-						member
-					],
-					"DimensionName": "BoA Branch",
-					"DatasetId": "kauagwc",
-					"Order": "0"
-				}
-			],
-			"Frequencies": [],
-			"Dataset": "kauagwc",
-		},
-		function (response) {
-			callback(response);
-		});
-	};*/
 
 	app.prototype.load = function (id) {
 
@@ -86,16 +81,32 @@
 	
 		var layer = this.layers[id];
 
-		$(document.body).addClass('loading');
-
 		if (!layer) {
+
+			$(document.body).addClass('loading');
 
 			var layer = new GeoPlayground.Layer({
 				map: self.map,
 				layerId: this.meta[id],
-				geoPlaygroundId: 'cpfelie',
-				bubblesLayer: self.bubblesLayer
-			}, function (e) {
+				geoPlaygroundId: 'cpfelie'
+			});
+
+			layer.on('click', function (e) {
+				self.tooltip(e, id);
+			});
+
+			//layer.on('beforeVisualize', function () {
+			//	self.count = 0;
+			//	$('.count label').text('NUMBER OF BRANCHES: ' + layer.layer.dataToDisplay.length);
+			//	layer.visualize();
+			//});
+
+			layer.on('loaded', function (loadedLayer) {
+
+				_.once(function() {
+					self.map.fitBounds(loadedLayer.layer.bounds);
+				});
+
 				if (id.indexOf('branches') > -1) {
 					$('.count label').text('NUMBER OF BRANCHES: ' + self.count);
 					self.fillFilters();
@@ -109,23 +120,18 @@
 
 					$(document.body).removeClass('loading');
 				})
+
 			});
 
-			layer.on('click', function (e) {
-				//if ($('#regions').val() == -1) {
-					self.tooltip(e, id);
-				//}
-			});
-
-			layer.on('beforeDraw', function (e, callback) {
-				self.onBeforeDraw(e, callback, id);
+			layer.on('beforeDraw', function (feature, callback) {
+				self.onBeforeDraw(feature, callback, id);
 			});
 
 			self.layers[id] = layer;
 		}
 
 		layer.load();
-	}
+	};
 
 	app.prototype.clean = function (id) {
 
@@ -141,6 +147,7 @@
 	};
 
 	app.prototype.update = function (id) {
+		this.count = 0;
 		this.clean(id);
 		this.load(id);
 	};
@@ -170,7 +177,9 @@
 				$('#branch-profile .tab.loans2').data('branch', data['Business Outlets']);
 
 				$('.nav-tabs a').first().click();
-				$('#branch-profile').show();
+				$('#branch-profile').css({
+					height: $('#content').height() + 45
+				}).show();
 				break;
 		}
 	};
@@ -221,7 +230,7 @@
 			min: this.clients[0],
 			max: this.clients[this.clients.length - 1],
 			_min: this.clients[0],
-			_max: this.clients[this.clients.length - 1],
+			_max: this.clients[this.clients.length - 1]
 		};
 
 		this.settings['credit'] = {
@@ -247,6 +256,7 @@
 
 		this.settings['grade'] = ['A', 'B', 'C', 'D'];
 
+		//Setup sliders
 		this.setup('clients');
 		this.setup('credit');
 		this.setup('savings');
@@ -259,9 +269,10 @@
 			self.update($('#size').val());
 		});
 
-		$('#filters').show();
+		$('#filters').find('.filters').show();
 	};
 
+	//setup slider
 	app.prototype.setup = function (id) {
 
 		var self = this;
@@ -327,17 +338,17 @@
 		});
 	};
 
-	app.prototype.onBeforeDraw = function (event, callback, id) {
-		
+	app.prototype.onBeforeDraw = function (feature, callback, id) {
+		var self = this;
 		if (id.indexOf('branches') == -1)
-			return callback(event.data);
+			return callback(feature.data);
 
-		if (!$.isNumeric(event.data.radius))
-			return callback(event.data);
+		if (!$.isNumeric(feature.data.radius))
+			return callback(feature.data);
 		
-		event.data.visible = true;
+		feature.data.visible = true;
 		
-		var data = event.data.content;
+		var data = feature.data.content;
 		var clients = $.isNumeric(parseFloat(data['Number of Clients'])) ? parseFloat(data['Number of Clients']) : 0;
 		var credit = $.isNumeric(parseFloat(data['Total ratings, Credit'])) ? parseFloat(data['Total ratings, Credit']) : 0;
 		var savings = $.isNumeric(parseFloat(data['Total ratings, Savings'])) ? parseFloat(data['Total ratings, Savings']) : 0;
@@ -375,16 +386,16 @@
 			if (visible && $.isNumeric(total)) 
 				visible = total >= this.settings['total'].min && total <= this.settings['total'].max;			
 
-			if (visible && grade) 
+			if (visible && grade && this.settings['grade'])
 				visible = this.settings['grade'].indexOf(grade) > -1;			
 
 			if (visible && search != '' && name.toLowerCase().indexOf(search) > -1)
-				event.data.fillColor = '#CC3333';
+				feature.data.fillColor = '#CC3333';
 		
-			event.data.visible = visible;
+			feature.data.visible = visible;
 		}
 
-		if (event.data.visible) {
+		if (feature.data.visible) {
 
 			var copy = $.extend({}, data);
 
@@ -403,12 +414,44 @@
 			$('#table tbody').append(row);
 		}
 
-		callback(event.data);
-	}
+		if (feature.data.visible) {
+
+			//TODO How to know min/max & get proper radius
+			if (self.settings.bubbleRadiusAttribute) {
+				var value;
+				if (self.settings.bubbleRadiusAttribute === 'Total amount, NGN') {
+					value = _.sum([
+						feature.data.content['Disbursement, SME, NGN'],
+						feature.data.content['Disbursement, Micro Agriculture, NGN'],
+						feature.data.content['Disbursement, Micro Non-Agriculture, NGN']
+					]);
+				} else {
+					value = feature.data.content[self.settings.bubbleRadiusAttribute];
+				}
+				if (!$.isNumeric(value)) {
+					feature.data.visible = false;
+				} else {
+					feature.data.radius = self.getRadius(value);
+				}
+			}
+		}
+
+		callback(feature.data);
+
+	};
+
+	app.prototype.resize = function () {
+		var newWindowHeight = $(window).height();
+		$('#filters .filters').height(newWindowHeight - 120 - 45);//55-NUMBER OF BRANCHES
+		$('#map-canvas').height(newWindowHeight - 120);//76#header+40.menu-bar
+		$('#table').height(newWindowHeight - 120);//76#header+40.menu-bar
+	};
 
 	app.prototype.bindEvents = function () {
 
 		var self = this;
+
+		$(window).on('resize', $.proxy(this.resize, this));
 
 		$('#map-view').on('click', function () {
 
@@ -431,17 +474,55 @@
 				self.clean('projects');
 		});
 
-		$('#size').change(function () {
+		$('#size').change(function (e) {
+			var layerId;
+			var profileAttribute = $(e.target).find('option:selected').data('value');
+			if (profileAttribute) {
+				//Will load fake layer and calculate radius using profileAttribute
+				layerId = 'branches';
+				self.settings.bubbleRadiusAttribute = profileAttribute;
+				var allAttributeValues = _.map(self.layers.branches.layer.dataToDisplay, function(d) {
+					//See <select id="size" class="selectpicker"> (for hardcoded 'Total amount, NGN')
+					var value;
+					if (profileAttribute === 'Total amount, NGN') {
+						value = _.sum(_.filter([
+							d.data['Disbursement, SME, NGN'],
+							d.data['Disbursement, Micro Agriculture, NGN'],
+							d.data['Disbursement, Micro Non-Agriculture, NGN']
+						], function(d) {
+							return !_.isUndefined(d);
+						}));
+						if (_.isUndefined(value)) {
+							throw 'value is undefined';
+						}
+					} else {
+						value = d.data[profileAttribute];
+					}
+					return value;
+				}).filter(function(d) {
+					return !_.isUndefined(d);
+				});
+				var min = _.min(allAttributeValues);
+				var max = _.max(allAttributeValues);
 
-			var layerId = $(this).val();
-
+				self.getRadius = function(value) {
+					var minRadius = 5;
+					var maxRadius = 25;
+					return Math.floor(minRadius + (maxRadius - minRadius) * (value - min) / (max - min));
+				};
+			} else {
+				self.settings.bubbleRadiusAttribute = null;
+				self.getRadius = null;
+				layerId = $(this).val();
+			}
 			for (var id in self.meta)
-				if (id.indexOf('branches') > -1)
+				if (id.indexOf('branches') > -1) {
 					self.clean(id);
-
+				}
 			self.load(layerId);
 		});
 
+		//TODO Refactor using debounce
 		var delay = (function () {
 			var timer = 0;
 			return function (callback, ms) {
@@ -449,7 +530,6 @@
 				timer = setTimeout(callback, ms);
 			};
 		})();
-
 		$('input').keyup(function () {
 			delay(function () {
 				self.settings['search'] = $.trim($(this).val().toLowerCase());
@@ -492,6 +572,7 @@
 			if (region == -1)
 				return false;
 
+			//TODO Change container #content
 			$('#tmpl-region-profile').tmpl({ regionId: region }).appendTo('#content');
 
 			return false;
@@ -502,18 +583,22 @@
 			
 			self.branchBubblesAreClickable = regionName == '-1';
 
+			var bounds = new google.maps.LatLngBounds();
+
 			self.map.data.forEach(function(feature) {
+
 				self.map.data.revertStyle(feature);
 
 				var visible = regionName == feature.getProperty('name');
 				self.map.data.overrideStyle(feature, { visible: visible });
 
 				if (visible) {
-					var bounds = new google.maps.LatLngBounds();
 					self.extendBoundsByGeometry(bounds, feature.getGeometry());
-					self.map.fitBounds(bounds);
-				}				
+				}
 			});
+
+			self.map.fitBounds(bounds);
+
 		});
 	};
 	
@@ -700,13 +785,26 @@
 				$('#table').hide();
 				$('#map-canvas').show();
 				$('#search-control input').val('');
+
+				$('#regions-control').show();
+
 				break;
 
 			case 'table':
 				$('#table').show();
 				$('#map-canvas').hide();
-				$('.table').stickyTableHeaders();
-				
+
+				//$('.table').css({
+				//	top: 120
+				//});
+
+				//scrollableArea: $('.scrollable-area')
+
+				//Horizontal scroll doesn't work
+				//$('.table').stickyTableHeaders({fixedOffset: 121});
+
+				$('#regions-control').hide();
+
 				break;
 		}
 

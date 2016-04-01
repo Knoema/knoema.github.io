@@ -54,35 +54,84 @@ body.loading > .ajax-loader
 		margin: 25px 0;
 	}
 
-#main-menu
-{
-	position: absolute;
-	top: 15px;
-	right: 20px;
-	z-index: 1;
+/*=================== .menu-bar ==============================*/
+.menu-bar {
+	height: 40px;
+	padding: 0 7px;
+}
+
+.menu-bar .side-bar-header {
+	font-size: 24px;
+	line-height: 45px;
+}
+
+.menu-bar .mode-switcher {
+	margin-top: 5px;
+}
+/*=================== .menu-bar ==============================*/
+
+.bootstrap-select {
+	margin-left: -6px;
+	width: 100%!important;
 }
 
 #content
 {
 	position: absolute;
-	top: 76px;
+	top: 120px;
 	bottom: 0;
 	right: 0;
 	left: 0;
 }
 
-#filters
-{
-	width: 300px;
-	padding: 0 20px;
-	display: none;
+/*TODO Veritical table header*/
+.table>thead>tr>th.vertical {
+	-ms-transform:rotate(270deg); /* IE 9 */
+	-moz-transform:rotate(270deg); /* Firefox */
+	-webkit-transform:rotate(270deg); /* Safari and Chrome */
+	-o-transform:rotate(270deg); /* Opera */
+	padding: 0!important;
+	line-height: 0!important;
+	vertical-align: middle;
 }
 
-	#filters h1
-	{
-		font-size: 16pt;
-		margin: 20px 0 10px;
+#filters
+{
+	width: 350px;
+}
+
+	#filters .filters {
+		overflow-x: auto;
+		padding: 0 15px;
+		display: none;
 	}
+
+	.count {
+		padding: 0 15px;
+	}
+
+	.count label
+	{
+		background-color: #E4F6FF;
+		text-align: center;
+		line-height: 40px;
+		display: block;
+	}
+
+.glyphicon-refresh-animate {
+	-animation: spin .98s infinite linear;
+	-webkit-animation: spin2 .98s infinite linear;
+}
+
+@-webkit-keyframes spin2 {
+	from { -webkit-transform: rotate(0deg);}
+	to { -webkit-transform: rotate(360deg);}
+}
+
+@keyframes spin {
+	from { transform: scale(1) rotate(0deg);}
+	to { transform: scale(1) rotate(360deg);}
+}
 
 .form-group .form-label, .form-inline .form-label
 {
@@ -104,13 +153,6 @@ body.loading > .ajax-loader
 .form-group .slider
 {
 	margin: 10px;
-}
-
-.form-group.count
-{
-	background-color: #E4F6FF;
-	padding: 10px;
-	text-align: center;
 }
 
 .form-group.projects label
@@ -140,20 +182,22 @@ body.loading > .ajax-loader
 #map-canvas
 {
 	position: absolute;
-	left: 300px;
-	top: 53px;
+	left: 350px;
+	top: 0;
 	right: 0;
 	bottom: 0;
+	background-color: rgb(229, 227, 223);/*google maps bg color on loading*/
 }
 
 #table
 {
 	display: none;
 	position: absolute;
-	left: 300px;
-	top: 53px;
+	left: 350px;
+	top: 0;
 	right: 0;
 	bottom: 0;
+	overflow-x: auto;
 }
 
 	#table table tbody tr
@@ -166,6 +210,11 @@ table thead tr th
 	background-color: #E4F6FF;
 	font-weight: bold;
 	border-bottom: 0;
+}
+
+.table > thead {
+	margin-top: -1px!important;
+	border-bottom: 2px solid #E4F6FF;
 }
 
 .table > thead > tr > th
@@ -193,7 +242,7 @@ table thead tr th
 #search-control
 {
 	position: absolute;
-	top: 30px;
+	top: 22px;
 	right: 20px;
 }
 
@@ -212,6 +261,7 @@ table thead tr th
 	background-color: #fff;
 	z-index: 2;
 	padding: 20px;
+	margin-top: -45px;
 }
 
 #branch-profile .nav-tabs
@@ -252,12 +302,24 @@ table thead tr th
 
 #branch-profile table tr:nth-child(odd) 
 {
-    background-color: #f9f9f9;
+    /*background-color: #f9f9f9;*/
 }
 
+#branch-profile table tr.header td:first-child
+{
+	/*font-weight: bold;*/
+}
+#branch-profile table tr.subheader td:first-child
+{
+	padding-left: 20px;
+}
+#branch-profile table tr.rating td:first-child
+{
+	padding-left: 40px;
+}
 #branch-profile table tr.white
 {
-	background-color: #fff;
+	background-color: white;
 }
 
 .project-profile .title
@@ -286,9 +348,9 @@ table thead tr th
 #regions-control
 {
 	position: absolute;
-	top: 60px;
-	left: 430px;
 	font-size: 9.5pt;
+	top: 10px;
+	right: 10px;
 }
 
 #regions-control .input-group

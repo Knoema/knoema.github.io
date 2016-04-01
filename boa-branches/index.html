@@ -1,18 +1,21 @@
 ﻿<!DOCTYPE html>
 
 <html lang="en">
+
 <head>
-    <meta charset="utf-8" />
-    <title>Bank of Agriculture</title>
-    <link rel='stylesheet' type='text/css' href='https://fonts.googleapis.com/css?family=Roboto'>
-    <link rel='stylesheet' type='text/css' href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,700'>
+	<meta charset="utf-8" />
+	<title>Bank of Agriculture</title>
+	<link rel='stylesheet' type='text/css' href='https://fonts.googleapis.com/css?family=Roboto'>
+	<link rel='stylesheet' type='text/css' href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,700'>
 	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.7.3/css/bootstrap-select.min.css"/>
 	<link rel="stylesheet" type="text/css" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/css/bootstrap-select.min.css">
 	<link rel="stylesheet" type="text/css" href="slick.grid.css"/>
 	<link rel="stylesheet" type="text/css" href="style.css"/>
+	<link rel="shortcut icon" href="img/favicon.ico">
 </head>
+
 <body class="loading">
 	<div id="widthCalc" style="position: absolute; float: left; visibility: hidden; white-space: nowrap;"></div>
 
@@ -27,70 +30,93 @@
 		<div class="logo-title"></div>
 	</div>
 
-	<div id="content">
-		<div id="main-menu" class="btn-group">
-			<div class="btn btn-default active" id="map-view">Map</div>
-			<div class="btn btn-default" id="table-view">Table</div>
+	<div class="menu-bar">
+		<div class="col-xs-2">
+			<div class="side-bar-header">FILTERS</div>
 		</div>
+		<div class="col-xs-10">
+			<div class="mode-switcher">
+				<div id="main-menu" class="btn-group pull-right">
+					<div class="btn btn-default active" id="map-view">Map</div>
+					<div class="btn btn-default" id="table-view">Table</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div id="content">
+
 		<div id="filters">
-			<h1>FILTERS</h1>
 
-			<div class="form-group count">
-				<label class="form-label"></label>
+			<div class="count">
+				<label class="form-label">
+					NUMBER OF BRANCHES:&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span>
+				</label>
 			</div>
 
-			<div class="form-group">
-				<label for="size" class="form-label" style="text-transform: uppercase;">Circle size reflects</label>&nbsp;
-				<select id="size" class="selectpicker">
-					<option selected="selected" value="branches">Number of clients</option>
-					<option value="branches-credit">Credit rating</option>
-					<option value="branches-savings">Savings rating</option>
-					<option value="branches-total">Total rating</option>
-				</select>
-			</div>
+			<div class="filters">
 
-			<div class="form-group clients">
-				<label class="form-label">NUMBER OF CLIENTS</label>
-				<input type="text" class="min form-control">
-				<input type="text" class="max form-control right">
-				<div class="slider"></div>
-			</div>
+				<div class="form-group">
+					<label for="size" class="form-label" style="text-transform: uppercase;">Circle size reflects</label>
+					<select id="size" class="selectpicker">
+						<option value="branches" selected="selected">Number of clients</option>
 
-			<div class="form-group credit">
-				<label class="form-label">TOTAL CREDIT RATING</label>
-				<input type="text" class="min form-control">
-				<input type="text" class="max form-control right">
-				<div class="slider"></div>
-			</div>
+						<option value="branches" data-type="profile-attribute" data-value="Total amount, NGN"    data-TODO="THIS OPTION SHOULD BE SELECTED BY DEFAULT"               >Total amount, NGN</option>
 
-			<div class="form-group savings">
-				<label class="form-label">TOTAL SAVINGS RATING</label>
-				<input type="text" class="min form-control">
-				<input type="text" class="max form-control right">
-				<div class="slider"></div>
-			</div>
+						<option value="branches" data-type="profile-attribute" data-value="Outstanding, Total, NGN">Total outstanding amount, NGN</option>
+						<option value="branches-credit">Credit rating</option>
+						<option value="branches-savings">Savings rating</option>
+						<option value="branches-total">Total rating</option>
+					</select>
+				</div>
 
-			<div class="form-group total">
-				<label class="form-label">TOTAL RATING</label>
-				<input type="text" class="min form-control">
-				<input type="text" class="max form-control right">
-				<div class="slider"></div>
-			</div>
+				<div class="form-group clients">
+					<label class="form-label">NUMBER OF CLIENTS</label>
+					<input type="text" class="min form-control">
+					<input type="text" class="max form-control right">
+					<div class="slider"></div>
+				</div>
 
-			<div class="form-group">
-				<label for="rating-grade" class="form-label">TOTAL RATING GRADE</label>&nbsp;
-				<select id="rating-grade" class="selectpicker" multiple>
-					<option selected="selected" value="A">A</option>
-					<option selected="selected" value="B">B</option>
-					<option selected="selected" value="C">C</option>
-					<option selected="selected" value="D">D</option>
-				</select>
-			</div>
+				<div class="form-group credit">
+					<label class="form-label">TOTAL CREDIT RATING</label>
+					<input type="text" class="min form-control">
+					<input type="text" class="max form-control right">
+					<div class="slider"></div>
+				</div>
 
-			<div class="form-group projects">
-				<input type="checkbox" checked id="projects" /><img src="http://th.knoema.com/production/images/1044160/4z5penk4.png"><label for="projects">DISPLAY PROJECTS</label>
-			</div>
-		</div>		
+				<div class="form-group savings">
+					<label class="form-label">TOTAL SAVINGS RATING</label>
+					<input type="text" class="min form-control">
+					<input type="text" class="max form-control right">
+					<div class="slider"></div>
+				</div>
+
+				<div class="form-group total">
+					<label class="form-label">TOTAL RATING</label>
+					<input type="text" class="min form-control">
+					<input type="text" class="max form-control right">
+					<div class="slider"></div>
+				</div>
+
+				<div class="form-group">
+					<label for="rating-grade" class="form-label">TOTAL RATING GRADE</label>
+					<select id="rating-grade" class="selectpicker" multiple>
+						<option selected="selected" value="A">A</option>
+						<option selected="selected" value="B">B</option>
+						<option selected="selected" value="C">C</option>
+						<option selected="selected" value="D">D</option>
+					</select>
+				</div>
+
+				<div class="form-group projects">
+					<label for="projects">
+						<input type="checkbox" checked id="projects" /><img src="http://th.knoema.com/production/images/1044160/4z5penk4.png" /> DISPLAY PROJECTS
+					</label>
+				</div>
+
+			</div><!--/.filters-->
+
+		</div>
 
 		<div id="map-canvas"></div>
 
@@ -113,7 +139,7 @@
 					<option value="Edo">Edo</option>
 					<option value="Ekiti">Ekiti</option>
 					<option value="Enugu">Enugu</option>
-					<option value="FCT">FCT</option>
+					<option value="Fct, Abuja">FCT</option>
 					<option value="Gombe">Gombe</option>
 					<option value="Imo">Imo</option>
 					<option value="Jigawa">Jigawa</option>
@@ -136,7 +162,7 @@
 					<option value="Sokoto">Sokoto</option>
 					<option value="Taraba">Taraba</option>
 					<option value="Yobe">Yobe</option>
-					<option value="Abia">Zamfara</option>
+					<option value="Zamfara">Zamfara</option>
 				</select>
 			</div>
 
@@ -148,26 +174,26 @@
 		<div id="table">
 			<table class="table">
 				<thead>
-					<tr class="header">
-						<th>Name</th>
-						<th>Location</th>
-						<th>State</th>
-						<th>Number of clients</th>
-						<th>SME, NGN</th>
-						<th>Rating</th>
-						<th>Micro Agriculture, NGN</th>
-						<th>Rating</th>
-						<th>Micro Non-Agriculture, NGN</th>
-						<th>Rating</th>
-						<th>Principal, NGN</th>
-						<th>Interest, NGN</th>
-						<th>Total, NGN</th>
-						<th>Rating</th>
-						<th>Credit</th>
-						<th>Savings</th>
-						<th>Total</th>
-						<th>Grade</th>
-					</tr>
+				<tr class="header">
+					<th>Name</th>
+					<th>Location</th>
+					<th>State</th>
+					<th>Number of clients</th>
+					<th>SME, NGN</th>
+					<th>Rating</th>
+					<th>Micro Agriculture, NGN</th>
+					<th>Rating</th>
+					<th>Micro Non-Agriculture, NGN</th>
+					<th>Rating</th>
+					<th>Principal, NGN</th>
+					<th>Interest, NGN</th>
+					<th>Total, NGN</th>
+					<th>Rating</th>
+					<th>Credit</th>
+					<th>Savings</th>
+					<th>Total</th>
+					<th>Grade</th>
+				</tr>
 				</thead>
 				<tbody>
 			</table>
@@ -175,7 +201,7 @@
 
 		<div id="branch-profile">
 			<h1></h1>
-			<ul class="nav nav-tabs profile-tabs"> 
+			<ul class="nav nav-tabs profile-tabs">
 				<li class="active"><a data-tab-name="general" href="#">GENERAL INFORMATION</a></li>
 				<li><a data-tab-name="loans2" href="#">LOANS</a></li>
 			</ul>
@@ -184,7 +210,7 @@
 				<div class="wait">Please wait...</div>
 				<div id="loan-table" class="grid-container" style="width: 100%; height: 685px;"></div>
 			</div>
-			<button type="button" class="btn btn-primary" style="position: absolute; left: 20px; bottom: 20px;">Export to XLS</button>
+			<button type="button" class="btn btn-primary" style="margin-bottom: 20px;">Export to XLS</button>
 			<div class="back-button"><a href="#">Back</a></div>
 		</div>
 	</div>
@@ -212,9 +238,9 @@
 		</tr>
 	</script>
 
-	<script id="tmpl-branch-profile" type="text/x-jQuery-tmpl">				
-		<table>
-			<tr class="header">
+	<script id="tmpl-branch-profile" type="text/x-jQuery-tmpl">
+		<table class="table table-striped">
+			<tr>
 				<td>General information:</td>
 				<td></td>
 			</tr>
@@ -230,71 +256,74 @@
 				<td>Number of clients:</td>
 				<td>${data['Number of Clients']}</td>
 			</tr>
+
+
 			<tr class="header">
-				<td>Disbursement:</td>
+				<td>Disbursement</td>
 				<td></td>
 			</tr>
-			<tr>
+			<tr class="subheader">
 				<td>SME, NGN:</td>
 				<td>${data['Disbursement, SME, NGN']}</td>
 			</tr>
-			<tr>
+			<tr class="rating">
 				<td>Rating:</td>
 				<td>${data['Disbursement, SME, NGN - Rating']}</td>
 			</tr>
-			<tr>
+			<tr class="subheader">
 				<td>Micro Agriculture, NGN:</td>
 				<td>${data['Disbursement, Micro Agriculture, NGN']}</td>
 			</tr>
-			<tr>
+			<tr class="rating">
 				<td>Rating:</td>
 				<td>${data['Disbursement, Micro Agriculture, NGN - Rating']}</td>
 			</tr>
-			<tr>
+			<tr class="subheader">
 				<td>Micro Non-Agriculture, NGN:</td>
 				<td>${data['Disbursement, Micro Non-Agriculture, NGN']}</td>
 			</tr>
-			<tr>
+			<tr class="rating">
 				<td>Rating:</td>
 				<td>${data['Disbursement, Micro Non-Agriculture, NGN - Rating']}</td>
 			</tr>
+
 			<tr class="header">
-				<td>Ratings (Outstanding):</td>
-				<td></td>
+				<td colspan="2">Outstanding</td>
 			</tr>
-			<tr class="white">
+			<tr class="subheader white">
 				<td>Principal, NGN:</td>
 				<td>${data['Outstanding, Principal, NGN']}</td>
 			</tr>
-			<tr>
+			<tr class="subheader">
 				<td>Interest, NGN:</td>
 				<td>${data['Outstanding, Interest, NGN']}</td>
 			</tr>
-			<tr>
+			<tr class="subheader">
 				<td>Total, NGN:</td>
 				<td>${data['Outstanding, Total, NGN']}</td>
 			</tr>
-			<tr>
+			<tr class="subheader">
 				<td>Rating:</td>
 				<td>${data['Outstanding: Rating']}</td>
 			</tr>
+
 			<tr class="header">
 				<td>Total ratings:</td>
 				<td></td>
 			</tr>
-			<tr class="white">
+			<tr class="subheader white">
 				<td>Credit:</td>
 				<td>${data['Total ratings, Credit']}</td>
 			</tr>
-			<tr>
+			<tr class="subheader">
 				<td>Savings:</td>
 				<td>${data['Total ratings, Savings']}</td>
 			</tr>
-			<tr>
+			<tr class="subheader">
 				<td>Total:</td>
 				<td>${data['Total ratings, Total']}</td>
 			</tr>
-			<tr>
+			<tr class="subheader">
 				<td>Grade:</td>
 				<td>${data['Total ratings, Grade']}</td>
 			</tr>
@@ -308,10 +337,10 @@
 	<script id="tmpl-region-profile" type="text/x-jQuery-tmpl">
 		<div id="region-profile-popup" class="passport-popup">
 			<div class="passport__title" style="text-transform: uppercase;">${regionId} region profile</div>
-    		<div class="passport__close"></div>
-    		<div class="passport__content">
+			<div class="passport__close"></div>
+			<div class="passport__content">
 				<iframe src="http://knoema.com/resource/embed/vdttdad?state=${regionId}" scrolling="yes" frameborder="0" style="height:100%; width:100%"></iframe>
-    		</div>
+			</div>
 		</div>
 	</script>
 
@@ -326,7 +355,7 @@
 							<td>${data[key]}</td>
 						</tr>
 					{{/if}}
-				{{/each}}				
+				{{/each}}
 			</table>
 		</div>
 	</script>
@@ -341,11 +370,10 @@
 	<script src="http://knoema.com/app-script?version=2.0"></script>
 
 	<!-- dependencies of layer. I think we need to get rid of them -->
-	<script src="http://knoema.com/js/googlemap/bubbleslayer.js"></script>
-	<script src="http://knoema.com/js/googlemap/canvaslayer.js"></script>
+	<script src="http://knoema.com/js/googlemap/bubbles-overlay.js"></script>
 
 	<!-- basic script for rendering map layers -->
-	<script src="http://knoema.com/js/geoplayground/geo-playground-layer.js?v=1"></script>
+	<script src="http://knoema.com/js/geoplayground/geo-playground-layer.js?v=2"></script>
 
 	<!-- Latest compiled and minified JavaScript -->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/js/bootstrap-select.min.js"></script>
@@ -359,9 +387,9 @@
 	<script src="slick.core.js"></script>
 	<script src="slick.grid.js"></script>
 	<script src="numeral.min.js"></script>
+	<script src="lodash.min.js"></script>
 
-	<script src="boa.js"></script>
-
+	<script src="boa.js?v=1"></script>
 
 </body>
 </html>
