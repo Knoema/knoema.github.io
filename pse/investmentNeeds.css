@@ -28,14 +28,13 @@
 }
 .timeline .item {
 	float: left;
-	/*padding-right: 79px;
-	margin-right: 15px;*/
-    margin: 0 15px;
+	padding-right: 79px;
+	margin-right: 15px;
 	line-height: 30px;
     height: 30px;
 	color: #777;
 	cursor: pointer;
-	/*background: url(./Images/timeline-item-icon.png) right center no-repeat;*/
+	background: url(./Images/timeline-item-icon.png) right center no-repeat;
 }
 .timeline .item:hover {
 	color: black;
