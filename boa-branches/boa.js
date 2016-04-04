@@ -62,6 +62,7 @@
 
 		google.maps.event.addListener(this.map, 'dragend', function() {
 			self.count = 0;
+			self.update('branches');
 		});
 
 		google.maps.event.addListenerOnce(this.map, 'idle', function () {
