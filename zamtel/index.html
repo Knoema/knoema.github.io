@@ -95,6 +95,7 @@
 		<script src="./Content/libs/silviomoreto-bootstrap-select/js/bootstrap-select.min.js"></script>
 		<script src="//maps.googleapis.com/maps/api/js?libraries=places,drawing"></script>
 		<script src="./Content/libs/nanobar.min.js"></script>
+		<script type="text/javascript" src="http://knoema.com/app-script?version=2.0"></script>
 
 		<script id="passport-tmpl" type="text/template">
 			<div class="passport">
@@ -147,6 +148,19 @@
 		</script>
 
 		<script>
+			var access_token = "";
+
+			$(function () {
+				/* Authentication via access token  */
+				var params = Knoema.Helpers.parseHashParams();
+				if (params == null)
+					Knoema.Helpers.getAccessToken('JaatuSo', window.location, false, 'read_resources');
+				else {
+					if (params["access_token"] != undefined)
+						access_token = params["access_token"];
+				}
+			});
+
 			google.maps.event.addDomListener(window, 'load', function () {
 				var $mainMenu = $('#main-menu__items');
 				$mainMenu.on('click', 'a', function () {
@@ -659,11 +673,16 @@
 						promises.push(
 							getDimensionDetails(dimensionId)
 								.then(function ($select, dimensionDetails) {
-									var $options = dimensionDetails.items.map(function (item) {
-										return $('<option>').val(item.key).text(item.name);
-									});
-									$select.append($options);
-									$select.selectpicker('refresh');
+									if (typeof dimensionDetails == "string") {
+										$(".panel-body").addClass("error").html(dimensionDetails).append("<p><a href='https://knoema.com/sys/login?returnUrl=" + location.protocol + '//' + location.host + location.pathname + "'>Try to use</a> different account</p>");
+									}
+									else {
+										var $options = dimensionDetails.items.map(function (item) {
+											return $('<option>').val(item.key).text(item.name);
+										});
+										$select.append($options);
+										$select.selectpicker('refresh');
+									}
 								}.bind(this, $select))
 						);
 					}
@@ -672,7 +691,7 @@
 				}
 
 				function getDimensionDetails(dimensionId) {
-					return $.get('http://knoema.com/api/1.0/meta/dataset/qcgaiaf/dimension/' + dimensionId + '?client_id=EZj54KGFo3rzIvnLczrElvAitEyU28DGw9R73tif');
+					return $.get('http://knoema.com/api/1.0/meta/dataset/rmvtalg/dimension/' + dimensionId + '?access_token=' + access_token);
 				}
 
 				var datasetDetailsQueryState = null;
@@ -683,7 +702,7 @@
 					}
 
 					var data = {
-						Dataset: "qcgaiaf",
+						Dataset: "rmvtalg",
 						Filter: filters,
 						Frequencies: [],
 						Header: [],
@@ -692,7 +711,7 @@
 						Stub: []
 					};
 
-					var url = 'http://knoema.com/api/1.0/data/details?client_id=EZj54KGFo3rzIvnLczrElvAitEyU28DGw9R73tif&page_id=qcgaiaf';
+					var url = 'http://knoema.com/api/1.0/data/details?page_id=rmvtalg&access_token=' + access_token;
 
 					return datasetDetailsQueryState = $.post(url, data);
 				}
