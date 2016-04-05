@@ -116,6 +116,7 @@
 
 				if (id.indexOf('branches') > -1) {
 					$('.count label').text('NUMBER OF BRANCHES: ' + self.count);
+					self.count = 0;
 					self.fillFilters();
 				}
 
@@ -836,3 +837,4 @@
 		new app().run();
 	});
 })();
+
