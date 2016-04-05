@@ -621,6 +621,8 @@
 				bounds = self.layers.branches.layer.bounds;
 			}
 			self.map.fitBounds(bounds);
+		
+			google.maps.event.trigger(self.map, 'resize');
 		});
 	};
 	
