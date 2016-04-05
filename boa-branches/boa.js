@@ -620,9 +620,16 @@
 			if (countOfVisibleFeatures == 0) {
 				bounds = self.layers.branches.layer.bounds;
 			}
+
 			self.map.fitBounds(bounds);
-		
-			google.maps.event.trigger(self.map, 'resize');
+			setTimeout(function() {
+				google.maps.event.trigger(self.map, 'resize');
+			}, 100);
+
+			//self.map.fitBounds(bounds, function() {
+			//	google.maps.event.trigger(self.map, 'resize');
+			//});
+
 		});
 	};
 	
