@@ -11,37 +11,220 @@
     <title>Electricity Power Plants</title>
 
     <link href="https://fonts.googleapis.com/css?family=PT+Sans" rel="stylesheet" type="text/css">
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
 
 <link href="styles.css" rel="stylesheet"></head>
 
 <body>
 
-
-    <div class="container-fluid loading" id="application">
+    <div class="app-container loading" id="application">
         <div class="ajax-loader"></div>
-        <div class="row">
-            <div class="col-xs-3">
-                <div id="sidebar-holder"></div>
+
+            <div id="header">
+                <a href="/epp" class="logo"></a>
+                <ul class="menu">
+                    <li class="active"><a href="#">POWER PLANTS BY TYPE</a></li>
+                    <li><a href="#/capacity-heat-map">CAPACITY HEAT MAP</a></li>
+                    <li><a href="#/power-plants-profile">POWER PLANTS PROFILE</a></li>
+                    <li><a href="#/about">ABOUT</a></li>
+                </ul>
             </div>
-            <div class="col-xs-9 map-holder">
+
+            <div id="sidebar-holder"></div>
+
+            <div class="map-holder">
                 <div class="map-canvas map-component"></div>
+
+                <div id="regions-control" class="form-inline">
+                    <div class="input-group">
+                        <!--<span class="input-group-addon">COUNTRY:</span>-->
+                        <select id="regions">
+                            <option value="-1">Select a country</option>
+                            <option value="Algeria">Algeria</option>
+                            <option value="Angola">Angola</option>
+                            <option value="Benin">Benin</option>
+                            <option value="Botswana">Botswana</option>
+                            <option value="Burkina Faso">Burkina Faso</option>
+                            <option value="Burundi">Burundi</option>
+                            <!--no geo json--><option value="Cape Verde">Cape Verde</option>
+                            <option value="Cameroon">Cameroon</option>
+                            <option value="Central African Republic">Central African Republic</option>
+                            <option value="Chad">Chad</option>
+                            <!--no geo json--><option value="Comoros">Comoros</option>
+                            <option value="Ivory Coast">Ivory Coast</option>
+                            <option value="Democratic Republic of the Congo">Democratic Republic of the Congo</option>
+                            <option value="Djibouti">Djibouti</option>
+                            <option value="Egypt">Egypt</option>
+                            <option value="Equatorial Guinea">Equatorial Guinea</option>
+                            <option value="Eritrea">Eritrea</option>
+                            <option value="Ethiopia">Ethiopia</option>
+                            <option value="Gabon">Gabon</option>
+                            <option value="Gambia">Gambia</option>
+                            <option value="Ghana">Ghana</option>
+                            <option value="Guinea">Guinea</option>
+                            <option value="Guinea Bissau">Guinea Bissau</option>
+                            <option value="Kenya">Kenya</option>
+                            <option value="Lesotho">Lesotho</option>
+                            <option value="Liberia">Liberia</option>
+                            <option value="Libya">Libya</option>
+                            <option value="Madagascar">Madagascar</option>
+                            <option value="Malawi">Malawi</option>
+                            <option value="Mali">Mali</option>
+                            <option value="Mauritania">Mauritania</option>
+                            <!--no geo json--><option value="Mauritius">Mauritius</option>
+                            <option value="Morocco">Morocco</option>
+                            <option value="Mozambique">Mozambique</option>
+                            <option value="Namibia">Namibia</option>
+                            <option value="Niger">Niger</option>
+                            <option value="Nigeria">Nigeria</option>
+                            <option value="Republic of the Congo">Republic of the Congo</option>
+                            <option value="Rwanda">Rwanda</option>
+                            <!--no geo json--><option value="Sao Tome and Principe">Sao Tome and Principe</option>
+                            <option value="Senegal">Senegal</option>
+                            <!--no geo json--><option value="Seychelles">Seychelles</option>
+                            <option value="Sierra Leone">Sierra Leone</option>
+                            <option value="Somalia">Somalia</option>
+                            <option value="South Africa">South Africa</option>
+                            <option value="South Sudan">South Sudan</option>
+                            <option value="Sudan">Sudan</option>
+                            <option value="Swaziland">Swaziland</option>
+                            <option value="Togo">Togo</option>
+                            <option value="Tunisia">Tunisia</option>
+                            <option value="Uganda">Uganda</option>
+                            <option value="United Republic of Tanzania">United Republic of Tanzania</option>
+                            <option value="Zambia">Zambia</option>
+                            <option value="Zimbabwe">Zimbabwe</option>"
+                        </select>
+                    </div>
+
+                    <div class="input-group" style="background-color: transparent;">
+                        <button class="region-profile-button">Show country profile</button>
+                    </div>
+                </div>
             </div>
-        </div>
     </div>
 
-    <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.6.1/lodash.js"></script>
+    <div id="dashboard" style="position: absolute; left: 0; top: 60px; bottom: 0; right: 0; overflow: hidden; display: none;">
+        <iframe src="" style="width: 100%; height: 100%;"></iframe>
+    </div>
 
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=visualization,drawing"></script>
+    <script src="js/vendor/jquery.min.js"></script>
+
+    <script src="js/vendor/jquery.tmpl.min.js"></script>
+    <script src="js/vendor/lodash.min.js"></script>
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
 
     <script src="http://knoema.com/app-script?version=2.0"></script>
     <script>
         Knoema.Helpers.clientId = 'EZj54KGFo3rzIvnLczrElvAitEyU28DGw9R73tif';
     </script>
 
-    <script src="http://knoema.com/Js/GoogleMap/markerclusterer.js?v=1"></script>
-    <script src="http://knoema.com/js/geoplayground/geo-playground-layer.js?v=1"></script>
+    <script id="tmpl-region-profile" type="text/x-jQuery-tmpl">
+		<div id="region-profile-popup" class="passport-popup">
+			<div class="passport__title" style="text-transform: uppercase;">${country} country profile</div>
+    		<div class="passport__close"></div>
+    		<div class="passport__content">
+				<iframe src="${embedUrl}" scrolling="yes" frameborder="0" style="height:100%; width:100%"></iframe>
+    		</div>
+		</div>
+	</script>
 
-<script src="bundle.js"></script></body>
+    <script id="tmpl-tooltip" type="text/x-jQuery-tmpl">
+        <div class="map-tooltip">
+            <h4>${data.Name}</h4>
+            <table class="table table-condensed">
+                <tbody>
+                    <tr>
+                        <td>Category</td>
+                        <td>${data.Category}</td>
+                    </tr>
+                    <tr>
+                        <td>Type</td>
+                        <td>${data.Type}</td>
+                    </tr>
+                    <tr>
+                        <td>Capacity (MW)</td>
+                        <td>${data.Capacity}</td>
+                    </tr>
+                    <tr>
+                        <td>Status</td>
+                        <td>${data.Status}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </script>
+
+    <script id="tmpl-side-bar" type="text/x-jQuery-tmpl">
+        <div class="side-bar">
+            <div class="layers-holder">
+
+                <h5>Energy Source</h5>
+                <ul class="SideBar" id="type-filter">
+                    {{each sideBarItems}}
+                        <li>
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" value="" data-type-filter checked data-type="${itemName}"> <span class="icon ${itemClassName}" href="#">${itemName}</span>
+                                </label>
+                            </div>
+                        </li>
+                    {{/each}}
+                </ul>
+
+                <h5>Filter by category</h5>
+                <ul class="SideBar" id="category-filter">
+                        <li>
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" value="" data-category-filter data-type="Renewable" checked> Renewable
+                                </label>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" value="" data-category-filter data-type="Non-renewable" checked> Non - Renewable
+                                </label>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" value="" data-category-filter data-type="Other" checked> Other
+                                </label>
+                            </div>
+                        </li>
+                </ul>
+
+            </div>
+
+            <div class="footer">
+                <div class="logo-afbd pull-left"></div>
+                <div class="powered-by-knoema"></div>
+            </div>
+        </div>
+    </script>
+
+    <script src="http://knoema.com/Js/GoogleMap/marker-clusterer.js?v=1"></script>
+    <script src="http://knoema.com/js/geoplayground/geo-playground-layer.js?v=1"></script>
+    <script src="js/utils/getDataByType_old.js"></script>
+
+    <script src="js/index.js"></script>
+
+    <script>
+        google.maps.event.addDomListener(window, 'load', function () {
+            window.app = new Application({
+                elementId: 'application',
+                geoPlaygroundId: 'hmxahdf' //cjgphfe - old
+            });
+        });
+    </script>
+
+</body>
 </html>
 
