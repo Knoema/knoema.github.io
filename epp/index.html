@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -14,95 +13,43 @@
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
 
-<link href="styles.css" rel="stylesheet"></head>
-
+    <link href="js/vendor/jquery-ui.css" rel="stylesheet">
+    <link href="styles.css" rel="stylesheet">
+</head>
 <body>
 
     <div class="app-container loading" id="application">
         <div class="ajax-loader"></div>
 
-            <div id="header">
-                <a href="/epp" class="logo"></a>
-                <ul class="menu">
-                    <li class="active"><a href="#">POWER PLANTS BY TYPE</a></li>
-                    <li><a href="#/capacity-heat-map">CAPACITY HEAT MAP</a></li>
-                    <li><a href="#/power-plants-profile">POWER PLANTS PROFILE</a></li>
-                    <li><a href="#/about">ABOUT</a></li>
-                </ul>
-            </div>
+        <div id="header">
+            <a href="/epp" class="logo"></a>
+            <ul class="menu">
+                <li class="active"><a href="#">POWER PLANTS BY TYPE</a></li>
+                <li><a href="#/capacity-heat-map">CAPACITY HEAT MAP</a></li>
+                <li><a href="#/power-plants-profile">POWER PLANTS PROFILE</a></li>
+                <li><a href="#/about">ABOUT</a></li>
+            </ul>
+        </div>
 
-            <div id="sidebar-holder"></div>
+        <div id="sidebar-holder"></div>
 
-            <div class="map-holder">
-                <div class="map-canvas map-component"></div>
+        <div id="overview-holder"></div>
 
-                <div id="regions-control" class="form-inline">
-                    <div class="input-group">
-                        <!--<span class="input-group-addon">COUNTRY:</span>-->
-                        <select id="regions">
-                            <option value="-1">Select a country</option>
-                            <option value="Algeria">Algeria</option>
-                            <option value="Angola">Angola</option>
-                            <option value="Benin">Benin</option>
-                            <option value="Botswana">Botswana</option>
-                            <option value="Burkina Faso">Burkina Faso</option>
-                            <option value="Burundi">Burundi</option>
-                            <!--no geo json--><option value="Cape Verde">Cape Verde</option>
-                            <option value="Cameroon">Cameroon</option>
-                            <option value="Central African Republic">Central African Republic</option>
-                            <option value="Chad">Chad</option>
-                            <!--no geo json--><option value="Comoros">Comoros</option>
-                            <option value="Ivory Coast">Ivory Coast</option>
-                            <option value="Democratic Republic of the Congo">Democratic Republic of the Congo</option>
-                            <option value="Djibouti">Djibouti</option>
-                            <option value="Egypt">Egypt</option>
-                            <option value="Equatorial Guinea">Equatorial Guinea</option>
-                            <option value="Eritrea">Eritrea</option>
-                            <option value="Ethiopia">Ethiopia</option>
-                            <option value="Gabon">Gabon</option>
-                            <option value="Gambia">Gambia</option>
-                            <option value="Ghana">Ghana</option>
-                            <option value="Guinea">Guinea</option>
-                            <option value="Guinea Bissau">Guinea Bissau</option>
-                            <option value="Kenya">Kenya</option>
-                            <option value="Lesotho">Lesotho</option>
-                            <option value="Liberia">Liberia</option>
-                            <option value="Libya">Libya</option>
-                            <option value="Madagascar">Madagascar</option>
-                            <option value="Malawi">Malawi</option>
-                            <option value="Mali">Mali</option>
-                            <option value="Mauritania">Mauritania</option>
-                            <!--no geo json--><option value="Mauritius">Mauritius</option>
-                            <option value="Morocco">Morocco</option>
-                            <option value="Mozambique">Mozambique</option>
-                            <option value="Namibia">Namibia</option>
-                            <option value="Niger">Niger</option>
-                            <option value="Nigeria">Nigeria</option>
-                            <option value="Republic of the Congo">Republic of the Congo</option>
-                            <option value="Rwanda">Rwanda</option>
-                            <!--no geo json--><option value="Sao Tome and Principe">Sao Tome and Principe</option>
-                            <option value="Senegal">Senegal</option>
-                            <!--no geo json--><option value="Seychelles">Seychelles</option>
-                            <option value="Sierra Leone">Sierra Leone</option>
-                            <option value="Somalia">Somalia</option>
-                            <option value="South Africa">South Africa</option>
-                            <option value="South Sudan">South Sudan</option>
-                            <option value="Sudan">Sudan</option>
-                            <option value="Swaziland">Swaziland</option>
-                            <option value="Togo">Togo</option>
-                            <option value="Tunisia">Tunisia</option>
-                            <option value="Uganda">Uganda</option>
-                            <option value="United Republic of Tanzania">United Republic of Tanzania</option>
-                            <option value="Zambia">Zambia</option>
-                            <option value="Zimbabwe">Zimbabwe</option>"
-                        </select>
-                    </div>
+        <div id="map-holder">
+            <div id="map-canvas"></div>
 
-                    <div class="input-group" style="background-color: transparent;">
-                        <button class="region-profile-button">Show country profile</button>
-                    </div>
+            <div id="regions-control" class="form-inline">
+                <div id="region-selector" class="input-group"></div>
+
+                <div class="input-group" style="background-color: transparent;">
+                    <button class="region-profile-button">Show country profile</button>
+                </div>
+
+                <div class="input-group" style="background-color: transparent;">
+                    <button class="area-profile-button">Show area profile</button>
                 </div>
             </div>
+        </div>
     </div>
 
     <div id="dashboard" style="position: absolute; left: 0; top: 60px; bottom: 0; right: 0; overflow: hidden; display: none;">
@@ -111,8 +58,8 @@
 
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=visualization,drawing"></script>
     <script src="js/vendor/jquery.min.js"></script>
-
     <script src="js/vendor/jquery.tmpl.min.js"></script>
+    <script src="js/vendor/jquery-ui.min.js"></script>
     <script src="js/vendor/lodash.min.js"></script>
 
     <!-- Latest compiled and minified JavaScript -->
@@ -121,6 +68,16 @@
     <script src="http://knoema.com/app-script?version=2.0"></script>
     <script>
         Knoema.Helpers.clientId = 'EZj54KGFo3rzIvnLczrElvAitEyU28DGw9R73tif';
+    </script>
+
+    <script id="tmpl-regions-control" type="text/x-jQuery-tmpl">
+        <!--<span class="input-group-addon">COUNTRY:</span>-->
+        <select id="regions">
+            <option value="">Select a country</option>
+            {{each regions}}
+                <option value="${regionid}">${name}</option>
+            {{/each}}
+        </select>
     </script>
 
     <script id="tmpl-region-profile" type="text/x-jQuery-tmpl">
@@ -201,12 +158,48 @@
                         </li>
                 </ul>
 
+                <div class="form-group capacity">
+                    <h5>Filter by Capacity</h5>
+                    <input type="text" class="min form-control">
+                    <input type="text" class="max form-control right">
+                    <div class="slider"></div>
+                </div>
+
             </div>
 
             <div class="footer">
                 <div class="logo-afbd pull-left"></div>
                 <div class="powered-by-knoema"></div>
             </div>
+        </div>
+    </script>
+
+    <script id="tmpl-overview" type="text/x-jQuery-tmpl">
+        <div class="overview">
+            <div class=country-card>
+                <h3 class="title">${regionName}</h5>
+            </div>
+            <hr/>
+            <h5>Existing Power Plants</h5>
+            <div class="stations-by-type">
+                <ul>
+                    {{each types}}
+                        <li><span class="type icon ${itemClassName}">${itemName}</span><span class="count">${stationsByType[itemName] ? stationsByType[itemName] : '-'}</span></li>
+                    {{/each}}
+                </ul>
+            </div>
+
+            <div class="stations">
+                <ul>
+                    <li class="header">
+                        <span class="station">Station<span><span class="value">Capacity (MW)</span>
+                    </li>
+                    {{each stations}}
+                        <li><span class="station">${name}<span><span class="value">${capacity}</span></li>
+                    {{/each}}
+                </ul>
+            </div>
+
         </div>
     </script>
 
@@ -219,8 +212,9 @@
     <script>
         google.maps.event.addDomListener(window, 'load', function () {
             window.app = new Application({
-                elementId: 'application',
-                geoPlaygroundId: 'hmxahdf' //cjgphfe - old
+                selector: '#application',
+                geoPlaygroundId: 'hmxahdf', //cjgphfe - old
+                datasetId: 'lpxhpcb'
             });
         });
     </script>
