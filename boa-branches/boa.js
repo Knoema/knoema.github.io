@@ -225,9 +225,14 @@
 						return _.isEmpty(d[1]);
 					})[0];
 
+					////TODO Implement excluded columns properly (now it is "index > 9" check in template)
+					//var excludeColumn = function(c) {
+					//	return ["SORT No", "SORT items", "Remarks Next Adjustment", "Zonal Stops", "Deptal/brs - s/no", "Directorate/Zonal - S/no", "Department", "State", "Zone", "Business Outlets"].indexOf(c.name) > -1;
+					//};
 					var staffData = {
 						manager: {
 							managerName: manager[20],
+							//TODO Use length instead
 							numberOfStaff: manager[19]
 						},
 						staffColumns: branchStuff.columns,
@@ -245,8 +250,12 @@
 					$('#branch-profile .tab.loans2').data('branch', branchName);
 
 					$('.nav-tabs a').first().click();
+
+					//$('.tab.active').position()
+
 					$('#branch-profile').css({
-						height: $('#content').height() + 45
+						//"background-color": "red",
+						"height": $('#content').height() + 45
 					}).show();
 
 				});
@@ -754,12 +763,6 @@
 					gridColumns.push(gridColumn);
 				}
 			});
-
-			/*gridColumns.forEach(function(gridColumn) { 
-				var headerWidth = calcWidth(gridColumn.name, 'bold');
-				gridColumnsDict[gridColumn.field] = gridColumn;
-				gridColumn.width = headerWidth < 250 ? headerWidth : 250
-			});*/
 
 			var notEmptyColumns = [];
 			var rows = [];

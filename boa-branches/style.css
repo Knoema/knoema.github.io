@@ -457,3 +457,21 @@ table thead tr th
 .tab.loans2.loading > .wait {
 	display: block;
 }
+
+/*For some reason tmpl excludes this element*/
+.staff-holder {
+	/*font-size: 80%;*/
+	background-color: red;
+}
+
+.staff {
+	font-size: 90%;
+}
+
+.manager {
+	margin-bottom: 10px;
+}
+
+.manager span.title {
+	color: gray;
+}

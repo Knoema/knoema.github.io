@@ -219,18 +219,12 @@
 
 	<script id="tmpl-staff" type="text/x-jQuery-tmpl">
 		<div class="staff-holder">
-			<h3>Manager</h3>
-			<div>
-				<strong>Name:</strong>&nbsp;${staffData.manager.managerName}
-				<br/>
-				<strong>Number of staff:</strong>&nbsp;${staffData.manager.numberOfStaff}
-			</div>
-			<h3>Staff</h3>
-			<table>
+			<h4 class="manager"><span class="title">Manager:</span> ${staffData.manager.managerName}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="title">Number of staff:<span>&nbsp;&nbsp;&nbsp;<span class="label label-default">${staffData.manager.numberOfStaff}</span></h4>
+			<table class="table table-condensed">
 				<thead>
 					<tr>
 						{{each(i, col) staffData.staffColumns}}
-							{{if i !== 1}}
+							{{if i > 9}}
 								<th>${col.name}</th>
 							{{/if}}
 						{{/each}}
@@ -240,7 +234,7 @@
 					{{each(i, staffEntry) staffData.staff}}
 						<tr>
 							{{each(j, columnValue) staffEntry}}
-								{{if j !== 1}}
+								{{if j > 9}}
 									<td>${columnValue}</td>
 								{{/if}}
 							{{/each}}
