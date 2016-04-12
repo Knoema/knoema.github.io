@@ -202,16 +202,54 @@
 			<ul class="nav nav-tabs profile-tabs">
 				<li class="active"><a data-tab-name="general" href="#">GENERAL INFORMATION</a></li>
 				<li><a data-tab-name="loans2" href="#">LOANS</a></li>
+				<li><a data-tab-name="staff" href="#">STAFF</a></li>
 			</ul>
 			<div class="tab general active"></div>
 			<div class="tab loans2">
 				<div class="wait">Please wait...</div>
 				<div id="loan-table" class="grid-container" style="width: 100%; height: 685px;"></div>
 			</div>
+			<div class="tab staff">
+				<h1>Stuff data goes here</h1>
+			</div>
 			<button type="button" class="btn btn-primary" style="margin-bottom: 20px;">Export to XLS</button>
 			<div class="back-button"><a href="#">Back</a></div>
 		</div>
 	</div>
+
+	<script id="tmpl-staff" type="text/x-jQuery-tmpl">
+		<div class="staff-holder">
+			<h3>Manager</h3>
+			<div>
+				<strong>Name:</strong>&nbsp;${staffData.manager.managerName}
+				<br/>
+				<strong>Number of staff:</strong>&nbsp;${staffData.manager.numberOfStaff}
+			</div>
+			<h3>Staff</h3>
+			<table>
+				<thead>
+					<tr>
+						{{each(i, col) staffData.staffColumns}}
+							{{if i !== 1}}
+								<th>${col.name}</th>
+							{{/if}}
+						{{/each}}
+					</tr>
+				</thead>
+				<tbody>
+					{{each(i, staffEntry) staffData.staff}}
+						<tr>
+							{{each(j, columnValue) staffEntry}}
+								{{if j !== 1}}
+									<td>${columnValue}</td>
+								{{/if}}
+							{{/each}}
+						</tr>
+					{{/each}}
+				</tbody>
+			</table>
+		</div>
+	</script>
 
 	<script id="tmpl-branch" type="text/x-jQuery-tmpl">
 		<tr >
@@ -328,6 +366,11 @@
 		</table>
 	</script>
 
+	<!--
+	<script id="tmpl-loans" type="text/x-jQuery-tmpl">
+		<iframe src="http://knoema.com/resource/embed/ihojpsg/first?boa-branch=${data['Business Outlets']}&noHeader=1" scrolling="no" frameborder="0" style="height:600px; width:100%"></iframe>
+	</script>
+	-->
 	<script id="tmpl-loans" type="text/x-jQuery-tmpl">
 		<iframe src="http://knoema.com/resource/embed/ihojpsg/first?boa-branch=${data['Business Outlets']}&noHeader=1" scrolling="no" frameborder="0" style="height:600px; width:100%"></iframe>
 	</script>

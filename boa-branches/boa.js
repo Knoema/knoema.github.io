@@ -22,6 +22,14 @@
 
 		this.getRadius = null;
 
+		//Ogoja -> 1000010
+		self.branches = {};
+		$.getJSON('//knoema.com/api/1.0/meta/dataset/srvintb/dimension/business-outlets', function(branchDimension) {
+			_.each(branchDimension.items, function(item) {
+				self.branches[item.name] = item.key;
+			});
+		});
+
 		//TODO Load these layers as part of the geoplayground object
 		this.meta = {
 			'branches': '8576b262-f9be-684a-b2e8-002339c4bf36',
@@ -178,6 +186,27 @@
 		};
 
 		var self = this;
+		var branchName = data['Business Outlets'];// -> Ogoja
+
+		var dataDescriptor = {
+			"Header": [],
+			"Stub": [],
+			"Filter": [
+				{
+					"DimensionId": "business-outlets",
+					"Members": [
+						self.branches[branchName]
+					],
+					"DimensionName": "Business Outlets",
+					"DatasetId": "srvintb",
+					"Order": "0"
+				}
+			],
+			"Frequencies": [],
+			"Dataset": "srvintb",
+			"Segments": null,
+			"MeasureAggregations": null
+		};
 
 		switch (id) {
 			case 'projects':
@@ -186,15 +215,58 @@
 				this.infoWindow.open(this.map);
 				break;
 			default:
-				$('#branch-profile h1').text(data['Business Outlets']);
-				$('#branch-profile .tab.general').html($('#tmpl-branch-profile').tmpl({ data: copy }));
 
-				$('#branch-profile .tab.loans2').data('branch', data['Business Outlets']);
+				Knoema.Helpers.post('/api/1.0/data/details', dataDescriptor, function(branchStuff) {
 
-				$('.nav-tabs a').first().click();
-				$('#branch-profile').css({
-					height: $('#content').height() + 45
-				}).show();
+					//console.log('branchStuff', branchStuff);
+
+					var ddd = _.chunk(branchStuff.data, branchStuff.columns.length);
+
+					var manager = _.find(ddd, function(d) {return d[20]});
+
+					//"First Name", "Middle Name"
+					var firstNameIndex = _.findIndex(branchStuff.columns, function(d) {return d['name'] === 'First Name'});
+					var lastNameIndex = _.findIndex(branchStuff.columns, function(d) {return d['name'] === 'First Name'});
+
+					var staff = _.chain(ddd)
+						.filter(function(d) {
+							//please display all rows where [SORT Items] not empty,
+							return d[1];
+						})
+						.sort(function(d) {
+							//ordered by [SORT No]
+							return d[0];
+						}).value();
+
+					//console.log('branchStuff.columns', branchStuff.columns);
+					//console.log('staff', staff);
+
+					var staffData = {
+						manager: {
+							managerName: manager[20],
+							numberOfStaff: manager[19]
+						},
+						staffColumns: branchStuff.columns,
+						staff: staff
+					};
+					var staffContent = $('#tmpl-staff').tmpl({
+						staffData: staffData
+					}).html();
+
+					$('#branch-profile').find('.staff').html(staffContent);
+
+					$('#branch-profile h1').text(data['Business Outlets']);
+					$('#branch-profile .tab.general').html($('#tmpl-branch-profile').tmpl({ data: copy }));
+
+					$('#branch-profile .tab.loans2').data('branch', branchName);
+
+					$('.nav-tabs a').first().click();
+					$('#branch-profile').css({
+						height: $('#content').height() + 45
+					}).show();
+
+				});
+
 				break;
 		}
 	};

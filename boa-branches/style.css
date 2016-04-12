@@ -210,6 +210,7 @@ table thead tr th
 	background-color: #E4F6FF;
 	font-weight: bold;
 	border-bottom: 0;
+	vertical-align: top;
 }
 
 .table > thead {
