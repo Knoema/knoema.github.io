@@ -279,6 +279,7 @@ table thead tr th
 #branch-profile .tab.active
 {
 	display: block;
+	background-color: white;
 }
 
 #branch-profile h1 
@@ -474,4 +475,8 @@ table thead tr th
 
 .manager span.title {
 	color: gray;
+}
+
+.tab-content {
+	overflow-x: auto;
 }

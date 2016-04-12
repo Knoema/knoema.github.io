@@ -242,20 +242,23 @@
 						staffData: staffData
 					}).html();
 
-					$('#branch-profile').find('.staff').html(staffContent);
+					$('#branch-profile').find('.staff').find('.tab-content').html(staffContent);
 
 					$('#branch-profile h1').text(data['Business Outlets']);
-					$('#branch-profile .tab.general').html($('#tmpl-branch-profile').tmpl({ data: copy }));
+					$('#branch-profile').find('.general').find('.tab-content').html($('#tmpl-branch-profile').tmpl({ data: copy }));
 
 					$('#branch-profile .tab.loans2').data('branch', branchName);
 
 					$('.nav-tabs a').first().click();
 
-					//$('.tab.active').position()
+					var contentHeight  = $('#content').height();
+
+					$('#branch-profile').find('.tab-content').height(contentHeight - 110);
 
 					$('#branch-profile').css({
-						//"background-color": "red",
-						"height": $('#content').height() + 45
+						//"background-color": "goldenrod",
+						"top": 0,
+						"height": contentHeight + 45
 					}).show();
 
 				});

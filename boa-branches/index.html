@@ -204,15 +204,17 @@
 				<li><a data-tab-name="loans2" href="#">LOANS</a></li>
 				<li><a data-tab-name="staff" href="#">STAFF</a></li>
 			</ul>
-			<div class="tab general active"></div>
-			<div class="tab loans2">
+			<div class="tab general active">
+				<div class="tab-content"></div>
+			</div>
+			<div class="tab loans2 tab-content">
 				<div class="wait">Please wait...</div>
 				<div id="loan-table" class="grid-container" style="width: 100%; height: 685px;"></div>
 			</div>
 			<div class="tab staff">
-				<h1>Stuff data goes here</h1>
+				<div class="tab-content"></div>
 			</div>
-			<button type="button" class="btn btn-primary" style="margin-bottom: 20px;">Export to XLS</button>
+			<!--<button type="button" class="btn btn-primary" style="margin-bottom: 20px;">Export to XLS</button>-->
 			<div class="back-button"><a href="#">Back</a></div>
 		</div>
 	</div>
@@ -271,10 +273,6 @@
 	<script id="tmpl-branch-profile" type="text/x-jQuery-tmpl">
 		<table class="table table-striped">
 			<tr>
-				<td>General information:</td>
-				<td></td>
-			</tr>
-			<tr>
 				<td>Location:</td>
 				<td>${data['Location']}</td>
 			</tr>
@@ -286,8 +284,6 @@
 				<td>Number of clients:</td>
 				<td>${data['Number of Clients']}</td>
 			</tr>
-
-
 			<tr class="header">
 				<td>Disbursement</td>
 				<td></td>
