@@ -22,10 +22,12 @@
 
 		this.getRadius = null;
 
+		//TODO Refactor using branchKeys
 		//Ogoja -> 1000010
 		self.branches = {};
 		$.getJSON('//knoema.com/api/1.0/meta/dataset/srvintb/dimension/business-outlets', function(branchDimension) {
 			_.each(branchDimension.items, function(item) {
+				//TODO Refactor using branchKeys
 				self.branches[item.name] = item.key;
 			});
 		});
@@ -195,6 +197,7 @@
 				{
 					"DimensionId": "business-outlets",
 					"Members": [
+						//TODO Refactor using branchKeys
 						self.branches[branchName]
 					],
 					"DimensionName": "Business Outlets",
@@ -217,29 +220,10 @@
 			default:
 
 				Knoema.Helpers.post('/api/1.0/data/details', dataDescriptor, function(branchStuff) {
-
-					//console.log('branchStuff', branchStuff);
-
-					var ddd = _.chunk(branchStuff.data, branchStuff.columns.length);
-
-					var manager = _.find(ddd, function(d) {return d[20]});
-
-					//"First Name", "Middle Name"
-					var firstNameIndex = _.findIndex(branchStuff.columns, function(d) {return d['name'] === 'First Name'});
-					var lastNameIndex = _.findIndex(branchStuff.columns, function(d) {return d['name'] === 'First Name'});
-
-					var staff = _.chain(ddd)
-						.filter(function(d) {
-							//please display all rows where [SORT Items] not empty,
-							return d[1];
-						})
-						.sort(function(d) {
-							//ordered by [SORT No]
-							return d[0];
-						}).value();
-
-					//console.log('branchStuff.columns', branchStuff.columns);
-					//console.log('staff', staff);
+					var staff = _.chunk(branchStuff.data, branchStuff.columns.length);
+					var manager = _.remove(staff, function(d) {
+						return _.isEmpty(d[1]);
+					})[0];
 
 					var staffData = {
 						manager: {
@@ -276,6 +260,7 @@
 	};
 
 	app.prototype.getLoanData = function (boaBranchName) {
+		//TODO Refactor usig Knoema.Helpers.post?
 		return $.post('http://knoema.com/api/1.0/data/details?client_id=EZj54KGFo3rzIvnLczrElvAitEyU28DGw9R73tif&page_id=' + datasetId, {
 			Dataset: datasetId,
 			Filter: [{
