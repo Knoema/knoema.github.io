@@ -30,6 +30,8 @@
 
 		this.getRadius = null;
 
+		this.staffGrid = null;
+
 		//TODO Refactor using branchKeys
 		//Ogoja -> 1000010
 		self.branches = {};
@@ -254,6 +256,51 @@
 					}).html();
 
 					$('#branch-profile').find('.staff').find('.tab-content').html(staffContent);
+
+					/*
+					var staffColumns = _.map(_.slice(branchStuff.columns, 10), function(c) {
+						return {
+							id: c.name,
+							name: c.name,
+							field: c.name
+						}
+					})
+
+					var staffData = _.map(staff, function(s) {
+						var d = {};
+						var arr = _.slice(s, 10);
+						for (var i = 0; i < staffColumns.length; i++) {
+							d[staffColumns[i].name] = arr[i];
+						}
+						return d;
+					});
+
+					//For some reason can't render all cells
+					$('#staff-slickgrid').css({
+						height: 300,
+						width: '100%'
+					});
+
+					//container, data, columns, options
+					self.staffGrid = new Slick.Grid(
+						//container
+						'#staff-slickgrid',
+
+						//data
+						staffData,
+
+						//columns
+						staffColumns,
+
+						//options
+						{
+							enableColumnReorder: false,
+							syncColumnCellResize: true
+						});
+
+					self.staffGrid.resizeCanvas();
+					self.staffGrid.render();
+					*/
 
 					$('#branch-profile h1').text(data['Business Outlets']);
 					$('#branch-profile').find('.general').find('.tab-content').html($('#tmpl-branch-profile').tmpl({ data: copy }));

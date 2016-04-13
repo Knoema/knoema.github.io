@@ -218,10 +218,19 @@ table thead tr th
 	border-bottom: 2px solid #E4F6FF;
 }
 
+.table-condensed {
+	margin-top: 20px;
+}
+
+.table-condensed td {
+	white-space: nowrap;
+}
+
 .table > thead > tr > th
 {
 	border-bottom: 0;
 	vertical-align: top;
+	white-space: nowrap;
 }
 
 .grid-container {
@@ -479,4 +488,8 @@ table thead tr th
 
 .tab-content {
 	overflow-x: auto;
+}
+
+.slick-viewport {
+	min-height: 300px;
 }

@@ -270,6 +270,37 @@
 		</div>
 	</script>
 
+	<!--
+
+	<div id="staff-slickgrid" class="grid-container"></div>
+
+	VS
+
+	<table class="table table-condensed">
+		<thead>
+			<tr>
+				{{each(i, col) staffData.staffColumns}}
+					{{if i > 9}}
+						<th>${col.name}</th>
+					{{/if}}
+				{{/each}}
+			</tr>
+		</thead>
+		<tbody>
+			{{each(i, staffEntry) staffData.staff}}
+				<tr>
+					{{each(j, columnValue) staffEntry}}
+						{{if j > 9}}
+							<td>${columnValue}</td>
+						{{/if}}
+					{{/each}}
+				</tr>
+			{{/each}}
+		</tbody>
+	</table>
+
+	-->
+
 	<script id="tmpl-branch" type="text/x-jQuery-tmpl">
 		<tr >
 			<td class="name">${data['Business Outlets']}</td>
