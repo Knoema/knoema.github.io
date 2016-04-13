@@ -56,16 +56,39 @@
 
 			<div class="filters">
 
-				<div class="form-group">
-					<label for="size" class="form-label" style="text-transform: uppercase;">Circle size reflects</label>
+				<div class="form-group" style="display: none;">
 					<select id="size" class="selectpicker">
 						<option value="branches-0" data-type="profile-attribute" data-value="Total amount, NGN" selected="selected">Total amount, NGN</option>
 						<option value="branches-1" data-type="profile-attribute" data-value="Outstanding, Total, NGN">Total outstanding amount, NGN</option>
-
 						<option value="branches">Number of clients</option>
 						<option value="branches-credit">Credit rating</option>
 						<option value="branches-savings">Savings rating</option>
 						<option value="branches-total">Total rating</option>
+					</select>
+				</div>
+
+				<div class="form-group">
+					<label for="bubble-size" class="form-label" style="text-transform: uppercase;">Circle size reflects</label>
+					<select id="bubble-size" class="selectpicker">
+						<option value='["Disbursement, SME, NGN", "Disbursement, Micro Agriculture, NGN", "Disbursement, Micro Non-Agriculture, NGN"]' selected="selected">Total amount, NGN</option>
+						<option value="Outstanding, Total, NGN">Total outstanding amount, NGN</option>
+						<option value="Number of Clients">Number of clients</option>
+						<option value="Total ratings, Credit">Credit rating</option>
+						<option value="Total ratings, Savings">Savings rating</option>
+						<option value="Total ratings, Total">Total rating</option>
+					</select>
+				</div>
+
+				<div class="form-group">
+					<label for="bubble-color" class="form-label" style="text-transform: uppercase;">Bubble color reflects</label>
+					<select id="bubble-color" class="selectpicker">
+						<option value="null" selected="selected">None</option>
+						<option value='["Disbursement, SME, NGN", "Disbursement, Micro Agriculture, NGN", "Disbursement, Micro Non-Agriculture, NGN"]'>Total amount, NGN</option>
+						<option value="Outstanding, Total, NGN">Total outstanding amount, NGN</option>
+						<option value="Number of Clients">Number of clients</option>
+						<option value="Total ratings, Credit">Credit rating</option>
+						<option value="Total ratings, Savings">Savings rating</option>
+						<option value="Total ratings, Total">Total rating</option>
 					</select>
 				</div>
 
@@ -420,7 +443,17 @@
 	<script src="numeral.min.js"></script>
 	<script src="lodash.min.js"></script>
 
-	<script src="boa.js?v=2"></script>
+	<script src="js/dataDescriptor.js"></script>
+	<script src="d3.min.js"></script>
+	<script src="boa2.js"></script>
+	<!--<script src="js/App.js"></script>-->
+	<!--<script>-->
+		<!--$(function() {-->
+			<!--google.maps.event.addDomListener(window, 'load', function () {-->
+				<!--new App().run();-->
+			<!--});-->
+		<!--});-->
+	<!--</script>-->
 
 </body>
 </html>
