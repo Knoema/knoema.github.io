@@ -493,3 +493,23 @@ table thead tr th
 .slick-viewport {
 	min-height: 300px;
 }
+
+#color-legend {
+	display: none;
+	position: absolute;
+	width: 230px;
+	height: 50px;
+	background-color: white;
+	bottom: 30px;
+	right: 20px;
+	z-index: 10;
+}
+
+.palette-holder {
+	margin: 4px 6px;
+}
+
+.palette {
+	height: 20px;
+	background-color: blue;
+}

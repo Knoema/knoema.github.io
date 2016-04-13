@@ -178,10 +178,35 @@
 		}
 	};
 
+	app.prototype.hideLegend = function() {
+		$('#color-legend').hide();
+	};
+
+	app.prototype.showLegend = function() {
+		var self = this;
+		var minMax = self.getMinMax(self.settings.bubbleColorAttribute);
+
+		var minColor = self.getColor(minMax.min);
+		var maxColor = self.getColor(minMax.max);
+
+		$('#color-legend').find('.min').html(minMax.min);
+		$('#color-legend').find('.max').html(minMax.max);
+
+		$('#color-legend').find('.palette').css({
+			"background": 'linear-gradient(90deg, ' + maxColor + ', ' + minColor + ')'
+		});
+		$('#color-legend').show();
+	};
+
 	app.prototype.updateMap = function () {
 		this.count = 0;
 		this.clean('branches');
 		this.load('branches');
+		if (this.settings.bubbleColorAttribute) {
+			this.showLegend();
+		} else {
+			this.hideLegend();
+		}
 	};
 
 	app.prototype.update = function (id) {
@@ -697,10 +722,6 @@
 			self.settings.bubbleColorAttribute = $(e.target).val();
 			if (self.settings.bubbleColorAttribute === 'null') {
 				self.settings.bubbleColorAttribute = null;
-				//will return hardcoded color
-				self.getColor = function(value) {
-					return '#ff00ff';
-				};
 			} else {
 				var minMax = self.getMinMax(self.settings.bubbleColorAttribute);
 				self.getColor = d3.scale.linear().domain([minMax.min, minMax.max]).range(["red", "gold"]);
