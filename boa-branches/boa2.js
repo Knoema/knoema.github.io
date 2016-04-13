@@ -193,7 +193,7 @@
 		$('#color-legend').find('.max').html(minMax.max);
 
 		$('#color-legend').find('.palette').css({
-			"background": 'linear-gradient(90deg, ' + maxColor + ', ' + minColor + ')'
+			"background": 'linear-gradient(90deg, ' + minColor + ', ' + maxColor + ')'
 		});
 		$('#color-legend').show();
 	};
