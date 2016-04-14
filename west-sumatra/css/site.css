@@ -123,11 +123,12 @@ body
 	#content .statistics.selected iframe
 	{
 		margin-top: -66px;
+		height: 1600px;
 	}
 
 	#content .dashboards.selected iframe
 	{
-		height: 600px;
+		height: 1909px;
 		width: 100%;
 	}
 

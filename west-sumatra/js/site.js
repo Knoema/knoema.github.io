@@ -29,15 +29,7 @@ $(function () {
 		$tab.addClass('selected');
 		$content.addClass('selected');
 
-		//if (className == 'dashboards')
-		//	$content.find('iframe').height($content.height());
-
-		if(className == 'statistics')
-			$content.find('iframe').height($content.height() + 66);
-
 	}
-
-	$('#content').find('iframe').height($('#content').height());
 
 
 });
