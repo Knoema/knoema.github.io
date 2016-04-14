@@ -1,0 +1,177 @@
+html
+{
+	overflow: hidden;
+}
+
+body
+{
+	margin: 0;
+}
+
+#header
+{
+	height: 70px;
+	background: url('../img/head_bg.png');
+	background-size: 100% 100%;
+}
+
+#title
+{
+	float: left;
+	width: 210px;
+	height: 26px;
+	background: url('../img/logo.png');
+	margin: 22px;
+}
+
+#tabs
+{
+	float: right;
+}
+
+	#tabs .divider
+	{
+		display: inline-block;
+		width: 2px;
+		height: 70px;
+		background-position: left center;
+		background-repeat: no-repeat;
+		background: url('../img/head_divider_menu.png');
+	}
+
+	#tabs .tab
+	{
+		display: inline-block;
+		font: bold 13pt 'Roboto Condensed', sans-serif;
+		color: #fff770;
+		text-align: center;
+		width: 185px;
+		height: 70px;
+		padding-top: 20px;
+		padding-bottom: 20px;
+		cursor: pointer;
+		position: relative;
+		top: -31px;
+	}
+
+		#tabs .tab .img
+		{
+			display: inline-block;
+			background-position: left center;
+			background-repeat: no-repeat;
+			vertical-align: middle;
+			margin-right: 20px;
+		}
+
+		#tabs .tab:hover, #tabs .tab.selected
+		{
+			background-color: #084906;
+		}
+
+		#tabs .tab .img.overview
+		{
+			width: 29px;
+			height: 29px;
+			background: url('../img/ico-country-overview.png');
+		}
+
+		#tabs .tab .img.dashboards, #tabs .tab .img.statistics
+		{
+			width: 32px;
+			height: 26px;
+		}
+
+		#tabs .tab .img.dashboards
+		{
+			background: url('../img/ico-dashboards.png');
+		}
+
+		#tabs .tab .img.statistics
+		{
+			background: url('../img/ico-statistics.png');
+		}
+
+#content
+{
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	right: 0;
+	left: 0;
+	margin-top: 70px;
+	background: gray;
+	overflow: auto;
+}
+
+	#content .overview, #content .dashboards, #content .statistics
+	{
+		display: none;
+	}
+
+	#content .selected
+	{
+		height: 100%;
+		display: block;
+	}
+
+	#content .overview.selected iframe, #content .statistics.selected iframe
+	{
+		height: 100%;
+		width: 100%;
+	}
+
+	#content .statistics.selected iframe
+	{
+		margin-top: -66px;
+	}
+
+	#content .dashboards.selected iframe
+	{
+		height: 600px;
+		width: 100%;
+	}
+
+	#site-header, #kn-social-bar
+	{
+		display: none;
+	}
+
+
+@media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2ppx), only screen and (min-device-pixel-ratio: 2)
+{
+	#header
+	{
+		background: url('../img/head_bg@2x.png');
+		background-size: cover;
+	}
+
+	#title
+	{
+		background: url('../img/logo@2x.png');
+		background-size: cover;
+	}
+
+	#tabs .divider
+	{
+		background: url('../img/head_divider_menu@2x.png');
+		background-size: cover;
+	}
+
+	#tabs .tab .img.overview
+	{
+		background: url('../img/ico-country-overview@2x.png');
+		background-size: cover;
+	}
+
+	#tabs .tab .img.dashboards
+	{
+		background: url('../img/ico-dashboards@2x.png');
+		background-size: cover;
+	}
+
+	#tabs .tab .img.statistics
+	{
+		background: url('../img/ico-statistics@2x.png');
+		background-size: cover;
+	}
+}
