@@ -189,8 +189,8 @@
 		var minColor = self.getColor(minMax.min);
 		var maxColor = self.getColor(minMax.max);
 
-		$('#color-legend').find('.min').html(minMax.min);
-		$('#color-legend').find('.max').html(minMax.max);
+		$('#color-legend').find('.min').html(Globalize.format(minMax.min));
+		$('#color-legend').find('.max').html(Globalize.format(minMax.max));
 
 		$('#color-legend').find('.palette').css({
 			"background": 'linear-gradient(90deg, ' + minColor + ', ' + maxColor + ')'
@@ -724,7 +724,7 @@
 				self.settings.bubbleColorAttribute = null;
 			} else {
 				var minMax = self.getMinMax(self.settings.bubbleColorAttribute);
-				self.getColor = d3.scale.linear().domain([minMax.min, minMax.max]).range(["red", "gold"]);
+				self.getColor = d3.scale.linear().domain([minMax.min, minMax.max]).range(["lightblue", "deeppink"]);
 			}
 			self.updateMap();
 		});
