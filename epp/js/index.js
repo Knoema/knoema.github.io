@@ -3,15 +3,17 @@ function Application(options) {
         throw 'Required options are "selector" and "geoPlaygroundId"';
     }
 
-    this.datasetId = '';
-    
-    this.infoWindow = new google.maps.InfoWindow();
-
     this.options = options;
+    this.datasetId = options.datasetId;
     this.$element = $(options.selector);
-    this.layers = {};
-    this.sideBarLoaded = false;
 
+    this.map = null;
+    this.infoWindow = new google.maps.InfoWindow();
+    this.layerId = options.layerId;
+    this.layer = null;
+
+    this.energySources = [];
+    this.stations = [];
     this.countries = []; //{ name: 'Algeria', regionId: 'DZ' }
     
     this.filterSettings = {
@@ -19,16 +21,16 @@ function Application(options) {
         showTypes: ['Coal', 'Fuel Oil', 'Gas', 'Hydro', 'Nuclear', 'Solar', 'Wind', 'Geothermal', 'Other'],
         capacity: {}
     };
-    
+
+    this.sideBarLoaded = false;
+
     this.initMap();
     this.bindEvents();
     this.initRegionSelector();
-
 };
 
 Application.prototype.initMap = function() {
 
-    var self = this;
     var $map = this.$element.find('#map-canvas');
 
     //TODO Get map capacityFilter from options
@@ -37,20 +39,10 @@ Application.prototype.initMap = function() {
         zoom: 3,
         streetViewControl: false,
         zoomControlOptions: { position: google.maps.ControlPosition.LEFT_TOP },
-        //mapTypeControlOptions: { position: google.maps.ControlPosition.LEFT_TOP },
         mapTypeId: google.maps.MapTypeId.ROADMAP
     });
 
-    google.maps.event.addListenerOnce(this.map, 'idle', function () {
-        window.setTimeout(function () {
-            var url = 'http://knoema.com/api/1.0/frontend/resource/' + self.options.geoPlaygroundId + '/content';
-            Knoema.Helpers.get(url, function(content) {
-                for (var layerId in content.layers) {
-                    self.loadLayer(layerId);
-                }
-            });
-        }, 300);
-    });
+    this.loadLayer();
 }
 
 Application.prototype.bindEvents = function () {
@@ -92,8 +84,7 @@ Application.prototype.bindEvents = function () {
 Application.prototype.initCapacityFilter = function(){
     var self = this;
 
-    var layer = this.layers[Object.keys(this.layers)[0]];
-    var capacities = _.map(layer.data, function (i) { return i[layer.columns.indexOf('Capacity (MW)')]; });
+    var capacities = _.map(self.stations, 'Capacity (MW)');
 
     self.filterSettings.capacity = {
         _min: Math.round(_.min(capacities)),
@@ -113,27 +104,33 @@ Application.prototype.initCapacityFilter = function(){
     min.change(function () {
         var value = parseFloat($(this).val());
 
-        if ($.isNumeric(value) && value <= self.filterSettings.capacity._max && value >= self.filterSettings.capacity._min) {
+        if ($.isNumeric(value) && value < self.filterSettings.capacity._max && value > self.filterSettings.capacity._min) {
             self.filterSettings.capacity.min = value;
-            slider.slider('option', 'values', [self.filterSettings.capacity.min, self.filterSettings.capacity.max]);
+        }
+        else {
+            self.filterSettings.capacity.min = self.filterSettings.capacity._min;
+            min.val(self.filterSettings.capacity.min);
         }
 
-        min.val(self.filterSettings.capacity.min);
+        slider.slider('option', 'values', [self.filterSettings.capacity.min, self.filterSettings.capacity.max]);
 
-        self.reloadLayers();
+        self.refreshFilterSettings();
     });
 
     max.change(function () {
         var value = parseFloat($(this).val());
 
-        if ($.isNumeric(value) && value <= self.filterSettings.capacity._max && value >= self.filterSettings.capacity._min) {
+        if ($.isNumeric(value) && value < self.filterSettings.capacity._max && value > self.filterSettings.capacity._min) {
             self.filterSettings.capacity.max = value;
-            slider.slider('option', 'values', [self.filterSettings.capacity.min, self.filterSettings.capacity.max]);
+        }
+        else {
+            self.filterSettings.capacity.max = self.filterSettings.capacity._max;
+            max.val(self.filterSettings.capacity.max);
         }
 
-        max.val(self.filterSettings.capacity.max);
+        slider.slider('option', 'values', [self.filterSettings.capacity.min, self.filterSettings.capacity.max]);
 
-        self.reloadLayers();
+        self.refreshFilterSettings();
     });
 
     slider.slider({
@@ -142,16 +139,16 @@ Application.prototype.initCapacityFilter = function(){
         max: self.filterSettings.capacity._max,
         values: [self.filterSettings.capacity._min, self.filterSettings.capacity._max],
         change: function (event, ui) {
+            if (event.originalEvent) {
 
-            _.extend(self.filterSettings.capacity, {
-                min: ui.values[0],
-                max: ui.values[1]
-            });
-
-            min.val(self.filterSettings.capacity.min);
-            max.val(self.filterSettings.capacity.max);
-
-            self.reloadLayers();
+                _.extend(self.filterSettings.capacity, {
+                    min: ui.values[0],
+                    max: ui.values[1]
+                });
+                min.val(self.filterSettings.capacity.min);
+                max.val(self.filterSettings.capacity.max);
+                self.refreshFilterSettings();
+            }
         }
     });
 }
@@ -168,11 +165,16 @@ Application.prototype.initRegionSelector = function(){
         clickable: false
     });
     
-    var url = 'http://knoema.com/api/1.0/meta/dataset/' + self.options.datasetId + '/dimension/country';
+    var url = 'http://knoema.com/api/1.0/meta/dataset/' + self.datasetId + '/dimension/country';
+
     Knoema.Helpers.get(url, function(response) {
         if (response && response.items && response.items.length) {
+
             self.countries = _.map(response.items, function(i){
-                return { name: i.name, regionid: i.fields.regionid };
+                return {
+                    name: i.name,
+                    regionid: i.fields.regionid
+                };
             })
 
             var $selectorContent = $('#tmpl-regions-control').tmpl({
@@ -186,34 +188,140 @@ Application.prototype.initRegionSelector = function(){
                 self.resetAreaSelector();
 
                 var regionId = $(event.delegateTarget).val();
-                var regionName = $(event.delegateTarget).find(':selected').text();
 
-                self.map.data.forEach(function(feature) {
-                    self.map.data.revertStyle(feature);
+                if (regionId) {
+                    var regionName = $(event.delegateTarget).find(':selected').text();
 
-                    var visible = regionId == feature.getId();
+                    self.map.data.forEach(function (feature) {
+                        self.map.data.revertStyle(feature);
 
-                    //do not show region because borders are rough
-                    //self.map.data.overrideStyle(feature, { visible: visible });
+                        var visible = regionId == feature.getId();
 
-                    if (visible) {
-                        var bounds = new google.maps.LatLngBounds();
-                        self.extendBoundsByGeometry(bounds, feature.getGeometry());
-                        self.map.fitBounds(bounds);
-                    }
-                });
+                        //do not show region because borders are rough
+                        //self.map.data.overrideStyle(feature, { visible: visible });
 
-                var layer = self.layers[Object.keys(self.layers)[0]];
-                var items = _.filter(layer.data, function(i) {
-                    return i[layer.columns.indexOf('Country')] == regionName
-                });
+                        if (visible) {
+                            var bounds = new google.maps.LatLngBounds();
+                            self.extendBoundsByGeometry(bounds, feature.getGeometry());
+                            self.map.fitBounds(bounds);
+                        }
+                    });
 
-                self.showOverview(regionName, items);
+                    var countryStations = _.filter(self.stations, function (station) {
+                        return station['Country'] == regionName
+                    });
+
+                    self.updateOverview(regionName, regionId, countryStations);
+                }
+                else
+                    self.updateOverview('Africa', null, self.stations);
             });
         }
     });
+}
 
-    $('.region-profile-button').click(function () {
+Application.prototype.initAreaSelector = function () {
+    var $radiusButton = $('.area-profile-button');
+    if ($radiusButton.length == 0) return;
+
+    var drawingManager = new google.maps.drawing.DrawingManager({
+        map: this.map,
+        drawingMode: null,
+        drawingControl: false,
+        circleOptions: {
+            fillColor: 'black',
+            fillOpacity: 0.2,
+            strokeWeight: 4,
+            strokeColor: 'orange',
+            clickable: false,
+            editable: true,
+            zIndex: 1
+        }
+    });
+
+    var self = this;
+
+    google.maps.event.addListener(drawingManager, 'circlecomplete', function(circle) {
+        drawingManager.setDrawingMode(null);
+
+        self.radiusToolCircle = circle;
+
+        var updateArea = function(circle){
+            var itemsInArea = [];
+            _.each(self.stations, function(item) {
+                var distance = google.maps.geometry.spherical.computeDistanceBetween(circle.getCenter(), new google.maps.LatLng(item['Latitude'], item['Longitude']));
+                if (distance < circle.getRadius())
+                    itemsInArea.push(item);
+            });
+
+            self.updateOverview('Selected area', null, itemsInArea);
+        }
+
+        updateArea(circle);
+
+        google.maps.event.addListener(circle, 'center_changed', function () {
+            updateArea(circle);
+        });
+
+        google.maps.event.addListener(circle, 'radius_changed', function() {
+            updateArea(circle);
+        });
+    });
+
+    $radiusButton.on('click', function() {
+        $radiusButton.toggleClass('active');
+        if ($radiusButton.hasClass('active')) {
+            drawingManager.setDrawingMode(google.maps.drawing.OverlayType.CIRCLE);
+        } else {
+            drawingManager.setDrawingMode(null);
+            self.resetAreaSelector();
+            $('#regions').change();
+        }
+    });
+};
+
+Application.prototype.resetAreaSelector = function () {
+    $('.area-profile-button').removeClass('active');
+    if (this.radiusToolCircle) {
+        this.radiusToolCircle.setMap(null);
+        this.radiusToolCircle = null;
+        this.resetOverview();
+    }
+}
+
+Application.prototype.extendBoundsByGeometry = function (bounds, geometry) {
+    var arr = geometry.getArray();
+    for (var i = 0; i < arr.length; i++) {
+        if (typeof(arr[i].getArray) == 'function')
+            this.extendBoundsByGeometry(bounds, arr[i]);
+        else
+            bounds.extend(arr[i]);
+    }
+};
+
+Application.prototype.updateOverview = function (regionName, regionId, stations) {
+
+    var self = this;
+
+    var options = {
+        regionName: regionName,
+        regionId: regionId
+    };
+
+    _.extend(options, {
+        types: self.energySources,
+        stationsByType: _.mapValues(_.groupBy(stations, 'Type'), function(g) {
+            return g.length;
+        }),
+        stations: _.chain(stations).filter(function(s) { return s['Capacity (MW)']; }).sortBy('Capacity (MW)').reverse().value()
+    });
+
+    $('#overview-holder').empty();
+
+    var $overviewContent = $('#tmpl-overview').tmpl(options);
+    var $overviewHolder = $('#overview-holder').html($overviewContent);
+
+    $overviewHolder.find('.region-profile-button').click(function () {
 
         var regionId = $('#regions').val();
         var country = $('#regions :selected').text();
@@ -249,191 +357,45 @@ Application.prototype.initRegionSelector = function(){
     });
 }
 
-Application.prototype.initAreaSelector = function () {
-    var $radiusButton = $('.area-profile-button');
-    if ($radiusButton.length == 0) return;
-
-    var drawingManager = new google.maps.drawing.DrawingManager({
-        map: this.map,
-        drawingMode: null,
-        drawingControl: false,
-        circleOptions: {
-            fillColor: 'black',
-            fillOpacity: 0.2,
-            strokeWeight: 4,
-            strokeColor: 'orange',
-            clickable: false,
-            editable: true,
-            zIndex: 1
-        }
-    });
-
+Application.prototype.loadLayer = function () {
     var self = this;
-
-    var layer = this.layers[Object.keys(this.layers)[0]];
-
-    google.maps.event.addListener(drawingManager, 'circlecomplete', function(circle) {
-        drawingManager.setDrawingMode(null);
-
-        self.radiusToolCircle = circle;
-
-        var updateArea = function(circle){
-            var itemsInArea = [];
-            _.each(layer.data, function(item) {
-                var distance = google.maps.geometry.spherical.computeDistanceBetween(circle.getCenter(), new google.maps.LatLng(item[9], item[10]));
-                if (distance < circle.getRadius())
-                    itemsInArea.push(item);
-            });
-
-            self.showOverview('Selected area', itemsInArea);
-        }
-
-        updateArea(circle);
-
-        google.maps.event.addListener(circle, 'center_changed', function () {
-            updateArea(circle);
-        });
-
-        google.maps.event.addListener(circle, 'radius_changed', function() {
-            updateArea(circle);
-        });
-    });
-
-    $radiusButton.on('click', function() {
-        $radiusButton.toggleClass('active');
-        if ($radiusButton.hasClass('active')) {
-            drawingManager.setDrawingMode(google.maps.drawing.OverlayType.CIRCLE);
-        } else {
-            drawingManager.setDrawingMode(null);
-            self.resetAreaSelector();
-        }
-    });
-};
-
-Application.prototype.resetAreaSelector = function () {
-    $('.area-profile-button').removeClass('active');
-    if (this.radiusToolCircle) {
-        this.radiusToolCircle.setMap(null);
-        this.radiusToolCircle = null;
-        this.hideOverview();
-    }
-}
-
-Application.prototype.extendBoundsByGeometry = function (bounds, geometry) {
-    var arr = geometry.getArray();
-    for (var i = 0; i < arr.length; i++) {
-        if (typeof(arr[i].getArray) == 'function')
-            this.extendBoundsByGeometry(bounds, arr[i]);
-        else
-            bounds.extend(arr[i]);
-    }
-};
-
-Application.prototype.showOverview = function (regionName, items) {
-
-    var options = {
-        regionName: regionName
-        /*
-        stationsByType:
-        {
-        'Coal': 123,
-        'Fuel Oil': 45
-        },
-        stations: [
-        { name: 'Station1', capacity: 300000 },
-        { name: 'Station2', capacity: 550000 },
-        { name: 'Station3', capacity: 12500 }
-        ]
-        */
-    }
-
-    var layer = this.layers[Object.keys(this.layers)[0]];
-
-    var countryStations = items;
-
-    countryStations = _.each(countryStations, function(i){
-        i[layer.columns.indexOf('Type')] = getDataByType(i[layer.columns.indexOf('Type')]).name;
-    });
-
-    _.extend(options, {
-        types: _.map(layer.types, function(item) {
-            var d = getDataByType(item);
-            return {
-                itemName: d.name,
-                itemClassName: d.className
-            };
-        }),
-        stationsByType: _.mapValues(_.groupBy(countryStations, function(i) {
-            return i[layer.columns.indexOf('Type')];
-        }), function(i) {
-            return i.length;
-        }),
-        stations: _.map(countryStations, function(i) {
-            return {
-                name: i[layer.columns.indexOf('Name')],
-                capacity: i[layer.columns.indexOf('Capacity (MW)')]
-            }
-        })
-    });
-
-    var $overviewContent = $('#tmpl-overview').tmpl(options);
-    var $overviewHolder = $('#overview-holder').html($overviewContent);
-    //if (!$overviewHolder.is(':visible'))
-    //    $overviewHolder.animate({width:'toggle'}, 400);
-    $overviewHolder.show();
-}
-
-Application.prototype.hideOverview = function (options) {
-    $('#overview-holder').empty();
-}
-
-Application.prototype.loadLayer = function (layerId) {
-    var self = this;
-    var layer = this.layers[layerId];
-
     var $elem = this.$element;
-    $elem.addClass('loading');
 
-    if (!layer) {
+    if (!this.layer) {
 
-        layer = new GeoPlayground.Layer({
+        $elem.addClass('loading');
+
+        this.layer = new GeoPlayground.Layer({
             map: self.map,
-            layerId: layerId,
+            layerId: self.layerId,
             geoPlaygroundId: self.options.geoPlaygroundId,
         }, function(loadedLayer) {
 
-            //self.map.fitBounds(loadedLayer.layer.bounds);
+            var columns = _.map(loadedLayer.layer.data.columns, function(i) { return i['name']; });
+            var data = _.chunk(loadedLayer.layer.data.data, loadedLayer.layer.data.columns.length);
 
-            layer.columns = _.map(loadedLayer.layer.data.columns, function(i) { return i['name']; });
-            layer.data = _.chunk(loadedLayer.layer.data.data, loadedLayer.layer.data.columns.length);
-
-            var types = _.groupBy(layer.data, function(d) {
-                return d[4];
+            self.stations = _.map(data, function(item){
+               var station = {};
+                _.each(item, function(prop, i) {
+                    if (columns[i] == 'Type')
+                        station[columns[i]] = getDataByType(prop).name;
+                    else
+                        station[columns[i]] = prop;
+                });
+                return station;
             });
 
-            var items = _.uniq(_.map(_.keys(types), function(typeKey) {
-                    var d = getDataByType(typeKey);
-                    return d.name;
-                }).filter(function(item) {
-                    return item !== 'Other';
-                })
-            );
-            items.push('Other');
+            var types = _.uniq(_.map(self.stations, 'Type')).filter(function(type) { return type != 'Other'});
+            types.push('Other'); //should be in the end
 
-            layer.types = items;
+            self.energySources = _.map(types, function (type) {
+                return getDataByType(type);
+            });
 
-            if (!this.sideBarLoaded) {
-
-                var sideBarItems = _.map(items, function(item) {
-                    var d = getDataByType(item);
-                    return {
-                        itemName: d.name,
-                        itemClassName: d.className
-                    };
-                });
+            if (!self.sideBarLoaded) {
 
                 var $sideBarContent = $('#tmpl-side-bar').tmpl({
-                    sideBarItems: sideBarItems
+                    sideBarItems: self.energySources
                 });
 
                 $('#sidebar-holder').html($sideBarContent.html());
@@ -441,17 +403,18 @@ Application.prototype.loadLayer = function (layerId) {
                 $('#type-filter, #category-filter').on('click', 'input', function(e) {
                     self.refreshFilterSettings();
                 });
-                this.sideBarLoaded = true;
 
-                /* INIT */
                 self.initCapacityFilter();
                 self.initAreaSelector();
+                self.updateOverview('Africa', null, self.stations);
+
+                self.sideBarLoaded = true;
             }
 
             $elem.removeClass('loading');
         });
 
-        layer.on('click', function (e) {
+        this.layer.on('click', function (e) {
             var data = {
                 Name: e.data.tooltip.Name,
                 Type: e.data.tooltip.Type,
@@ -469,17 +432,15 @@ Application.prototype.loadLayer = function (layerId) {
             self.infoWindow.open(self.map);
         });
 
-        layer.on('beforeDraw', function (e, callback) {
-            self.onBeforeDraw(e, callback, layerId);
+        this.layer.on('beforeDraw', function (e, callback) {
+            self.onBeforeDraw(e, callback);
         });
-
-        self.layers[layerId] = layer;
     }
 
-    layer.load();
+    this.layer.load();
 };
 
-Application.prototype.onBeforeDraw = function (event, callback, layerId) {
+Application.prototype.onBeforeDraw = function (event, callback) {
     var self = this;
 
     var typeData = getDataByType(event.data.content.Type);
@@ -490,13 +451,12 @@ Application.prototype.onBeforeDraw = function (event, callback, layerId) {
         anchor: new google.maps.Point(15, 20)
     };
 
-    var category =  (event.data.content.Category == 'Not Defined') ? 'Other' : event.data.content.Category;
-    if (self.filterSettings.showCategories.indexOf(category) < 0) {
+    if (self.filterSettings.showTypes.indexOf(typeData.name) < 0) {
         event.data.visible = false;
     }
 
-    var pointType = getDataByType(event.data.content.Type).name;
-    if (self.filterSettings.showTypes.indexOf(pointType) < 0) {
+    var category =  (event.data.content.Category == 'Not Defined') ? 'Other' : event.data.content.Category;
+    if (self.filterSettings.showCategories.indexOf(category) < 0) {
         event.data.visible = false;
     }
 
@@ -535,13 +495,5 @@ Application.prototype.refreshFilterSettings = function () {
     });
     self.filterSettings.showCategories = newCategories;
 
-    self.reloadLayers();
-};
-
-Application.prototype.reloadLayers = function () {
-    var self = this;
-    self.infoWindow.setMap(null);
-    _.each(_.keys(this.layers), function(layerId) {
-        self.loadLayer(layerId);
-    });
+    self.loadLayer();
 };

@@ -40,14 +40,6 @@
 
             <div id="regions-control" class="form-inline">
                 <div id="region-selector" class="input-group"></div>
-
-                <div class="input-group" style="background-color: transparent;">
-                    <button class="region-profile-button">Show country profile</button>
-                </div>
-
-                <div class="input-group" style="background-color: transparent;">
-                    <button class="area-profile-button">Show area profile</button>
-                </div>
             </div>
         </div>
     </div>
@@ -126,14 +118,14 @@
                         <li>
                             <div class="checkbox">
                                 <label>
-                                    <input type="checkbox" value="" data-type-filter checked data-type="${itemName}"> <span class="icon ${itemClassName}" href="#">${itemName}</span>
+                                    <input type="checkbox" value="" data-type-filter checked data-type="${name}"> <span class="icon ${className}" href="#">${name}</span>
                                 </label>
                             </div>
                         </li>
                     {{/each}}
                 </ul>
 
-                <h5>Filter by category</h5>
+                <h5>Filter by Category</h5>
                 <ul class="SideBar" id="category-filter">
                         <li>
                             <div class="checkbox">
@@ -165,6 +157,10 @@
                     <div class="slider"></div>
                 </div>
 
+                <div class="form-group">
+                    <button class="area-profile-button">Filter by Area</button>
+                </div>
+
             </div>
 
             <div class="footer">
@@ -176,15 +172,18 @@
 
     <script id="tmpl-overview" type="text/x-jQuery-tmpl">
         <div class="overview">
-            <div class=country-card>
+            <div class="country-card">
                 <h3 class="title">${regionName}</h5>
+                {{if regionId}}
+                    <button class="region-profile-button">Show country profile</button>
+                {{/if}}
             </div>
             <hr/>
             <h5>Existing Power Plants</h5>
             <div class="stations-by-type">
                 <ul>
                     {{each types}}
-                        <li><span class="type icon ${itemClassName}">${itemName}</span><span class="count">${stationsByType[itemName] ? stationsByType[itemName] : '-'}</span></li>
+                        <li><span class="type icon ${className}">${name}</span><span class="count">${stationsByType[name] ? stationsByType[name] : '-'}</span></li>
                     {{/each}}
                 </ul>
             </div>
@@ -195,7 +194,7 @@
                         <span class="station">Station<span><span class="value">Capacity (MW)</span>
                     </li>
                     {{each stations}}
-                        <li><span class="station">${name}<span><span class="value">${capacity}</span></li>
+                        <li><span class="station">${$value['Name']}<span><span class="value">${$value['Capacity (MW)']}</span></li>
                     {{/each}}
                 </ul>
             </div>
@@ -205,7 +204,7 @@
 
     <script src="http://knoema.com/Js/GoogleMap/marker-clusterer.js?v=1"></script>
     <script src="http://knoema.com/js/geoplayground/geo-playground-layer.js?v=1"></script>
-    <script src="js/utils/getDataByType_old.js"></script>
+    <script src="js/utils/getDataByType.js"></script>
 
     <script src="js/index.js"></script>
 
@@ -214,6 +213,7 @@
             window.app = new Application({
                 selector: '#application',
                 geoPlaygroundId: 'hmxahdf', //cjgphfe - old
+                layerId: '95f0ca90-45ad-b03d-f0c0-f17ed8ea5de9',
                 datasetId: 'lpxhpcb'
             });
         });

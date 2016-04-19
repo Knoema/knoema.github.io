@@ -22,7 +22,7 @@ iframe {
     position: absolute;
     left: 300px;
     top: 60px;
-    right: 0;
+    right: 400px;
     bottom: 0;
     z-index: 1;
 }
@@ -118,22 +118,24 @@ iframe {
     font-weight: bold;
     border: none;
 }
-#regions-control .region-profile-button, #regions-control .area-profile-button {
-    padding: 8px 15px;
+
+/* --- end region selector -- */
+
+.region-profile-button, .area-profile-button {
+    padding: 5px 15px;
     border: 1px solid #009943;
     border-radius: 3px;
     color: white;
     font-weight: bold;
     background-color: #009943;
-    margin-left: 12px;
     font-size: 9pt;
 }
-
-#regions-control .area-profile-button.active {
+.region-profile-button {
+    margin-top: 5px;
+}
+.area-profile-button.active {
     background-color: #077537;
 }
-
-/* --- end region selector -- */
 
 /* --- sidebar -- */
 ul.SideBar {
@@ -181,14 +183,12 @@ ul.SideBar span {
 
 /* --- overview -- */
 #overview-holder{
-    display: none;
+    //display: none;
     position:absolute;
     top: 60px;
     bottom: 0;
     right: 0;
     width: 400px;
-    overflow-x: hidden;
-    overflow-y: auto;
     z-index: 2;
 }
 
@@ -196,7 +196,10 @@ ul.SideBar span {
     background-color: white;
     padding: 15px;
     height: 100%;
-    overflow-y: auto;
+    overflow-y: scroll;
+}
+.overview .country-card {
+    text-align: center;
 }
 .overview .country-card h3 {
     margin: 0;
@@ -277,7 +280,7 @@ ul.SideBar span {
     position: absolute;
     left: 0;
     top: 60px;
-    right: 0;
+    right: 400px;
     bottom: 0;
     background-color: rgba(0,0,0,0.5);
     z-index: 3;
@@ -303,7 +306,7 @@ ul.SideBar span {
     overflow: auto;
 }
 .passport__content hr {
-    margin: 20px 0;
+    margin: 15px 0;
     border-top: 1px solid #e6e6e6;
 }
 .passport__close {
