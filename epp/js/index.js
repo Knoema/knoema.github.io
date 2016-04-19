@@ -285,7 +285,7 @@ Application.prototype.resetAreaSelector = function () {
     if (this.radiusToolCircle) {
         this.radiusToolCircle.setMap(null);
         this.radiusToolCircle = null;
-        this.resetOverview();
+        $('#regions').change();
     }
 }
 
