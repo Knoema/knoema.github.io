@@ -102,19 +102,26 @@ body.loading > .ajax-loader
 	border: none;
 }
 
+.navbar {
+	border: none;
+}
+
 .navbar .container-fluid {
 	padding-left: 0;
 }
 
 .navbar a.logo{
 	background-color: #1eb53a;
-	margin-left: -1px;
-	margin-top: -1px;
+	//margin-left: -1px;
 	line-height: 50px;
 	height: 50px;
 	display: block;
 	float: left;
 	outline: none;
+	background-image: url("../img/logo.png");
+	width: 570px;
+	height: 50px;
+	background-repeat: no-repeat;
 }
 
 .navbar a.logo:focus{
@@ -140,7 +147,7 @@ body.loading > .ajax-loader
 	background-color: #efefef;
 	opacity: 0.9;
 	position: absolute;
-	top: 70px;
+	top: 20px;
 	right: 20px;
 	color: #2D2D2D;
 }
@@ -171,8 +178,8 @@ body.loading > .ajax-loader
 
 #back-button {
 	position: absolute;
-	right: 19px;
-	top: 70px;
+	right: 20px;
+	top: 35px;
 }
 
 #back-button a:hover {
@@ -234,9 +241,9 @@ body.loading > .ajax-loader
 
 #map-canvas
 {
-	position: absolute;
+	position: relative;
 	left: 0;
-	top: 50px;
+	top: 0;
 	right: 0;
 	bottom: 0;
 }
@@ -248,3 +255,23 @@ body.loading > .ajax-loader
 tr.header {
 	background-color: lightgray;
 }
+
+.sidebar-content {
+	/*background-color: red;*/
+	padding: 15px 0;
+}
+
+#map-canvas {
+	margin-right: -15px;
+}
+
+.priority-for {
+	/*TODO Restore this after new section added to side-bar*/
+	/*max-height: 300px;*/
+	/*overflow-x: auto;*/
+}
+	.priority-for .list-group-item {
+		/*background-color: gray;*/
+		padding: 3px 4px;
+		font-size: 12px;
+	}

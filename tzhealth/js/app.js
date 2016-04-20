@@ -16,10 +16,17 @@
 
         this.mode = 'map';
 
+        this.topBarHeight = 55;
+
+        this.drugsAvailability = null;
+        this.neededWorkers = null;
+
         this.settings = {
             search: '',
             bounds: null,
-            drugSearch: null
+            geoSearchType: null,
+            geoSearch: null,
+            priorityFor: 'None'
         };
 
         this.namesToChange = {
@@ -69,9 +76,6 @@
 
         google.maps.event.addListenerOnce(this.map, 'idle', function () {
             var idleTimeout = window.setTimeout(function () {
-                self.bubblesLayer = new Knoema.GeoPlayground.BubblesLayer(self.map, {
-                    clusterize: false
-                });
                 var url = 'http://knoema.com/api/1.0/frontend/resource/' + self.geoPlaygroundId + '/content';
                 Knoema.Helpers.get(url, function(content) {
                     self.geoPlaygroundContent = content;
@@ -82,60 +86,87 @@
             }, 300);
         });
 
+        this.loadTemplates();
+
         this.bindEvents();
 
         this.initRadiusTool();
 
         this.initDrugSearchDialog();
 
-        $.ajax({
-            url: '//knoema.com/api/1.0/data/details',
-            type: 'POST',
-            data: JSON.stringify(drugsDataDescriptor),
-            processData: false,
-            contentType: 'application/json; charset=utf-8',
-            error: function(e) {
-                console.log('ERROR', e);
-            },
-            success: function (response, status) {
-                self.drugsAvailability = _.groupBy(_.chunk(response.data, 11), function(d) {
-                    return d[2];
-                });
-            }
+        this.initSideBar();
+
+        $(window).trigger('resize');
+
+        Knoema.Helpers.post('//knoema.com/api/1.0/data/details', neededWorkesDataDescriptor, function(response) {
+            self.neededWorkers = _.groupBy(_.chunk(response.data, response.columns.length), function(d) {
+                return d[2];
+            });
+        });
+
+        Knoema.Helpers.post('//knoema.com/api/1.0/data/details', drugsDataDescriptor, function(response) {
+            self.drugsAvailability = _.groupBy(_.chunk(response.data, 11), function(d) {
+                return d[2];
+            });
         });
 
     };
 
-    //app.prototype.loadTemplates = function () {
-    //    _.each([
-    //        'profile-template.html',
-    //        'table-row-template.html'
-    //    ], function(filename, i) {
-    //        $.get(window.location.pathname + 'tmpl/' + filename, function(templateRawData) {
-    //            $.template(templateRawData, $(templateRawData).data('templateName'));
-    //        });
-    //    });
-    //};
+    app.prototype.initSideBar = function () {
+        var self = this;
+        Knoema.Helpers.get('//knoema.com/api/1.0/meta/dataset/znxktgc/dimension/cadre-type', function(response) {
+            $('#priority-for').append($.tmpl('vacancies-list-template.html', {
+                vacancies: ['None'].concat(_.map(response.items, 'name'))
+            }));
+
+            $('#priority-for').on('click', '.list-group-item', function() {
+                $(this).parent().find('.active').removeClass('active');
+                $(this).addClass('active');
+                self.settings.priorityFor = $(this).data('priorityFor');
+                self.reloadLayers();
+            });
+
+        });
+    };
+
+    //TODO Refactor using $.when[] then
+    app.prototype.loadTemplates = function () {
+        var templates = [
+            'profile-template.html',
+            'table-row-template.html',
+            'vacancies-list-template.html'
+        ];
+        $.get('tmpl/profile-template.html', function(templateSrc) {
+            $.template(this.url.replace('tmpl/', ''), templateSrc);
+        });
+        $.get('tmpl/table-row-template.html', function(templateSrc) {
+            $.template(this.url.replace('tmpl/', ''), templateSrc);
+        });
+        $.get('tmpl/vacancies-list-template.html', function(templateSrc) {
+            $.template(this.url.replace('tmpl/', ''), templateSrc);
+        });
+    };
 
     app.prototype.initDrugSearchDialog = function (id) {
         var self = this;
-        $.ajax({
-            url: '//knoema.com/api/1.0/meta/dataset/fgovnne/dimension/tracer-commodity-checklist',
-            type: 'GET',
-            contentType: 'application/json; charset=utf-8',
-            error: function(e) {
-                console.log('ERROR', e);
-            },
-            success: function (response, status) {
+        Knoema.Helpers.get('//knoema.com/api/1.0/meta/dataset/fgovnne/dimension/tracer-commodity-checklist', function(response) {
 
-                var options = _.map(response.items, function(item) {
-                    return '<option value="' + item.name + '">' + item.name + '</option>';
-                }).join('');
+            var options = _.map(response.items, function(item) {
+                return '<option data-search-type="drug" value="' + item.name + '">' + item.name + '</option>';
+            }).join('');
+            var drugOptGroup = '<optgroup label="Pharmaceutical">' + options + '</optgroup>';
 
-                options = '<option value="Clinic">Clinic</option>' + options;
+            var clinicTypes = [
+                'Dispensary',
+                'Health Centre',
+                'Hospital'
+            ].map(function(item) {
+                return '<option data-search-type="facility" value="' + item + '">' + item + '</option>';
+            }).join('');
+            var clinicOptGroup = '<optgroup label="Facility">' + clinicTypes + '</optgroup>';
 
-                $('#drug-select').html(options);
-            }
+            options = clinicOptGroup + drugOptGroup;
+            $('#drug-select').html(options);
         });
     };
 
@@ -149,10 +180,8 @@
             layer = new GeoPlayground.Layer({
                 map: self.map,
                 layerId: id,
-                geoPlaygroundId: self.geoPlaygroundId,
-                bubblesLayer: self.bubblesLayer
+                geoPlaygroundId: self.geoPlaygroundId
             }, function(layer2) {
-                console.log('layer2', layer2);
                 $(document.body).removeClass('loading');
             });
 
@@ -367,49 +396,6 @@
                             'Resuscitator Bags - Child?',
                             'Anaesthesia Machine?',
                             'Anaethesia Stool?'
-
-                        /*
-                                24 hour Electricity (Y/N)?/ Source of Energy
-                        National Grid
-                        Generator
-                        Solar Panel
-                        Others
-
-                        24 hour Running Water (Y/N)?/ Source of Water
-                        Piped Water In to Health Facility
-                        Piped Water to Yard/Plot
-
-                        Public Tap or Standpipe
-                        Tube Well or Borehole
-                        Protected Dug Well
-                        Protected Spring
-                        Rainwater Harvesting
-                        Others, Specify
-
-                        Refrigeration Or Cold Storage (Y/N)?
-                            Vodacom
-                            Mpesa Available
-                        Can Ths Facility Do C-Section?
-                            If Yes, Please Use The Check List:
-                            Operating Table?
-                            Operating Light?
-                            Suction Machine?
-                            Foot Operated Suction Machine?
-                            Pulse Oximeter?
-                            Caesarean Set?
-                            Patient Monitor?
-                            Diathermy Machine?
-                            Trolley?
-                                Stretcher?
-                                    Ultrasound Machine?
-                                    Autoclave?
-                                        Resuscitator Bags - Adult?
-                                        Resuscitator Bags - Child?
-                                        Anaesthesia Machine?
-                                        Anaethesia Stool?
-                            */
-
-
                         ];
                     }
 
@@ -508,28 +494,6 @@
                                 ]
                             }
                         ];
-
-                        /*
-                        Family Planning
-                        Has Special Room For Family Planning?
-                            Family Planning Available
-                        RCH
-                        Weighing Machine
-                        Vaccination Availability/ Cold Chain
-                        SP For Mothers
-                        PMTCT Services
-                        Testing For Syphilis
-                        HB Monitoring
-                        Blood Pressure Measuring
-                        Community Linkage
-                        Counseling Services
-                        Fetalscope/ Dopetone
-                        IPT for Malaria
-                            UTI screening
-                        UTI treatment
-                        Iron and Folate Supplement
-                        */
-
                     }
                     break;
 
@@ -541,26 +505,6 @@
                                 'Death Rate Perinatal',
                                 'Neonatal Mortality  Rate',
                                 'Maternal Mortality Ratio (Institutional)'
-                                /*
-                                 MISSING (MARKED WITH YELLOW)
-                                 Can this facility do Cesarian-section?
-                                 Operating table?
-                                 Operating light?
-                                 Suction machine?
-                                 Foot operated suction machine?
-                                 Pulse oximeter?
-                                 Caesarean set?
-                                 Patient monitor?
-                                 Diathermy machine?
-                                 Trolley?
-                                 Stretcher?
-                                 Ultrasound machine?
-                                 Autoclave?
-                                 Resuscitator bags - adult?
-                                 Resuscitator bags - child?
-                                 ANesthesia machine?
-                                 ANethesia stool?
-                                */
                             ];
                         }
                         break;
@@ -624,10 +568,19 @@
                             ];
                         }
                         break;
-            }
 
-            //Filter data by existing keys
-            //_.pick(data, tabDataKeys)
+                    case 'Needed workers':
+                        if (data['District'] === "Shinyanga") {
+                            tabDataKeys = [
+                                'Bin card available with commodity',
+                                'Physical Count',
+                                'FEFO (Yes / No)',
+                                'Exp Date (soonest)'
+                            ];
+                        }
+                        console.log('TODO Add data from another dataset here');
+                        break;
+            }
 
             var indicators = _.map(tabDataKeys, function (indicatorName) {
                 if (typeof indicatorName === 'object') {
@@ -673,6 +626,9 @@
             };
 
         }).filter(function(tab) {
+            if (tab.tabName === 'Needed workers') {
+                return true;
+            }
             return tab.indicators.length;
         });
 
@@ -683,24 +639,33 @@
             });
         }
 
+        if (typeof self.neededWorkers[facilityName] !== 'undefined') {
+            profileData.push({
+                tabName: 'Needed workers',
+                neededWorkers: _.sortBy(self.neededWorkers[facilityName], function(w) { return Number(w[0]); })
+            });
+        }
+
+        console.log('======================================');
+        console.log('profileData', profileData);
+        console.log('======================================');
+
+
         $('#profile').html('<h2>' + facilityName + '</h2>');
 
-        $('#profile').append($('#profile-template').tmpl({
+        $('#profile').append($.tmpl('profile-template.html', {
             profileData: profileData
         }));
+
+        // $('#profile').append($('#profile-template').tmpl({
+        //     profileData: profileData
+        // }));
+
         var tabHeight = $(window).height() - 200;
         $('#profile').find('.drug-list').css({
             height: tabHeight
         });
 
-        //$(window).on('resize', function() {
-        //    var newHeight = $(this).height();
-        //    $('.tabpanel').css({
-        //        height: ''
-        //    });
-        //});
-
-        //window.profileData = profileData;
         self.switchView('profile');
     };
 
@@ -710,26 +675,39 @@
             this.allData[event.data.content['Facility Name']] = event.data.content;
         }
 
+        if (this.settings.bounds !== null && event.data.visible) {
+            event.data.visible = event.data.visible && this.settings.bounds.contains(event.data.position);
+        }
+
+        if (this.settings.priorityFor !== 'None') {
+            //Workers needed in current clinic
+            var facilityVacancies = _.map(self.neededWorkers[event.data.content['Facility Name']], function(d) {
+                return d[1];
+            });
+            event.data.visible = event.data.visible && _.indexOf(facilityVacancies, self.settings.priorityFor) > -1;
+        }
+
         var search = this.settings['search'];
 
         if (search != '' && event.data.content['Facility Name'].toLowerCase().indexOf(search) < 0) {
             event.data.visible = false;
         }
 
-        if (this.settings.bounds !== null && event.data.visible) {
-            event.data.visible = event.data.visible && this.settings.bounds.contains(event.data.position);
-        }
+        if (this.settings.geoSearch != null) {
 
-        if (this.settings.drugSearch != null) {
+            if (this.settings.geoSearchType === 'facility') {
 
-            if (_.isUndefined(this.drugsAvailability[event.data.content['Facility Name']])) {
-                event.data.visible = false;
-            } else {
-                var drugsInLocation = this.drugsAvailability[event.data.content['Facility Name']];
+                event.data.visible = event.data.visible && event.data.content.Clinic.toLocaleLowerCase() === self.settings.geoSearch.toLowerCase();
 
-                if (self.settings.drugSearch != 'clinic') {
+            } else if (this.settings.geoSearchType === 'drug') {
+
+                if (_.isUndefined(this.drugsAvailability[event.data.content['Facility Name']])) {
+                    event.data.visible = false;
+                } else {
+                    var drugsInLocation = this.drugsAvailability[event.data.content['Facility Name']];
+
                     var requestedDrug = _.find(drugsInLocation, function(drug) {
-                        return drug[5].toLowerCase() === self.settings.drugSearch;
+                        return drug[5].toLowerCase() === self.settings.geoSearch;
                     });
 
                     if (typeof requestedDrug[6] === 'string') {
@@ -737,9 +715,20 @@
                     }
 
                     event.data.visible = event.data.visible && requestedDrug && (requestedDrug[6] != '' && requestedDrug[6] != 'N' && requestedDrug[6] != 0);
+
                 }
+
             }
         }
+
+        // event.data.icon = {
+        //     path: "M-20,0a20,20 0 1,0 40,0a20,20 0 1,0 -40,0",
+        //     fillColor: '#FF00ff',
+        //     fillOpacity: .6,
+        //     anchor: new google.maps.Point(0,0),
+        //     strokeWeight: 0,
+        //     scale: 1
+        // };
 
         if (event.data.visible) {
 
@@ -756,7 +745,10 @@
 
             if (!$('#table').find('tr[data-facility-name="' + data['Facility Name'] + '"]').length) {
                 data['Hours of Operation (opening hours)'] = event.data.content['Hours of Operation (opening hours)'];
-                $('#table').find('tbody').append($('#tmpl-table-row').tmpl({data: data}));
+                //$('#table').find('tbody').append($('#tmpl-table-row').tmpl({data: data}));
+
+                $('#table').find('tbody').append($.tmpl('table-row-template.html', {data: data}));
+
             }
 
             var copy = $.extend({}, data);
@@ -770,8 +762,21 @@
         callback(event.data);
     };
 
+    app.prototype.onResize = function () {
+        var newHeight = $(window).height();
+        $('#side-bar').height(newHeight - this.topBarHeight);
+        $('#map-canvas').height(newHeight - this.topBarHeight);
+
+        //$('#priority-for').parent().height() - 40
+
+        //$('#priority-for').height();//padding 20 top/bottom
+
+    };
+
     app.prototype.bindEvents = function () {
         var self = this;
+
+        $(window).on('resize', $.proxy(this.onResize, this));
 
         $('#main-menu').on('click', '.btn', function () {
             var $btn = $(this);
@@ -892,11 +897,10 @@
             self.areaToolShape['setMap'](null);
             self.areaToolShape = null;
 
-            var drugSearch = $('#drug-select').val().toLowerCase();
-            if (drugSearch !== 'Clinic') {
-                self.settings.drugSearch = drugSearch;
-                self.reloadLayers();
-            }
+            //facility/drug
+            self.settings.geoSearchType = $('#drug-select').find('option:selected').data('searchType');
+            self.settings.geoSearch = $('#drug-select').val().toLowerCase();
+            self.reloadLayers();
         });
 
         $('#drug-search-dialog').on('click', '.close', function() {
@@ -940,32 +944,6 @@
 
             });
 
-            //val('Put proper distance here').on('keyup', $.proxy(self.onRadiusChange, self));
-
-            //$('.')
-
-            //var $radiusSpinner = $('#radius-spinner');
-            //
-            //// convert radius from meters to kilometers
-            //$radiusSpinner.val((circle.getRadius() / 1000).toFixed(2));
-            //
-            //// convert radius from kilometers to meters
-            //$radiusSpinner.on('change', function() {
-            //    circle.setRadius($radiusSpinner.val() * 1000)
-            //});
-
-            //google.maps.event.addListener(circle, 'center_changed', function() {
-            //    //refesh data
-            //    self.radiusToolWindow.setPosition(circle.getCenter());
-            //});
-
-            //google.maps.event.addListener(circle, 'radius_changed', function() {
-            //    //this.refreshData();
-            //    if ($radiusSpinner.val() * 1 != circle.getRadius() / 1000) {
-            //        $radiusSpinner.val((circle.getRadius() / 1000).toFixed(2));
-            //    }
-            //});
-
         });
 
         $radiusButton.on('click', function(e) {
@@ -978,7 +956,7 @@
                 $radiusButton.removeClass('btn-warning');
 
                 self.settings.bounds = null;
-                self.settings.drugSearch = null;
+                self.settings.geoSearch = null;
 
                 self.reloadLayers();
             }

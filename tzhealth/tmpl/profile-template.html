@@ -1,3 +1,125 @@
-<div class="profile" data-template-name="profile-template.html">
-    Will load this template using $.get & compile
+<div class="profile">
+    <div id="back-button">
+        <a href="#">
+            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+        </a>
+    </div>
+    <div class="row">
+        <div class="col-sm-3">
+            <div class="thumbnail">
+                <img id="preview-image" src="img/hospitals.jpg" alt="img/hospitals.jpg" />
+            </div>
+        </div>
+        <div class="col-sm-9">
+            <ul class="nav nav-tabs profile-tabs" role="tablist">
+                {{each(i, tab) profileData}}
+                <li role="presentation" {{if (i==0)}}class="active"{{/if}}>
+                    <a href="#tab-${i}" aria-controls="home" role="tab" data-toggle="tab">${tab.tabName}</a>
+                </li>
+                {{/each}}
+            </ul>
+            <div class="tab-content">
+                {{each(i, tab) profileData}}
+                <div role="tabpanel" class="tab-pane {{if (i==0)}}active{{/if}}" id="tab-${i}">
+
+                    <div class="drug-list">
+                        {{if tab.tabName == 'Needed workers'}}
+                        <h3> Needed workers</h3>
+                        {{if typeof tab.neededWorkers !== 'undefined'}}
+                            <table class="table table-striped table-condensed drug-list-table">
+                                <thead>
+                                <tr>
+                                    <th>Order</th>
+                                    <th>Cadre type</th>
+                                    <th>Priority Index</th>
+                                    <th>Budget left, TZS</th>
+                                    <th>Current staff</th>
+                                    <th>POA HRH Requirement</th>
+                                    <th>POA HRH Request (Need-Based)</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {{each(j, vacancy) tab.neededWorkers}}
+                                <tr>
+                                    <td>${vacancy[0]}</td>
+                                    <td>${vacancy[1]}</td>
+                                    <td>${vacancy[6]}</td>
+                                    <td>${vacancy[7]}</td>
+                                    <td>${vacancy[8]}</td>
+                                    <td>${vacancy[9]}</td>
+                                    <td>${vacancy[10]}</td>
+                                </tr>
+                                {{/each}}
+                                </tbody>
+                            </table>
+                        {{else}}
+                        <p>No data on drugs availability</p>
+                        {{/if}}
+                        {{else tab.tabName == 'Drugs list'}}
+
+                        {{if typeof tab.drugsList !== 'undefined'}}
+                        <table class="table table-striped table-condensed drug-list-table">
+                            <thead>
+                            <tr>
+                                <th>Tracer Commodity Checklist</th>
+                                <th>Bin card available with commodity</th>
+                                <th>Physical Count</th>
+                                <th>FEFO (Yes / No)</th>
+                                <th>Exp Date (soonest)</th>
+                                <th>Notes</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {{each(j, drug) tab.drugsList}}
+                            <tr>
+                                <td>${drug[5]}</td>
+                                <td style="{{if drug[6]=='N' || drug[6] == '' || drug[6] == 0}}color:red;{{/if}}">${drug[6]}</td>
+                                <td>${drug[7]}</td>
+                                <td>${drug[8]}</td>
+                                <td>${drug[9]}</td>
+                                <td>${drug[10]}</td>
+                            </tr>
+                            {{/each}}
+                            </tbody>
+                        </table>
+                        {{else}}
+                        <p>No data on drugs availability</p>
+                        {{/if}}
+
+                        {{else}}
+
+                        {{each(j, indicator) tab.indicators}}
+                        {{if (typeof indicator.children !== 'undefined')}}
+                        <h4 class="item-header">${indicator.name}</h4>
+                        <table class="table table-striped table-condensed" style="width: 300px;">
+                            <tbody>
+                            {{each(k, child) indicator.children}}
+                            <tr>
+                                <td>
+                                    ${child.name}
+                                </td>
+                                <td>
+                                    ${child.value}
+                                </td>
+                            </tr>
+                            {{/each}}
+                            </tbody>
+                        </table>
+                        <hr />
+                        {{else}}
+                        <div>
+                            <h4 class="item-header inline-header">${indicator.name}</h4>
+                            <div class="inline-value">
+                                ${indicator.value}
+                            </div>
+                        </div>
+                        {{/if}}
+                        {{/each}}
+                        {{/if}}
+                    </div>
+                </div>
+                {{/each}}
+            </div>
+        </div>
+    </div>
 </div>

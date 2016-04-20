@@ -1,0 +1,8 @@
+<h4>Priority for</h4>
+<div class="list-group priority-for">
+    {{each(i, vacancy) vacancies}}
+    <a href="#" class="list-group-item {{if i == 0}}active{{/if}}" data-priority-for="${vacancy}">
+        ${vacancy}
+    </a>
+    {{/each}}
+</div>
