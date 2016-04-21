@@ -275,3 +275,11 @@ tr.header {
 		padding: 3px 4px;
 		font-size: 12px;
 	}
+
+.labels {
+	color: gray;
+	background-color: white;
+	border-radius: 50%;
+	padding: 3px;
+	font-size: 10px;
+}

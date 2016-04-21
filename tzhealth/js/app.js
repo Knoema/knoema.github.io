@@ -21,6 +21,8 @@
         this.drugsAvailability = null;
         this.neededWorkers = null;
 
+        this.markers = [];
+
         this.settings = {
             search: '',
             bounds: null,
@@ -679,14 +681,6 @@
             event.data.visible = event.data.visible && this.settings.bounds.contains(event.data.position);
         }
 
-        if (this.settings.priorityFor !== 'None') {
-            //Workers needed in current clinic
-            var facilityVacancies = _.map(self.neededWorkers[event.data.content['Facility Name']], function(d) {
-                return d[1];
-            });
-            event.data.visible = event.data.visible && _.indexOf(facilityVacancies, self.settings.priorityFor) > -1;
-        }
-
         var search = this.settings['search'];
 
         if (search != '' && event.data.content['Facility Name'].toLowerCase().indexOf(search) < 0) {
@@ -721,15 +715,6 @@
             }
         }
 
-        // event.data.icon = {
-        //     path: "M-20,0a20,20 0 1,0 40,0a20,20 0 1,0 -40,0",
-        //     fillColor: '#FF00ff',
-        //     fillOpacity: .6,
-        //     anchor: new google.maps.Point(0,0),
-        //     strokeWeight: 0,
-        //     scale: 1
-        // };
-
         if (event.data.visible) {
 
             var tabDataKeys = [
@@ -757,6 +742,37 @@
                     copy[key] = parseFloat(copy[key]).toLocaleString();
             };
             this.count++;
+        }
+
+        if (this.settings.priorityFor !== 'None') {
+            //Workers needed in current clinic
+            var facilityVacancies = _.map(self.neededWorkers[event.data.content['Facility Name']], function(d) {
+                return d[1];
+            });
+            event.data.visible = event.data.visible && _.indexOf(facilityVacancies, self.settings.priorityFor) > -1;
+
+            if (event.data.visible) {
+                event.data.visible = false;
+                var marker = new MarkerWithLabel({
+                    //anchor property doesn't work
+                    //anchor: new google.maps.Point(0, 2000),
+                    position: event.data.position,
+                    map: self.map,
+                    labelAnchor: new google.maps.Point(8, 15),//8-horiz, 5-vert
+
+                    //TODO Popolate with proper data
+                    //labelContent:  '42',
+                    //labelClass: 'labels'
+                });
+
+                //TODO Uncomment this
+                //marker.setIcon(event.data.icon.url);
+
+                marker.addListener('click', function() {
+                    self.showProfile(event.data.content['Facility Name'], event.data.content);
+                });
+                self.markers.push(marker);
+            }
         }
 
         callback(event.data);
@@ -821,6 +837,10 @@
 
     app.prototype.reloadLayers = function () {
         var self = this;
+        _.each(this.markers, function(m) {
+            m.setMap(null);
+        });
+        this.markers = [];
         _.each(_.keys(this.layers), function(layerId) {
             self.loadLayer(layerId);
         });
