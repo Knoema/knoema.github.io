@@ -1,6 +1,6 @@
 (function () {
 
-    app = function app() {
+    var app = function app() {
     };
 
     app.prototype.run = function () {
@@ -23,12 +23,20 @@
 
         this.markers = [];
 
+        this.facilities = [];
+        self.sortedVacancies = null;
+
         this.settings = {
             search: '',
             bounds: null,
             geoSearchType: null,
             geoSearch: null,
             priorityFor: 'None'
+        };
+
+        //TODO Change names in "Priority for" list
+        this.vacanciesNamesToChange = {
+
         };
 
         this.namesToChange = {
@@ -101,6 +109,11 @@
         $(window).trigger('resize');
 
         Knoema.Helpers.post('//knoema.com/api/1.0/data/details', neededWorkesDataDescriptor, function(response) {
+
+            self.groupedByVacancyName = _.groupBy(_.chunk(response.data, response.columns.length), function(d) {
+                return d[1];
+            });
+
             self.neededWorkers = _.groupBy(_.chunk(response.data, response.columns.length), function(d) {
                 return d[2];
             });
@@ -117,6 +130,8 @@
     app.prototype.initSideBar = function () {
         var self = this;
         Knoema.Helpers.get('//knoema.com/api/1.0/meta/dataset/znxktgc/dimension/cadre-type', function(response) {
+
+            //TODO Change names in according to this.vacanciesNamesToChange
             $('#priority-for').append($.tmpl('vacancies-list-template.html', {
                 vacancies: ['None'].concat(_.map(response.items, 'name'))
             }));
@@ -124,7 +139,20 @@
             $('#priority-for').on('click', '.list-group-item', function() {
                 $(this).parent().find('.active').removeClass('active');
                 $(this).addClass('active');
+
                 self.settings.priorityFor = $(this).data('priorityFor');
+
+                if (self.settings.priorityFor !== 'None') {
+
+                    var vacancies = self.groupedByVacancyName[self.settings.priorityFor];
+
+                    self.sortedVacancies = _.sortBy(vacancies, function(v) {
+                        return -1 * Number(v[0]);
+                    }).filter(function(v) {
+                        //Filter by existing facilities
+                        return _.indexOf(self.facilities, v[2]) > -1;
+                    });
+                }
                 self.reloadLayers();
             });
 
@@ -648,20 +676,11 @@
             });
         }
 
-        console.log('======================================');
-        console.log('profileData', profileData);
-        console.log('======================================');
-
-
         $('#profile').html('<h2>' + facilityName + '</h2>');
 
         $('#profile').append($.tmpl('profile-template.html', {
             profileData: profileData
         }));
-
-        // $('#profile').append($('#profile-template').tmpl({
-        //     profileData: profileData
-        // }));
 
         var tabHeight = $(window).height() - 200;
         $('#profile').find('.drug-list').css({
@@ -673,6 +692,11 @@
 
     app.prototype.onBeforeDraw = function (event, callback, id) {
         var self = this;
+
+        if (_.indexOf(self.facilities, event.data.content['Facility Name']) < 0) {
+            self.facilities.push(event.data.content['Facility Name']);
+        }
+
         if (_.isUndefined(this.allData[event.data.content['Facility Name']])) {
             this.allData[event.data.content['Facility Name']] = event.data.content;
         }
@@ -753,20 +777,27 @@
 
             if (event.data.visible) {
                 event.data.visible = false;
+
+                //TODO Get proper index for current facility
+
+                var index = 1 + _.findIndex(self.sortedVacancies, function(v) {
+                    return v[2] === event.data.content['Facility Name'];
+                });
+
+
                 var marker = new MarkerWithLabel({
                     //anchor property doesn't work
                     //anchor: new google.maps.Point(0, 2000),
                     position: event.data.position,
                     map: self.map,
-                    labelAnchor: new google.maps.Point(8, 15),//8-horiz, 5-vert
-
+                    labelAnchor: new google.maps.Point(0, 0),//new google.maps.Point(8, 0)
                     //TODO Popolate with proper data
-                    //labelContent:  '42',
-                    //labelClass: 'labels'
+                    labelContent:  index,
+                    labelClass: 'labels'
                 });
 
                 //TODO Uncomment this
-                //marker.setIcon(event.data.icon.url);
+                marker.setIcon(event.data.icon);
 
                 marker.addListener('click', function() {
                     self.showProfile(event.data.content['Facility Name'], event.data.content);
@@ -984,7 +1015,9 @@
     };
 
     google.maps.event.addDomListener(window, 'load', function () {
-        new app().run();
+        //new app().run();
+        window.tzhealth = new app();
+        window.tzhealth.run();
     });
 
 })();

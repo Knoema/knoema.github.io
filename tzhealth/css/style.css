@@ -277,9 +277,11 @@ tr.header {
 	}
 
 .labels {
-	color: gray;
+	color: #222;
 	background-color: white;
 	border-radius: 50%;
 	padding: 3px;
 	font-size: 10px;
+	min-width: 18px;
+	text-align: center;
 }
