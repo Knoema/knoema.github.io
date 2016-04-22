@@ -261,6 +261,42 @@ tr.header {
 	padding: 15px 0;
 }
 
+.sidebar-content h4{
+	text-transform: uppercase;
+	color: #00A3DD;
+	padding: 0;
+	font-size: 14px;
+	font-weight: bold;
+}
+
+.priority-for a {
+	display: block;
+	padding: 3px 0 3px 15px;
+	font-size: 12px;
+	text-decoration: none;
+	font-weight: bold;
+	color: black;
+}
+
+.priority-for a:before {
+	content: '\2022';/*http://www.fileformat.info/info/unicode/char/2022/index.htm*/
+	display: inline-block;
+	margin-right: 4px;
+}
+
+.priority-for a:hover {
+	background-color: #efefef;
+}
+
+.priority-for a.active {
+	background-color: #ccecf7;
+	color: #06a2dd;
+}
+
+
+
+
+
 #map-canvas {
 	margin-right: -15px;
 }
@@ -284,4 +320,9 @@ tr.header {
 	font-size: 10px;
 	min-width: 18px;
 	text-align: center;
+}
+
+#profile {
+	margin-left: -36%;
+	background-color: white;
 }

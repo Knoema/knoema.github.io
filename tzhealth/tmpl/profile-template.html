@@ -29,7 +29,6 @@
                             <table class="table table-striped table-condensed drug-list-table">
                                 <thead>
                                 <tr>
-                                    <th>Order</th>
                                     <th>Cadre type</th>
                                     <th>Priority Index</th>
                                     <th>Budget left, TZS</th>
@@ -41,10 +40,9 @@
                                 <tbody>
                                 {{each(j, vacancy) tab.neededWorkers}}
                                 <tr>
-                                    <td>${vacancy[0]}</td>
                                     <td>${vacancy[1]}</td>
-                                    <td>${vacancy[6]}</td>
-                                    <td>${vacancy[7]}</td>
+                                    <td>${Globalize.format(vacancy[6])}</td>
+                                    <td>${Globalize.format(vacancy[7])}</td>
                                     <td>${vacancy[8]}</td>
                                     <td>${vacancy[9]}</td>
                                     <td>${vacancy[10]}</td>

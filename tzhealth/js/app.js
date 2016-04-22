@@ -136,7 +136,7 @@
                 vacancies: ['None'].concat(_.map(response.items, 'name'))
             }));
 
-            $('#priority-for').on('click', '.list-group-item', function() {
+            $('#priority-for').on('click', '.vacancy', function() {
                 $(this).parent().find('.active').removeClass('active');
                 $(this).addClass('active');
 
