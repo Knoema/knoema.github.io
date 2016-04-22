@@ -682,7 +682,7 @@
             profileData: profileData
         }));
 
-        var tabHeight = $(window).height() - 200;
+        var tabHeight = $(window).height() - 165;
         $('#profile').find('.drug-list').css({
             height: tabHeight
         });
