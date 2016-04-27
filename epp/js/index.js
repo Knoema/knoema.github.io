@@ -173,6 +173,8 @@ Application.prototype.initRegionSelector = function () {
             self.updateOverview({ title: self.currentCountryName, countryId: self.currentCountryId });
         else
             self.updateOverview({ title: 'Africa' });
+
+        self.loadLayer();
     });
 }
 
@@ -235,6 +237,8 @@ Application.prototype.initCountrySelector = function(){
                     self.updateOverview({ title: self.currentRegion, region: self.currentRegion });
                 else
                     self.updateOverview({ title: 'Africa' });
+
+                self.loadLayer();
             });
         }
     });
@@ -357,6 +361,9 @@ Application.prototype.updateOverview = function (options) {
             });
     }
 
+    var totalCapacity = 0;
+    _.each(stations, function(s) { totalCapacity += s['Capacity (MW)']; });
+
     var opt = {
         title: options.title,
         countryId: options.countryId,
@@ -364,7 +371,8 @@ Application.prototype.updateOverview = function (options) {
         stationsByType: _.mapValues(_.groupBy(stations, 'Type'), function(g) {
             return g.length;
         }),
-        stations: _.chain(stations).filter(function(s) { return s['Capacity (MW)']; }).sortBy('Capacity (MW)').reverse().value()
+        stations: _.chain(stations).filter(function(s) { return s['Capacity (MW)']; }).sortBy('Capacity (MW)').reverse().value(),
+        totalCapacity: parseInt(totalCapacity)
     };
 
     var $overviewHolder = $('#overview-holder').empty().html($('#tmpl-overview').tmpl(opt));
@@ -499,24 +507,44 @@ Application.prototype.onBeforeDraw = function (event, callback) {
 
     if (self.filterSettings.showTypes.indexOf(typeData.name) < 0) {
         event.data.visible = false;
+        return;
     }
 
     var category =  (event.data.content.Category == 'Not Defined') ? 'Other' : event.data.content.Category;
     if (self.filterSettings.showCategories.indexOf(category) < 0) {
         event.data.visible = false;
+        return;
     }
 
     if (self.filterSettings.capacity) {
-        if (!event.data.content['Capacity (MW)'])
+        if (!event.data.content['Capacity (MW)']) {
             event.data.visible = false;
+            return;
+        }
 
-
-
-        if (typeof(self.filterSettings.capacity.min) !== "undefined" && self.filterSettings.capacity.min !== null && event.data.content['Capacity (MW)'] < self.filterSettings.capacity.min)
+        if (typeof(self.filterSettings.capacity.min) !== "undefined" && self.filterSettings.capacity.min !== null && event.data.content['Capacity (MW)'] < self.filterSettings.capacity.min) {
             event.data.visible = false;
+            return;
+        }
 
-        if (typeof(self.filterSettings.capacity.max) !== "undefined" && self.filterSettings.capacity.max !== null && event.data.content['Capacity (MW)'] > self.filterSettings.capacity.max)
+        if (typeof(self.filterSettings.capacity.max) !== "undefined" && self.filterSettings.capacity.max !== null && event.data.content['Capacity (MW)'] > self.filterSettings.capacity.max) {
             event.data.visible = false;
+            return;
+        }
+    }
+
+    if (self.currentCountryId) {
+        if (event.data.content['RegionId'] != self.currentCountryId) {
+            event.data.visible = false;
+            return;
+        }
+    }
+    else if (self.currentRegion) {
+        var countries = getCountriesByRegion(self.currentRegion);
+        if (countries && countries.length && _.indexOf(countries, event.data.content['Country']) == -1) {
+            event.data.visible = false;
+            return;
+        }
     }
 
     callback(event.data);
