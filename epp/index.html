@@ -39,7 +39,19 @@
             <div id="map-canvas"></div>
 
             <div id="regions-control" class="form-inline">
-                <div id="region-selector" class="input-group"></div>
+                <div id="region-selector" class="input-group">
+                    <span class="input-group-addon">REGION:</span>
+                    <select id="regions">
+                        <option value="">Africa</option>
+                        <option value="SADC">SADC</option>
+                        <option value="COMESA">COMESA</option>
+                        <option value="ECOWAS">ECOWAS</option>
+                        <option value="EAC">EAC</option>
+                        <option value="UMA">UMA</option>
+                        <option value="ECCAS">ECCAS</option>
+                    </select>
+                </div>
+                <div id="country-selector" class="input-group"></div>
             </div>
         </div>
     </div>
@@ -62,21 +74,21 @@
         Knoema.Helpers.clientId = 'EZj54KGFo3rzIvnLczrElvAitEyU28DGw9R73tif';
     </script>
 
-    <script id="tmpl-regions-control" type="text/x-jQuery-tmpl">
-        <!--<span class="input-group-addon">COUNTRY:</span>-->
-        <select id="regions">
+    <script id="tmpl-country-selector" type="text/x-jQuery-tmpl">
+        <span class="input-group-addon">COUNTRY:</span>
+        <select id="countries">
             <option value="">Select a country</option>
-            {{each regions}}
-                <option value="${regionid}">${name}</option>
+            {{each countries}}
+                <option value="${countryId}">${countryName}</option>
             {{/each}}
         </select>
     </script>
 
-    <script id="tmpl-region-profile" type="text/x-jQuery-tmpl">
-		<div id="region-profile-popup" class="passport-popup">
-			<div class="passport__title" style="text-transform: uppercase;">${country} country profile</div>
-    		<div class="passport__close"></div>
-    		<div class="passport__content">
+    <script id="tmpl-country-profile" type="text/x-jQuery-tmpl">
+		<div class="passport-popup">
+			<div class="passport-title" style="text-transform: uppercase;">${country} country profile</div>
+    		<div class="passport-close"></div>
+    		<div class="passport-content">
 				<iframe src="${embedUrl}" scrolling="yes" frameborder="0" style="height:100%; width:100%"></iframe>
     		</div>
 		</div>
@@ -173,9 +185,9 @@
     <script id="tmpl-overview" type="text/x-jQuery-tmpl">
         <div class="overview">
             <div class="country-card">
-                <h3 class="title">${regionName}</h5>
-                {{if regionId}}
-                    <button class="region-profile-button">Show country profile</button>
+                <h3 class="title">${title}</h5>
+                {{if countryId}}
+                    <button class="country-profile-button">Show country profile</button>
                 {{/if}}
             </div>
             <hr/>
@@ -205,7 +217,7 @@
     <script src="http://knoema.com/Js/GoogleMap/marker-clusterer.js?v=1"></script>
     <script src="http://knoema.com/js/geoplayground/geo-playground-layer.js?v=1"></script>
     <script src="js/utils/getDataByType.js"></script>
-
+    <script src="js/utils/getCountriesByRegion.js"></script>
     <script src="js/index.js?v=2"></script>
 
     <script>

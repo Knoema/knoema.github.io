@@ -1,4 +1,4 @@
-//for dataset http://electricitypowerplants.knoema.com/wxafqvc
+//for dataset http://electricitypowerplants.knoema.com/lpxhpcb
 
 getDataByType = function(type) {
     var url;

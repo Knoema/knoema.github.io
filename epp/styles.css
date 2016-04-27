@@ -112,7 +112,7 @@ iframe {
     font-size: 9.0pt;
     border: none;
 }
-#regions-control #regions {
+#regions-control select {
     font-size: 10pt;
     padding: 5px 10px 6px 10px;
     font-weight: bold;
@@ -121,7 +121,7 @@ iframe {
 
 /* --- end region selector -- */
 
-.region-profile-button, .area-profile-button {
+.country-profile-button, .area-profile-button {
     padding: 5px 15px;
     border: 1px solid #009943;
     border-radius: 3px;
@@ -130,7 +130,7 @@ iframe {
     background-color: #009943;
     font-size: 9pt;
 }
-.region-profile-button {
+.country-profile-button {
     margin-top: 5px;
 }
 .area-profile-button.active {
@@ -285,7 +285,7 @@ ul.SideBar span {
     background-color: rgba(0,0,0,0.5);
     z-index: 3;
 }
-.passport__content {
+.passport-content {
     position: absolute;
     left: 10px;
     right: 10px;
@@ -295,7 +295,7 @@ ul.SideBar span {
     background-color: #fff;
     overflow: auto;
 }
-.passport__title
+.passport-title
 {
     position: absolute;
     top: 10px;
@@ -305,11 +305,11 @@ ul.SideBar span {
     background-color: #EBFAFF;
     overflow: auto;
 }
-.passport__content hr {
+.passport-content hr {
     margin: 15px 0;
     border-top: 1px solid #e6e6e6;
 }
-.passport__close {
+.passport-close {
     position: absolute;
     right: 30px;
     top: 20px;
@@ -321,10 +321,10 @@ ul.SideBar span {
     border-radius: 50%;
     box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.15);
 }
-.passport__close:hover {
+.passport-close:hover {
     background-image: url(./img/icon_close_hover.png);
 }
-.passport__title {
+.passport-title {
     font-family: 'Roboto', sans-serif;
     font-size: 18px;
     font-weight: bold;

@@ -24,9 +24,14 @@ function Application(options) {
 
     this.sideBarLoaded = false;
 
+    this.currentRegion = '';
+    this.currentCountryId = '';
+    this.currentCountryName = '';
+
     this.initMap();
     this.bindEvents();
     this.initRegionSelector();
+    this.initCountrySelector();
 };
 
 Application.prototype.initMap = function() {
@@ -104,7 +109,7 @@ Application.prototype.initCapacityFilter = function(){
     min.change(function () {
         var value = parseFloat($(this).val());
 
-        if ($.isNumeric(value) && value < self.filterSettings.capacity._max && value > self.filterSettings.capacity._min) {
+        if ($.isNumeric(value) && value <= self.filterSettings.capacity._max && value >= self.filterSettings.capacity._min) {
             self.filterSettings.capacity.min = value;
         }
         else {
@@ -120,7 +125,7 @@ Application.prototype.initCapacityFilter = function(){
     max.change(function () {
         var value = parseFloat($(this).val());
 
-        if ($.isNumeric(value) && value < self.filterSettings.capacity._max && value > self.filterSettings.capacity._min) {
+        if ($.isNumeric(value) && value <= self.filterSettings.capacity._max && value >= self.filterSettings.capacity._min) {
             self.filterSettings.capacity.max = value;
         }
         else {
@@ -153,7 +158,25 @@ Application.prototype.initCapacityFilter = function(){
     });
 }
 
-Application.prototype.initRegionSelector = function(){
+Application.prototype.initRegionSelector = function () {
+
+    var self = this;
+
+    $('#regions').on('change', function(event) {
+
+        self.resetAreaSelector();
+
+        self.currentRegion = $(event.delegateTarget).val();
+        if (self.currentRegion)
+            self.updateOverview({ title: self.currentRegion, region: self.currentRegion });
+        else if (self.currentCountryId)
+            self.updateOverview({ title: self.currentCountryName, countryId: self.currentCountryId });
+        else
+            self.updateOverview({ title: 'Africa' });
+    });
+}
+
+Application.prototype.initCountrySelector = function(){
 
     var self = this;
 
@@ -172,30 +195,29 @@ Application.prototype.initRegionSelector = function(){
 
             self.countries = _.map(response.items, function(i){
                 return {
-                    name: i.name,
-                    regionid: i.fields.regionid
+                    countryName: i.name,
+                    countryId: i.fields.regionid
                 };
             })
 
-            var $selectorContent = $('#tmpl-regions-control').tmpl({
-               regions: self.countries 
+            var $selectorContent = $('#tmpl-country-selector').tmpl({
+               countries: self.countries
             });
             
-            $('#region-selector').append($selectorContent);
+            $('#country-selector').append($selectorContent);
 
-            $('#regions').on('change', function(event) {
+            $('#countries').on('change', function(event) {
 
                 self.resetAreaSelector();
+                self.currentCountryId = $(event.delegateTarget).val();
 
-                var regionId = $(event.delegateTarget).val();
-
-                if (regionId) {
-                    var regionName = $(event.delegateTarget).find(':selected').text();
+                if (self.currentCountryId) {
+                    self.currentCountryName = $(event.delegateTarget).find(':selected').text();
 
                     self.map.data.forEach(function (feature) {
                         self.map.data.revertStyle(feature);
 
-                        var visible = regionId == feature.getId();
+                        var visible = self.currentCountryId == feature.getId();
 
                         //do not show region because borders are rough
                         //self.map.data.overrideStyle(feature, { visible: visible });
@@ -207,14 +229,12 @@ Application.prototype.initRegionSelector = function(){
                         }
                     });
 
-                    var countryStations = _.filter(self.stations, function (station) {
-                        return station['Country'] == regionName
-                    });
-
-                    self.updateOverview(regionName, regionId, countryStations);
+                    self.updateOverview({ title: self.currentCountryName, countryId: self.currentCountryId });
                 }
+                else if (self.currentRegion)
+                    self.updateOverview({ title: self.currentRegion, region: self.currentRegion });
                 else
-                    self.updateOverview('Africa', null, self.stations);
+                    self.updateOverview({ title: 'Africa' });
             });
         }
     });
@@ -254,7 +274,7 @@ Application.prototype.initAreaSelector = function () {
                     itemsInArea.push(item);
             });
 
-            self.updateOverview('Selected area', null, itemsInArea);
+            self.updateOverview({ title: 'Selected area', stations: itemsInArea });
         }
 
         updateArea(circle);
@@ -275,17 +295,24 @@ Application.prototype.initAreaSelector = function () {
         } else {
             drawingManager.setDrawingMode(null);
             self.resetAreaSelector();
-            $('#regions').change();
         }
     });
 };
 
 Application.prototype.resetAreaSelector = function () {
+
     $('.area-profile-button').removeClass('active');
+
     if (this.radiusToolCircle) {
         this.radiusToolCircle.setMap(null);
         this.radiusToolCircle = null;
-        $('#regions').change();
+
+        if (this.currentCountryId)
+            this.updateOverview({ title: this.currentCountryName, countryId: this.currentCountryId });
+        else if (this.currentRegion)
+            this.updateOverview({ title: this.currentRegion, region: this.currentRegion });
+        else
+            this.updateOverview({ title: 'Africa' });
     }
 }
 
@@ -299,62 +326,81 @@ Application.prototype.extendBoundsByGeometry = function (bounds, geometry) {
     }
 };
 
-Application.prototype.updateOverview = function (regionName, regionId, stations) {
+/*
+options = {
+    title: '',
+    countryId: ''
+    region: '', //SADC, COMESA, ECOWAS, EAC, AMU, ECCAS, Africa
+    stations: '' //stations is used for selected area
+}
+ */
+
+Application.prototype.updateOverview = function (options) {
 
     var self = this;
 
-    var options = {
-        regionName: regionName,
-        regionId: regionId
-    };
+    var stations = self.stations;
+    
+    if (options.stations)
+        stations = options.stations;
 
-    _.extend(options, {
+    if (options.countryId) {
+        stations = _.filter(stations, function (s) {
+            return s['RegionId'] == options.countryId;
+        });
+    }
+    else if (options.region) {
+        var countries = getCountriesByRegion(options.region);
+        if (countries && countries.length)
+            stations = _.filter(stations, function (s) {
+                return _.indexOf(countries, s['Country']) > -1;
+            });
+    }
+
+    var opt = {
+        title: options.title,
+        countryId: options.countryId,
         types: self.energySources,
         stationsByType: _.mapValues(_.groupBy(stations, 'Type'), function(g) {
             return g.length;
         }),
         stations: _.chain(stations).filter(function(s) { return s['Capacity (MW)']; }).sortBy('Capacity (MW)').reverse().value()
+    };
+
+    var $overviewHolder = $('#overview-holder').empty().html($('#tmpl-overview').tmpl(opt));
+
+    $overviewHolder.find('.country-profile-button').click(function () {
+        self.showCountryProfile(options.title);
+    });
+}
+
+Application.prototype.showCountryProfile = function(country) {
+    var embedUrl;
+    switch (country){
+        case 'Comoros':
+            embedUrl = '//electricitypowerplants.knoema.com/resource/embed/gbgujnd?noHeader=1&location=Comoros';
+            break;
+        case 'Equatorial Guinea':
+            embedUrl = '//electricitypowerplants.knoema.com/resource/embed/suhkgpg?noHeader=1';
+            break;
+        case 'Sudan':
+        case 'South Sudan':
+            embedUrl = '//electricitypowerplants.knoema.com/resource/embed/hoikemg?noHeader=1&location=Sudan and South Sudan';
+            break;
+        case 'Sao Tome and Principe':
+            embedUrl = '//electricitypowerplants.knoema.com/resource/embed/gbgujnd?noHeader=1&location=Sao Tome and Principe';
+            break;
+        default:
+            embedUrl = '//electricitypowerplants.knoema.com/resource/embed/hoikemg?noHeader=1&location=' + country;
+    }
+
+    $('#tmpl-country-profile').tmpl({ country: country, embedUrl: embedUrl }).appendTo('#application');
+
+    $('.passport-close').click(function () {
+        $('.passport-popup').remove();
     });
 
-    $('#overview-holder').empty();
-
-    var $overviewContent = $('#tmpl-overview').tmpl(options);
-    var $overviewHolder = $('#overview-holder').html($overviewContent);
-
-    $overviewHolder.find('.region-profile-button').click(function () {
-
-        var regionId = $('#regions').val();
-        var country = $('#regions :selected').text();
-        if (!regionId)
-            return false;
-
-        var embedUrl;
-        switch (country){
-            case 'Comoros':
-                embedUrl = '//electricitypowerplants.knoema.com/resource/embed/gbgujnd?noHeader=1&location=Comoros';
-                break;
-            case 'Equatorial Guinea':
-                embedUrl = '//electricitypowerplants.knoema.com/resource/embed/suhkgpg?noHeader=1';
-                break;
-            case 'Sudan':
-            case 'South Sudan':
-                embedUrl = '//electricitypowerplants.knoema.com/resource/embed/hoikemg?noHeader=1&location=Sudan and South Sudan';
-                break;
-            case 'Sao Tome and Principe':
-                embedUrl = '//electricitypowerplants.knoema.com/resource/embed/gbgujnd?noHeader=1&location=Sao Tome and Principe';
-                break;
-            default:
-                embedUrl = '//electricitypowerplants.knoema.com/resource/embed/hoikemg?noHeader=1&location=' + country;
-        }
-
-        $('#tmpl-region-profile').tmpl({ country: country, embedUrl: embedUrl }).appendTo('#application');
-
-        $('.passport__close').click(function () {
-            $('.passport-popup').remove();
-        });
-
-        return false;
-    });
+    return false;
 }
 
 Application.prototype.loadLayer = function () {
@@ -406,7 +452,7 @@ Application.prototype.loadLayer = function () {
 
                 self.initCapacityFilter();
                 self.initAreaSelector();
-                self.updateOverview('Africa', null, self.stations);
+                self.updateOverview({ title: 'Africa' });
 
                 self.sideBarLoaded = true;
             }
