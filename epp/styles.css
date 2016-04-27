@@ -21,7 +21,7 @@ iframe {
 #map-canvas {
     position: absolute;
     left: 300px;
-    top: 60px;
+    top: 80px;
     right: 400px;
     bottom: 0;
     z-index: 1;
@@ -33,39 +33,50 @@ iframe {
     user-select: none;
 }
 #header {
-    background-color: #009943;
-    height: 60px;
-    padding: 0 11px;
-    text-align: center;
-    background-image: url(img/head_bg.png);
+    background-color: #71aa00;
+    height: 80px;
+    padding: 0 20px;
+    text-align: right;
+    //background-image: url(img/head_bg.png);
     background-repeat: repeat-x;
+}
+
+#header .logo-afdb {
+    float: left;
+    height: 48px;
+    width: 245px;
+    background-image: url(img/logo_afdb.png);
+    background-size: cover;
+    margin: 16px 0;
 }
 #header .logo {
     float: left;
-    height: 38px;
-    width: 173px;
+    height: 37px;
+    width: 196px;
     background-image: url(img/logo.png);
     background-size: cover;
-    margin: 11px 0;
+    margin: 21px 20px;
 }
 @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-device-pixel-ratio: 2) {
     #header .logo {
         background-image: url(img/logo@2x.png);
-        width: 177px;
+    }
+    #header .logo-afbd {
+        background-image: url(img/logo_afdb@2x.png);
     }
 }
 #header ul.menu {
     display: block;
-    height: 60px;
+    height: 80px;
     margin: 0;
 }
 #header ul.menu li {
     display: inline-block;
-    padding: 11px;
-    line-height: 38px;
+    padding: 15px 20px;
+    line-height: 50px;
 }
 #header ul.menu li.active {
-    background-color: #077537;
+    background-color: #5a8406;
 }
 #header ul.menu li a {
     color: white;
@@ -95,7 +106,7 @@ iframe {
 /* --- region selector --- */
 #regions-control {
     position: absolute;
-    top: 70px;
+    top: 90px;
     left: 450px;
     font-size: 9.5pt;
     z-index: 3;
@@ -123,18 +134,18 @@ iframe {
 
 .country-profile-button, .area-profile-button {
     padding: 5px 15px;
-    border: 1px solid #009943;
+    border: 1px solid #71aa00;
     border-radius: 3px;
     color: white;
     font-weight: bold;
-    background-color: #009943;
+    background-color: #71aa00;
     font-size: 9pt;
 }
 .country-profile-button {
     margin-top: 5px;
 }
 .area-profile-button.active {
-    background-color: #077537;
+    background-color: #5a8406;
 }
 
 /* --- sidebar -- */
@@ -161,7 +172,7 @@ ul.SideBar span {
 #sidebar-holder {
     display: block;
     position:absolute;
-    top: 60px;
+    top: 80px;
     bottom: 0;
     left: 0;
     width: 300px;
@@ -185,7 +196,7 @@ ul.SideBar span {
 #overview-holder{
     //display: none;
     position:absolute;
-    top: 60px;
+    top: 80px;
     bottom: 0;
     right: 0;
     width: 400px;
@@ -279,7 +290,7 @@ ul.SideBar span {
 .passport-popup {
     position: absolute;
     left: 0;
-    top: 60px;
+    top: 80px;
     right: 400px;
     bottom: 0;
     background-color: rgba(0,0,0,0.5);
@@ -356,51 +367,7 @@ ul.SideBar span {
 }
 /* --- end tooltip --- */
 
-/* --- footer --- */
-.footer {
-    background-color: #009943;
-    color: white;
-    height: 55px;
-    width: 300px;
-    position: absolute;
-    bottom: 0;
-    padding: 10px 15px;
-}
-.footer .footer-nav {
-    line-height: 40px;
-    display: inline-block;
-    background-color: #009943;
-    padding: 0;
-}
-.footer .footer-nav a {
-    color: white;
-}
-.footer .logo-afbd {
-    background-image: url(img/logo_afbd.png);
-    background-color: #009943;
-    height: 33px;
-    width: 120px;
-    margin-top: 2px;
-    background-repeat: no-repeat;
-    background-size: cover;
-}
-.footer .powered-by-knoema {
-    background-image: url(img/logo_knoema.png);
-    height: 21px;
-    width: 64px;
-    float: right;
-    background-repeat: no-repeat;
-    margin-top: 6px;
-}
-/* --- end footer --- */
-
 @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-device-pixel-ratio: 2) {
-    .footer .logo-afbd {
-        background-image: url(img/logo_afbd@2x.png);
-    }
-    .footer .powered-by-knoema {
-        background-image: url(img/logo_knoema@2x.png);
-    }
     #header {
         background-image: url(img/head_bg@2x.png);
     }

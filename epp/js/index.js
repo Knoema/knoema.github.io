@@ -109,7 +109,7 @@ Application.prototype.initCapacityFilter = function(){
     min.change(function () {
         var value = parseFloat($(this).val());
 
-        if ($.isNumeric(value) && value <= self.filterSettings.capacity._max && value >= self.filterSettings.capacity._min) {
+        if ($.isNumeric(value) && value < self.filterSettings.capacity._max && value > self.filterSettings.capacity._min) {
             self.filterSettings.capacity.min = value;
         }
         else {
@@ -125,7 +125,7 @@ Application.prototype.initCapacityFilter = function(){
     max.change(function () {
         var value = parseFloat($(this).val());
 
-        if ($.isNumeric(value) && value <= self.filterSettings.capacity._max && value >= self.filterSettings.capacity._min) {
+        if ($.isNumeric(value) && value < self.filterSettings.capacity._max && value > self.filterSettings.capacity._min) {
             self.filterSettings.capacity.max = value;
         }
         else {
@@ -510,10 +510,12 @@ Application.prototype.onBeforeDraw = function (event, callback) {
         if (!event.data.content['Capacity (MW)'])
             event.data.visible = false;
 
-        if (self.filterSettings.capacity.min && event.data.content['Capacity (MW)'] < self.filterSettings.capacity.min)
+
+
+        if (typeof(self.filterSettings.capacity.min) !== "undefined" && self.filterSettings.capacity.min !== null && event.data.content['Capacity (MW)'] < self.filterSettings.capacity.min)
             event.data.visible = false;
 
-        if (self.filterSettings.capacity.max && event.data.content['Capacity (MW)'] > self.filterSettings.capacity.max)
+        if (typeof(self.filterSettings.capacity.max) !== "undefined" && self.filterSettings.capacity.max !== null && event.data.content['Capacity (MW)'] > self.filterSettings.capacity.max)
             event.data.visible = false;
     }
 
