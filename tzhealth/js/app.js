@@ -1188,6 +1188,10 @@
                     var facilityName = $(e.target).closest('tr').data('facilityName');
                     self.showProfile(facilityName, self.allData[facilityName]);
                 });
+                
+                self.hideLegend();
+                self.removeTimeline();
+
                 break;
 
             case 'profile':
@@ -1198,6 +1202,9 @@
                 $('#back-button').on('click', function() {
                     self.switchView($('#main-menu').find('.active').data('mode'));
                 });
+
+                self.hideLegend();
+                self.removeTimeline();
 
                 break;
         }
