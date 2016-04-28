@@ -191,14 +191,23 @@ body.loading > .ajax-loader
 }
 
 
-
+#table {
+	font-size: 90%;
+	margin-left: -36%;
+	margin-top: 15px;
+	background-color: white;
+}
 
 #table tbody tr {
 	cursor: pointer;
 }
 
 #table tbody tr:hover{
-	background-color: lightgray;
+	background-color: #CCECF7;
+}
+
+#table .nano {
+	padding-top: 20px;
 }
 
 #back-button {
@@ -303,9 +312,8 @@ tr.header {
 .side-bar-list a {
 	display: block;
 	padding: 3px 0 3px 15px;
-	font-size: 12px;
+	font-size: 1em;
 	text-decoration: none;
-	font-weight: bold;
 	color: black;
 }
 
@@ -345,6 +353,11 @@ tr.header {
 	text-align: center;
 }
 
+#test-table {
+	margin-left: -36%;
+	background-color: red;
+	padding-left: 20px;
+}
 #profile {
 	margin-left: -36%;
 	background-color: white;
@@ -397,29 +410,37 @@ tr.header {
 }
 
 #timeline {
-	display: none;
+	visibility: hidden;
 	position: absolute;
-	height: 50px;
-	background-color: white;
-	bottom: 30px;
+	height: 30px;
 	left: 20px;
 	z-index: 10;
-	max-width: 55%;
+	bottom: 50px;
 }
 
 #timeline a {
-	display: inline-block;
+	display: table-cell;
 	text-align: center;
-	height: 50px;
-	line-height: 50px;
+	height:      30px;
+	line-height: 30px;
 	text-decoration: none;
 	margin: 0 -3px;
+	vertical-align: middle;
 }
 
 #timeline a.play-button {
 	color: white;
-	background-color: darkgreen;
+	background-color: transparent;
 	padding: 0 15px;
+	display: table-cell;
+	font-size: 200%;
+	color: white;
+	vertical-align: top;
+}
+
+#timeline a.play-button:hover {
+	background-color: transparent;
+	color: lightgray;
 }
 
 #timeline a.timepoint {
@@ -435,6 +456,22 @@ tr.header {
 #timeline a.active {
 	background-color: #0e4114;
 	color: white;
+}
+
+#timeline .time-members {
+	display: table-cell;
+	/*background-color: gold;*/
+	max-width: 100px;
+	width:     100px;
+}
+
+#timeline .time-members .scroll-content {
+	height: 50px;
+	width: auto;
+	max-width: 10%;
+	display: inline-block;
+	vertical-align: bottom;
+	/*background-color: red;*/
 }
 
 .chosen-container .chosen-results li.group-result {
@@ -465,7 +502,7 @@ tr.header {
 }
 
 #indicator-list-holder a.header {
-	font-size: 1.05em;
+	/*font-size: 1.05em;*/
 }
 
 #indicator-list-holder a.header:hover {
@@ -517,3 +554,40 @@ tr.header {
 .level-5 {
 	margin-left: 60px;
 }
+
+
+
+
+
+/*.header-fixed {*/
+	/*width: 100%*/
+/*}*/
+
+/*.header-fixed > thead,*/
+/*.header-fixed > tbody,*/
+/*.header-fixed > thead > tr,*/
+/*.header-fixed > tbody > tr,*/
+/*.header-fixed > thead > tr > th,*/
+/*.header-fixed > tbody > tr > td {*/
+	/*display: block;*/
+/*}*/
+
+/*.header-fixed > tbody > tr:after,*/
+/*.header-fixed > thead > tr:after {*/
+	/*content: ' ';*/
+	/*display: block;*/
+	/*visibility: hidden;*/
+	/*clear: both;*/
+/*}*/
+
+/*.header-fixed > tbody {*/
+	/*overflow-y: auto;*/
+	/*height: 150px;*/
+/*}*/
+
+/*.header-fixed > tbody > tr > td,*/
+/*.header-fixed > thead > tr > th {*/
+	/*width: 20%;*/
+	/*float: left;*/
+/*}*/
+

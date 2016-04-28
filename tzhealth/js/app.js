@@ -246,7 +246,9 @@
     };
 
     app.prototype.removeTimeline = function() {
-        $('#timeline').empty().off().hide();
+        $('#timeline').empty().off().css({
+            visibility: 'hidden'
+        });
     };
 
     app.prototype.addTimeline = function (timeDimension) {
@@ -283,7 +285,18 @@
             timeMembers: timeDimension.members
         }));
 
-        $('#timeline').show();
+        $('#timeline').find('.scroll-content').mCustomScrollbar({
+            axis:"x",
+            advanced:{
+                autoExpandHorizontalScroll:true
+            }
+        });
+
+        $('#timeline').css({
+            visibility: 'visible'
+        });
+
+        $(window).trigger('resize');
 
     };
 
@@ -542,6 +555,7 @@
     };
 
     app.prototype.loadTemplates = function (callback) {
+        var self = this;
         function compileTemplate(templateSrc) {
             $.template(this.url.replace('tmpl/', ''), templateSrc);
         }
@@ -597,6 +611,9 @@
                 geoPlaygroundId: self.geoPlaygroundId
             }, function(layer2) {
                 $(document.body).removeClass('loading');
+
+                $('.nav').find('[disabled]').removeAttr('disabled');
+
             });
 
             layer.on('click', function (e) {
@@ -1199,6 +1216,19 @@
 
         $('#map-canvas').height(newHeight - this.topBarHeight);
 
+        var timelineWidth = $('#map-canvas').width() - $('#color-legend').width() - 100;
+
+        $('#timeline').find('.time-members, .scroll-content').css({
+            "width": timelineWidth,
+            "max-width": timelineWidth
+        });
+
+        // if ($('#timeline').find('.mCSB_scrollTools_horizontal').is(':visible')) {
+        //     $('#timeline').find('.time-members').find('a').height(30);
+        // } else {
+        //     $('#timeline').find('.time-members').find('a').height(50);
+        // }
+
         var timeseriesSettingsHeight = $('#timeseries-settings').height();
 
         //TODO Add one callback for handling height of #timeseries-settings & #priority-for
@@ -1228,38 +1258,31 @@
             self.switchView($btn.data('mode'));
         });
 
-        var delay = (function () {
-            var timer = 0;
-            return function (callback, ms) {
-                clearTimeout(timer);
-                timer = setTimeout(callback, ms);
-            };
-        })();
+        function keyupHandler() {
 
-        $('#filter-objects').keyup(function () {
-            delay(function () {
+            self.settings['search'] = $.trim($(this).val().toLowerCase());
 
-                self.settings['search'] = $.trim($(this).val().toLowerCase());
+            self.reloadLayers();
 
-                self.reloadLayers();
+            if ($('main-menu').find('.active').data('mode') == 'map') {
 
-                if ($('main-menu').find('.active').data('mode') == 'map') {
-
+            } else {
+                if (self.settings['search'] == '') {
+                    $('#table').find('tbody tr').show();
                 } else {
-                    if (self.settings['search'] == '') {
-                        $('#table').find('tbody tr').show();
-                    } else {
-                        $('#table').find('tbody tr').hide();
-                        $('#table').find('tbody tr').each(function(i, tr) {
-                            var facilityName = $(tr).data('facilityName').toLowerCase();
-                            if (facilityName.indexOf(self.settings['search']) > -1) {
-                                $(tr).show();
-                            }
-                        });
-                    }
+                    $('#table').find('tbody tr').hide();
+                    $('#table').find('tbody tr').each(function(i, tr) {
+                        var facilityName = $(tr).data('facilityName').toLowerCase();
+                        if (facilityName.indexOf(self.settings['search']) > -1) {
+                            $(tr).show();
+                        }
+                    });
                 }
-            }.bind(this), 200);
-        });
+            }
+        };
+
+        $('#filter-objects').keyup(_.debounce(keyupHandler, 250));
+
     };
 
     app.prototype.reloadLayers = function () {
@@ -1291,12 +1314,31 @@
 
                 $('.map-component').hide();
 
+                //TODO Refactor: load as profile
                 $('#table').stickyTableHeaders();
+
                 $('#table').on('click', 'tbody tr', function(e) {
                     var facilityName = $(e.target).closest('tr').data('facilityName');
                     self.showProfile(facilityName, self.allData[facilityName]);
                 });
                 
+                self.hideLegend();
+                self.removeTimeline();
+
+                break;
+
+            case 'test-table':
+                $('#table').hide();
+                $('.map-component').hide();
+                $('#profile').empty().hide();
+
+                $('#test-table').height($('#content').height()).show();
+
+                $('#test-table').find('.nano').nanoScroller({
+                    preventPageScrolling: true,
+                    alwaysVisible: true
+                });
+
                 self.hideLegend();
                 self.removeTimeline();
 

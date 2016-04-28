@@ -1,8 +1,13 @@
-<a href="#" class="play-button">
+<a href="#" class="play-button" title="Play">
     <span class="glyphicon glyphicon-play-circle"></span>
 </a>
-{{each(i, timeMember) timeMembers}}
-<a href="#" class="timepoint {{if i == 0}}active{{/if}}" data-time="${timeMember}">
-    ${timeMember}
-</a>
-{{/each}}
+<div class="time-members">
+    <div class="scroll-content">
+        {{each(i, timeMember) timeMembers}}
+            <a href="#" class="timepoint {{if i == 0}}active{{/if}}" data-time="${timeMember}">
+                ${timeMember}
+            </a>
+        {{/each}}
+    </div>
+</div>
+
