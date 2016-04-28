@@ -1,0 +1,10 @@
+<select data-placeholder="Choose an indicator..." class="chosen-select">
+    <option></option>
+    {{each(i, optionGroup) options}}
+        <optgroup label="${optionGroup.name}">
+            {{each(j, option) optionGroup.children}}
+                <option value="${option.key}">${option.name}</option>
+            {{/each}}
+        </optgroup>
+    {{/each}}
+</select>

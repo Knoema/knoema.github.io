@@ -1,0 +1,8 @@
+<a href="#" class="play-button">
+    <span class="glyphicon glyphicon-play-circle"></span>
+</a>
+{{each(i, timeMember) timeMembers}}
+<a href="#" class="timepoint {{if i == 0}}active{{/if}}" data-time="${timeMember}">
+    ${timeMember}
+</a>
+{{/each}}

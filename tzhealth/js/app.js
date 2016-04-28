@@ -13,6 +13,7 @@
         this.total = [];
         this.layers = {};
         this.count = 0;
+        this.noDataColor = 'gray';
 
         this.mode = 'map';
 
@@ -24,7 +25,11 @@
         this.markers = [];
 
         this.facilities = [];
-        self.sortedVacancies = null;
+
+        this.selectedIndicator = null;
+        this.sortedVacancies = null;
+
+        this.infoWindow = new google.maps.InfoWindow();
 
         this.settings = {
             search: '',
@@ -34,9 +39,29 @@
             priorityFor: 'None'
         };
 
-        //TODO Change names in "Priority for" list
         this.vacanciesNamesToChange = {
-
+            // "ADO",
+            // "AMO",
+            // "ANO",
+            "Clinical_officer": "Clinical officer",
+            "Dental_officer": "Dental officer",
+            "Dental_therapist": "Dental therapist",
+            "Lab_assistant": "Lab assistant",
+            "Lab_tech": "Lab tech",
+            "Medical_attendant": "Medical attendant",
+            "Medical_officer": "Medical officer",
+            // "Nurse",
+            "Nursing_officer": "Nursing officer",
+            "Occupational_therapist": "Occupational therapist",
+            "Ophthalmic_NO": "Ophthalmic NO",
+            // "Ophthalmologist",
+            // "Optometrist",
+            "Pharma_assistant": "Pharma assistant",
+            "Pharma_tech": "Pharma tech",
+            // "Pharmacist",
+            // "Physiotherapist",
+            // "Radiographer",
+            "Radiology_scientist": "Radiology scientist"
         };
 
         this.namesToChange = {
@@ -96,6 +121,37 @@
             }, 300);
         });
 
+        this.map.data.loadGeoJson('TZA_adm1.json', {}, function() {
+            self.cleanMapRegions();
+        });
+
+        this.map.data.addListener('click', function(event) {
+            self.infoWindow.close();
+
+            var $selectedIndicator = $('#indicator-select-holder').find('option:selected');
+
+            var regionId = event.feature.getId();
+            var indicatorName = $selectedIndicator.text();
+
+            if (_.isEmpty(indicatorName) || _.isEmpty(regionId)) {
+                return;
+            }
+
+            var dataTuple = _.find(self.byTime[self.activeTimelineMember], function(tuple) {return tuple.RegionId == regionId});
+            var value = _.isUndefined(dataTuple) ? 'No data' : Globalize.format(dataTuple.Value);
+
+            var $content = $.tmpl('infowindow-content-template.html', {
+                regionId: self.pivotResponse.regions[regionId],
+                indicatorGroup: $('#indicator-select-holder').find('option:selected').parent().prop('label'),
+                indicatorName:  indicatorName,
+                value: value
+            });
+
+            self.infoWindow.setContent($content.html());
+            self.infoWindow.setPosition(event.latLng);
+            self.infoWindow.open(self.map);
+        });
+
         this.loadTemplates();
 
         this.bindEvents();
@@ -110,6 +166,7 @@
 
         Knoema.Helpers.post('//knoema.com/api/1.0/data/details', neededWorkesDataDescriptor, function(response) {
 
+            //TODO Maybe store raw data and iterate on demand?
             self.groupedByVacancyName = _.groupBy(_.chunk(response.data, response.columns.length), function(d) {
                 return d[1];
             });
@@ -127,14 +184,232 @@
 
     };
 
+    app.prototype.removeTimeline = function() {
+        $('#timeline').empty().off().hide();
+    };
+
+    app.prototype.addTimeline = function (timeDimension) {
+        var self = this;
+        this.removeTimeline();
+
+        $('#timeline').on('click', '.timepoint', function(e) {
+            self.activeTimelineMember =   $(e.target).data('time');
+            $('#timeline').find('.active').removeClass('active');
+            $(e.target).addClass('active');
+            self.updateRegions();
+        });
+
+        $('#timeline').on('click', '.play-button', function(e) {
+
+            $('#timeline').find('.timepoint').each(function(i, element) {
+
+                setTimeout(function () {
+                    self.activeTimelineMember = $(element).data('time');
+
+                    $('#timeline').find('.active').removeClass('active');
+                    $(element).addClass('active');
+
+                    self.updateRegions();
+
+                }, 2000 * i);
+
+            });
+
+        });
+
+        $('#timeline').append($.tmpl('timeline-template.html', {
+            timeMembers: timeDimension.members
+        }));
+
+        $('#timeline').show();
+
+    };
+
+    app.prototype.hideLegend = function() {
+        $('#color-legend').hide();
+    };
+
+    app.prototype.showLegend = function(min, max) {
+        var self = this;
+
+        var minColor = self.getColor(min);
+        var maxColor = self.getColor(max);
+
+        $('#color-legend').find('.min').html(Globalize.format(min));
+        $('#color-legend').find('.max').html(Globalize.format(max));
+
+        $('#color-legend').find('.palette').css({
+            "background": 'linear-gradient(90deg, ' + minColor + ', ' + maxColor + ')'
+        });
+        $('#color-legend').show();
+    };
+
+    app.prototype.loadTimeSeries = function (selectedIndicator) {
+        var self = this;
+
+        timeSeriesDataDescriptor.Filter[0].Members[0] = selectedIndicator;
+        //Neuroses, Hiv Positive -> maps & regions
+
+        Knoema.Helpers.post('//knoema.com/api/1.0/data/pivot', timeSeriesDataDescriptor, function(pivotResponse) {
+            var mapMeta;
+
+            self.pivotResponse = pivotResponse;
+
+            // console.log('-------------------------------------------------------');
+            // console.log('self.pivotResponse', self.pivotResponse);
+            // console.log('-------------------------------------------------------');
+
+            self.cleanMapRegions();
+
+            if (!_.isString(pivotResponse.data) && pivotResponse.data.length) {
+
+                self.byTime = _.groupBy(pivotResponse.data, function(tuple) {
+                    return (new Date(tuple.Time)).getFullYear();
+                });
+
+                self.activeTimelineMember = _.keys(self.byTime)[0];
+
+                var min = _.minBy(pivotResponse.data, 'Value').Value;
+                var max = _.maxBy(pivotResponse.data, 'Value').Value;
+
+                self.getColor = d3.scale.linear()
+                    .domain([min, max])
+                    .range(["gold", "red"]);
+
+                self.showLegend(min, max);
+
+                self.addTimeline(pivotResponse.header[0]);
+
+                self.updateRegions();
+
+            } else {
+                //console.log('%cNO DATA FOR ' + selectedIndicator, 'color:red;font-size:200%;');
+                self.hideLegend();
+            }
+
+        });
+    };
+
+    app.prototype.updateRegions = function () {
+        var self = this;
+        self.map.data.forEach(function(feature) {
+            var regionId = feature.getId();
+            var currentRegionData = _.find(self.byTime[self.activeTimelineMember], function(tuple) {
+                return tuple.RegionId === regionId;
+            });
+            var color = _.isUndefined(currentRegionData) ? self.noDataColor : self.getColor(currentRegionData.Value);
+            self.map.data.overrideStyle(feature, {
+                fillColor: color,
+                fillOpacity: 0.7
+            });
+        });
+    };
+
+    app.prototype.cleanMapRegions = function () {
+        var self = this;
+        self.map.data.forEach(function(feature) {
+            self.map.data.overrideStyle(feature, {
+                fillColor: self.noDataColor,
+                fillOpacity: 0.7
+            });
+        })
+    };
+
+    app.prototype.getParentKey = function (items, item, itemIndex) {
+        for (var i = itemIndex; i > -1; i--) {
+            if (items[i].level < item.level) {
+                return items[i].key.toString();
+            }
+        }
+        return "0";
+    };
+
+    app.prototype.getOptions = function (items) {
+        var self = this;
+        var treeData = {
+            name: "Root element",
+            children: []
+        };
+
+        var levels = _.toArray(_.groupBy(items, function(item) { return item.level }));
+
+        _.each(items, function(item, i) {
+            item.parentKey = self.getParentKey(items, item, i);
+        });
+
+        var grouped = _.groupBy(items, 'parentKey');
+
+        treeData.children = grouped['0'];
+
+        var options = [];
+
+        function populateChildren(child, i) {
+
+            if (child.level == 1) {
+                child.name = _.find(items, function(i) {return i.key == child.parentKey}).name + ' - ' + child.name;
+                options.push(child);
+            }
+
+            if (grouped[child.key]) {
+                child.children = grouped[child.key];
+                _.each(child.children, populateChildren);
+            }
+        }
+
+        _.each(treeData.children, populateChildren);
+
+        //true tree structure (not used at the moment)
+        self.treeData = treeData;
+
+        return options;
+
+    };
+
     app.prototype.initSideBar = function () {
         var self = this;
+
+        Knoema.Helpers.get('//knoema.com/api/1.0/meta/dataset/TANSAT2016/dimension/indicator', function(response) {
+
+            //"Inpatient department diagnoses" has index 1034
+            var neededItems = _.slice(response.items, 1034);
+
+            //TODO Use response.items later
+            self.items = neededItems;
+
+            var options = self.getOptions(neededItems);
+
+            $('#indicator-select-holder').html($.tmpl('indicator-select-template.html', {
+                options: options
+            }));
+
+            $('#timeseries-settings').find('.chosen-select').chosen({
+                "width": "100%"
+            });
+
+            $('#indicator-select-holder').on('change', 'select', function(e) {
+                self.loadTimeSeries($(e.target).val());
+            });
+
+        });
+
         Knoema.Helpers.get('//knoema.com/api/1.0/meta/dataset/znxktgc/dimension/cadre-type', function(response) {
 
-            //TODO Change names in according to this.vacanciesNamesToChange
             $('#priority-for').append($.tmpl('vacancies-list-template.html', {
-                vacancies: ['None'].concat(_.map(response.items, 'name'))
+                vacancies: [
+                    {
+                        name: 'None',
+                        key: 'None'
+                    }
+                ].concat(_.map(response.items, function(vacancy) {
+                    return {
+                        // Change vacancy name
+                        name: _.isUndefined(self.vacanciesNamesToChange[vacancy.name]) ? vacancy.name : self.vacanciesNamesToChange[vacancy.name],
+                        key: vacancy.name
+                    }
+                }))
             }));
+
+            self.onResize();
 
             $('#priority-for').on('click', '.vacancy', function() {
                 $(this).parent().find('.active').removeClass('active');
@@ -159,21 +434,22 @@
         });
     };
 
-    //TODO Refactor using $.when[] then
-    app.prototype.loadTemplates = function () {
+    app.prototype.loadTemplates = function (callback) {
+        function compileTemplate(templateSrc) {
+            $.template(this.url.replace('tmpl/', ''), templateSrc);
+        }
         var templates = [
-            'profile-template.html',
-            'table-row-template.html',
-            'vacancies-list-template.html'
+            $.get('tmpl/indicator-select-template.html', compileTemplate),
+            $.get('tmpl/profile-template.html', compileTemplate),
+            $.get('tmpl/table-row-template.html', compileTemplate),
+            $.get('tmpl/vacancies-list-template.html', compileTemplate),
+            $.get('tmpl/timeline-template.html', compileTemplate),
+            $.get('tmpl/infowindow-content-template.html', compileTemplate)
         ];
-        $.get('tmpl/profile-template.html', function(templateSrc) {
-            $.template(this.url.replace('tmpl/', ''), templateSrc);
-        });
-        $.get('tmpl/table-row-template.html', function(templateSrc) {
-            $.template(this.url.replace('tmpl/', ''), templateSrc);
-        });
-        $.get('tmpl/vacancies-list-template.html', function(templateSrc) {
-            $.template(this.url.replace('tmpl/', ''), templateSrc);
+        $.when.apply(null, templates).done(function onTemplatesLoaded() {
+            if ($.isFunction(callback)) {
+                callback();
+            }
         });
     };
 
@@ -608,7 +884,6 @@
                                 'Exp Date (soonest)'
                             ];
                         }
-                        console.log('TODO Add data from another dataset here');
                         break;
             }
 
@@ -811,13 +1086,26 @@
 
     app.prototype.onResize = function () {
         var newHeight = $(window).height();
+
         $('#side-bar').height(newHeight - this.topBarHeight);
+
         $('#map-canvas').height(newHeight - this.topBarHeight);
 
-        //$('#priority-for').parent().height() - 40
+        var timeseriesSettingsHeight = $('#timeseries-settings').height();
 
-        //$('#priority-for').height();//padding 20 top/bottom
+        //TODO Add one callback for handling height of #timeseries-settings & #priority-for
+        timeseriesSettingsHeight = 166;
 
+        var priorityForHeight = newHeight - this.topBarHeight - timeseriesSettingsHeight - 90 + 80;//66-height of .region-switcher
+
+        $('#priority-for').find('.nano').css({
+            //"background-color": "red",
+            "height": priorityForHeight,
+            "max-height": priorityForHeight
+        }).nanoScroller({
+            preventPageScrolling: true,
+            alwaysVisible: true
+        });
     };
 
     app.prototype.bindEvents = function () {

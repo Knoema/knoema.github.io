@@ -8,8 +8,9 @@
 	<link rel="stylesheet" type='text/css' href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,700'>
 	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/css/bootstrap-select.min.css">
-
 	<link rel="stylesheet" type="text/css" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+	<link rel="stylesheet" type="text/css" href="bootstrap-chosen-1.0.1/bootstrap-chosen.css">
+	<link rel="stylesheet" type="text/css" href="nanoScrollerJS-0.8.7/bin/css/nanoscroller.css">
 	<link rel="stylesheet" type="text/css" href="css/style.css"/>
 </head>
 
@@ -49,6 +50,29 @@
 			<div class="col-xs-3">
 				<div id="side-bar">
 					<div class="sidebar-content">
+						<div id="timeseries-settings">
+							<h4>Indicators</h4>
+
+							<div id="indicator-select-holder">
+							</div>
+
+							<hr/>
+
+							<div class="region-switcher">
+								<div class="radio">
+									<label>
+										<input type="radio" name="optionsRadios" id="optionsRadios1" value="RRRRRRRRRRRR" checked> Regions
+									</label>
+								</div>
+								<div class="radio">
+									<label>
+										<input type="radio" name="optionsRadios" id="Districts" value="DDDDDDDDDDD"> Districts
+									</label>
+								</div>
+								<hr/>
+							</div>
+
+						</div>
 						<div id="priority-for"></div>
 					</div>
 				</div>
@@ -68,6 +92,20 @@
 						<div>Hospital</div>
 					</div>
 				</div>
+
+				<div id="timeline">
+					This is timeline
+				</div>
+
+				<div id="color-legend">
+					<div class="palette-holder">
+						<div class="min pull-left">min</div>
+						<div class="max pull-right">max</div>
+						<div class="clearfix"></div>
+						<div class="palette"></div>
+					</div>
+				</div>
+
 				<div id="map-canvas" class="map-component"></div>
 				<div id="table" style="display:none;">
 					<table class="table stripped">
@@ -179,13 +217,18 @@
 		Knoema.Helpers.clientId = 'EZj54KGFo3rzIvnLczrElvAitEyU28DGw9R73tif';
 	</script>
 
+	<script src="js/d3.min.js"></script>
 	<script src="js/jquery.tmpl.js"></script>
 	<script src="js/jquery.stickytableheaders.min.js"></script>
+	<script src="chosen_v1.5.1/chosen.jquery.min.js"></script>
+	<script src="nanoScrollerJS-0.8.7/bin/javascripts/jquery.nanoscroller.min.js"></script>
+
+	<script src="js/marketwithlabel.js"></script>
+	<script src="js/globalize.js"></script>
 
 	<script src="js/drugsDataDescriptor.js"></script>
 	<script src="js/neededWorkesDataDescriptor.js"></script>
-	<script src="js/marketwithlabel.js"></script>
-	<script src="js/globalize.js"></script>
+	<script src="js/timeSeriesDataDescriptor.js"></script>
 
 	<script src="js/app.js"></script>
 
