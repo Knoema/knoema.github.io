@@ -29,7 +29,13 @@
         this.selectedIndicator = null;
         this.sortedVacancies = null;
 
+        this.byTime = null;
+
         this.infoWindow = new google.maps.InfoWindow();
+
+        this.geoJsonLayer = 'regionsLayer';
+        self.regionsLayer = null;
+        self.districtsLayer = null;
 
         this.settings = {
             search: '',
@@ -96,7 +102,8 @@
 
         this.map = new google.maps.Map(document.getElementById('map-canvas'), {
             //Tanzania
-            //center: {lat: -6, lng: 35},
+            // center: {lat: -6, lng: 35},
+            // zoom: 6,
 
             //proper center for demo
             center: {lat: -3, lng: 33},
@@ -121,36 +128,35 @@
             }, 300);
         });
 
-        this.map.data.loadGeoJson('TZA_adm1.json', {}, function() {
-            self.cleanMapRegions();
-        });
-
-        this.map.data.addListener('click', function(event) {
+        $('#region-switcher').on('change', 'input', function(event) {
             self.infoWindow.close();
-
-            var $selectedIndicator = $('#indicator-select-holder').find('option:selected');
-
-            var regionId = event.feature.getId();
-            var indicatorName = $selectedIndicator.text();
-
-            if (_.isEmpty(indicatorName) || _.isEmpty(regionId)) {
-                return;
-            }
-
-            var dataTuple = _.find(self.byTime[self.activeTimelineMember], function(tuple) {return tuple.RegionId == regionId});
-            var value = _.isUndefined(dataTuple) ? 'No data' : Globalize.format(dataTuple.Value);
-
-            var $content = $.tmpl('infowindow-content-template.html', {
-                regionId: self.pivotResponse.regions[regionId],
-                indicatorGroup: $('#indicator-select-holder').find('option:selected').parent().prop('label'),
-                indicatorName:  indicatorName,
-                value: value
-            });
-
-            self.infoWindow.setContent($content.html());
-            self.infoWindow.setPosition(event.latLng);
-            self.infoWindow.open(self.map);
+            self.geoJsonLayer = $(event.target).val();
+            self.updateFeatures();
         });
+
+        self.regionsLayer = new google.maps.Data();
+        self.districtsLayer = new google.maps.Data();
+
+        self.regionsLayer.loadGeoJson('TZA_adm1.json', {}, function() {
+            self.regionsLayer.setStyle({
+                fillColor: self.noDataColor,
+                fillOpacity: 0.7,
+                visible: false
+            });
+        });
+        self.districtsLayer.loadGeoJson('tanzaniaDistrict.geo.json', {}, function() {
+            self.districtsLayer.setStyle({
+                fillColor: self.noDataColor,
+                fillOpacity: 0.7,
+                visible: false
+            });
+        });
+
+        self.regionsLayer.setMap(this.map);
+        self.districtsLayer.setMap(this.map);
+
+        self.regionsLayer.addListener('click',   $.proxy(self.handleLayerClick, self));
+        self.districtsLayer.addListener('click', $.proxy(self.handleLayerClick, self));
 
         this.loadTemplates();
 
@@ -184,6 +190,61 @@
 
     };
 
+    //app.prototype.handleLayerClick = function(event) {
+
+    app.prototype.handleLayerClick = function(event) {
+        var self = this;
+
+        self.infoWindow.close();
+
+        var $selectedIndicator = $('#indicator-list-holder').find('.active');
+
+        var regionId = event.feature.getId();
+        var indicatorName = $selectedIndicator.text();
+
+        if (_.isEmpty(indicatorName) || _.isEmpty(regionId)) {
+            return;
+        }
+
+        var dataTuple = _.find(self.byTime[self.activeTimelineMember], function(tuple) {return tuple.RegionId == regionId});
+        var value = (_.isUndefined(dataTuple) || !_.isUndefined(dataTuple) && _.isNull(dataTuple.Value)) ? 'No data' : Globalize.format(dataTuple.Value);
+
+        var $content = $.tmpl('infowindow-content-template.html', {
+            regionId: self.pivotResponse.regions[regionId],
+            indicatorGroup: $('#indicator-select-holder').find('option:selected').parent().prop('label'),
+            indicatorName:  indicatorName,
+            activeTimelineMember: self.activeTimelineMember,
+            value: value
+        });
+
+        self.infoWindow.setContent($content.html());
+        self.infoWindow.setPosition(event.latLng);
+        self.infoWindow.open(self.map);
+    };
+
+    app.prototype.updateFeatures = function() {
+        var self = this;
+        var layer2 = self.geoJsonLayer === 'regionsLayer' ? 'districtsLayer' : 'regionsLayer';
+        self[layer2].setStyle({
+            visible: false
+        });
+        self[self.geoJsonLayer].setStyle({
+            fillColor: self.noDataColor
+        });
+
+        self[self.geoJsonLayer].forEach(function(feature) {
+            var regionId = feature.getId();
+            var currentRegionData = _.find(self.byTime[self.activeTimelineMember], function(tuple) {
+                return tuple.RegionId === regionId;
+            });
+            var color = (_.isUndefined(currentRegionData) || !_.isUndefined(currentRegionData) && _.isNull(currentRegionData.Value)) ? self.noDataColor : self.getColor(currentRegionData.Value);
+            self[self.geoJsonLayer].overrideStyle(feature, {
+                fillColor: color,
+                fillOpacity: 0.7
+            });
+        });
+    };
+
     app.prototype.removeTimeline = function() {
         $('#timeline').empty().off().hide();
     };
@@ -193,14 +254,15 @@
         this.removeTimeline();
 
         $('#timeline').on('click', '.timepoint', function(e) {
+            self.infoWindow.close();
             self.activeTimelineMember =   $(e.target).data('time');
             $('#timeline').find('.active').removeClass('active');
             $(e.target).addClass('active');
-            self.updateRegions();
+            self.updateFeatures();
         });
 
         $('#timeline').on('click', '.play-button', function(e) {
-
+            self.infoWindow.close();
             $('#timeline').find('.timepoint').each(function(i, element) {
 
                 setTimeout(function () {
@@ -209,7 +271,7 @@
                     $('#timeline').find('.active').removeClass('active');
                     $(element).addClass('active');
 
-                    self.updateRegions();
+                    self.updateFeatures();
 
                 }, 2000 * i);
 
@@ -247,72 +309,59 @@
     app.prototype.loadTimeSeries = function (selectedIndicator) {
         var self = this;
 
-        timeSeriesDataDescriptor.Filter[0].Members[0] = selectedIndicator;
-        //Neuroses, Hiv Positive -> maps & regions
+        if (selectedIndicator == null) {
 
-        Knoema.Helpers.post('//knoema.com/api/1.0/data/pivot', timeSeriesDataDescriptor, function(pivotResponse) {
-            var mapMeta;
+            $('#region-switcher').hide();
 
-            self.pivotResponse = pivotResponse;
-
-            // console.log('-------------------------------------------------------');
-            // console.log('self.pivotResponse', self.pivotResponse);
-            // console.log('-------------------------------------------------------');
-
-            self.cleanMapRegions();
-
-            if (!_.isString(pivotResponse.data) && pivotResponse.data.length) {
-
-                self.byTime = _.groupBy(pivotResponse.data, function(tuple) {
-                    return (new Date(tuple.Time)).getFullYear();
-                });
-
-                self.activeTimelineMember = _.keys(self.byTime)[0];
-
-                var min = _.minBy(pivotResponse.data, 'Value').Value;
-                var max = _.maxBy(pivotResponse.data, 'Value').Value;
-
-                self.getColor = d3.scale.linear()
-                    .domain([min, max])
-                    .range(["gold", "red"]);
-
-                self.showLegend(min, max);
-
-                self.addTimeline(pivotResponse.header[0]);
-
-                self.updateRegions();
-
-            } else {
-                //console.log('%cNO DATA FOR ' + selectedIndicator, 'color:red;font-size:200%;');
-                self.hideLegend();
-            }
-
-        });
-    };
-
-    app.prototype.updateRegions = function () {
-        var self = this;
-        self.map.data.forEach(function(feature) {
-            var regionId = feature.getId();
-            var currentRegionData = _.find(self.byTime[self.activeTimelineMember], function(tuple) {
-                return tuple.RegionId === regionId;
+            self.regionsLayer.setStyle({
+                visible: false
             });
-            var color = _.isUndefined(currentRegionData) ? self.noDataColor : self.getColor(currentRegionData.Value);
-            self.map.data.overrideStyle(feature, {
-                fillColor: color,
-                fillOpacity: 0.7
+            self.districtsLayer.setStyle({
+                visible: false
             });
-        });
-    };
 
-    app.prototype.cleanMapRegions = function () {
-        var self = this;
-        self.map.data.forEach(function(feature) {
-            self.map.data.overrideStyle(feature, {
-                fillColor: self.noDataColor,
-                fillOpacity: 0.7
+        } else {
+
+            $('#region-switcher').show();
+
+            timeSeriesDataDescriptor.Filter[0].Members[0] = selectedIndicator;
+
+            Knoema.Helpers.post('//knoema.com/api/1.0/data/pivot', timeSeriesDataDescriptor, function(pivotResponse) {
+                var mapMeta;
+
+                self.pivotResponse = pivotResponse;
+
+                self.byTime = null;
+
+                if (!_.isString(pivotResponse.data) && pivotResponse.data.length) {
+
+                    self.byTime = _.groupBy(pivotResponse.data, function(tuple) {
+                        return (new Date(tuple.Time)).getFullYear();
+                    });
+
+                    self.activeTimelineMember = _.keys(self.byTime)[0];
+
+                    var min = _.minBy(pivotResponse.data, 'Value').Value;
+                    var max = _.maxBy(pivotResponse.data, 'Value').Value;
+
+                    self.getColor = d3.scale.linear()
+                        .domain([min, max])
+                        .range(["gold", "red"]);
+
+                    self.showLegend(min, max);
+
+                    self.addTimeline(pivotResponse.header[0]);
+
+                    self.updateFeatures();
+
+                } else {
+                    //console.log('%cNO DATA FOR ' + selectedIndicator, 'color:red;font-size:200%;');
+                    self.hideLegend();
+                }
+
             });
-        })
+        }
+
     };
 
     app.prototype.getParentKey = function (items, item, itemIndex) {
@@ -344,12 +393,6 @@
         var options = [];
 
         function populateChildren(child, i) {
-
-            if (child.level == 1) {
-                child.name = _.find(items, function(i) {return i.key == child.parentKey}).name + ' - ' + child.name;
-                options.push(child);
-            }
-
             if (grouped[child.key]) {
                 child.children = grouped[child.key];
                 _.each(child.children, populateChildren);
@@ -358,10 +401,40 @@
 
         _.each(treeData.children, populateChildren);
 
+        function getFullName(child) {
+            var parent = _.find(items, function(item) {
+                return child.parentKey == item.key;
+            });
+
+            if (parent) {
+                child.name = getFullName(parent) + ' - ' + child.name;
+            } else {
+                return child.name;
+            }
+        }
+
+        var opt2 = [];
+
+        function buildOptions(child, i) {
+            var children = _.filter(child.children, function(c) { return !_.isUndefined(c.children) });
+            if (children.length) {
+                _.each(child.children, buildOptions);
+            } else {
+                var parent = _.find(items, function(i) {return i.key == child.parentKey});
+                if (parent) {
+                    //child.name = parent.name + ' - ' + child.name;
+                    child.name = getFullName(child);
+                }
+                opt2.push(child);
+            }
+        }
+
+        _.each(treeData.children, buildOptions);
+
         //true tree structure (not used at the moment)
         self.treeData = treeData;
 
-        return options;
+        return opt2;
 
     };
 
@@ -370,25 +443,59 @@
 
         Knoema.Helpers.get('//knoema.com/api/1.0/meta/dataset/TANSAT2016/dimension/indicator', function(response) {
 
-            //"Inpatient department diagnoses" has index 1034
-            var neededItems = _.slice(response.items, 1034);
+            self.items = response.items;
 
-            //TODO Use response.items later
-            self.items = neededItems;
+            _.each(self.items, function(item, i) {
+                item.parentKey = self.getParentKey(self.items, item, i);
+            });
 
-            var options = self.getOptions(neededItems);
+            self.grouped = _.groupBy(self.items, 'parentKey');
 
-            $('#indicator-select-holder').html($.tmpl('indicator-select-template.html', {
-                options: options
+            var treeData = {
+                children: self.grouped['0']
+            };
+
+            function populateChildren(child, i) {
+                if (self.grouped[child.key]) {
+                    child.hasChildren = true;
+                    child.children = self.grouped[child.key];
+                    _.each(child.children, populateChildren);
+                }
+            }
+
+            _.each(self.items, populateChildren);
+
+            $('#indicator-list-holder').html($.tmpl('indicator-list-template.html', {
+                items: self.items
             }));
+
+            $('#indicator-list-holder').find('.nano').css({
+                    //"background-color": "blue",
+                    "height": 200,
+                    "max-height": 200
+                }).nanoScroller({
+                    preventPageScrolling: true,
+                    alwaysVisible: true
+                });
+
+            $('#indicator-list-holder').on('click', '.has-data', function(e) {
+                $('#indicator-list-holder').find('.active').removeClass('active');
+                $(e.target).addClass('active');
+                self.loadTimeSeries($(e.target).data('key'));
+            });
 
             $('#timeseries-settings').find('.chosen-select').chosen({
                 "width": "100%"
             });
 
-            $('#indicator-select-holder').on('change', 'select', function(e) {
-                self.loadTimeSeries($(e.target).val());
-            });
+            // var options = self.getOptions(self.items);
+            // $('#indicator-select-holder').html($.tmpl('indicator-select-template.html', {
+            //     options: options
+            // }));
+
+            // $('#indicator-select-holder').on('change', 'select', function(e) {
+            //     self.loadTimeSeries($(e.target).val());
+            // });
 
         });
 
@@ -444,7 +551,8 @@
             $.get('tmpl/table-row-template.html', compileTemplate),
             $.get('tmpl/vacancies-list-template.html', compileTemplate),
             $.get('tmpl/timeline-template.html', compileTemplate),
-            $.get('tmpl/infowindow-content-template.html', compileTemplate)
+            $.get('tmpl/infowindow-content-template.html', compileTemplate),
+            $.get('tmpl/indicator-list-template.html', compileTemplate)
         ];
         $.when.apply(null, templates).done(function onTemplatesLoaded() {
             if ($.isFunction(callback)) {
@@ -1096,7 +1204,7 @@
         //TODO Add one callback for handling height of #timeseries-settings & #priority-for
         timeseriesSettingsHeight = 166;
 
-        var priorityForHeight = newHeight - this.topBarHeight - timeseriesSettingsHeight - 90 + 80;//66-height of .region-switcher
+        var priorityForHeight = newHeight - this.topBarHeight - timeseriesSettingsHeight - 180;
 
         $('#priority-for').find('.nano').css({
             //"background-color": "red",

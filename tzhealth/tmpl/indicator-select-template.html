@@ -3,7 +3,9 @@
     {{each(i, optionGroup) options}}
         <optgroup label="${optionGroup.name}">
             {{each(j, option) optionGroup.children}}
-                <option value="${option.key}">${option.name}</option>
+                {{if option.hasData}}
+                    <option value="${option.key}">${option.key} ${option.name}</option>
+                {{/if}}
             {{/each}}
         </optgroup>
     {{/each}}

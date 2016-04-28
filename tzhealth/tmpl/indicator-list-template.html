@@ -1,0 +1,17 @@
+<div class="nano">
+    <div class="nano-content">
+        <div class="side-bar-list">
+            <a class="item level-0 has-data none-item active" href="#" data-key="null">
+                None
+            </a>
+            {{each(i, item) items}}
+                {{if item.hasChildren || !item.hasChildren && item.hasData}}
+                    <a class="item level-${item.level} {{if item.hasData}}has-data{{else}}header{{/if}}" href="#" data-key="${item.key}">
+                        ${item.name}
+                    </a>
+                {{/if}}
+            {{/each}}
+        </div>
+    </div>
+</div>
+

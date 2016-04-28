@@ -175,6 +175,24 @@ body.loading > .ajax-loader
 	user-select: none;
 }
 
+#region-switcher {
+	z-index: 1000;
+	width: 128px;
+	background-color: #efefef;
+	position: absolute;
+	padding-left: 10px;
+	top: 130px;
+	right: 20px;
+	color: #2D2D2D;
+	display: none;
+}
+#region-switcher label {
+	font-weight: bold;
+}
+
+
+
+
 #table tbody tr {
 	cursor: pointer;
 }
@@ -430,7 +448,72 @@ tr.header {
 	color: #555;
 }
 
-.region-switcher {
-	background-color: red;
-	display: none;
+#indicator-list-holder {
+	overflow-x: auto;
+}
+
+#indicator-list-holder .side-bar-list {
+	margin-left: -20px;
+}
+
+#indicator-list-holder a {
+	cursor: default;
+}
+
+#indicator-list-holder a:before {
+	content: '';
+}
+
+#indicator-list-holder a.header {
+	font-size: 1.05em;
+}
+
+#indicator-list-holder a.header:hover {
+	background-color: #fbfbfb;
+}
+
+#indicator-list-holder a.has-data {
+	cursor: pointer;
+}
+
+#indicator-list-holder a.has-data:before {
+	content: '\2022';/*http://www.fileformat.info/info/unicode/char/2022/index.htm*/
+	display: inline-block;
+	margin-right: 4px;
+}
+
+#indicator-list-holder a.active {
+	background-color: #06a2dd;
+	color: white;
+}
+
+.has-data.none-item {
+	font-size: 1.05em;
+}
+.has-data.none-item:hover {
+	background-color: #06a2dd;
+	color: white;
+}
+.has-data.none-item:before {
+	content: ''!important;
+}
+
+.level-0 {
+	font-weight: bold;
+	padding-left: 0;
+}
+.level-1 {
+	margin-left: 20px;
+}
+.level-2 {
+	margin-left: 30px;
+}
+.level-3 {
+	margin-left: 40px;
+}
+.level-4 {
+	margin-left: 50px;
+}
+.level-5 {
+	margin-left: 60px;
 }

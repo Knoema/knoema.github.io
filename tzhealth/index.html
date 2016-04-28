@@ -53,24 +53,10 @@
 						<div id="timeseries-settings">
 							<h4>Indicators</h4>
 
-							<div id="indicator-select-holder">
+							<div id="indicator-list-holder">
 							</div>
 
 							<hr/>
-
-							<div class="region-switcher">
-								<div class="radio">
-									<label>
-										<input type="radio" name="optionsRadios" id="optionsRadios1" value="RRRRRRRRRRRR" checked> Regions
-									</label>
-								</div>
-								<div class="radio">
-									<label>
-										<input type="radio" name="optionsRadios" id="Districts" value="DDDDDDDDDDD"> Districts
-									</label>
-								</div>
-								<hr/>
-							</div>
 
 						</div>
 						<div id="priority-for"></div>
@@ -90,6 +76,19 @@
 					<div class="legend-item">
 						<img src="img/clinic_icons_hospital.png" />
 						<div>Hospital</div>
+					</div>
+				</div>
+
+				<div id="region-switcher">
+					<div class="radio">
+						<label>
+							<input type="radio" name="optionsRadios" id="optionsRadios1" value="regionsLayer" checked> Regions
+						</label>
+					</div>
+					<div class="radio">
+						<label>
+							<input type="radio" name="optionsRadios" id="Districts" value="districtsLayer"> Districts
+						</label>
 					</div>
 				</div>
 
