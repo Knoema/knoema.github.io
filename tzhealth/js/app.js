@@ -327,6 +327,8 @@
 
             $('#region-switcher').hide();
 
+            self.removeTimeline();
+
             self.regionsLayer.setStyle({
                 visible: false
             });
