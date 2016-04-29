@@ -286,6 +286,7 @@
         }));
 
         $('#timeline').find('.scroll-content').mCustomScrollbar({
+            theme: "dark",
             axis:"x",
             advanced:{
                 autoExpandHorizontalScroll:true
@@ -482,14 +483,12 @@
                 items: self.items
             }));
 
-            $('#indicator-list-holder').find('.nano').css({
-                    //"background-color": "blue",
-                    "height": 200,
-                    "max-height": 200
-                }).nanoScroller({
-                    preventPageScrolling: true,
-                    alwaysVisible: true
+            $('#indicator-list-holder')
+                .find('.side-bar-list')
+                .mCustomScrollbar({
+                    theme: "dark"
                 });
+
 
             $('#indicator-list-holder').on('click', '.has-data', function(e) {
                 $('#indicator-list-holder').find('.active').removeClass('active');
@@ -497,9 +496,9 @@
                 self.loadTimeSeries($(e.target).data('key'));
             });
 
-            $('#timeseries-settings').find('.chosen-select').chosen({
-                "width": "100%"
-            });
+            // $('#timeseries-settings').find('.chosen-select').chosen({
+            //     "width": "100%"
+            // });
 
             // var options = self.getOptions(self.items);
             // $('#indicator-select-holder').html($.tmpl('indicator-select-template.html', {
@@ -1223,27 +1222,24 @@
             "max-width": timelineWidth
         });
 
-        // if ($('#timeline').find('.mCSB_scrollTools_horizontal').is(':visible')) {
-        //     $('#timeline').find('.time-members').find('a').height(30);
-        // } else {
-        //     $('#timeline').find('.time-members').find('a').height(50);
-        // }
-
         var timeseriesSettingsHeight = $('#timeseries-settings').height();
 
         //TODO Add one callback for handling height of #timeseries-settings & #priority-for
         timeseriesSettingsHeight = 166;
 
-        var priorityForHeight = newHeight - this.topBarHeight - timeseriesSettingsHeight - 180;
+        var priorityForHeight = newHeight - this.topBarHeight - timeseriesSettingsHeight - 220;
 
-        $('#priority-for').find('.nano').css({
-            //"background-color": "red",
-            "height": priorityForHeight,
-            "max-height": priorityForHeight
-        }).nanoScroller({
-            preventPageScrolling: true,
-            alwaysVisible: true
-        });
+        $('#priority-for')
+            .find('.side-bar-list')
+            .css({
+                //"background-color": "red",
+                "height": priorityForHeight,
+                "max-height": priorityForHeight
+            })
+            .mCustomScrollbar({
+                theme: "dark"
+            });
+
     };
 
     app.prototype.bindEvents = function () {
@@ -1307,12 +1303,20 @@
 
                 $('#profile').empty().hide();
                 $('#filter-objects').val('').trigger('keyup');
+
+
+                if ($('#indicator-list-holder').find('.active').data('key') != null) {
+                    $('#region-switcher').show();
+                }
+
                 break;
             case 'table':
                 $('#table').show();
                 $('#profile').empty().hide();
 
                 $('.map-component').hide();
+
+                $('#region-switcher').hide();
 
                 //TODO Refactor: load as profile
                 $('#table').stickyTableHeaders();
@@ -1331,13 +1335,16 @@
                 $('#table').hide();
                 $('.map-component').hide();
                 $('#profile').empty().hide();
+                $('#region-switcher').hide();
 
                 $('#test-table').height($('#content').height()).show();
 
-                $('#test-table').find('.nano').nanoScroller({
-                    preventPageScrolling: true,
-                    alwaysVisible: true
-                });
+                //TODO Apply custom scroller here
+
+                // $('#test-table').find('.nano').nanoScroller({
+                //     preventPageScrolling: true,
+                //     alwaysVisible: true
+                // });
 
                 self.hideLegend();
                 self.removeTimeline();
@@ -1348,6 +1355,7 @@
                 $('#table').hide();
                 $('.map-component').hide();
                 $('#profile').show();
+                $('#region-switcher').hide();
 
                 $('#back-button').on('click', function() {
                     self.switchView($('#main-menu').find('.active').data('mode'));

@@ -193,7 +193,7 @@ body.loading > .ajax-loader
 
 #table {
 	font-size: 90%;
-	margin-left: -36%;
+	margin-left: -34.5%;
 	margin-top: 15px;
 	background-color: white;
 }
@@ -204,10 +204,6 @@ body.loading > .ajax-loader
 
 #table tbody tr:hover{
 	background-color: #CCECF7;
-}
-
-#table .nano {
-	padding-top: 20px;
 }
 
 #back-button {
@@ -371,23 +367,25 @@ tr.header {
 	width: 90%;
 }
 
-.nano {
-	background: #fbfbfb;
-	border: 1px solid #efefef;
-	border-radius: 3px;
+
+
+
+
+.mCS-dark.mCSB_scrollTools .mCSB_dragger .mCSB_dragger_bar {
+	width: 6px;
 }
-.nano > .nano-content {
-	padding: 10px;
-}
-.nano > .nano-pane {
-	width: 9px;
-}
-.nano > .nano-pane > .nano-slider {
-	background: #06a2dd;
-	border-radius: 5px;
-	margin: 0;
+.mCSB_scrollTools.mCSB_scrollTools_horizontal .mCSB_dragger .mCSB_dragger_bar {
+	height: 6px;
+	width: auto;
 }
 
+.sidebar-content .mCSB_dragger_bar {
+	background-color: #06a2dd!important;
+}
+
+.time-members .mCSB_dragger_bar {
+	background-color: white!important;
+}
 
 #color-legend {
 	display: none;
@@ -487,10 +485,13 @@ tr.header {
 
 #indicator-list-holder {
 	overflow-x: auto;
+	/*max-height: 300px;*/
 }
 
 #indicator-list-holder .side-bar-list {
 	margin-left: -20px;
+	max-height: 250px;
+	max-height: 250px;
 }
 
 #indicator-list-holder a {
