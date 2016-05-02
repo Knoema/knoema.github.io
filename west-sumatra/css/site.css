@@ -6,6 +6,112 @@ html
 body
 {
 	margin: 0;
+	padding: 0;
+}
+
+#landing
+{
+	background: url('../img/landing/bg.png') no-repeat;
+	background-size: cover;
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	text-align: center;
+}
+
+	#landing .coat
+	{
+		width: 120px;
+		height: 141px;
+		background: url('../img/landing/coat.png') no-repeat;
+		display: inline-block;
+		margin-top: 130px;
+	}
+
+	#landing .logo
+	{
+		width: 295px;
+		height: 95px;
+		background: url('../img/landing/logo.png') no-repeat;
+		display: inline-block;
+		margin-top: 60px;
+	}
+
+	#landing .flag
+	{
+		width: 99px;
+		height: 78px;
+		background: url('../img/landing/flag.png') no-repeat;
+		display: inline-block;
+		margin-top: 35px;
+	}
+
+	#landing .buttons
+	{
+		margin-top: 55px;
+	}
+
+		#landing .buttons .button
+		{
+			width: 280px;
+			height: 120px;
+			line-height: 120px;
+			background: url('../img/landing/btn.png') no-repeat;
+			display: inline-block;
+			text-transform: uppercase;
+			font: bold 22pt 'Roboto Condensed', sans-serif;
+			color: #164914;
+			margin-left: 15px;
+			vertical-align: top;
+			cursor: pointer;
+		}
+
+			#landing .buttons .button span
+			{
+				vertical-align: middle;
+				position: relative;
+				top: 30px;
+			}
+
+			#landing .buttons .button.overview span
+			{
+				top: 28px;
+			}
+
+			#landing .buttons .button .img
+			{
+				display: inline-block;
+				background-repeat: no-repeat;
+				margin-right: 15px;
+				position: relative;
+			}
+
+			#landing .buttons .button.overview .img
+			{
+				width: 58px;
+				height: 59px;
+				background: url('../img/landing/ico01.png');
+			}
+
+			#landing .buttons .button.dashboards .img
+			{
+				width: 64px;
+				height: 53px;
+				background: url('../img/landing/ico02.png');
+			}
+
+			#landing .buttons .button.statistics .img
+			{
+				width: 64px;
+				height: 53px;
+				background: url('../img/landing/ico03.png');
+			}
+
+#container
+{
+	display: none;
 }
 
 #header
@@ -22,6 +128,7 @@ body
 	height: 26px;
 	background: url('../img/logo.png');
 	margin: 22px;
+	cursor: pointer;
 }
 
 #tabs
@@ -35,8 +142,7 @@ body
 		width: 2px;
 		height: 70px;
 		background-position: left center;
-		background-repeat: no-repeat;
-		background: url('../img/head_divider_menu.png');
+		background: url('../img/head_divider_menu.png') no-repeat;
 	}
 
 	#tabs .tab
@@ -45,6 +151,7 @@ body
 		font: bold 13pt 'Roboto Condensed', sans-serif;
 		color: #fff770;
 		text-align: center;
+		text-transform: uppercase;
 		width: 185px;
 		height: 70px;
 		padding-top: 20px;
@@ -132,10 +239,10 @@ body
 		width: 100%;
 	}
 
-	#site-header, #kn-social-bar
-	{
-		display: none;
-	}
+#site-header, #kn-social-bar
+{
+	display: none;
+}
 
 
 @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2ppx), only screen and (min-device-pixel-ratio: 2)
@@ -145,6 +252,54 @@ body
 		background: url('../img/head_bg@2x.png');
 		background-size: cover;
 	}
+
+	#landing
+	{
+		background: url('../img/landing/bg.png-x2');
+		background-size: cover;
+	}
+
+		#landing .coat
+		{
+			background: url('../img/landing/coat.png-x2');
+			background-size: cover;
+		}
+
+		#landing .logo
+		{
+			background: url('../img/landing/logo.png-x2');
+			background-size: cover;
+		}
+
+		#landing .flag
+		{
+			background: url('../img/landing/flag.png-x2');
+			background-size: cover;
+		}
+
+		#landing .buttons .button
+		{
+			background: url('../img/landing/btn.png-x2');
+			background-size: cover;
+		}
+
+			#landing .buttons .button.overview .img
+			{
+				background: url('../img/landing/ico01-x2.png');
+				background-size: cover;
+			}
+
+			#landing .buttons .button.dashboards .img
+			{
+				background: url('../img/landing/ico02-x2.png');
+				background-size: cover;
+			}
+
+			#landing .buttons .button.statistics .img
+			{
+				background: url('../img/landing/ico03-x2.png');
+				background-size: cover;
+			}
 
 	#title
 	{

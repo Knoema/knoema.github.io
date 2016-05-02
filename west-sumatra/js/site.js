@@ -1,6 +1,33 @@
 
 $(function () {
 
+	$('#title').on('click', function () {
+		$('#container').hide();
+		$('#landing').show();
+		return false;
+
+	});
+
+	$('#landing .buttons').on('click', '.button', function () {
+		var $target = $(this);
+
+		if ($target.hasClass('overview'))
+			showContent('overview');
+		else if ($target.hasClass('dashboards'))
+			showContent('dashboards');
+		else if ($target.hasClass('statistics'))
+			showContent('statistics');
+
+		return false;
+	});
+
+	function showContent(className) {
+		$('#landing').hide();
+		$('#container').show();
+
+		$('#tabs').find('.tab.' + className).click();
+	}
+
 	$('#tabs').on('click', '.tab', function () {
 		var $target = $(this);
 
