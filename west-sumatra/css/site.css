@@ -27,7 +27,7 @@ body
 		height: 141px;
 		background: url('../img/landing/coat.png') no-repeat;
 		display: inline-block;
-		margin-top: 130px;
+		margin-top: 50px;
 	}
 
 	#landing .logo
@@ -36,7 +36,7 @@ body
 		height: 95px;
 		background: url('../img/landing/logo.png') no-repeat;
 		display: inline-block;
-		margin-top: 60px;
+		margin-top: 50px;
 	}
 
 	#landing .flag
@@ -45,12 +45,12 @@ body
 		height: 78px;
 		background: url('../img/landing/flag.png') no-repeat;
 		display: inline-block;
-		margin-top: 35px;
+		margin-top: 25px;
 	}
 
 	#landing .buttons
 	{
-		margin-top: 55px;
+		margin-top: 40px;
 	}
 
 		#landing .buttons .button
