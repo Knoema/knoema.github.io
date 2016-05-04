@@ -1,0 +1,73 @@
+<div class="modal-content">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">
+            ${data['Name of facility']}
+        </h4>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-xs-2">
+                <img src="img/facility.png" alt="${data['Name of facility']}" class="img-thumbnail pull-left facility-img" />
+            </div>
+            <div class="col-xs-10">
+                <dl class="dl-horizontal facility-general-info">
+                    <dt>Name:</dt>
+                    <dd>${data['Name of facility']}</dd>
+
+                    <dt>Location:</dt>
+                    <dd>${data['Location of facility']}</dd>
+
+                    <dt>Ownership:</dt>
+                    <dd>Private</dd>
+
+                    <dt>Nearest hospital:</dt>
+                    <dd>${distance}</dd>
+                </dl>
+            </div>
+        </div>
+        <div class="row available-drugs">
+            <div class="col-xs-12">
+                <h5>Typically available inventory</h5>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <hr />
+                    </div>
+                </div>
+                <div class="row">
+                    {{each(i, listItem) drugList}}
+                        <div class="col-xs-3">
+                            <strong>
+                                ${listItem.disease}
+                            </strong>
+                            <ul>
+                                {{each(j, drug) listItem.drugs}}
+                                    <li>
+                                        <i class="fa ${drug.isAvailable ? 'fa-check' : 'fa-remove'}"></i> ${drug.drugName}
+                                    </li>
+                                {{/each}}
+                            </ul>
+                        </div>
+                    {{/each}}
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <hr />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                <h5>Medication prices</h5>
+                <p>
+                    Metformin, cost for 100 tablets, roughly a 3-month course, excluding inhalers: 42,000 USh
+                </p>
+                <p class="notice">
+                    For more details see <a href="#">Pharmacy Prices Datasheet</a>. To compare prices in th region use <a href="#" class="prices-comparison-tool" data-dismiss="modal">Prices Comparison Tool</a>
+                </p>
+            </div>
+        </div>
+
+    </div>
+</div>

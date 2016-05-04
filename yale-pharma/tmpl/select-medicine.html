@@ -1,0 +1,7 @@
+{{each(i, listItem) drugSelectList}}
+<optgroup label="${listItem.disease}">
+    {{each(j, drug) listItem.drugs}}
+        <option data-key="${drug.key}" value="${drug.drugName}">${drug.drugName}</option>
+    {{/each}}
+</optgroup>
+{{/each}}

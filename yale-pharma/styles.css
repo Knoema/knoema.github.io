@@ -1,0 +1,332 @@
+* {
+    font-family: 'Roboto', sans-serif;
+}
+
+body {
+    background-color: #c2d6e9;
+}
+
+header {
+    background-color: #1b3768;
+}
+
+div[class*="logo_"] {
+    display: inline-block;
+    background-repeat: no-repeat;
+    background-position: center;
+    height: 80px;
+    margin-left: 20px;
+    background-size: contain;
+}
+
+.logo_uincd {
+    background-image: url('img/logo_uincd.png');
+    width: 57px;
+    height: 58px;
+}
+
+.logo_yp-cdn {
+    background-image: url('img/logo_yp-cdn.png');
+    width: 44px;
+    height: 44px;
+}
+
+.logo_knoema {
+    background-image: url('img/logo_knoema.png');
+    width: 129px;
+    height: 20px;
+}
+
+
+.main-menu {
+    padding-right: 15px;
+}
+
+.main-menu a {
+    color: #c2e6d9;
+    line-height: 80px;
+    text-transform: uppercase;
+    padding: 0 15px;
+}
+
+.main-menu a:hover {
+    color: white;
+    text-decoration: none;
+}
+
+.main-menu a.active {
+    color: white;
+    font-weight: bolder;
+}
+
+#side-bar {
+    /*background-color: #c2d6e9;*/
+    margin: 10px -10px 10px 0;
+}
+
+#timeline {
+    display: none;
+}
+
+#map-canvas {
+    background-color: #E5E3DF;
+    margin: 0 -15px;
+}
+
+#search-panel {
+    background-color: #c2d6e9;
+    width: 70%;
+    position: absolute;
+    top: 10px;
+    z-index: 1000;
+    left: 15%;
+    padding-top: 8px;
+}
+
+#search-panel label {
+    text-transform: uppercase;
+    color: #1b3768;
+    font-size: 12px;
+}
+
+#search-input {
+    background-image: url('img/btn-search.png');
+    background-position: 99% center;
+    background-repeat: no-repeat;
+}
+
+.notice {
+    background-image: url('img/ico-notice.png');
+    background-repeat: no-repeat;
+    background-position: 0 0;
+    padding-left: 25px;
+}
+
+@media
+only screen and (-webkit-min-device-pixel-ratio: 2)     ,
+only screen and (   min--moz-device-pixel-ratio: 2)     ,
+only screen and (     -o-min-device-pixel-ratio: 2/1)   ,
+only screen and (        min-device-pixel-ratio: 2)     ,
+only screen and (                min-resolution: 192dpi),
+only screen and (                min-resolution: 2dppx) {
+    .logo_uincd {
+        background-image: url('img/logo_uincd-x2.png');
+    }
+    .logo_yp-cdn {
+        background-image: url('img/logo_yp-cdn-x2.png');
+    }
+    .logo_knoema {
+        background-image: url('img/logo_knoema-x2.png');
+    }
+    #search-input {
+        background-image: url('img/btn-search-x2.png');
+        background-size: 20px;
+    }
+    .notice {
+        background-image: url('img/ico-notice-x2.png');
+    }
+}
+
+/*custom chosen styles*/
+.chosen-container {
+    width: 100%;
+}
+
+.search-choice-close {
+    cursor: pointer;
+}
+.chosen-container .chosen-results li.group-result {
+    color: #1b3768;
+}
+/*custom chosen styles*/
+
+.slider-limit {
+    display: inline-block;
+    width: 49%;
+}
+
+#slider {
+    margin: -3px 0 12px 0;
+    height: 5px;
+    border: none;
+}
+
+.ui-slider-range {
+    border-radius: 0;
+    background-color: #6788c2;
+    background-image: none;
+}
+
+.ui-slider .ui-slider-handle {
+    width: 0.6em;
+    top: -.4em;
+    background-image: none;
+    background-color: #1b3768;
+    border: none;
+}
+.ui-slider .ui-slider-handle:focus {
+    outline: none;
+}
+
+
+.form-control, .chosen-container-single .chosen-single {
+    border-color: #89aaca;
+}
+
+#select-medicine {
+    display: none;
+}
+
+.ncd-sara-composite-score .Red {
+    color: #DC040A;
+}
+
+.ncd-sara-composite-score .Green {
+    color: #12A80D;
+}
+
+.ncd-sara-composite-score .Yellow {
+    color: #EFC607;
+}
+
+.filter-section h5, .filter-section label {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.filter-section h5, .modal-body h5, .main-header th {
+    text-transform: uppercase;
+    color: #1b3768;
+    font-size: 12px;
+}
+
+.filter-section input:focus {
+    outline: none;
+    cursor: pointer;
+}
+
+.fa-info-circle {
+    color: #FF5B03;
+    cursor: pointer;
+}
+
+.tooltip-inner {
+    min-width: 320px;
+    text-align: left;
+}
+
+.mCSB_inside>.mCSB_container {
+    margin-right: 15px;
+}
+
+#side-bar .mCSB_dragger_bar {
+    background-color: #1b3768!important;
+}
+
+#modal-dialog-holder {
+    margin: 5% auto 0 auto;
+    max-width: 70%;
+}
+
+.modal-header button:focus {
+    outline: none;
+}
+
+.facility-img {
+    margin-right: 10px;
+}
+
+.separator {
+    clear: both;
+    margin-top: 20px;
+}
+
+#prices-comparison-tool {
+    position: absolute;
+    width: 0;
+    z-index: 2000;
+    right: 0;
+    top: 0;
+    overflow: hidden;
+    /*background-color: #F7F7F7;*/
+    background-color: #e6eef6;
+}
+
+#prices-comparison-tool .fa-remove {
+    padding: 10px;
+    cursor: pointer;
+    position: absolute;
+    right: 0;
+}
+
+#prices-comparison-tool .fa-remove:hover {
+    color: #dd0000;
+}
+
+.comparison-content {
+    padding: 0 10px;
+    width: 450px;
+    min-width: 450px;
+    overflow: hidden;
+}
+
+.comparison-content h4 {
+    color: #1b3768;
+}
+
+.comparison-content hr {
+    border-top: 1px dotted gray;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.comparison-content tbody tr:nth-child(odd) {
+    background-color: #f3f7fb;
+}
+
+.comparison-content tbody tr {
+    cursor: pointer;
+}
+
+.comparison-content tbody tr:hover {
+    background-color: #eee0ca;
+}
+
+.comparison-content th, .comparison-content td {
+    white-space: nowrap;
+}
+
+.available-drugs .fa-check {
+    color: #12A80D;
+}
+
+.available-drugs .fa-remove {
+    color: #DC040A;
+}
+
+.available-drugs {
+    margin-top: 10px;
+}
+
+.available-drugs li {
+    padding: 5px;
+}
+
+.available-drugs ul, .available-drugs li {
+    list-style-type: none;
+    margin-left: 0;
+    padding-left: 0;
+}
+
+.available-drugs hr {
+    border-top: 1px solid #c2d6e9;
+    margin-top: 0;
+}
+
+.dl-horizontal.facility-general-info dt {
+    text-align: left;
+    color: #7195b6;
+    font-weight: normal;
+}
