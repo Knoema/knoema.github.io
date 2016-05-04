@@ -140,7 +140,7 @@ var App = (function () {
                     var width = 100 / dates.length;
                     dates.forEach(function (date, index) {
                         var dateParts = date.split('/');
-                        $timeline.append('<div style="width:' + width + '%;" class="item ' + (index == (dates.length - 1) ? 'active' : '') + '" data-date="' + date + '"><span class="day">' + parseInt(dateParts[1]) + '</span>&nbsp;<span class="month">mars</span></div>');
+                        $timeline.append('<div style="width:' + width + '%;" class="item ' + (index == (dates.length - 1) ? 'active' : '') + '" data-date="' + date + '"><span class="day">' + parseInt(dateParts[1]) + '</span>&nbsp;<span class="month">mai</span></div>');
                     });
                     currentDate = dates[dates.length - 1];
                 }
@@ -514,6 +514,7 @@ var App = (function () {
     	//'Ethnos': 'Quel est votre groupe ethnique ?',
     	//'Politics': 'Pour qui avez-vous vote en 2012 ?',
 
+    	'PastElections': 'QUELLE EST LA DERNIERE ELECTION A LAQUELLE VOUS AVEZ PARTICIPE ?',
     	'CommuneVotedOrNot': 'SUR VOTRE CARTE D’ELECTEUR QUELLE EST VOTRE COMMUNE DE VOTE?',
     	'Sex': 'GENRE ?',
     	'Education': 'QUEL EST VOTRE NIVEAU D’EDUCATION ?',
@@ -522,7 +523,14 @@ var App = (function () {
     	'Religion': 'QUELLE EST VOTRE AFFILIATION RELIGIEUSE ?',
     	'Nationality': 'QUEL EST VOTRE GROUPE ETHNIQUE ?',
     	'EvaluatePresident': 'COMMENT EVALUEZ-VOUS LE TRAVAIL DU PRESIDENT MACKY SALL DEPUIS 2012 ?',
-    	'RightDirection': 'PENSEZ-VOUS QUE LE PAYS VA DANS LA BONNE DIRECTION ?'
+    	'RightDirection': 'PENSEZ-VOUS QUE LE PAYS VA DANS LA BONNE DIRECTION ?',
+    	'Satisfied': 'CITEZ VOS PLUS GRANDS MOTIFS DE SATISFACTION DU PRESIDENT DEPUIS 2012 ?',
+    	'Dissatisfied': 'CITEZ VOS PLUS GRANDS MOTIF DE D’INSATISFACTION DU PRESIDENT DEPUIS 2012 ?',
+    	'Priority1': 'QUELLES SONT LES TROIS PRIORITES OÙ VOUS ATTENDEZ LE PRESIDENT ? #1:',
+    	'Priority2': 'QUELLES SONT LES TROIS PRIORITES OÙ VOUS ATTENDEZ LE PRESIDENT ? #2:',
+    	'Priority3': 'QUELLES SONT LES TROIS PRIORITES OÙ VOUS ATTENDEZ LE PRESIDENT ? #3:',
+    	'Program': 'QUEL EST LE PROGRAMME DU PRESIDENT QUE VOUS APPRECIEZ LE PLUS ?',
+    	'Participate': 'SERIEZ-VOUS INTERESSÉ A REPONDRE A DES QUESTIONS SUR LES AFFAIRES DU PAYS UNE FOIS PAR MOIS PAR TELEPHONE OU CONTACT DIRECT ?',
     };
     App.datasetDepartmentNames = {
         'SN-DK-DD': 'dakar',

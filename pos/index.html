@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8" />
-    <title>Senegal Referendum</title>
+    <title>PULSE of SENEGAL</title>
 	<link href='https://fonts.googleapis.com/css?family=Roboto:400,500,700' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="./styles/app.css" type="text/css" />
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
@@ -24,7 +24,7 @@
 
     <div id="left-sidebar">
 		<img src="./img/logo.png" style="position: absolute; left: 15px; top: 15px;" />
-		<div class="title">Senegal referendum</div>
+		<div class="title">PULSE of SENEGAL</div>
 		<div class="vote">
 			<span class="sr-label pull-left"><br />A VOTé</span>
 			<span id="voteCount" class="value pull-left"></span>
@@ -44,15 +44,21 @@
 			<label class="btn btn-default">
 				<input type="radio" name="optionsRegion" id="optionProvinces" autocomplete="off"> Provinces
 			</label>
+			<label class="btn btn-default">
+				<input type="radio" name="optionsRegion" id="optionCommunities" autocomplete="off"> Communities
+			</label>
+			<label class="btn btn-default">
+				<input type="radio" name="optionsRegion" id="optionTownships" autocomplete="off"> Townships
+			</label>
 		</div>
 
 		<div style="position: absolute; right: 15px; top: 15px;">
 			<div class="btn-group" data-toggle="buttons">
-				<label class="btn btn-default active">
-					<input type="radio" name="optionsVisualization" id="optionBubbles" autocomplete="off" checked> Bubbles
-				</label>
 				<label class="btn btn-default">
-					<input type="radio" name="optionsVisualization" id="optionHeatmap" autocomplete="off"> Heatmap
+					<input type="radio" name="optionsVisualization" id="optionBubbles" autocomplete="off"> Bubbles
+				</label>
+				<label class="btn btn-default active">
+					<input type="radio" name="optionsVisualization" id="optionHeatmap" autocomplete="off" checked> Heatmap
 				</label>
 			</div>
 			<div id="legend">
