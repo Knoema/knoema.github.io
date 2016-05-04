@@ -1,0 +1,109 @@
+﻿<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>Senegal Referendum</title>
+	<link href='https://fonts.googleapis.com/css?family=Roboto:400,500,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="./styles/app.css" type="text/css" />
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+</head>
+<body>
+	<input type="hidden" id="settings_datasetId" value="erzlbec" />
+	<input type="hidden" id="settings_host" value="collect.knoema.com" />
+	<input type="hidden" id="settings_dashSummary" value="ectdjoe" />
+	<input type="hidden" id="settings_dashDetails" value="iyifebb" />
+	<input type="hidden" id="settings_dashRegionSummary" value="kfkjehb" />
+	<input type="hidden" id="settings_dashRegionDetails" value="pyonove" />
+	<input type="hidden" id="settings_dashCountrySummary" value="bhlekeb" />
+	<input type="hidden" id="settings_dashCountryDetails" value="eqtldnd" />
+	<input type="hidden" id="settings_skipFirstColumns" value="5" />
+	<input type="hidden" id="settings_departmentColumnIndex" value="3" />
+	<input type="hidden" id="settings_provinceColumnIndex" value="2" />
+	<input type="hidden" id="settings_dateColumnIndex" value="1" />
+
+    <div id="left-sidebar">
+		<img src="./img/logo.png" style="position: absolute; left: 15px; top: 15px;" />
+		<div class="title">Senegal referendum</div>
+		<div class="vote">
+			<span class="sr-label pull-left"><br />A VOTé</span>
+			<span id="voteCount" class="value pull-left"></span>
+			<span class="sr-label pull-left">VOTES SUR<br />LA DATE<br />SéLECTIONNEé</span>
+			<span id="voteCountByDate" class="value pull-left"></span>
+			<button id="showCountrySummary" type="button" class="btn btn-default btn-sm pull-right">Résumé du pays</button>
+		</div>
+		<div id="statistics"></div>
+	</div>
+	<div id="content">
+		<div id="map"></div>
+
+		<div class="btn-group" data-toggle="buttons" style="position: absolute; left: 15px; top: 15px;">
+			<label class="btn btn-default active">
+				<input type="radio" name="optionsRegion" id="optionDepartments" autocomplete="off" checked> Departments
+			</label>
+			<label class="btn btn-default">
+				<input type="radio" name="optionsRegion" id="optionProvinces" autocomplete="off"> Provinces
+			</label>
+		</div>
+
+		<div style="position: absolute; right: 15px; top: 15px;">
+			<div class="btn-group" data-toggle="buttons">
+				<label class="btn btn-default active">
+					<input type="radio" name="optionsVisualization" id="optionBubbles" autocomplete="off" checked> Bubbles
+				</label>
+				<label class="btn btn-default">
+					<input type="radio" name="optionsVisualization" id="optionHeatmap" autocomplete="off"> Heatmap
+				</label>
+			</div>
+			<div id="legend">
+				<div id="legend_low">0</div>
+				<div id="legend_medium">50</div>
+				<div id="legend_high">100%</div>
+			</div>
+		</div>
+
+		<div id="timeline"></div>
+	</div>
+	
+	<div id="passportPopup" class="passport-popup">
+		<div class="passport__close"></div>
+		<div class="passport__content">
+			<h1 class="title"></h1>
+			<ul class="nav nav-tabs" role="tablist">
+				<li role="presentation" class="active"><a href="#tab-summary" aria-controls="summary" role="tab" data-toggle="tab">Summary</a></li>
+				<li role="presentation"><a href="#tab-details" aria-controls="details" role="tab" data-toggle="tab">Details</a></li>
+			</ul>
+			<div class="tab-content">
+				<div role="tabpanel" class="tab-pane active text-center" id="tab-summary">...</div>
+				<div role="tabpanel" class="tab-pane text-center" id="tab-details">...</div>
+			</div>
+		</div>
+	</div>
+
+	<div id="countrySummaryPopup" class="passport-popup">
+		<div class="passport__close"></div>
+		<div class="passport__content">
+			<h1 class="title">Résumé</h1>
+			<ul class="nav nav-tabs" role="tablist">
+				<li role="presentation" class="active"><a href="#tab-country-summary" aria-controls="country-summary" role="tab" data-toggle="tab">Summary</a></li>
+				<li role="presentation"><a href="#tab-country-details" aria-controls="country-details" role="tab" data-toggle="tab">Details</a></li>
+			</ul>
+			<div class="tab-content">
+				<div role="tabpanel" class="tab-pane active text-center" id="tab-country-summary"></div>
+				<div role="tabpanel" class="tab-pane text-center" id="tab-country-details"></div>
+			</div>
+		</div>
+	</div>
+
+	<script src="http://code.jquery.com/jquery-2.2.1.min.js"></script>
+	<script src="https://maps.googleapis.com/maps/api/js?libraries=visualization"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+	<script type="text/javascript" src="http://knoema.com/app-script?version=2.0"></script>
+	<script src="./scripts/numeral.min.js"></script>
+	<script src="./scripts/app.js"></script>
+	
+	<script>
+		App.init();
+	</script>
+</body>
+</html>
