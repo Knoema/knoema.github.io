@@ -122,7 +122,73 @@ var App = (function () {
             }
         });
         var markers;
+        var popMarkers = [];
+
         this.getDepartments().done(function (provinces, departments) {
+        	_this.getPopulationData().done(function (populationData) {
+        		var addPopMarkers = function () {
+        			if (popMarkers.length > 0) {
+        				popMarkers.forEach(function (marker) { return marker.setMap(null); });
+        				popMarkers = [];
+        			}
+
+        			var valIndex = 8;
+        			var latIndex = 9;
+        			var lngIndex = 10;
+
+        			var regions;
+        			var regionColumnIndex;
+
+        			if ($('#optionDepartments').is(':checked')) {
+        				regionColumnIndex = 3;
+        				regions = departments;
+        			}
+        			else {
+        				regionColumnIndex = 1;
+        				regions = provinces;
+        			}
+
+        			var count = populationData.columns.length;
+        			var data = populationData.data;
+
+        			var popMarkerInfo = {};
+        			var max = -1;
+        			for (var i = count; i < data.length; i += count) {
+        				var value = data[i + valIndex];
+        				var regionName = data[i + regionColumnIndex];
+        				if (!popMarkerInfo[regionName])
+        					popMarkerInfo[regionName] = value;
+        				else
+        					popMarkerInfo[regionName] += value;
+
+        				if (value > max)
+        					max = value;
+        			}
+
+        			for (var r in regions) {
+        				var regionName = regions[r].Name;
+
+        				if (popMarkerInfo[regionName]) {
+        					popMarkers.push(new google.maps.Marker({
+        						map: map,
+        						position: new google.maps.LatLng(regions[r].Latitude, regions[r].Longitude),
+        						icon: {
+        							path: google.maps.SymbolPath.CIRCLE,
+        							fillColor: '#3A45C7',
+        							fillOpacity: 0.8,
+        							strokeColor: 'black',
+        							strokeWeight: 1,
+        							scale: 20 * Math.log(popMarkerInfo[regionName] / max + 1) + 10
+        						},
+        					}));
+        				}
+        			}
+        		};
+        		addPopMarkers();
+
+        		$('#optionDepartments, #optionProvinces').on('change', function (event) { return addPopMarkers(); });
+        	});
+
             _this.getData().done(function (data) {
                 var currentAnswers;
                 var currentColumnIndex;
@@ -369,6 +435,31 @@ var App = (function () {
         		});
         });
         return def;
+    };
+    App.getPopulationData = function () {
+    	var self = this;
+    	var def = $.Deferred();
+    	var datasetId = 'uyppukg';
+    	$.post('http://knoema.com/api/1.0/data/details?page_id=' + datasetId + '&access_token=' + access_token, {
+    		"Header": [],
+    		"Stub": [],
+    		"Filter": [{
+    			"DimensionId": "measure",
+    			"Members": ['4996610'],
+    			"DimensionName": "measure",
+    			"DatasetId": datasetId,
+    			"Order": "0",
+    			"isGeo": true
+    		}],
+    		"Frequencies": [],
+    		"Dataset": datasetId,
+    		"Segments": null,
+    		"MeasureAggregations": null
+    	}).done(function (data) {
+    		return def.resolve(data);
+    	});
+
+    	return def;
     };
     App.getDepartments = function () {
         var _this = this;
