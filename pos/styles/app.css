@@ -17,8 +17,14 @@
 	font-family: 'Roboto', sans-serif;
 	font-size: 14px;
 	text-transform: uppercase;
-	overflow-y: scroll;
 }
+
+#statistics
+{
+	overflow-y: scroll;
+	margin: 0 -20px 0 0;
+}
+
 #left-sidebar > .title {
 	display: inline-block;
 	font-size: 23px;
@@ -29,7 +35,7 @@
 
 #left-sidebar > .questionnaire
 {
-	color: #fff;
+	color: #9AA998;
 	float: right;
 	margin: -10px 10px 0 0;
 }
@@ -73,6 +79,7 @@
 #left-sidebar .results {
 	margin-top: 6px;
 	margin-bottom: 15px;
+	padding-right: 10px;
 	cursor: pointer;
 }
 #left-sidebar .results > .sr-label {
@@ -123,8 +130,8 @@
 #left-sidebar .results.white {
 	position: relative;
 	background-color: white;
-    margin: 6px -20px 5px -20px;
-    padding: 5px 20px 5px 20px;
+    margin: 6px 0px 5px -20px;
+    padding: 5px 10px 5px 20px;
 	font-weight: bold;
 	z-index: 1;
 }

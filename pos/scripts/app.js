@@ -338,6 +338,8 @@ var App = (function () {
             if (_this.datasetColumnNames[item.question])
             	$stat.append('<div class="results" data-column-index="' + (itemIndex + _this.skipFirstColumns) + '">' + '<div class="sr-label">' + _this.datasetColumnNames[item.question] + '</div>' + '<div class="sr-progress">' + progress.join('') + '</div>' + '<span class="values">' + values.join(', ') + '</span>' + '</div>');
         });
+
+        $stat.height($('#left-sidebar').outerHeight() - 141);
     };
     App.getData = function () {
         var _this = this;
