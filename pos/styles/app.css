@@ -17,12 +17,21 @@
 	font-family: 'Roboto', sans-serif;
 	font-size: 14px;
 	text-transform: uppercase;
+	overflow-y: scroll;
 }
 #left-sidebar > .title {
+	display: inline-block;
 	font-size: 23px;
     font-weight: 500;
 	letter-spacing: 1px;
 	margin: 4px 0 25px 54px;
+}
+
+#left-sidebar > .questionnaire
+{
+	color: #fff;
+	float: right;
+	margin: -10px 10px 0 0;
 }
 
 #left-sidebar .vote {
@@ -44,7 +53,7 @@
 #left-sidebar .vote > .value {
 	width: 110px;
 	line-height: 40px;
-	margin-right: 25px;
+	margin-right: 15px;
 	font-size: 25px;
     font-weight: 500;
 	text-align: left;
@@ -119,7 +128,7 @@
 	font-weight: bold;
 	z-index: 1;
 }
-#left-sidebar .results.white::after {
+/*#left-sidebar .results.white::after {
 	position: absolute;
 	left: 100%;
 	top: 0;
@@ -129,7 +138,7 @@
 	background: url(../img/corner.png) center center no-repeat;
 	background-position-x: -1px;
 	background-size: 13px 100%;
-}
+}*/
 #left-sidebar .results.white > .sr-label {
 	color: #000;
 	font-size: 15px;
