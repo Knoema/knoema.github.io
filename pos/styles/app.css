@@ -19,6 +19,18 @@
 	text-transform: uppercase;
 }
 
+.pools-wrapper
+{
+	display: inline-block;
+	float: left;
+	margin-right: -5px;
+}
+
+.pools-wrapper .bootstrap-select
+{
+	width: 100px !important;
+}
+
 #statistics
 {
 	overflow-y: scroll;

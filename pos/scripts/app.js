@@ -39,8 +39,9 @@ var App = (function () {
     App.init = function () {
     	var _this = this;
 
-    	$('#mapType').on('click', function(){
+    	$('#pools').selectpicker();
 
+    	$('#mapType').on('click', function(){
     		_this.changeMapType();
     	});
 
@@ -130,8 +131,11 @@ var App = (function () {
         var markers;
         var popMarkers = [];
 
-        this.getDepartments().done(function (provinces, departments) {
-        	_this.getPopulationData().done(function (populationData) {
+        this.getDepartments().done(function (provinces, departments, populationData) {
+
+        	var poolsStructure = _this.getPoolsStructure(populationData);
+
+        	{
         		var addPopMarkers = function () {
         			if (_this.getMapType() == 'answers')
         				return;
@@ -147,14 +151,17 @@ var App = (function () {
 
         			var regions;
         			var regionColumnIndex;
+        			var selectedRegions;
 
         			if ($('#optionDepartments').is(':checked')) {
         				regionColumnIndex = 3;
         				regions = departments;
+        				selectedRegions = _this.getSelectedRegions(poolsStructure.dep);
         			}
         			else {
         				regionColumnIndex = 1;
         				regions = provinces;
+        				selectedRegions = _this.getSelectedRegions(poolsStructure.region);
         			}
 
         			var count = populationData.columns.length;
@@ -177,7 +184,7 @@ var App = (function () {
         			map['data'].forEach(function (feature) {
         				map['data'].revertStyle(feature);
         				var rName = feature.getProperty('name');
-        				if (popMarkerInfo[rName]) {
+        				if (popMarkerInfo[rName] && $.inArray(rName, selectedRegions) != -1) {
         					feature.setProperty('regionName', rName);
         					map['data'].overrideStyle(feature, {
         						fillColor: _this.percentToRGB(100 * (1 - popMarkerInfo[rName] / max)),
@@ -190,7 +197,7 @@ var App = (function () {
 
         		$('#optionDepartments, #optionProvinces').on('change', function (event) { return addPopMarkers(); });
         		$('#mapType').on('click', function () { return addPopMarkers(); });
-        	});
+        	}
 
             _this.getData().done(function (data) {
                 var currentAnswers;
@@ -225,13 +232,16 @@ var App = (function () {
 
                     var regions;
                     var regionColumnIndex;
+                    var selectedRegions;
                     if ($('#optionDepartments').is(':checked')) {
                         regionColumnIndex = _this.departmentColumnIndex;
                         regions = departments;
+                        selectedRegions = _this.getSelectedRegions(poolsStructure.dep);
                     }
                     else {
                         regionColumnIndex = _this.provinceColumnIndex;
                         regions = provinces;
+                        selectedRegions = _this.getSelectedRegions(poolsStructure.region);
                     }
                     if (currentAnswers == null) {
                         markers = _this.showQuestionStat(map, currentColumnIndex, data, currentDate, regions, regionColumnIndex);
@@ -247,10 +257,10 @@ var App = (function () {
                         var markersByRegionId = {};
                         markers.forEach(function (m) { return markersByRegionId[m['_regionId']] = m; });
                         map['data'].forEach(function (feature) {
-                            map['data'].revertStyle(feature);
+                        	map['data'].revertStyle(feature);
+                        	var fName = feature.getProperty('name');
                             var regionMarker = markersByRegionId[feature.getId()];
-                            if (regionMarker != null) {
-                                console.log(feature.getId(), regionMarker);
+                            if (regionMarker != null && $.inArray(fName, selectedRegions) != -1) {
                                 var percent = regionMarker._percent;
                                 var regionName = regionMarker._departmentName;
                                 feature.setProperty('regionName', regionName);
@@ -294,6 +304,10 @@ var App = (function () {
                 });
                 $('#optionDepartments, #optionProvinces').on('change', function (event) { return addMarkers(); });
                 $('#mapType').on('click', function () { return addMarkers(); });
+                $('#pools').on('change', function () {
+                	addMarkers();
+                	addPopMarkers();
+                })
                 $('#optionBubbles, #optionHeatmap').on('change', function (event) { return addMarkers(); });
                 $timeline.on('click', '.item:not(.disabled)', function (event) {
                     $(event.delegateTarget).find('.item.active').removeClass('active');
@@ -327,6 +341,80 @@ var App = (function () {
             });
         });
     };
+
+    App.getSelectedRegions = function (structure) {
+
+    	var selectedPools = [];
+    	var regions = [];
+    	$('#pools option:selected').each(function (i, item) {
+    		selectedPools.push($(item).text());
+    	});
+
+    	for (var p in structure) {
+    		if ($.inArray(p, selectedPools) == -1)
+    			continue;
+
+    		regions = regions.concat(structure[p]);
+    	}
+
+    	return regions;
+    };
+
+    App.getPoolsStructure = function (populationData) {
+
+    	var count = populationData.columns.length;
+    	var data = populationData.data;
+
+    	var regionIndex = 1;
+    	var depIndex = 3;
+    	var poolIndex = 11;
+    	var poolDep = {};
+    	var poolRegion = {};
+    	var pools = [];
+
+    	//var unicRegion = [];
+    	//var unicDep = [];
+
+    	for (var i = count; i < data.length; i += count) {
+
+    		var poolName = data[i + poolIndex];
+    		var regionName = data[i + regionIndex];
+    		var depName = data[i + depIndex];
+
+    		if (poolName == '')
+    			continue;
+
+    		if($.inArray(poolName, pools) == -1)
+    			pools.push(poolName);
+
+
+    		//if ($.inArray(regionName, unicRegion) == -1) {
+    		//	unicRegion.push(regionName);
+    		//	console.log('r: ' + regionName);
+    		//}
+
+    		//if ($.inArray(depName, unicDep) == -1) {
+    		//	unicDep.push(depName);
+    		//	console.log('d: ' + depName);
+    		//}
+
+
+    		if (!poolDep[poolName])
+    			poolDep[poolName] = [];
+			
+    		if ($.inArray(depName, poolDep[poolName]) == -1)
+    			poolDep[poolName].push(depName);
+
+    		if (!poolRegion[poolName])
+    			poolRegion[poolName] = [];
+
+    		if ($.inArray(regionName, poolRegion[poolName]) == -1)
+    			poolRegion[poolName].push(regionName);
+    	}
+
+    	return { dep: poolDep, region: poolRegion, pools: pools };
+    };
+
     App.changeMapType = function (switchTo) {
 
     	$('#mapType').parent().removeClass('active');
@@ -525,7 +613,10 @@ var App = (function () {
                     }
                 });
             });
-            def.resolve(regions, departments);
+
+            _this.getPopulationData().done(function (populationData) {
+            	def.resolve(regions, departments, populationData);
+            });
         });
         return def;
     };

@@ -7,6 +7,7 @@
 	<link href='https://fonts.googleapis.com/css?family=Roboto:400,500,700' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="./styles/app.css" type="text/css" />
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/css/bootstrap-select.min.css">
 </head>
 <body>
 	<input type="hidden" id="settings_datasetId" value="erzlbec" />
@@ -46,6 +47,15 @@
 		<div id="map"></div>
 
 		<div class="btn-group" data-toggle="buttons" style="position: absolute; left: 15px; top: 15px;">
+			<div class="pools-wrapper">
+				<select id="pools" class="selectpicker" multiple style="display: none;">
+					<option selected="selected" value="Pole 1">Pole 1</option>
+					<option selected="selected" value="Pole 2">Pole 2</option>
+					<option selected="selected" value="Pole 3">Pole 3</option>
+					<option selected="selected" value="Pole 4">Pole 4</option>
+					<option selected="selected" value="Pole 5">Pole 5</option>
+				</select>
+			</div>
 			<label class="btn btn-default active">
 				<input type="radio" name="optionsRegion" id="optionProvinces" autocomplete="off" checked> Regions
 			</label>
@@ -117,6 +127,10 @@
 	<script src="https://maps.googleapis.com/maps/api/js?libraries=visualization"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
 	<script type="text/javascript" src="http://knoema.com/app-script?version=2.0"></script>
+
+	<!-- Latest compiled and minified JavaScript -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/js/bootstrap-select.min.js"></script>
+
 	<script src="./scripts/numeral.min.js"></script>
 	<script src="./scripts/app.js"></script>
 	
