@@ -28,7 +28,7 @@
             zoomControlOptions: {
                 position: google.maps.ControlPosition.LEFT_TOP
             },
-            mapTypeId: google.maps.MapTypeId.HYBRID
+            mapTypeId: google.maps.MapTypeId.ROADMAP
         });
 
         google.maps.event.addListenerOnce(this.map, 'idle', function () {
