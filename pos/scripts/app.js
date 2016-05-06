@@ -37,7 +37,13 @@ var App = (function () {
         return "rgb(" + r + "," + g + "," + b + ")";
     };
     App.init = function () {
-        var _this = this;
+    	var _this = this;
+
+    	$('#mapType').on('click', function(){
+
+    		_this.changeMapType();
+    	});
+
         // read settings
         ['datasetId', 'host', 'dashSummary', 'dashDetails', 'dashRegionSummary', 'dashRegionDetails', 'dashCountrySummary', 'dashCountryDetails'].forEach(function (field) {
             _this[field] = $('#settings_' + field).val();
@@ -127,6 +133,9 @@ var App = (function () {
         this.getDepartments().done(function (provinces, departments) {
         	_this.getPopulationData().done(function (populationData) {
         		var addPopMarkers = function () {
+        			if (_this.getMapType() == 'answers')
+        				return;
+
         			if (popMarkers.length > 0) {
         				popMarkers.forEach(function (marker) { return marker.setMap(null); });
         				popMarkers = [];
@@ -161,32 +170,26 @@ var App = (function () {
         				else
         					popMarkerInfo[regionName] += value;
 
-        				if (value > max)
-        					max = value;
+        				if (popMarkerInfo[regionName] > max)
+        					max = popMarkerInfo[regionName];
         			}
 
-        			for (var r in regions) {
-        				var regionName = regions[r].Name;
-
-        				if (popMarkerInfo[regionName]) {
-        					popMarkers.push(new google.maps.Marker({
-        						map: map,
-        						position: new google.maps.LatLng(regions[r].Latitude, regions[r].Longitude),
-        						icon: {
-        							path: google.maps.SymbolPath.CIRCLE,
-        							fillColor: '#3A45C7',
-        							fillOpacity: 0.8,
-        							strokeColor: 'black',
-        							strokeWeight: 1,
-        							scale: 20 * Math.log(popMarkerInfo[regionName] / max + 1) + 10
-        						},
-        					}));
+        			map['data'].forEach(function (feature) {
+        				map['data'].revertStyle(feature);
+        				var rName = feature.getProperty('name');
+        				if (popMarkerInfo[rName]) {
+        					feature.setProperty('regionName', rName);
+        					map['data'].overrideStyle(feature, {
+        						fillColor: _this.percentToRGB(100 * (1 - popMarkerInfo[rName] / max)),
+        						visible: true,
+        					});
         				}
-        			}
+        			});
         		};
         		addPopMarkers();
 
         		$('#optionDepartments, #optionProvinces').on('change', function (event) { return addPopMarkers(); });
+        		$('#mapType').on('click', function () { return addPopMarkers(); });
         	});
 
             _this.getData().done(function (data) {
@@ -212,11 +215,14 @@ var App = (function () {
                 }
                 _this.refreshSidebar(data, currentDate);
                 var addMarkers = function () {
+                	if (_this.getMapType() == 'population')
+                		return;
+
                     if (markers != null) {
                         markers.forEach(function (marker) { return marker.setMap(null); });
                         markers = null;
                     }
-                    //if (currentColumnIndex != null) {
+
                     var regions;
                     var regionColumnIndex;
                     if ($('#optionDepartments').is(':checked')) {
@@ -265,7 +271,6 @@ var App = (function () {
                             showProvincePassposrt(this._departmentName);
                         }
                     }); });
-                    //}
                 };
                 addMarkers();
                 $('#statistics').on('click', '.results', function (event) {
@@ -282,9 +287,13 @@ var App = (function () {
                     var $bar = $(event.currentTarget).toggleClass('active', true);
                     currentAnswers = $bar.data('answers').split('|');
                     currentColumnIndex = $bar.closest('.results').toggleClass('white', true).data('column-index');
+
+					_this.changeMapType('answers');
+
                     addMarkers();
                 });
                 $('#optionDepartments, #optionProvinces').on('change', function (event) { return addMarkers(); });
+                $('#mapType').on('click', function () { return addMarkers(); });
                 $('#optionBubbles, #optionHeatmap').on('change', function (event) { return addMarkers(); });
                 $timeline.on('click', '.item:not(.disabled)', function (event) {
                     $(event.delegateTarget).find('.item.active').removeClass('active');
@@ -317,6 +326,35 @@ var App = (function () {
                 });
             });
         });
+    };
+    App.changeMapType = function (switchTo) {
+
+    	$('#mapType').parent().removeClass('active');
+
+    	var type = $('#mapType').data('type');
+
+    	if (type == switchTo)
+    		return;
+
+    	if (type == 'population') {
+
+    		$('#mapType').data('type', 'answers');
+    		$('#mapType').parent().find('span').text('population');
+    	}
+    	else if (type == 'answers') {
+
+    		$('#mapType').data('type', 'population');
+    		$('#mapType').parent().find('span').text('answers');
+
+    		$('#statistics .results').removeClass('white');
+    		$('#statistics .bar').removeClass('active');
+    	}
+
+    	
+    };
+    App.getMapType = function () {
+
+    	return $('#mapType').data('type');
     };
     App.refreshSidebar = function (data, currentDate) {
         var _this = this;
@@ -584,7 +622,7 @@ var App = (function () {
                     _regionId: department.Id,
                     _departmentName: depName // $('#optionDepartments').is(':checked') ? depName : null
                 });
-                console.log(marker['marker'], marker['_percent']);
+                //console.log(marker['marker'], marker['_percent']);
                 markers.push(marker);
             }
             else {
