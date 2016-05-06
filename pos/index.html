@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="./styles/app.css" type="text/css" />
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/css/bootstrap-select.min.css">
+	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" />
 </head>
 <body>
 	<input type="hidden" id="settings_datasetId" value="erzlbec" />
@@ -39,6 +40,7 @@
 			<span id="voteCount" class="value pull-left"></span>
 			<span class="sr-label pull-left">VOTES SUR<br />LA DATE<br />SéLECTIONNEé</span>
 			<span id="voteCountByDate" class="value pull-left"></span>
+			<a id="source-link" href="//knoema.com/erzlbec" target="_blank"><i class="fa fa-external-link" title="View data"></i></a>
 			<button id="showCountrySummary" type="button" class="btn btn-default btn-sm pull-right">Résumé du pays</button>
 		</div>
 		<div id="statistics"></div>
@@ -87,7 +89,12 @@
 		</div>
 
 		<div class="btn-group" data-toggle="buttons" style="position: absolute; left: 15px; bottom: 50px;">
-			<label class="btn btn-default" id="mapType" data-type="population"> Switch to <span>answer</span> data</label>
+			<label class="btn btn-default active" >
+				<input type="radio" name="mapType" id="optionPopulation" autocomplete="off" checked> Population
+			</label>
+			<label class="btn btn-default">
+				<input type="radio" name="mapType" id="optionQuestionnaire" autocomplete="off"> Questionnaire
+			</label>
 		</div>
 
 		<div id="timeline"></div>
