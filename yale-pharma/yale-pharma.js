@@ -13,6 +13,27 @@
         };
     };
 
+    $.ajaxSetup({
+        data: {
+            clientId: 'EZj54KGFo3rzIvnLczrElvAitEyU28DGw9R73tif'
+        }
+    });
+
+    //Cross domain post request:
+    /*
+    $.ajax({
+        type: "POST",
+
+        crossDomain: true,
+
+        url: '//knoema.com/api/1.0/data/pivot',
+        data: {"Dataset":"CDIACTACHIINDUSAA","Header":[{"DimensionId":"Time","Members":[1992,1995,1998,{"Name":"1996-1998","Key":-1987,"Formula":[1996,1998,"avga"]},{"Name":"1980-1990","Key":-9876,"Formula":[1980,1990,"avga"]}]}],"Filter":[{"DimensionId":"Location","Members":[1000000]}],"Stub":[{"DimensionId":"Variable","Members":[1000000,1000010,1000020,{"Name":"TotalPrimaryEnergyproduction,AnnualAverageGrowth","Key":-1234,"Formula":[1134,"pcha"]},{"Name":"TotalPrimaryEnergyconsumption,AnnualAverageGrowth","Key":-1236,"Formula":[1486,"pcha"]},{"Name":"ConsumptiontoProductionratio","Key":-1238,"Formula":[1486,1134,"/"]}]}]},
+        success: function(pivotResponse) {
+            console.log('pivotResponse', pivotResponse);
+        }
+    });
+    */
+
     app.prototype.run = function() {
         var self = this;
         $(window).on('resize', $.proxy(this.onResize, this));
@@ -33,8 +54,7 @@
 
         google.maps.event.addListenerOnce(this.map, 'idle', function () {
             var idleTimeout = window.setTimeout(function () {
-                var url = '//knoema.com/api/1.0/frontend/resource/' + self.geoPlaygroundId + '/content';
-                Knoema.Helpers.get(url, function(content) {
+                $.get('//knoema.com/api/1.0/frontend/resource/' + self.geoPlaygroundId + '/content', function(content) {
                     for (var layerId in content.layers) {
                         self.loadLayer(layerId);
                     }
@@ -78,7 +98,7 @@
             }
         });
 
-        Knoema.Helpers.get('//yale.knoema.com/api/1.0/meta/dataset/zoxdoob/dimension/measure', function(measureDimension) {
+        $.get('//yale.knoema.com/api/1.0/meta/dataset/zoxdoob/dimension/measure', function(measureDimension) {
             var medicineList = [
                 {
                     disease: 'Diabets',
@@ -281,17 +301,19 @@
                 tooltipContent: tooltipContent
             });
         }
+
         var dimensionRequests = [
-            this.get('//yale.knoema.com/api/1.0/meta/dataset/zoxdoob/dimension/facility-type'),
-            this.get('//yale.knoema.com/api/1.0/meta/dataset/zoxdoob/dimension/location'),
-            this.get('//yale.knoema.com/api/1.0/meta/dataset/zoxdoob/dimension/sector'),
-            this.get('//yale.knoema.com/api/1.0/meta/dataset/zoxdoob/dimension/ncd-sara-composite-score')
+            $.get('//yale.knoema.com/api/1.0/meta/dataset/zoxdoob/dimension/facility-type'),
+            $.get('//yale.knoema.com/api/1.0/meta/dataset/zoxdoob/dimension/location'),
+            $.get('//yale.knoema.com/api/1.0/meta/dataset/zoxdoob/dimension/sector'),
+            $.get('//yale.knoema.com/api/1.0/meta/dataset/zoxdoob/dimension/ncd-sara-composite-score')
         ];
+
         $.when.apply(null, dimensionRequests).done(function onDimensionsLoaded(facilityType, location, sector, ncd) {
-            $('#side-bar').append(createFilterSectionMarkup(facilityType));
-            $('#side-bar').append(createFilterSectionMarkup(location));
-            $('#side-bar').append(createFilterSectionMarkup(sector));
-            $('#side-bar').append(createFilterSectionMarkup(ncd));
+            $('#side-bar').append(createFilterSectionMarkup(facilityType[0]));
+            $('#side-bar').append(createFilterSectionMarkup(location[0]));
+            $('#side-bar').append(createFilterSectionMarkup(sector[0]));
+            $('#side-bar').append(createFilterSectionMarkup(ncd[0]));
 
             $('#side-bar').append($.tmpl('side-bar-radio-section.html'));
 
@@ -309,20 +331,6 @@
         // //yale.knoema.com/api/1.0/meta/dataset/zoxdoob/dimension/measure
     };
 
-    app.prototype.get = function (url) {
-        var d = $.Deferred();
-        Knoema.Helpers.get(url, function (data) {
-            d.resolve(data);
-        });
-        return d;
-    };
-
-    // app.prototype.resize = function () {
-    //     var newWindowHeight = $(window).height();
-    //     $('#filters .filters').height(newWindowHeight - 120 - 45);
-    //     $('#map-canvas').height(newWindowHeight - 120);
-    //     $('#table').height(newWindowHeight - 120);
-    // };
     app.prototype.onResize = function () {
         var newHeight = $(window).height() - 7;
         var sideBarHeight = newHeight - this.topBarHeight - 20;
@@ -343,7 +351,9 @@
     app.prototype.loadTemplates = function (callback) {
         var self = this;
         function compileTemplate(templateSrc) {
-            $.template(this.url.replace('tmpl/', ''), templateSrc);
+            var templateId = this.url.replace('tmpl/', '');
+            templateId = templateId.substring(0, templateId.indexOf('?'))
+            $.template(templateId, templateSrc);
         }
         var templates = [
             $.get('tmpl/side-bar-checkbox-section.html', compileTemplate),
