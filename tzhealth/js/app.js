@@ -118,7 +118,7 @@
 
         google.maps.event.addListenerOnce(this.map, 'idle', function () {
             var idleTimeout = window.setTimeout(function () {
-                var url = 'http://knoema.com/api/1.0/frontend/resource/' + self.geoPlaygroundId + '/content';
+                var url = '//knoema.com/api/1.0/frontend/resource/' + self.geoPlaygroundId + '/content';
                 Knoema.Helpers.get(url, function(content) {
                     self.geoPlaygroundContent = content;
                     for (var layerId in content.layers) {
