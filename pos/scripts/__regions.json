@@ -1,0 +1,651 @@
+{
+  "Id": "SN",
+  "Name": "Senegal",
+  "Map": "world",
+  "Regions": [
+    {
+      "Id": "SN-DK",
+      "Name": "Dakar",
+      "Map": "senegalRegions",
+      "Regions": [
+        {
+          "Id": "SN-DK-DD",
+          "Name": "Dakar Department",
+          "Map": "senegalDepartments",
+          "Regions": [],
+          "Names": [
+            "Département de Dakar"
+          ],
+          "Latitude": "14.76667",
+          "Longitude": "-17.28333"
+        },
+        {
+          "Id": "SN-DK-GU",
+          "Name": "Guédiawaye",
+          "Map": "senegalDepartments",
+          "Regions": [],
+          "Names": [
+            "Département de Guédiawaye"
+          ],
+          "Latitude": "14.7827487",
+          "Longitude": "-17.3761685"
+        },
+        {
+          "Id": "SN-DK-PI",
+          "Name": "Pikine",
+          "Map": "senegalDepartments",
+          "Regions": [],
+          "Names": [
+            "Département de Pikine"
+          ],
+          "Latitude": "14.7589446",
+          "Longitude": "-17.3937536"
+        },
+        {
+          "Id": "SN-DK-RU",
+          "Name": "Rufisque",
+          "Map": "senegalDepartments",
+          "Regions": [],
+          "Names": [
+            "Département de Rufisque"
+          ],
+          "Latitude": "14.71554",
+          "Longitude": "-17.270929"
+        }
+      ],
+      "Names": [],
+      "Latitude": "14.775597",
+      "Longitude": "-17.274525"
+    },
+    {
+      "Id": "SN-DB",
+      "Name": "Diourbel",
+      "Map": "senegalRegions",
+      "Regions": [
+        {
+          "Id": "SN-DB-BA",
+          "Name": "Bambey",
+          "Map": "senegalDepartments",
+          "Regions": [],
+          "Names": [
+            "Département de Bambey"
+          ],
+          "Latitude": "14.6965115",
+          "Longitude": "-16.458256"
+        },
+        {
+          "Id": "SN-DB-DD",
+          "Name": "Diourbel Department",
+          "Map": "senegalDepartments",
+          "Regions": [],
+          "Names": [
+            "Département de Diourbel"
+          ],
+          "Latitude": "14.728342",
+          "Longitude": "-16.25243"
+        },
+        {
+          "Id": "SN-DB-MB",
+          "Name": "Mbacké",
+          "Map": "senegalDepartments",
+          "Regions": [],
+          "Names": [
+            "Département de Mbacké"
+          ],
+          "Latitude": "14.80828",
+          "Longitude": "-15.86454"
+        }
+      ],
+      "Names": [],
+      "Latitude": "14.801979",
+      "Longitude": "-16.187472"
+    },
+    {
+      "Id": "SN-FK",
+      "Name": "Fatick",
+      "Map": "senegalRegions",
+      "Regions": [
+        {
+          "Id": "SN-FK-FD",
+          "Name": "Fatick Department",
+          "Map": "senegalDepartments",
+          "Regions": [],
+          "Names": [
+            "Département de Fatick"
+          ],
+          "Latitude": "14.28333",
+          "Longitude": "-16.5"
+        },
+        {
+          "Id": "SN-FK-FO",
+          "Name": "Foundiougne",
+          "Map": "senegalDepartments",
+          "Regions": [],
+          "Names": [
+            "Département de Foundiougne"
+          ],
+          "Latitude": "14.1240756",
+          "Longitude": "-16.4670909"
+        },
+        {
+          "Id": "SN-FK-GO",
+          "Name": "Gossas",
+          "Map": "senegalDepartments",
+          "Regions": [],
+          "Names": [
+            "Département de Gossas"
+          ],
+          "Latitude": "14.4957057",
+          "Longitude": "-16.0669571"
+        }
+      ],
+      "Names": [],
+      "Latitude": "14.3390167",
+      "Longitude": "-16.4111425"
+    },
+    {
+      "Id": "SN-KA",
+      "Name": "Kaffrine",
+      "Map": "senegalRegions",
+      "Regions": [
+        {
+          "Id": "SN-KA-KA",
+          "Name": "Kaffrine Department",
+          "Map": "senegalDepartments",
+          "Regions": [],
+          "Names": [
+            "Département de Kaffrine"
+          ],
+          "Latitude": "14.097071",
+          "Longitude": "-15.54565"
+        },
+        {
+          "Id": "SN-KA-BI",
+          "Name": "Birkelane",
+          "Map": "senegalDepartments",
+          "Regions": [],
+          "Names": [
+            "Département de Birkelane"
+          ],
+          "Latitude": "14.128458",
+          "Longitude": "-15.7439194"
+        },
+        {
+          "Id": "SN-KA-KO",
+          "Name": "Koungheul",
+          "Map": "senegalDepartments",
+          "Regions": [],
+          "Names": [
+            "Département de Koungheul"
+          ],
+          "Latitude": "13.9802139",
+          "Longitude": "-14.8016887"
+        },
+        {
+          "Id": "SN-KA-MH",
+          "Name": "Malem Hoddar",
+          "Map": "senegalDepartments",
+          "Regions": [],
+          "Names": [
+            "Département de Malem-Hodar"
+          ],
+          "Latitude": "14.08844",
+          "Longitude": "-15.29466"
+        }
+      ],
+      "Names": [],
+      "Latitude": "14.27099",
+      "Longitude": "-15.146495"
+    },
+    {
+      "Id": "SN-KL",
+      "Name": "Kaolack",
+      "Map": "senegalRegions",
+      "Regions": [
+        {
+          "Id": "SN-KL-GU",
+          "Name": "Guinguinéo",
+          "Map": "senegalDepartments",
+          "Regions": [],
+          "Names": [
+            "Département de Guinguinéo"
+          ],
+          "Latitude": "14.29886",
+          "Longitude": "-15.92072"
+        },
+        {
+          "Id": "SN-KL-KA",
+          "Name": "Kaolack Department",
+          "Map": "senegalDepartments",
+          "Regions": [],
+          "Names": [
+            "Département de Kaolack"
+          ],
+          "Latitude": "14.064637",
+          "Longitude": "-16.13449"
+        },
+        {
+          "Id": "SN-KL-ND",
+          "Name": "Nioro du Rip",
+          "Map": "senegalDepartments",
+          "Regions": [],
+          "Names": [
+            "Département de Nioro du Rip"
+          ],
+          "Latitude": "13.74372",
+          "Longitude": "-15.7732633"
+        }
+      ],
+      "Names": [],
+      "Latitude": "13.923617",
+      "Longitude": "-15.866504"
+    },
+    {
+      "Id": "SN-KE",
+      "Name": "Kédougou",
+      "Map": "senegalRegions",
+      "Regions": [
+        {
+          "Id": "SN-KE-KE",
+          "Name": "Kédougou Department",
+          "Map": "senegalDepartments",
+          "Regions": [],
+          "Names": [
+            "Département de Kédougou"
+          ],
+          "Latitude": "12.651661",
+          "Longitude": "-12.212329"
+        },
+        {
+          "Id": "SN-KE-SL",
+          "Name": "Salémata",
+          "Map": "senegalDepartments",
+          "Regions": [],
+          "Names": [
+            "Département de Salemata"
+          ],
+          "Latitude": "12.59971",
+          "Longitude": "-12.77619"
+        },
+        {
+          "Id": "SN-KE-SA",
+          "Name": "Saraya",
+          "Map": "senegalDepartments",
+          "Regions": [],
+          "Names": [
+            "Département de Saraya"
+          ],
+          "Latitude": "13.0015",
+          "Longitude": "-11.79627"
+        }
+      ],
+      "Names": [],
+      "Latitude": "12.8354589",
+      "Longitude": "-11.7563676"
+    },
+    {
+      "Id": "SN-KD",
+      "Name": "Kolda",
+      "Map": "senegalRegions",
+      "Regions": [
+        {
+          "Id": "SN-KD-KD",
+          "Name": "Kolda Department",
+          "Map": "senegalDepartments",
+          "Regions": [],
+          "Names": [
+            "Département de Kolda"
+          ],
+          "Latitude": "12.91058",
+          "Longitude": "-14.41667"
+        },
+        {
+          "Id": "SN-KD-MY",
+          "Name": "Médina Yoro Foulah",
+          "Map": "senegalDepartments",
+          "Regions": [],
+          "Names": [
+            "Département de Médina Yoro Foulah"
+          ],
+          "Latitude": "13.22561",
+          "Longitude": "-14.85773"
+        },
+        {
+          "Id": "SN-KD-VE",
+          "Name": "Vélingara",
+          "Map": "senegalDepartments",
+          "Regions": [],
+          "Names": [
+            "Département de Vélingara"
+          ],
+          "Latitude": "13.1440383",
+          "Longitude": "-14.1060893"
+        }
+      ],
+      "Names": [],
+      "Latitude": "13.130669",
+      "Longitude": "-14.299601"
+    },
+    {
+      "Id": "SN-LG",
+      "Name": "Louga",
+      "Map": "senegalRegions",
+      "Regions": [
+        {
+          "Id": "SN-LG-KE",
+          "Name": "Kébémer",
+          "Map": "senegalDepartments",
+          "Regions": [],
+          "Names": [
+            "Département de Kébémer"
+          ],
+          "Latitude": "15.376248",
+          "Longitude": "-16.4466092"
+        },
+        {
+          "Id": "SN-LG-LI",
+          "Name": "Linguère",
+          "Map": "senegalDepartments",
+          "Regions": [],
+          "Names": [
+            "Département de Linguère"
+          ],
+          "Latitude": "15.359",
+          "Longitude": "-15.158"
+        },
+        {
+          "Id": "SN-LG-LD",
+          "Name": "Louga Department",
+          "Map": "senegalDepartments",
+          "Regions": [],
+          "Names": [
+            "Département de Louga"
+          ],
+          "Latitude": "15.701895",
+          "Longitude": "-16.033463"
+        }
+      ],
+      "Names": [],
+      "Latitude": "15.415747",
+      "Longitude": "-15.33089"
+    },
+    {
+      "Id": "SN-MT",
+      "Name": "Matam",
+      "Map": "senegalRegions",
+      "Regions": [
+        {
+          "Id": "SN-MT-KA",
+          "Name": "Kanel",
+          "Map": "senegalDepartments",
+          "Regions": [],
+          "Names": [
+            "Département de Kanel"
+          ],
+          "Latitude": "15.4884265",
+          "Longitude": "-13.1754767"
+        },
+        {
+          "Id": "SN-MT-MA",
+          "Name": "Matam Department",
+          "Map": "senegalDepartments",
+          "Regions": [],
+          "Names": [
+            "Département de Matam"
+          ],
+          "Latitude": "15.16667",
+          "Longitude": "-13.66667"
+        },
+        {
+          "Id": "SN-MT-RF",
+          "Name": "Ranérou Ferlo",
+          "Map": "senegalDepartments",
+          "Regions": [],
+          "Names": [
+            "Ranérou-Ferlo",
+            "Département de Ranérou-Ferlo"
+          ],
+          "Latitude": "15.05069",
+          "Longitude": "-14.13322"
+        }
+      ],
+      "Names": [],
+      "Latitude": "15.6600225",
+      "Longitude": "-13.2576906"
+    },
+    {
+      "Id": "SN-SL",
+      "Name": "Saint-Louis",
+      "Map": "senegalRegions",
+      "Regions": [
+        {
+          "Id": "SN-SL-DA",
+          "Name": "Dagana",
+          "Map": "senegalDepartments",
+          "Regions": [],
+          "Names": [
+            "Département de Dagana"
+          ],
+          "Latitude": "16.5105628",
+          "Longitude": "-15.5034785"
+        },
+        {
+          "Id": "SN-SL-PO",
+          "Name": "Podor",
+          "Map": "senegalDepartments",
+          "Regions": [],
+          "Names": [
+            "Département de Podor"
+          ],
+          "Latitude": "16.6600591",
+          "Longitude": "-14.959329"
+        },
+        {
+          "Id": "SN-SL-SD",
+          "Name": "Saint-Louis Department",
+          "Map": "senegalDepartments",
+          "Regions": [],
+          "Names": [
+            "Département de Saint-Louis"
+          ],
+          "Latitude": "16.0326307",
+          "Longitude": "-16.4818167"
+        }
+      ],
+      "Names": [],
+      "Latitude": "16.341806",
+      "Longitude": "-15.01304"
+    },
+    {
+      "Id": "SN-SE",
+      "Name": "Sédhiou",
+      "Map": "senegalRegions",
+      "Regions": [
+        {
+          "Id": "SN-SE-BO",
+          "Name": "Bounkiling",
+          "Map": "senegalDepartments",
+          "Regions": [],
+          "Names": [
+            "Département de Bounkiling"
+          ],
+          "Latitude": "13.0394002",
+          "Longitude": "-15.6942332"
+        },
+        {
+          "Id": "SN-SE-GO",
+          "Name": "Goudoump",
+          "Map": "senegalDepartments",
+          "Regions": [],
+          "Names": [
+            "Département de Goudomp"
+          ],
+          "Latitude": "12.57778",
+          "Longitude": "-15.87222"
+        },
+        {
+          "Id": "SN-SE-SD",
+          "Name": "Sédhiou Department",
+          "Map": "senegalDepartments",
+          "Regions": [],
+          "Names": [
+            "Département de Sédhiou"
+          ],
+          "Latitude": "12.690866",
+          "Longitude": "-15.587752"
+        }
+      ],
+      "Names": [],
+      "Latitude": "12.899898",
+      "Longitude": "-15.630471"
+    },
+    {
+      "Id": "SN-TC",
+      "Name": "Tambacounda",
+      "Map": "senegalRegions",
+      "Regions": [
+        {
+          "Id": "SN-TC-BA",
+          "Name": "Bakel",
+          "Map": "senegalDepartments",
+          "Regions": [],
+          "Names": [
+            "Département de Bakel"
+          ],
+          "Latitude": "14.9026699",
+          "Longitude": "-12.4638538"
+        },
+        {
+          "Id": "SN-TC-GO",
+          "Name": "Goudiry",
+          "Map": "senegalDepartments",
+          "Regions": [],
+          "Names": [
+            "Département de Goudiry"
+          ],
+          "Latitude": "14.18769",
+          "Longitude": "-12.70515"
+        },
+        {
+          "Id": "SN-TC-KO",
+          "Name": "Koupentoum",
+          "Map": "senegalDepartments",
+          "Regions": [],
+          "Names": [
+            "Département de Koumpentoum"
+          ],
+          "Latitude": "13.9779361",
+          "Longitude": "-14.562614"
+        },
+        {
+          "Id": "SN-TC-TD",
+          "Name": "Tambacounda Department",
+          "Map": "senegalDepartments",
+          "Regions": [],
+          "Names": [
+            "Département de Tambacounda"
+          ],
+          "Latitude": "13.72861",
+          "Longitude": "-13.786622"
+        }
+      ],
+      "Names": [],
+      "Latitude": "13.861511",
+      "Longitude": "-13.230559"
+    },
+    {
+      "Id": "SN-TH",
+      "Name": "Thies",
+      "Map": "senegalRegions",
+      "Regions": [
+        {
+          "Id": "SN-TH-MB",
+          "Name": "M'bour",
+          "Map": "senegalDepartments",
+          "Regions": [],
+          "Names": [
+            "Département de M'bour"
+          ],
+          "Latitude": "14.4228422",
+          "Longitude": "-16.9653756"
+        },
+        {
+          "Id": "SN-TH-TD",
+          "Name": "Thiès Department",
+          "Map": "senegalDepartments",
+          "Regions": [],
+          "Names": [
+            "Département de Thiès"
+          ],
+          "Latitude": "14.761509",
+          "Longitude": "-16.928975"
+        },
+        {
+          "Id": "SN-TH-TI",
+          "Name": "Tivaouane",
+          "Map": "senegalDepartments",
+          "Regions": [],
+          "Names": [
+            "Département de Tivaouane"
+          ],
+          "Latitude": "14.9526715",
+          "Longitude": "-16.8119382"
+        }
+      ],
+      "Names": [
+        "Thiès"
+      ],
+      "Latitude": "14.914124",
+      "Longitude": "-16.813137"
+    },
+    {
+      "Id": "SN-ZG",
+      "Name": "Ziguinchor",
+      "Map": "senegalRegions",
+      "Regions": [
+        {
+          "Id": "SN-ZG-BI",
+          "Name": "Bignona",
+          "Map": "senegalDepartments",
+          "Regions": [],
+          "Names": [
+            "Département de Bignona"
+          ],
+          "Latitude": "12.8050911",
+          "Longitude": "-16.2345633"
+        },
+        {
+          "Id": "SN-ZG-OU",
+          "Name": "Oussouye",
+          "Map": "senegalDepartments",
+          "Regions": [],
+          "Names": [
+            "Département Oussouye"
+          ],
+          "Latitude": "12.4884485",
+          "Longitude": "-16.543676"
+        },
+        {
+          "Id": "SN-ZG-ZD",
+          "Name": "Ziguinchor Department",
+          "Map": "senegalDepartments",
+          "Regions": [],
+          "Names": [
+            "Département de Ziguinchor"
+          ],
+          "Latitude": "12.515959",
+          "Longitude": "-16.242697"
+        }
+      ],
+      "Names": [],
+      "Latitude": "12.761493",
+      "Longitude": "-16.385944"
+    }
+  ],
+  "Names": [
+    "Senegalese",
+    "СЕНЕГАЛ"
+  ],
+  "Latitude": 14.36624,
+  "Longitude": -14.47348
+}

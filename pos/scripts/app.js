@@ -67,8 +67,8 @@ var App = (function () {
 		// init map
 		var map = new google.maps.Map(document.getElementById('map'), {
 			mapTypeControl: false,
-			zoom: 4,
-			center: { lat: 0, lng: 0 }
+			zoom: 8,
+			center: { lat: 14.56624, lng: -14.47348 }
 		});
 		$('#showCountrySummary').on('click', function (event) {
 			if ($('#tab-country-summary iframe').length <= 0) {
@@ -99,12 +99,17 @@ var App = (function () {
 				$('#passportPopup').show();
 			}
 		};
-		map['data'].loadGeoJson('./scripts/senegal-provinces.json');
-		map['data'].loadGeoJson('./scripts/senegal-departments.json');
-		map['data'].setStyle({
-			strokeWeight: 1,
-			visible: false
-		});
+
+		var loadMap = function (mapName) {
+
+			map['data'].forEach(function (feature) {
+				map['data'].remove(feature);
+			});
+
+			map['data'].loadGeoJson('./scripts/senegal-' + mapName + '.json');
+		};
+		loadMap('provinces');
+
 		map['data'].addListener('click', function (event) {
 			if ($('#optionDepartments').is(':checked')) {
 				showDepartmentPassposrt(event.feature.getProperty('regionName'));
@@ -113,21 +118,10 @@ var App = (function () {
 				showProvincePassposrt(event.feature.getProperty('regionName'));
 			}
 		});
-		// fit map to senegal
-		var geocoder = new google.maps.Geocoder();
-		geocoder.geocode({ 'address': 'Senegal' }, function (results, status) {
-			if (status == google.maps.GeocoderStatus.OK) {
-				map.fitBounds(results[0].geometry.bounds);
-			}
-			else {
-				// Senegal
-				map.fitBounds(new google.maps.LatLngBounds(new google.maps.LatLng(12.307289, -17.529848), new google.maps.LatLng(16.693054, -11.348607)));
-			}
-		});
 		var markers;
 		var popMarkers = [];
 
-		this.getDepartments().done(function (provinces, departments, populationData) {
+		this.getDepartments().done(function (provinces, departments, communes, townships, populationData) {
 
 			var poolsStructure = _this.getPoolsStructure(populationData);
 
@@ -149,15 +143,27 @@ var App = (function () {
 					var regionColumnIndex;
 					var selectedRegions;
 
-					if ($('#optionDepartments').is(':checked')) {
+					var isTwnshp = false;
+					if ($('#optionProvinces').is(':checked')) {
+						regionColumnIndex = 1;
+						regions = provinces;
+						selectedRegions = _this.getSelectedRegions(poolsStructure.region);
+					}
+					else if ($('#optionDepartments').is(':checked')) {
 						regionColumnIndex = 3;
 						regions = departments;
 						selectedRegions = _this.getSelectedRegions(poolsStructure.dep);
 					}
-					else {
-						regionColumnIndex = 1;
-						regions = provinces;
-						selectedRegions = _this.getSelectedRegions(poolsStructure.region);
+					else if ($('#optionCommunities').is(':checked')) {
+						regionColumnIndex = 5;
+						regions = communes;
+						selectedRegions = _this.getSelectedRegions(poolsStructure.communes);
+					}
+					else if ($('#optionTownships').is(':checked')) {
+						isTwnshp = true;
+						regionColumnIndex = 7;
+						regions = townships;
+						selectedRegions = _this.getSelectedRegions(poolsStructure.townships);
 					}
 
 					var count = populationData.columns.length;
@@ -168,6 +174,9 @@ var App = (function () {
 					for (var i = count; i < data.length; i += count) {
 						var value = data[i + valIndex];
 						var regionName = data[i + regionColumnIndex];
+						if (isTwnshp)
+							regionName = regionName.toUpperCase();
+
 						if (!popMarkerInfo[regionName])
 							popMarkerInfo[regionName] = value;
 						else
@@ -177,21 +186,29 @@ var App = (function () {
 							max = popMarkerInfo[regionName];
 					}
 
-					map['data'].forEach(function (feature) {
-						map['data'].revertStyle(feature);
+					map['data'].setStyle(function (feature) {
 						var rName = feature.getProperty('name');
-						if (popMarkerInfo[rName] && $.inArray(rName, selectedRegions) != -1) {
+
+						if (!popMarkerInfo[rName] &&_this.franchToEnglishNames[rName])
+							rName = _this.franchToEnglishNames[rName];
+
+						if (popMarkerInfo[rName] /*&& $.inArray(rName, selectedRegions) != -1*/) {
 							feature.setProperty('regionName', rName);
-							map['data'].overrideStyle(feature, {
+							return {
 								fillColor: _this.percentToRGB(100 * (1 - popMarkerInfo[rName] / max)),
-								visible: true,
-							});
+								strokeWeight: 1
+							};
+						}
+						else {
+							return {
+								visible: false,
+								strokeWeight: 0
+							}
 						}
 					});
 				};
 				addPopMarkers();
 
-				$('#optionDepartments, #optionProvinces').on('change', function (event) { return addPopMarkers(); });
 				$('#optionPopulation, #optionQuestionnaire').on('change', function () { return addPopMarkers(); });
 			}
 
@@ -235,16 +252,31 @@ var App = (function () {
 					var regions;
 					var regionColumnIndex;
 					var selectedRegions;
-					if ($('#optionDepartments').is(':checked')) {
-						regionColumnIndex = _this.departmentColumnIndex;
-						regions = departments;
-						selectedRegions = _this.getSelectedRegions(poolsStructure.dep);
-					}
-					else {
-						regionColumnIndex = _this.provinceColumnIndex;
+
+					var isTwnshp = false;
+					if ($('#optionProvinces').is(':checked')) {
+						regionColumnIndex = 2;
 						regions = provinces;
 						selectedRegions = _this.getSelectedRegions(poolsStructure.region);
 					}
+					else if ($('#optionDepartments').is(':checked')) {
+						regionColumnIndex = 3;
+						regions = departments;
+						selectedRegions = _this.getSelectedRegions(poolsStructure.dep);
+					}
+					else if ($('#optionCommunities').is(':checked')) {
+						regionColumnIndex = 4;
+						regions = communes;
+						selectedRegions = _this.getSelectedRegions(poolsStructure.communes);
+					}
+					else if ($('#optionTownships').is(':checked')) {
+						isTwnshp = true;
+						regionColumnIndex = 5;
+						regions = townships;
+						selectedRegions = _this.getSelectedRegions(poolsStructure.townships);
+					}
+
+
 					if (currentAnswers == null) {
 						markers = _this.showQuestionStat(map, currentColumnIndex, data, currentDate, regions, regionColumnIndex);
 					}
@@ -258,19 +290,31 @@ var App = (function () {
 					else {
 						var markersByRegionId = {};
 						markers.forEach(function (m) { return markersByRegionId[m['_regionId']] = m; });
-						map['data'].forEach(function (feature) {
-							map['data'].revertStyle(feature);
+						var markersByRegionName = {};
+						markers.forEach(function (m) { return markersByRegionName[m['_departmentName']] = m; });
+						map['data'].setStyle(function (feature) {
+
 							var fName = feature.getProperty('name');
-							var regionMarker = markersByRegionId[feature.getId()];
-							if (regionMarker != null && $.inArray(fName, selectedRegions) != -1) {
+							var regionMarker = markersByRegionId[feature.getId()] || markersByRegionName[fName];
+							if (regionMarker != null/* && $.inArray(fName, selectedRegions) != -1*/) {
 								var percent = regionMarker._percent;
 								var regionName = regionMarker._departmentName;
 								feature.setProperty('regionName', regionName);
 								if (percent != null) {
-									map['data'].overrideStyle(feature, {
+									return {
 										fillColor: _this.percentToRGB(percent * 100),
-										visible: true,
-									});
+										strokeWeight: 1
+									};
+								} else {
+									return {
+										visible: false,
+										strokeWeight: 0
+									}
+								}
+							} else {
+								return {
+									visible: false,
+									strokeWeight: 0
 								}
 							}
 						});
@@ -306,7 +350,13 @@ var App = (function () {
 
 					addMarkers();
 				});
-				$('#optionDepartments, #optionProvinces').on('change', function (event) { return addMarkers(); });
+				$('#optionDepartments, #optionProvinces, #optionCommunities, #optionTownships').on('change', function () {
+
+					loadMap($(this).data('map-name'));
+
+					addPopMarkers();
+					addMarkers();
+				});
 				$('#optionPopulation, #optionQuestionnaire').on('change', function () { return addMarkers(); });
 				$('#pools').on('change', function () {
 					addMarkers();
@@ -371,9 +421,13 @@ var App = (function () {
 
 		var regionIndex = 1;
 		var depIndex = 3;
+		var communeIndex = 5;
+		var townshipsIndex = 7;
 		var poolIndex = 11;
 		var poolDep = {};
 		var poolRegion = {};
+		var poolCommunes = {};
+		var poolTownships = {};
 		var pools = [];
 
 		//var unicRegion = [];
@@ -384,6 +438,8 @@ var App = (function () {
 			var poolName = data[i + poolIndex];
 			var regionName = data[i + regionIndex];
 			var depName = data[i + depIndex];
+			var communeName = data[i + communeIndex];
+			var townshipsName = data[i + townshipsIndex];
 
 			if (poolName == '')
 				continue;
@@ -414,9 +470,21 @@ var App = (function () {
 
 			if ($.inArray(regionName, poolRegion[poolName]) == -1)
 				poolRegion[poolName].push(regionName);
+
+			if (!poolCommunes[poolName])
+				poolCommunes[poolName] = [];
+
+			if ($.inArray(communeName, poolCommunes[poolName]) == -1)
+				poolCommunes[poolName].push(communeName);
+
+			if (!poolTownships[poolName])
+				poolTownships[poolName] = [];
+
+			if ($.inArray(townshipsName, poolTownships[poolName]) == -1)
+				poolTownships[poolName].push(townshipsName.toUpperCase());
 		}
 
-		return { dep: poolDep, region: poolRegion, pools: pools };
+		return { dep: poolDep, region: poolRegion, communes: poolCommunes, townships: poolTownships, pools: pools };
 	};
 
 	App.refreshSidebar = function (data, currentDate) {
@@ -491,8 +559,8 @@ var App = (function () {
 			}
 		});
 		var $stat = $('#statistics').html('').append($('<p>', {
-			text: 'Please click on an answer bar to see data.',
-			style: 'margin: 10px 120px;'
+			text: 'Please click on an answer bar to see data',
+			style: 'margin: 10px 120px; font-size: 9pt;'
 		}));
 		var colors = {
 			1: 'green',
@@ -571,6 +639,8 @@ var App = (function () {
 		$.getJSON('./scripts/regions.json').done(function (senegal) {
 			var departments = {};
 			var regions = {};
+			var communes = {};
+			var townships = {};
 			senegal.Regions.forEach(function (region) {
 
 				var regionName = _this.datasetProvinceNames[region.Id];
@@ -589,11 +659,32 @@ var App = (function () {
 					else {
 						console.log(department.Id, 'is not found in databaseDepartmentNames');
 					}
+
+					department.Regions.forEach(function (commune) {
+						var comName = commune.Name.toLowerCase();
+						if (comName != null) {
+							communes[comName] = commune;
+						}
+						else {
+							console.log(commune.Id, 'is not found');
+						}
+
+						commune.Regions.forEach(function (township) {
+							var townshipName = township.Name.toLowerCase();
+
+							if (townshipName != null) {
+								townships[townshipName] = township;
+							}
+							else {
+								console.log(township.Id, 'is not found');
+							}
+						});
+					});
 				});
 			});
 
 			_this.getPopulationData().done(function (populationData) {
-				def.resolve(regions, departments, populationData);
+				def.resolve(regions, departments, communes, townships, populationData);
 			});
 		});
 		return def;
@@ -795,6 +886,16 @@ var App = (function () {
 		'SN-TC': 'tambacounda',
 		'SN-TH': 'thies',
 		'SN-ZG': 'ziguinchor',
+	};
+
+	App.franchToEnglishNames = {
+		'Thiès': 'Thies',
+		'Malème Hodar': 'Malem Hoddar',
+		'Mbour': 'M\'bour',
+		'Birkilane': 'Birkelane',
+		'Goudomp': 'Goudoump',
+		'Médina Yoro Foula': 'Médina Yoro Foulah',
+
 	};
 
 	return App;
