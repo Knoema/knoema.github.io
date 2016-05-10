@@ -192,7 +192,7 @@ var App = (function () {
 						if (!popMarkerInfo[rName] &&_this.franchToEnglishNames[rName])
 							rName = _this.franchToEnglishNames[rName];
 
-						if (popMarkerInfo[rName] /*&& $.inArray(rName, selectedRegions) != -1*/) {
+						if (popMarkerInfo[rName] && $.inArray(rName, selectedRegions) != -1) {
 							feature.setProperty('regionName', rName);
 							return {
 								fillColor: _this.percentToRGB(100 * (1 - popMarkerInfo[rName] / max)),
@@ -296,7 +296,7 @@ var App = (function () {
 
 							var fName = feature.getProperty('name');
 							var regionMarker = markersByRegionId[feature.getId()] || markersByRegionName[fName];
-							if (regionMarker != null/* && $.inArray(fName, selectedRegions) != -1*/) {
+							if (regionMarker != null && $.inArray(fName, selectedRegions) != -1) {
 								var percent = regionMarker._percent;
 								var regionName = regionMarker._departmentName;
 								feature.setProperty('regionName', regionName);
