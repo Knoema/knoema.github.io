@@ -313,7 +313,27 @@
             $('#side-bar').append(createFilterSectionMarkup(facilityType[0]));
             $('#side-bar').append(createFilterSectionMarkup(location[0]));
             $('#side-bar').append(createFilterSectionMarkup(sector[0]));
-            $('#side-bar').append(createFilterSectionMarkup(ncd[0]));
+
+            var ncdData = ncd[0];
+            _.each(ncdData.items, function(item) {
+                switch(item.name) {
+                    case 'Red':
+                        item.displayName = '0-2';
+                        break;
+                    case 'Yellow':
+                        item.displayName = '3-4';
+                        break;
+                    case 'Green':
+                        item.displayName = '5-8';
+                        break;
+                }
+            });
+
+            ncdData.items = _.sortBy(ncdData.items, function(item) {
+                return item.displayName;
+            });
+
+            $('#side-bar').append(createFilterSectionMarkup(ncdData));
 
             $('#side-bar').append($.tmpl('side-bar-radio-section.html'));
 

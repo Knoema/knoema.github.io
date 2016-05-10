@@ -8,7 +8,8 @@
     {{each(i, item) items}}
         <div class="checkbox">
             <label>
-                <input type="checkbox" data-dimension="${header}" value="${item.name}" checked> <span class="${item.name}">{{if className == 'ncd-sara-composite-score'}}⚫{{/if}}</span> ${item.name}
+                <input type="checkbox" data-dimension="${header}" value="${item.name}" checked> <span class="${item.name}">{{if className == 'ncd-sara-composite-score'}}⚫{{/if}}</span>
+                ${typeof item.displayName === 'undefined' ? item.name : item.displayName}
             </label>
         </div>
     {{/each}}
