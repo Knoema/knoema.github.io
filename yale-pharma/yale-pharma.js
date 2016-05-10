@@ -329,9 +329,9 @@
                 }
             });
 
-            ncdData.items = _.sortBy(ncdData.items, function(item) {
+            ncdData.items = _.reverse(_.sortBy(ncdData.items, function(item) {
                 return item.displayName;
-            });
+            }));
 
             $('#side-bar').append(createFilterSectionMarkup(ncdData));
 
