@@ -318,13 +318,13 @@
             _.each(ncdData.items, function(item) {
                 switch(item.name) {
                     case 'Red':
-                        item.displayName = '0-2';
+                        item.displayName = '0 - 2';
                         break;
                     case 'Yellow':
-                        item.displayName = '3-4';
+                        item.displayName = '3 - 4';
                         break;
                     case 'Green':
-                        item.displayName = '5-8';
+                        item.displayName = '5 - 8';
                         break;
                 }
             });
