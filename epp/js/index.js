@@ -78,7 +78,7 @@ Application.prototype.bindEvents = function () {
             var $iframe = $dashboard.find('iframe');
             $iframe.attr('src', '');
             $dashboard.show();
-            $iframe.attr('src', 'http://electricitypowerplants.knoema.com/resource/embed/' + dashboardId + '?noHeader=1');
+            $iframe.attr('src', '//electricitypowerplants.knoema.com/resource/embed/' + dashboardId + '?noHeader=1');
         }
         else {
             $dashboard.hide();
@@ -190,7 +190,7 @@ Application.prototype.initCountrySelector = function(){
         clickable: false
     });
     
-    var url = 'http://knoema.com/api/1.0/meta/dataset/' + self.datasetId + '/dimension/country';
+    var url = '//knoema.com/api/1.0/meta/dataset/' + self.datasetId + '/dimension/country';
 
     Knoema.Helpers.get(url, function(response) {
         if (response && response.items && response.items.length) {
