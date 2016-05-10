@@ -33,7 +33,7 @@
 
         google.maps.event.addListenerOnce(this.map, 'idle', function () {
             var idleTimeout = window.setTimeout(function () {
-                var url = 'http://knoema.com/api/1.0/frontend/resource/' + self.geoPlaygroundId + '/content';
+                var url = '//knoema.com/api/1.0/frontend/resource/' + self.geoPlaygroundId + '/content';
                 Knoema.Helpers.get(url, function(content) {
                     for (var layerId in content.layers) {
                         self.loadLayer(layerId);
@@ -78,7 +78,7 @@
             }
         });
 
-        Knoema.Helpers.get('http://yale.knoema.com/api/1.0/meta/dataset/zoxdoob/dimension/measure', function(measureDimension) {
+        Knoema.Helpers.get('//yale.knoema.com/api/1.0/meta/dataset/zoxdoob/dimension/measure', function(measureDimension) {
             var medicineList = [
                 {
                     disease: 'Diabets',
@@ -304,9 +304,9 @@
                 theme: "dark"
             });
         });
-        // http://yale.knoema.com/api/1.0/meta/dataset/zoxdoob/dimension/name-of-facility
-        // http://yale.knoema.com/api/1.0/meta/dataset/zoxdoob/dimension/location-of-facility
-        // http://yale.knoema.com/api/1.0/meta/dataset/zoxdoob/dimension/measure
+        // //yale.knoema.com/api/1.0/meta/dataset/zoxdoob/dimension/name-of-facility
+        // //yale.knoema.com/api/1.0/meta/dataset/zoxdoob/dimension/location-of-facility
+        // //yale.knoema.com/api/1.0/meta/dataset/zoxdoob/dimension/measure
     };
 
     app.prototype.get = function (url) {
