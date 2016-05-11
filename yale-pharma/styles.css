@@ -8,12 +8,15 @@ body {
 
 header {
     background-color: #1b3768;
+    background-image: url('img/logo_full.png');
+    background-repeat: no-repeat;
+    background-position: 40% center;
+    background-size: contain;
 }
 
-div[class*="logo_"] {
+div[class*="logo_"], .divider {
     display: inline-block;
     background-repeat: no-repeat;
-    background-position: center;
     height: 80px;
     margin-left: 20px;
     background-size: contain;
@@ -23,20 +26,40 @@ div[class*="logo_"] {
     background-image: url('img/logo_uincd.png');
     width: 57px;
     height: 58px;
+    background-position: 0 14px;
 }
 
 .logo_yp-cdn {
     background-image: url('img/logo_yp-cdn.png');
     width: 44px;
     height: 44px;
+    background-position: 0 20px;
+}
+
+.logo_yale {
+    background-image: url('img/logo_yale.png');
+    width: 289px;
+    height: 22px;
+    background-position: 0 27px;
+}
+.divider {
+    background-image: url('img/divider.png');
+    width: 1px;
+    height: 80px;
+    background-position: 0 24px;
 }
 
 .logo_knoema {
     background-image: url('img/logo_knoema.png');
     width: 129px;
     height: 20px;
+    background-position: 0 32px;
 }
 
+.logos-container {
+    display: inline-block;
+    margin-left: 15%;
+}
 
 .main-menu {
     padding-right: 15px;
@@ -124,6 +147,15 @@ only screen and (                min-resolution: 2dppx) {
     }
     .notice {
         background-image: url('img/ico-notice-x2.png');
+    }
+    .logo_yale {
+        background-image: url('img/logo_yale-x2.png');
+    }
+    .divider {
+        background-image: url('img/divider-x2.png');
+    }
+    header {
+        background-image: url('img/logo_full-x2.png');
     }
 }
 
