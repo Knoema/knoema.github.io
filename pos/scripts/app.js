@@ -135,9 +135,9 @@ var App = (function () {
 						popMarkers = [];
 					}
 
-					var valIndex = 8;
-					var latIndex = 9;
-					var lngIndex = 10;
+					var valIndex = 9;
+					var latIndex = 10;
+					var lngIndex = 11;
 
 					var regions;
 					var regionColumnIndex;
@@ -161,7 +161,7 @@ var App = (function () {
 					}
 					else if ($('#optionTownships').is(':checked')) {
 						isTwnshp = true;
-						regionColumnIndex = 7;
+						regionColumnIndex = 8;
 						regions = townships;
 						selectedRegions = _this.getSelectedRegions(poolsStructure.townships);
 					}
@@ -422,8 +422,8 @@ var App = (function () {
 		var regionIndex = 1;
 		var depIndex = 3;
 		var communeIndex = 5;
-		var townshipsIndex = 7;
-		var poolIndex = 11;
+		var townshipsIndex = 8;
+		var poolIndex = 12;
 		var poolDep = {};
 		var poolRegion = {};
 		var poolCommunes = {};
@@ -611,13 +611,13 @@ var App = (function () {
 	App.getPopulationData = function () {
 		var self = this;
 		var def = $.Deferred();
-		var datasetId = 'uyppukg';
+		var datasetId = 'srovvqd';
 		$.post('http://knoema.com/api/1.0/data/details?page_id=' + datasetId + '&access_token=' + access_token, {
 			"Header": [],
 			"Stub": [],
 			"Filter": [{
 				"DimensionId": "measure",
-				"Members": ['4996610'],
+				"Members": ['5042180'],
 				"DimensionName": "measure",
 				"DatasetId": datasetId,
 				"Order": "0",
