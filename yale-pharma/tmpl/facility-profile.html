@@ -11,7 +11,7 @@
                 <img src="img/facility.png" alt="${data['Name of facility']}" class="img-thumbnail pull-left facility-img" />
             </div>
             <div class="col-xs-10">
-
+                <!--<pre>{JSON.stringify(data, null, 2)}</pre>-->
                 <dl class="dl-horizontal facility-general-info">
                     <dt>Facility name:</dt>
                     <dd>${data['Name of facility']}</dd>
@@ -21,6 +21,9 @@
 
                     <dt>Location:</dt>
                     <dd>${data['Location of facility']}</dd>
+
+                    <dt>Area:</dt>
+                    <dd>${data['Location']}</dd>
 
                     <dt>Sector:</dt>
                     <dd>${data['Sector']}</dd>
