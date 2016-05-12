@@ -11,15 +11,32 @@
                 <img src="img/facility.png" alt="${data['Name of facility']}" class="img-thumbnail pull-left facility-img" />
             </div>
             <div class="col-xs-10">
+
                 <dl class="dl-horizontal facility-general-info">
-                    <dt>Name:</dt>
+                    <dt>Facility name:</dt>
                     <dd>${data['Name of facility']}</dd>
+
+                    <dt>Facility type:</dt>
+                    <dd>${data['Facility type']}</dd>
 
                     <dt>Location:</dt>
                     <dd>${data['Location of facility']}</dd>
 
-                    <dt>Ownership:</dt>
-                    <dd>Private</dd>
+                    <dt>Sector:</dt>
+                    <dd>${data['Sector']}</dd>
+
+                    <dt>NCD-SARA:</dt>
+                    <dd>
+                        {{if data['NCD-SARA Composite Score'] == 'Green'}}
+                            5 - 8
+                        {{/if}}
+                        {{if data['NCD-SARA Composite Score'] == 'Yellow'}}
+                            3 - 4
+                        {{/if}}
+                        {{if data['NCD-SARA Composite Score'] == 'Red'}}
+                            0 - 2
+                        {{/if}}
+                    </dd>
 
                     <dt>Nearest hospital:</dt>
                     <dd>${distance}</dd>
@@ -28,7 +45,7 @@
         </div>
         <div class="row available-drugs">
             <div class="col-xs-12">
-                <h5>Typically available inventory</h5>
+                <h5>Available NCD essential medicine inventory</h5>
                 <div class="row">
                     <div class="col-xs-12">
                         <hr />

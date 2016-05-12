@@ -2,6 +2,7 @@
 
     var app = function () {
         this.topBarHeight = 80;
+        this.timelineHeight = 60;
         this.map = null;
         this.geoPlaygroundId = 'rdedwfb';
         this.layers = {};
@@ -38,8 +39,22 @@
         var self = this;
         $(window).on('resize', $.proxy(this.onResize, this));
 
+        $('#map-canvas').height($(window).height() - this.topBarHeight - this.timelineHeight);
+        $('#timeline').css({
+            visibility: 'visible'
+        });
+        
+
         this.loadTemplates(function() {
             self.initSideBar();
+        });
+
+        $('#timeline').find('.scroll-content').mCustomScrollbar({
+            theme: "dark",
+            axis:"x",
+            advanced:{
+                autoExpandHorizontalScroll:true
+            }
         });
 
         this.map = new google.maps.Map(document.getElementById('map-canvas'), {
@@ -101,7 +116,7 @@
         $.get('//yale.knoema.com/api/1.0/meta/dataset/zoxdoob/dimension/measure', function(measureDimension) {
             var medicineList = [
                 {
-                    disease: 'Diabets',
+                    disease: 'Diabetes',
                     drugs: [
                         "Metformin, cap/tab",
                         "Insulin, injection",
@@ -298,7 +313,8 @@
                 className: data.id,
                 header: data.name,
                 items: data.items,
-                tooltipContent: tooltipContent
+                tooltipContent: tooltipContent,
+                datasetUrl: '//yale.knoema.com/zoxdoob/sara-uganda-2013-selected-data'
             });
         }
 
@@ -355,9 +371,27 @@
         var newHeight = $(window).height() - 7;
         var sideBarHeight = newHeight - this.topBarHeight - 20;
 
+        var mapCanvasWidth = $('#map-canvas').width() - 80;
+
         $('#side-bar').css({
             'height': sideBarHeight,
             'min-height': sideBarHeight
+        });
+
+        var timepointWidth = (mapCanvasWidth - 10) / 12;//12 - count of time members
+        $('#timeline').find('.timepoint').css({
+            width: timepointWidth
+        });
+
+        //TODO If scrollbar is not visible increase height of the map
+        if (!$('#timeline').find('.mCSB_scrollTools').is(':visible')) {
+            //Move timeline to bottom (~10-20px)
+        }
+
+        $('#timeline').find('.scroll-content').css({
+            //'background-color': 'goldenrod',
+            'width': mapCanvasWidth,
+            'max-width': mapCanvasWidth
         });
 
         $('#prices-comparison-tool').css({
@@ -365,7 +399,7 @@
             'min-height': sideBarHeight + 20
         });
 
-        $('#map-canvas').height(newHeight - this.topBarHeight);
+        $('#map-canvas').height(newHeight - this.topBarHeight - this.timelineHeight);
     };
 
     app.prototype.loadTemplates = function (callback) {

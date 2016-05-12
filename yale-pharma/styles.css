@@ -11,10 +11,10 @@ header {
     background-image: url('img/logo_full.png');
     background-repeat: no-repeat;
     background-position: 40% center;
-    background-size: contain;
+    line-height: 0;
 }
 
-div[class*="logo_"], .divider {
+[class*="logo_"], .divider {
     display: inline-block;
     background-repeat: no-repeat;
     height: 80px;
@@ -25,14 +25,14 @@ div[class*="logo_"], .divider {
 .logo_uincd {
     background-image: url('img/logo_uincd.png');
     width: 57px;
-    height: 58px;
-    background-position: 0 14px;
+    /*height: 58px;*/
+    background-position: 0 10px;
 }
 
 .logo_yp-cdn {
     background-image: url('img/logo_yp-cdn.png');
     width: 44px;
-    height: 44px;
+    /*height: 44px;*/
     background-position: 0 20px;
 }
 
@@ -76,6 +76,10 @@ div[class*="logo_"], .divider {
     color: white;
     text-decoration: none;
 }
+.main-menu a:focus {
+    outline: none;
+    text-decoration: none;
+}
 
 .main-menu a.active {
     color: white;
@@ -85,10 +89,6 @@ div[class*="logo_"], .divider {
 #side-bar {
     /*background-color: #c2d6e9;*/
     margin: 10px -10px 10px 0;
-}
-
-#timeline {
-    display: none;
 }
 
 #map-canvas {
@@ -112,11 +112,9 @@ div[class*="logo_"], .divider {
     font-size: 12px;
 }
 
-#search-input {
-    background-image: url('img/btn-search.png');
-    background-position: 99% center;
-    background-repeat: no-repeat;
-}
+/*#search-input::-ms-clear {*/
+    /*display: none;*/
+/*}*/
 
 .notice {
     background-image: url('img/ico-notice.png');
@@ -141,10 +139,10 @@ only screen and (                min-resolution: 2dppx) {
     .logo_knoema {
         background-image: url('img/logo_knoema-x2.png');
     }
-    #search-input {
-        background-image: url('img/btn-search-x2.png');
-        background-size: 20px;
-    }
+    /*#search-input {*/
+        /*background-image: url('img/btn-search-x2.png');*/
+        /*background-size: 20px;*/
+    /*}*/
     .notice {
         background-image: url('img/ico-notice-x2.png');
     }
@@ -361,4 +359,111 @@ only screen and (                min-resolution: 2dppx) {
     text-align: left;
     color: #7195b6;
     font-weight: normal;
+}
+
+
+.checkbox {
+    cursor: pointer;
+    padding: 4px;
+}
+
+.checkbox:hover {
+    background-color: #d4e2f0;
+}
+
+.checkbox label {
+    display: inline-block;
+    width: 90%;
+}
+
+.checkbox .source-link {
+    color: #1b3768;
+    position: absolute;
+    right: 4px;
+    visibility: hidden;
+}
+
+.checkbox:hover .source-link {
+    visibility: visible;
+}
+
+.checkbox:hover .source-link:hover {
+    color: #5779b6;
+}
+
+.checkbox:hover .source-link:focus {
+    outline: none;
+}
+
+
+.relative-prevalence-rate {
+    margin-left: 15px;
+}
+
+#timeline {
+    height: 60px;
+    width: 100%;
+    margin: 0 -15px;
+    visibility: hidden;
+    position: absolute;
+    bottom: -60px;
+    background-color: #C8D2E6;
+}
+
+#timeline a {
+    display: table-cell;
+    text-align: center;
+    height:      30px;
+    line-height: 30px;
+    text-decoration: none;
+    margin: 0 -3px;
+    vertical-align: middle;
+    white-space: nowrap;
+}
+
+#timeline a.play-button {
+    color: white;
+    background-color: transparent;
+    padding: 0 15px;
+    display: table-cell;
+    font-size: 200%;
+    color: #1b3768;
+    vertical-align: top;
+    padding-top: 10px;
+}
+
+#timeline a.play-button:hover {
+    background-color: transparent;
+    color: #415E92;
+}
+
+#timeline a.timepoint {
+    background-color: #1b3768;
+    color: white;
+    padding: 0 7px;
+}
+
+#timeline a:hover {
+    background-color: #415E92;
+}
+
+#timeline a.active {
+    background-color: #415E92;
+    color: white;
+}
+
+#timeline .time-members {
+    display: table-cell;
+    /*background-color: gold;*/
+    /*max-width: 100px;*/
+    /*width:     100px;*/
+}
+
+#timeline .time-members .scroll-content {
+    height: 50px;
+    width: auto;
+    max-width: 10%;
+    display: inline-block;
+    vertical-align: bottom;
+    margin-top: 10px;
 }
