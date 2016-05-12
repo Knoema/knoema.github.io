@@ -11,6 +11,7 @@ header {
     background-image: url('img/logo_full.png');
     background-repeat: no-repeat;
     background-position: 40% center;
+    background-size: contain;
     line-height: 0;
 }
 
@@ -364,12 +365,11 @@ only screen and (                min-resolution: 2dppx) {
 
 .checkbox {
     cursor: pointer;
-    padding: 4px;
 }
 
-.checkbox:hover {
-    background-color: #d4e2f0;
-}
+/*.checkbox:hover {*/
+    /*background-color: #d4e2f0;*/
+/*}*/
 
 .checkbox label {
     display: inline-block;
