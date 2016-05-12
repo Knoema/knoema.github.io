@@ -894,8 +894,7 @@ var App = (function () {
 		'Mbour': 'M\'bour',
 		'Birkilane': 'Birkelane',
 		'Goudomp': 'Goudoump',
-		'Médina Yoro Foula': 'Médina Yoro Foulah',
-
+		'Médina Yoro Foula': 'Médina Yoro Foulah'
 	};
 
 	return App;
