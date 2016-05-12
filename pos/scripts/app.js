@@ -135,33 +135,31 @@ var App = (function () {
 						popMarkers = [];
 					}
 
-					var valIndex = 9;
-					var latIndex = 10;
-					var lngIndex = 11;
+					var valIndex = 12;
+					var latIndex = 13;
+					var lngIndex = 14;
 
 					var regions;
 					var regionColumnIndex;
 					var selectedRegions;
 
-					var isTwnshp = false;
 					if ($('#optionProvinces').is(':checked')) {
-						regionColumnIndex = 1;
+						regionColumnIndex = 2;
 						regions = provinces;
 						selectedRegions = _this.getSelectedRegions(poolsStructure.region);
 					}
 					else if ($('#optionDepartments').is(':checked')) {
-						regionColumnIndex = 3;
+						regionColumnIndex = 5;
 						regions = departments;
 						selectedRegions = _this.getSelectedRegions(poolsStructure.dep);
 					}
 					else if ($('#optionCommunities').is(':checked')) {
-						regionColumnIndex = 5;
+						regionColumnIndex = 8;
 						regions = communes;
 						selectedRegions = _this.getSelectedRegions(poolsStructure.communes);
 					}
 					else if ($('#optionTownships').is(':checked')) {
-						isTwnshp = true;
-						regionColumnIndex = 8;
+						regionColumnIndex = 11;
 						regions = townships;
 						selectedRegions = _this.getSelectedRegions(poolsStructure.townships);
 					}
@@ -174,8 +172,6 @@ var App = (function () {
 					for (var i = count; i < data.length; i += count) {
 						var value = data[i + valIndex];
 						var regionName = data[i + regionColumnIndex];
-						if (isTwnshp)
-							regionName = regionName.toUpperCase();
 
 						if (!popMarkerInfo[regionName])
 							popMarkerInfo[regionName] = value;
@@ -187,15 +183,12 @@ var App = (function () {
 					}
 
 					map['data'].setStyle(function (feature) {
-						var rName = feature.getProperty('name');
+						var fId = feature.getId();
 
-						if (!popMarkerInfo[rName] &&_this.franchToEnglishNames[rName])
-							rName = _this.franchToEnglishNames[rName];
-
-						if (popMarkerInfo[rName] && $.inArray(rName, selectedRegions) != -1) {
-							feature.setProperty('regionName', rName);
+						if (popMarkerInfo[fId] && $.inArray(fId, selectedRegions) != -1) {
+							feature.setProperty('regionName', feature.getProperty('name'));
 							return {
-								fillColor: _this.percentToRGB(100 * (1 - popMarkerInfo[rName] / max)),
+								fillColor: _this.percentToRGB(100 * (1 - popMarkerInfo[fId] / max)),
 								strokeWeight: 1
 							};
 						}
@@ -255,70 +248,59 @@ var App = (function () {
 
 					var isTwnshp = false;
 					if ($('#optionProvinces').is(':checked')) {
-						regionColumnIndex = 2;
+						regionColumnIndex = 33;
 						regions = provinces;
 						selectedRegions = _this.getSelectedRegions(poolsStructure.region);
 					}
 					else if ($('#optionDepartments').is(':checked')) {
-						regionColumnIndex = 3;
+						regionColumnIndex = 34;
 						regions = departments;
 						selectedRegions = _this.getSelectedRegions(poolsStructure.dep);
 					}
 					else if ($('#optionCommunities').is(':checked')) {
-						regionColumnIndex = 4;
+						regionColumnIndex = 35;
 						regions = communes;
 						selectedRegions = _this.getSelectedRegions(poolsStructure.communes);
 					}
 					else if ($('#optionTownships').is(':checked')) {
-						isTwnshp = true;
-						regionColumnIndex = 5;
+						regionColumnIndex = 32;
 						regions = townships;
 						selectedRegions = _this.getSelectedRegions(poolsStructure.townships);
 					}
 
 
-					if (currentAnswers == null) {
+					if (currentAnswers == null)
 						markers = _this.showQuestionStat(map, currentColumnIndex, data, currentDate, regions, regionColumnIndex);
-					}
-					else {
+					else
 						markers = _this.showAnswerStat(map, currentColumnIndex, currentAnswers, data, currentDate, regions, regionColumnIndex);
-					}
-					if ($('#optionBubbles').is(':checked')) {
-						map['data'].forEach(function (feature) { return map['data'].revertStyle(feature); });
-						markers.forEach(function (m) { return m.setMap(map); });
-					}
-					else {
-						var markersByRegionId = {};
-						markers.forEach(function (m) { return markersByRegionId[m['_regionId']] = m; });
-						var markersByRegionName = {};
-						markers.forEach(function (m) { return markersByRegionName[m['_departmentName']] = m; });
-						map['data'].setStyle(function (feature) {
 
-							var fName = feature.getProperty('name');
-							var regionMarker = markersByRegionId[feature.getId()] || markersByRegionName[fName];
-							if (regionMarker != null && $.inArray(fName, selectedRegions) != -1) {
-								var percent = regionMarker._percent;
-								var regionName = regionMarker._departmentName;
-								feature.setProperty('regionName', regionName);
-								if (percent != null) {
-									return {
-										fillColor: _this.percentToRGB(percent * 100),
-										strokeWeight: 1
-									};
-								} else {
-									return {
-										visible: false,
-										strokeWeight: 0
-									}
-								}
+					var markersByRegionId = {};
+					markers.forEach(function (m) { return markersByRegionId[m['_regionId']] = m; });
+					map['data'].setStyle(function (feature) {
+						var fId = feature.getId();
+						var regionMarker = markersByRegionId[fId];
+						if (regionMarker != null && $.inArray(fId, selectedRegions) != -1) {
+							var percent = regionMarker._percent;
+							feature.setProperty('regionName', feature.getProperty('name'));
+							if (percent != null) {
+								return {
+									fillColor: _this.percentToRGB(percent * 100),
+									strokeWeight: 1
+								};
 							} else {
 								return {
 									visible: false,
 									strokeWeight: 0
 								}
 							}
-						});
-					}
+						} else {
+							return {
+								visible: false,
+								strokeWeight: 0
+							}
+						}
+					});
+
 					markers.forEach(function (m) {
 						return google.maps.event.addListener(m, 'click', function (event) {
 							if ($('#optionDepartments').is(':checked')) {
@@ -419,19 +401,16 @@ var App = (function () {
 		var count = populationData.columns.length;
 		var data = populationData.data;
 
-		var regionIndex = 1;
-		var depIndex = 3;
-		var communeIndex = 5;
-		var townshipsIndex = 8;
-		var poolIndex = 12;
+		var regionIndex = 2;
+		var depIndex = 5;
+		var communeIndex = 8;
+		var townshipsIndex = 11;
+		var poolIndex = 15;
 		var poolDep = {};
 		var poolRegion = {};
 		var poolCommunes = {};
 		var poolTownships = {};
 		var pools = [];
-
-		//var unicRegion = [];
-		//var unicDep = [];
 
 		for (var i = count; i < data.length; i += count) {
 
@@ -446,18 +425,6 @@ var App = (function () {
 
 			if ($.inArray(poolName, pools) == -1)
 				pools.push(poolName);
-
-
-			//if ($.inArray(regionName, unicRegion) == -1) {
-			//	unicRegion.push(regionName);
-			//	console.log('r: ' + regionName);
-			//}
-
-			//if ($.inArray(depName, unicDep) == -1) {
-			//	unicDep.push(depName);
-			//	console.log('d: ' + depName);
-			//}
-
 
 			if (!poolDep[poolName])
 				poolDep[poolName] = [];
@@ -611,7 +578,7 @@ var App = (function () {
 	App.getPopulationData = function () {
 		var self = this;
 		var def = $.Deferred();
-		var datasetId = 'srovvqd';
+		var datasetId = 'fqxbqre';
 		$.post('http://knoema.com/api/1.0/data/details?page_id=' + datasetId + '&access_token=' + access_token, {
 			"Header": [],
 			"Stub": [],
@@ -637,47 +604,21 @@ var App = (function () {
 		var _this = this;
 		var def = $.Deferred();
 		$.getJSON('./scripts/regions.json').done(function (senegal) {
-			var departments = {};
 			var regions = {};
+			var departments = {};
 			var communes = {};
 			var townships = {};
 			senegal.Regions.forEach(function (region) {
-
-				var regionName = _this.datasetProvinceNames[region.Id];
-				if (regionName != null) {
-					regions[regionName] = region;
-				}
-				else {
-					console.log(department.Id, 'is not found in datasetProvinceNames');
-				}
+				regions[region.Id] = region;
 
 				region.Regions.forEach(function (department) {
-					var depName = _this.datasetDepartmentNames[department.Id];
-					if (depName != null) {
-						departments[depName] = department;
-					}
-					else {
-						console.log(department.Id, 'is not found in databaseDepartmentNames');
-					}
+					departments[department.Id] = department;
 
 					department.Regions.forEach(function (commune) {
-						var comName = commune.Name.toLowerCase();
-						if (comName != null) {
-							communes[comName] = commune;
-						}
-						else {
-							console.log(commune.Id, 'is not found');
-						}
+						communes[commune.Id] = commune;
 
 						commune.Regions.forEach(function (township) {
-							var townshipName = township.Name.toLowerCase();
-
-							if (townshipName != null) {
-								townships[townshipName] = township;
-							}
-							else {
-								console.log(township.Id, 'is not found');
-							}
+							townships[township.Id] = township;
 						});
 					});
 				});
@@ -724,7 +665,7 @@ var App = (function () {
 						strokeWeight: 1,
 						scale: 5 + depStat[depName] / max * 30,
 					},
-					_departmentName: depName //$('#optionDepartments').is(':checked') ? depName : null
+					_departmentName: depName
 				});
 				markers.push(marker);
 			}
@@ -765,9 +706,9 @@ var App = (function () {
 		}
 		var markers = [];
 		for (var depName in depStat) {
-			var lowerDepName = depName.toLowerCase();
-			if (lowerDepName in departments) {
-				var department = departments[lowerDepName];
+
+			if (depName in departments) {
+				var department = departments[depName];
 				var marker = new google.maps.Marker({
 					position: new google.maps.LatLng(department.Latitude, department.Longitude),
 					icon: {
@@ -780,9 +721,8 @@ var App = (function () {
 					},
 					_percent: depAnswerStat[depName] / depStat[depName],
 					_regionId: department.Id,
-					_departmentName: depName // $('#optionDepartments').is(':checked') ? depName : null
+					_departmentName: depName
 				});
-				//console.log(marker['marker'], marker['_percent']);
 				markers.push(marker);
 			}
 			else {
@@ -792,19 +732,6 @@ var App = (function () {
 		return markers;
 	};
 	App.datasetColumnNames = {
-		//'HowYouVote': 'Comment avez-vous vote pour ce referendum ?',
-		//'ChangedYourMind': 'Avez-vous considere vote autrement dans un premier temps ?',
-		//'YourReason': 'Quelle raison principale a motive votre choix ?',
-		//'Sex': 'Etes-vous',
-		//'Education': 'Quel est votre niveau d’education ?',
-		//'Occupation': 'Quelle est votre situation professionnelle ?',
-		//'YouLikePresident': 'Comment evaluez-vous le travail du president macky sall depuis 2012 ?',
-		//'Age': 'Quel est votre groupe d’age ?',
-		//'CountryDirection': 'Pensez-vous que le pays va vers la bonne direction ?',
-		//'Religion': 'Quelle est votre affiliation religieuse ?',
-		//'Ethnos': 'Quel est votre groupe ethnique ?',
-		//'Politics': 'Pour qui avez-vous vote en 2012 ?',
-
 		'PastElections': 'QUELLE EST LA DERNIERE ELECTION A LAQUELLE VOUS AVEZ PARTICIPE ?',
 		'CommuneVotedOrNot': 'SUR VOTRE CARTE D’ELECTEUR QUELLE EST VOTRE COMMUNE DE VOTE?',
 		'Sex': 'GENRE ?',
@@ -822,79 +749,6 @@ var App = (function () {
 		'Priority3': 'QUELLES SONT LES TROIS PRIORITES OÙ VOUS ATTENDEZ LE PRESIDENT ? #3:',
 		'Program': 'QUEL EST LE PROGRAMME DU PRESIDENT QUE VOUS APPRECIEZ LE PLUS ?',
 		'Participate': 'SERIEZ-VOUS INTERESSÉ A REPONDRE A DES QUESTIONS SUR LES AFFAIRES DU PAYS UNE FOIS PAR MOIS PAR TELEPHONE OU CONTACT DIRECT ?',
-	};
-	App.datasetDepartmentNames = {
-		'SN-DK-DD': 'dakar',
-		'SN-DK-GU': 'guediawaye',
-		'SN-DK-PI': 'pikine',
-		'SN-DK-RU': 'rufisque',
-		'SN-DB-BA': 'bambey',
-		'SN-DB-MB': 'mbacke',
-		'SN-DB-DD': 'diourbel',
-		'SN-FK-FD': 'fatick',
-		'SN-FK-FO': 'foundiougne',
-		'SN-FK-GO': 'gossas',
-		'SN-KA-BI': 'birkelane',
-		'SN-KA-KA': 'kaffrine',
-		'SN-KA-KO': 'koungheul',
-		'SN-KA-MH': 'malem hoddar',
-		'SN-KL-GU': 'guinguineo',
-		'SN-KL-KA': 'kaolack',
-		'SN-KL-ND': 'nioro',
-		'SN-KD-KD': 'kolda',
-		'SN-KD-MY': 'medina yoro foulah',
-		'SN-KD-VE': 'velingara',
-		'SN-KE-KE': 'kedougou',
-		'SN-KE-SL': 'salemata',
-		'SN-KE-SA': 'saraya',
-		'SN-LG-KE': 'kebemer',
-		'SN-LG-LI': 'linguere',
-		'SN-LG-LD': 'louga',
-		'SN-MT-KA': 'kanel',
-		'SN-MT-MA': 'matam',
-		'SN-MT-RF': 'ranerou ferlo',
-		'SN-SE-BO': 'bounkiling',
-		'SN-SE-GO': 'goudomp',
-		'SN-SE-SD': 'sedhiou',
-		'SN-SL-DA': 'dagana',
-		'SN-SL-PO': 'podor',
-		'SN-SL-SD': 'saint louis',
-		'SN-TC-BA': 'bakel',
-		'SN-TC-GO': 'goudiry',
-		'SN-TC-KO': 'koumpentoum',
-		'SN-TC-TD': 'tambacounda',
-		'SN-TH-MB': 'mbour',
-		'SN-TH-TD': 'thies',
-		'SN-TH-TI': 'tivaouane',
-		'SN-ZG-BI': 'bignona',
-		'SN-ZG-OU': 'oussouye',
-		'SN-ZG-ZD': 'ziguinchor',
-	};
-
-	App.datasetProvinceNames = {
-		'SN-DK': 'dakar',
-		'SN-DB': 'diourbel',
-		'SN-FK': 'fatick',
-		'SN-KA': 'kaffrine',
-		'SN-KL': 'kaolack',
-		'SN-KE': 'kedougou',
-		'SN-KD': 'kolda',
-		'SN-LG': 'louga',
-		'SN-MT': 'matam',
-		'SN-SL': 'saint-louis',
-		'SN-SE': 'sedhiou',
-		'SN-TC': 'tambacounda',
-		'SN-TH': 'thies',
-		'SN-ZG': 'ziguinchor',
-	};
-
-	App.franchToEnglishNames = {
-		'Thiès': 'Thies',
-		'Malème Hodar': 'Malem Hoddar',
-		'Mbour': 'M\'bour',
-		'Birkilane': 'Birkelane',
-		'Goudomp': 'Goudoump',
-		'Médina Yoro Foula': 'Médina Yoro Foulah'
 	};
 
 	return App;
