@@ -225,7 +225,7 @@ var App = (function () {
 							if (popMarkerInfo[rId] < min)
 								min = popMarkerInfo[rId];
 						}
-						_this.setLegendValues((min / 1000).toFixed(2), '', (max / 1000).toFixed(2) + 'th', true);
+						_this.setLegendValues('0', '', (max / 1000).toFixed(1) + 'k', true);
 
 						map['data'].setStyle(function (feature) {
 							var fId = feature.getId();
