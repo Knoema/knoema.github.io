@@ -70,19 +70,23 @@ header {
     margin-left: 15%;
 }
 
+.main-menu-holder {
+    height: 40px;
+}
+
 .main-menu {
     padding-right: 15px;
 }
 
 .main-menu a {
-    color: #c2e6d9;
-    line-height: 80px;
+    color: #1b3768;
+    line-height: 40px;
     text-transform: uppercase;
     padding: 0 15px;
 }
 
 .main-menu a:hover {
-    color: white;
+    color: #5779b6;
     text-decoration: none;
 }
 .main-menu a:focus {
@@ -91,9 +95,10 @@ header {
 }
 
 .main-menu a.active {
-    color: white;
     font-weight: bolder;
 }
+
+
 
 #side-bar {
     /*background-color: #c2d6e9;*/

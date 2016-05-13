@@ -1,7 +1,7 @@
 (function () {
 
     var app = function () {
-        this.topBarHeight = 80;
+        this.topBarHeight = 80 + 40;//40 - height of .main-menu-holder
         this.timelineHeight = 60;
         this.map = null;
         this.geoPlaygroundId = 'rdedwfb';
@@ -383,7 +383,10 @@
         var newHeight = $(window).height() - 7;
         var sideBarHeight = newHeight - this.topBarHeight - 20;
 
-        var mapCanvasWidth = $('#map-canvas').width() - 80;
+        var $mapCanvas = $('#map-canvas');
+        var $timeline = $('#timeline');
+
+        var mapCanvasWidth = $mapCanvas.width() - 80;
 
         $('#side-bar').css({
             'height': sideBarHeight,
@@ -391,16 +394,16 @@
         });
 
         var timepointWidth = (mapCanvasWidth - 10) / 12;//12 - count of time members
-        $('#timeline').find('.timepoint').css({
+        $timeline.find('.timepoint').css({
             width: timepointWidth
         });
 
         //TODO If scrollbar is not visible increase height of the map
-        if (!$('#timeline').find('.mCSB_scrollTools').is(':visible')) {
+        if (!$timeline.find('.mCSB_scrollTools').is(':visible')) {
             //Move timeline to bottom (~10-20px)
         }
 
-        $('#timeline').find('.scroll-content').css({
+        $timeline.find('.scroll-content').css({
             //'background-color': 'goldenrod',
             'width': mapCanvasWidth,
             'max-width': mapCanvasWidth
@@ -411,7 +414,7 @@
             'min-height': sideBarHeight + 20
         });
 
-        $('#map-canvas').height(newHeight - this.topBarHeight - this.timelineHeight);
+        $mapCanvas.height(newHeight - this.topBarHeight - this.timelineHeight);
     };
 
     app.prototype.loadTemplates = function (callback) {
