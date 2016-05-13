@@ -42,7 +42,7 @@ var App = (function () {
 		$('#pools').selectpicker();
 
 		// read settings
-		['datasetId', 'host', 'dashSummary', 'dashDetails', 'dashRegionSummary', 'dashRegionDetails', 'dashCountrySummary', 'dashCountryDetails'].forEach(function (field) {
+		['datasetId', 'host', 'dashCountrySummary', 'dashCountryDetails', 'dashRegionSummary', 'dashRegionDetails', 'dashDepSummary', 'dashDepDetails', 'dashCommuneSummary', 'dashCommuneSummary', 'dashTownshipSummary', 'dashTownshipDetails'].forEach(function (field) {
 			_this[field] = $('#settings_' + field).val();
 		});
 		['skipFirstColumns', 'departmentColumnIndex', 'provinceColumnIndex', 'dateColumnIndex'].forEach(function (field) {
@@ -70,6 +70,7 @@ var App = (function () {
 			zoom: 8,
 			center: { lat: 14.56624, lng: -14.47348 }
 		});
+
 		$('#showCountrySummary').on('click', function (event) {
 			if ($('#tab-country-summary iframe').length <= 0) {
 				var summaryUrl = 'http://knoema.com/resource/embed/' + _this.dashCountrySummary + '/?noHeader=1';
@@ -79,27 +80,54 @@ var App = (function () {
 			}
 			$('#countrySummaryPopup').show();
 		});
-		var showDepartmentPassposrt = function (depName) {
-			if (depName != null) {
-				var summaryUrl = 'http://knoema.com/resource/embed/' + _this.dashSummary + '/?noHeader=1&department=' + encodeURI(depName);
-				var detailsUrl = 'http://knoema.com/resource/embed/' + _this.dashDetails + '/?noHeader=1&department=' + encodeURI(depName);
-				$('#passportPopup .title').html(depName);
-				$('#tab-summary').html('<iframe src="' + summaryUrl + '">');
-				$('#tab-details').html('<iframe src="' + detailsUrl + '">');
-				$('#passportPopup').show();
-			}
-		};
-		var showProvincePassposrt = function (depName) {
-			if (depName != null) {
-				var summaryUrl = 'http://knoema.com/resource/embed/' + _this.dashRegionSummary + '/?noHeader=1&region=' + encodeURI(depName);
-				var detailsUrl = 'http://knoema.com/resource/embed/' + _this.dashRegionDetails + '/?noHeader=1&region=' + encodeURI(depName);
-				$('#passportPopup .title').html(depName);
-				$('#tab-summary').html('<iframe src="' + summaryUrl + '">');
-				$('#tab-details').html('<iframe src="' + detailsUrl + '">');
-				$('#passportPopup').show();
-			}
-		};
 
+		var showProvincePassposrt = function (regionName) {
+			if (regionName == null)
+				return;
+
+			var summaryUrl = 'http://knoema.com/resource/embed/' + _this.dashRegionSummary + '/?noHeader=1&region=' + encodeURI(regionName);
+			var detailsUrl = 'http://knoema.com/resource/embed/' + _this.dashRegionDetails + '/?noHeader=1&region=' + encodeURI(regionName);
+			$('#passportPopup .title').html(regionName);
+			$('#tab-summary').html('<iframe src="' + summaryUrl + '">');
+			$('#tab-details').html('<iframe src="' + detailsUrl + '">');
+			$('#passportPopup').show();
+		};
+		var showDepartmentPassposrt = function (regionName) {
+			if (regionName == null)
+				return;
+
+			var summaryUrl = 'http://knoema.com/resource/embed/' + _this.dashDepSummary + '/?noHeader=1';
+			var detailsUrl = 'http://knoema.com/resource/embed/' + _this.dashDepDetails + '/?noHeader=1&dvpgckc.dept=' + encodeURI(regionName) + '&nmlinf.dept=' + encodeURI(regionName) + '&eiaaxcf.dept=' + encodeURI(regionName);
+			$('#passportPopup .title').html(regionName);
+			$('#tab-summary').html('<iframe src="' + summaryUrl + '">');
+			$('#tab-details').html('<iframe src="' + detailsUrl + '">');
+			$('#passportPopup').show();
+		};
+		var showCommunePassposrt = function (regionName) {
+			return null;
+
+			if (regionName == null)
+				return;
+
+			var summaryUrl = 'http://knoema.com/resource/embed/' + _this.dashCommuneSummary + '/?noHeader=1&region=' + encodeURI(regionName);
+			var detailsUrl = 'http://knoema.com/resource/embed/' + _this.dashCommuneDetails + '/?noHeader=1&region=' + encodeURI(regionName);
+			$('#passportPopup .title').html(regionName);
+			$('#tab-summary').html('<iframe src="' + summaryUrl + '">');
+			$('#tab-details').html('<iframe src="' + detailsUrl + '">');
+			$('#passportPopup').show();
+		};
+		var showTownshipPassposrt = function (regionName) {
+			if (regionName == null)
+				return;
+
+			var summaryUrl = 'http://knoema.com/resource/embed/' + _this.dashTownshipSummary + '/?noHeader=1&dvpgckc.township=' + encodeURI(regionName) + '&nmlinf.township=' + encodeURI(regionName) + '&eiaaxcf.township=' + encodeURI(regionName);
+			var detailsUrl = 'http://knoema.com/resource/embed/' + _this.dashTownshipDetails + '/?noHeader=1&dvpgckc.township=' + encodeURI(regionName) + '&nmlinf.township=' + encodeURI(regionName) + '&eiaaxcf.township=' + encodeURI(regionName);
+			$('#passportPopup .title').html(regionName);
+			$('#tab-summary').html('<iframe src="' + summaryUrl + '">');
+			$('#tab-details').html('<iframe src="' + detailsUrl + '">');
+			$('#passportPopup').show();
+		};
+		
 		var loadMap = function (mapName) {
 
 			map['data'].forEach(function (feature) {
@@ -111,12 +139,14 @@ var App = (function () {
 		loadMap('provinces');
 
 		map['data'].addListener('click', function (event) {
-			if ($('#optionDepartments').is(':checked')) {
-				showDepartmentPassposrt(event.feature.getProperty('regionName'));
-			}
-			else {
+			if ($('#optionProvinces').is(':checked'))
 				showProvincePassposrt(event.feature.getProperty('regionName'));
-			}
+			else if ($('#optionDepartments').is(':checked'))
+				showDepartmentPassposrt(event.feature.getProperty('regionName'));
+			else if ($('#optionCommunities').is(':checked'))
+				showCommunePassposrt(event.feature.getProperty('regionName'));
+			else if ($('#optionTownships').is(':checked'))
+				showTownshipPassposrt(event.feature.getProperty('regionName'));
 		});
 		var markers;
 		var popMarkers = [];
@@ -303,12 +333,14 @@ var App = (function () {
 
 					markers.forEach(function (m) {
 						return google.maps.event.addListener(m, 'click', function (event) {
-							if ($('#optionDepartments').is(':checked')) {
-								showDepartmentPassposrt(this._departmentName);
-							}
-							else {
+							if ($('#optionProvinces').is(':checked'))
 								showProvincePassposrt(this._departmentName);
-							}
+							else if ($('#optionDepartments').is(':checked'))
+								showDepartmentPassposrt(this._departmentName);
+							else if ($('#optionCommunities').is(':checked'))
+								showCommunePassposrt(this._departmentName);
+							else if ($('#optionTownships').is(':checked'))
+								showTownshipPassposrt(this._departmentName);
 						});
 					});
 				};
