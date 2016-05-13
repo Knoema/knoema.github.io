@@ -16,7 +16,7 @@
 
     $.ajaxSetup({
         data: {
-            clientId: 'EZj54KGFo3rzIvnLczrElvAitEyU28DGw9R73tif'
+            client_id: 'EZj54KGFo3rzIvnLczrElvAitEyU28DGw9R73tif'
         }
     });
 
@@ -307,6 +307,18 @@
 
             if (data.id === 'facility-type') {
                 tooltipContent = $.tmpl('long-tooltip.html').html()//get(0).outerHTML;
+
+                var properOrder = [
+                    "HC II",
+                    "HC III",
+                    "HC IV",
+                    "General (district) hospital",
+                    "National or regional referral hospital"
+                ];
+
+                data.items = _.sortBy(data.items, function(item) {
+                    return _.indexOf(properOrder, item.name);
+                });
             }
 
             return $.tmpl('side-bar-checkbox-section.html', {
