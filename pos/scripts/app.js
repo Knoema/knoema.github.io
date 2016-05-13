@@ -42,7 +42,7 @@ var App = (function () {
 		$('#pools').selectpicker();
 
 		// read settings
-		['datasetId', 'host', 'dashCountrySummary', 'dashCountryDetails', 'dashRegionSummary', 'dashRegionDetails', 'dashDepSummary', 'dashDepDetails', 'dashCommuneSummary', 'dashCommuneSummary', 'dashTownshipSummary', 'dashTownshipDetails'].forEach(function (field) {
+		['datasetId', 'host', 'dashCountrySummary', 'dashCountryDetails', 'dashRegionSummary', 'dashRegionDetails', 'dashDepSummary', 'dashDepDetails', 'dashCommuneSummary', 'dashCommuneDetails', 'dashTownshipSummary', 'dashTownshipDetails'].forEach(function (field) {
 			_this[field] = $('#settings_' + field).val();
 		});
 		['skipFirstColumns', 'departmentColumnIndex', 'provinceColumnIndex', 'dateColumnIndex'].forEach(function (field) {
@@ -85,8 +85,8 @@ var App = (function () {
 			if (regionName == null)
 				return;
 
-			var summaryUrl = 'http://knoema.com/resource/embed/' + _this.dashRegionSummary + '/?noHeader=1&region=' + encodeURI(regionName);
-			var detailsUrl = 'http://knoema.com/resource/embed/' + _this.dashRegionDetails + '/?noHeader=1&region=' + encodeURI(regionName);
+			var summaryUrl = 'http://knoema.com/resource/embed/' + _this.dashRegionSummary + '/?noHeader=1&Region=' + encodeURI(regionName);
+			var detailsUrl = 'http://knoema.com/resource/embed/' + _this.dashRegionDetails + '/?noHeader=1&Region=' + encodeURI(regionName);
 			$('#passportPopup .title').html(regionName);
 			$('#tab-summary').html('<iframe src="' + summaryUrl + '">');
 			$('#tab-details').html('<iframe src="' + detailsUrl + '">');
@@ -96,21 +96,19 @@ var App = (function () {
 			if (regionName == null)
 				return;
 
-			var summaryUrl = 'http://knoema.com/resource/embed/' + _this.dashDepSummary + '/?noHeader=1';
-			var detailsUrl = 'http://knoema.com/resource/embed/' + _this.dashDepDetails + '/?noHeader=1&dvpgckc.dept=' + encodeURI(regionName) + '&nmlinf.dept=' + encodeURI(regionName) + '&eiaaxcf.dept=' + encodeURI(regionName);
+			var summaryUrl = 'http://knoema.com/resource/embed/' + _this.dashDepSummary + '/?noHeader=1&dvpgckc.dept=' + encodeURI(regionName) + '&nmlinf.dept=' + encodeURI(regionName) + '&eiaaxcf.dept=' + encodeURI(regionName);
+			var detailsUrl = 'http://knoema.com/resource/embed/' + _this.dashDepDetails + '/?noHeader=1';
 			$('#passportPopup .title').html(regionName);
 			$('#tab-summary').html('<iframe src="' + summaryUrl + '">');
 			$('#tab-details').html('<iframe src="' + detailsUrl + '">');
 			$('#passportPopup').show();
 		};
 		var showCommunePassposrt = function (regionName) {
-			return null;
-
 			if (regionName == null)
 				return;
 
-			var summaryUrl = 'http://knoema.com/resource/embed/' + _this.dashCommuneSummary + '/?noHeader=1&region=' + encodeURI(regionName);
-			var detailsUrl = 'http://knoema.com/resource/embed/' + _this.dashCommuneDetails + '/?noHeader=1&region=' + encodeURI(regionName);
+			var summaryUrl = 'http://knoema.com/resource/embed/' + _this.dashCommuneSummary + '/?noHeader=1&dvpgckc.commune=' + encodeURI(regionName) + '&nmlinf.township=' + encodeURI(regionName) + '&eiaaxcf.township=' + encodeURI(regionName);
+			var detailsUrl = 'http://knoema.com/resource/embed/' + _this.dashCommuneDetails + '/?noHeader=1&dvpgckc.commune=' + encodeURI(regionName) + '&nmlinf.township=' + encodeURI(regionName) + '&eiaaxcf.township=' + encodeURI(regionName);
 			$('#passportPopup .title').html(regionName);
 			$('#tab-summary').html('<iframe src="' + summaryUrl + '">');
 			$('#tab-details').html('<iframe src="' + detailsUrl + '">');
@@ -136,7 +134,6 @@ var App = (function () {
 
 			map['data'].loadGeoJson('./scripts/senegal-' + mapName + '.json');
 		};
-		loadMap('provinces');
 
 		map['data'].addListener('click', function (event) {
 			if ($('#optionProvinces').is(':checked'))
@@ -155,87 +152,104 @@ var App = (function () {
 
 			var poolsStructure = _this.getPoolsStructure(populationData);
 
-			{
-				var addPopMarkers = function () {
-					if ($('#optionQuestionnaire').is(':checked'))
-						return;
-
-					if (popMarkers.length > 0) {
-						popMarkers.forEach(function (marker) { return marker.setMap(null); });
-						popMarkers = [];
-					}
-
-					var valIndex = 12;
-					var latIndex = 13;
-					var lngIndex = 14;
-
-					var regions;
-					var regionColumnIndex;
-					var selectedRegions;
-
-					if ($('#optionProvinces').is(':checked')) {
-						regionColumnIndex = 2;
-						regions = provinces;
-						selectedRegions = _this.getSelectedRegions(poolsStructure.region);
-					}
-					else if ($('#optionDepartments').is(':checked')) {
-						regionColumnIndex = 5;
-						regions = departments;
-						selectedRegions = _this.getSelectedRegions(poolsStructure.dep);
-					}
-					else if ($('#optionCommunities').is(':checked')) {
-						regionColumnIndex = 8;
-						regions = communes;
-						selectedRegions = _this.getSelectedRegions(poolsStructure.communes);
-					}
-					else if ($('#optionTownships').is(':checked')) {
-						regionColumnIndex = 11;
-						regions = townships;
-						selectedRegions = _this.getSelectedRegions(poolsStructure.townships);
-					}
-
-					var count = populationData.columns.length;
-					var data = populationData.data;
-
-					var popMarkerInfo = {};
-					var max = -1;
-					for (var i = count; i < data.length; i += count) {
-						var value = data[i + valIndex];
-						var regionName = data[i + regionColumnIndex];
-
-						if (!popMarkerInfo[regionName])
-							popMarkerInfo[regionName] = value;
-						else
-							popMarkerInfo[regionName] += value;
-
-						if (popMarkerInfo[regionName] > max)
-							max = popMarkerInfo[regionName];
-					}
-
-					map['data'].setStyle(function (feature) {
-						var fId = feature.getId();
-
-						if (popMarkerInfo[fId] && $.inArray(fId, selectedRegions) != -1) {
-							feature.setProperty('regionName', feature.getProperty('name'));
-							return {
-								fillColor: _this.percentToRGB(100 * (1 - popMarkerInfo[fId] / max)),
-								strokeWeight: 1
-							};
-						}
-						else {
-							return {
-								visible: false,
-								strokeWeight: 0
-							}
-						}
-					});
-				};
-				addPopMarkers();
-
-				$('#optionPopulation, #optionQuestionnaire').on('change', function () { return addPopMarkers(); });
-			}
-
 			_this.getData().done(function (data) {
+
+				loadMap('provinces');
+
+				{
+					var addPopMarkers = function () {
+						if ($('#optionQuestionnaire').is(':checked'))
+							return;
+
+						if (popMarkers.length > 0) {
+							popMarkers.forEach(function (marker) { return marker.setMap(null); });
+							popMarkers = [];
+						}
+
+						var valIndex = 12;
+						var latIndex = 13;
+						var lngIndex = 14;
+
+						var regions;
+						var regionColumnIndex;
+						var baseNameIndex;
+						var baseColumnIndex;
+						var selectedRegions;
+
+						if ($('#optionProvinces').is(':checked')) {
+							regionColumnIndex = 2;
+							baseColumnIndex = 33;
+							baseNameIndex = 2;
+							regions = provinces;
+							selectedRegions = _this.getSelectedRegions(poolsStructure.region);
+						}
+						else if ($('#optionDepartments').is(':checked')) {
+							regionColumnIndex = 5;
+							baseColumnIndex = 34;
+							baseNameIndex = 3;
+							regions = departments;
+							selectedRegions = _this.getSelectedRegions(poolsStructure.dep);
+						}
+						else if ($('#optionCommunities').is(':checked')) {
+							regionColumnIndex = 8;
+							baseColumnIndex = 35;
+							baseNameIndex = 4;
+							regions = communes;
+							selectedRegions = _this.getSelectedRegions(poolsStructure.communes);
+						}
+						else if ($('#optionTownships').is(':checked')) {
+							regionColumnIndex = 11;
+							baseColumnIndex = 32;
+							baseNameIndex = 5;
+							regions = townships;
+							selectedRegions = _this.getSelectedRegions(poolsStructure.townships);
+						}
+
+						var count = populationData.columns.length;
+						var pdata = populationData.data;
+						var baseData = data;
+
+						var popMarkerInfo = {};
+						var popMarkerNameInfo = {};
+						var max = -1;
+						for (var i = baseData.columns.length; i < baseData.data.length; i += baseData.columns.length)
+							popMarkerNameInfo[baseData.data[i + baseColumnIndex]] = baseData.data[i + baseNameIndex];
+						for (var i = count; i < pdata.length; i += count) {
+							var value = pdata[i + valIndex];
+							var regionName = pdata[i + regionColumnIndex];
+
+							if (!popMarkerInfo[regionName])
+								popMarkerInfo[regionName] = value;
+							else
+								popMarkerInfo[regionName] += value;
+
+							if (popMarkerInfo[regionName] > max)
+								max = popMarkerInfo[regionName];
+						}
+
+						map['data'].setStyle(function (feature) {
+							var fId = feature.getId();
+
+							if (popMarkerInfo[fId] && $.inArray(fId, selectedRegions) != -1) {
+								feature.setProperty('regionName', popMarkerNameInfo[fId]);
+								return {
+									fillColor: _this.percentToRGB(100 * (1 - popMarkerInfo[fId] / max)),
+									strokeWeight: 1
+								};
+							}
+							else {
+								return {
+									visible: false,
+									strokeWeight: 0
+								}
+							}
+						});
+					};
+					addPopMarkers();
+
+					$('#optionPopulation, #optionQuestionnaire').on('change', function () { return addPopMarkers(); });
+				}
+
 				var currentAnswers;
 				var currentColumnIndex;
 				var currentDate;
@@ -274,35 +288,36 @@ var App = (function () {
 
 					var regions;
 					var regionColumnIndex;
+					var regionNameIndex;
 					var selectedRegions;
 
 					var isTwnshp = false;
 					if ($('#optionProvinces').is(':checked')) {
 						regionColumnIndex = 33;
+						regionNameIndex = 2;
 						regions = provinces;
 						selectedRegions = _this.getSelectedRegions(poolsStructure.region);
 					}
 					else if ($('#optionDepartments').is(':checked')) {
 						regionColumnIndex = 34;
+						regionNameIndex = 3;
 						regions = departments;
 						selectedRegions = _this.getSelectedRegions(poolsStructure.dep);
 					}
 					else if ($('#optionCommunities').is(':checked')) {
 						regionColumnIndex = 35;
+						regionNameIndex = 4;
 						regions = communes;
 						selectedRegions = _this.getSelectedRegions(poolsStructure.communes);
 					}
 					else if ($('#optionTownships').is(':checked')) {
 						regionColumnIndex = 32;
+						regionNameIndex = 5;
 						regions = townships;
 						selectedRegions = _this.getSelectedRegions(poolsStructure.townships);
 					}
 
-
-					if (currentAnswers == null)
-						markers = _this.showQuestionStat(map, currentColumnIndex, data, currentDate, regions, regionColumnIndex);
-					else
-						markers = _this.showAnswerStat(map, currentColumnIndex, currentAnswers, data, currentDate, regions, regionColumnIndex);
+					markers = _this.showAnswerStat(map, currentColumnIndex, currentAnswers, data, currentDate, regions, regionColumnIndex, regionNameIndex);
 
 					var markersByRegionId = {};
 					markers.forEach(function (m) { return markersByRegionId[m['_regionId']] = m; });
@@ -311,7 +326,7 @@ var App = (function () {
 						var regionMarker = markersByRegionId[fId];
 						if (regionMarker != null && $.inArray(fId, selectedRegions) != -1) {
 							var percent = regionMarker._percent;
-							feature.setProperty('regionName', feature.getProperty('name'));
+							feature.setProperty('regionName', regionMarker['_departmentName']);
 							if (percent != null) {
 								return {
 									fillColor: _this.percentToRGB(percent * 100),
@@ -331,18 +346,18 @@ var App = (function () {
 						}
 					});
 
-					markers.forEach(function (m) {
-						return google.maps.event.addListener(m, 'click', function (event) {
-							if ($('#optionProvinces').is(':checked'))
-								showProvincePassposrt(this._departmentName);
-							else if ($('#optionDepartments').is(':checked'))
-								showDepartmentPassposrt(this._departmentName);
-							else if ($('#optionCommunities').is(':checked'))
-								showCommunePassposrt(this._departmentName);
-							else if ($('#optionTownships').is(':checked'))
-								showTownshipPassposrt(this._departmentName);
-						});
-					});
+					//markers.forEach(function (m) {
+					//	return google.maps.event.addListener(m, 'click', function (event) {
+					//		if ($('#optionProvinces').is(':checked'))
+					//			showProvincePassposrt(this._departmentName);
+					//		else if ($('#optionDepartments').is(':checked'))
+					//			showDepartmentPassposrt(this._departmentName);
+					//		else if ($('#optionCommunities').is(':checked'))
+					//			showCommunePassposrt(this._departmentName);
+					//		else if ($('#optionTownships').is(':checked'))
+					//			showTownshipPassposrt(this._departmentName);
+					//	});
+					//});
 				};
 				addMarkers();
 				$('#statistics').on('click', '.results', function (event) {
@@ -707,14 +722,16 @@ var App = (function () {
 		}
 		return markers;
 	};
-	App.showAnswerStat = function (map, columnIndex, targetAnswers, data, currentDate, departments, regionColumnIndex) {
+	App.showAnswerStat = function (map, columnIndex, targetAnswers, data, currentDate, departments, regionColumnIndex, regionNameIndex) {
 		// vote count by question for each department
 		var depStat = {};
 		// vote count by answer for each departmnet
 		var depAnswerStat = {};
+		var depNames = {};
 		for (var rowOffset = 0; rowOffset < data.data.length; rowOffset += data.columns.length) {
 			if (data.data[rowOffset + this.dateColumnIndex] != null && data.data[rowOffset + this.dateColumnIndex].value == currentDate) {
 				var depName = data.data[rowOffset + regionColumnIndex];
+				depNames[depName] = data.data[rowOffset + regionNameIndex];
 				if (depName in depStat) {
 					depStat[depName] += 1;
 				}
@@ -753,7 +770,7 @@ var App = (function () {
 					},
 					_percent: depAnswerStat[depName] / depStat[depName],
 					_regionId: department.Id,
-					_departmentName: depName
+					_departmentName: depNames[depName]
 				});
 				markers.push(marker);
 			}
