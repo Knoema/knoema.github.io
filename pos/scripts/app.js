@@ -48,13 +48,7 @@ var App = (function () {
 		['skipFirstColumns', 'departmentColumnIndex', 'provinceColumnIndex', 'dateColumnIndex'].forEach(function (field) {
 			_this[field] = parseInt($('#settings_' + field).val());
 		});
-		{
-			var $legend = $('#legend');
-			for (var i = 0; i <= 10; i++) {
-				var item = $('<div class="color-item" style="background-color: ' + this.percentToRGB(i * 10) + ';"></div>');
-				$legend.append(item);
-			}
-		}
+		
 		var refreshVoteCount = function () {
 			$.getJSON('http://' + _this.host + '/api/forms/pos20160502/status').done(function (result) {
 				var formatedVoteCount = window['numeral'](result.all).format('0,0');
@@ -211,7 +205,6 @@ var App = (function () {
 
 						var popMarkerInfo = {};
 						var popMarkerNameInfo = {};
-						var max = -1;
 						for (var i = baseData.columns.length; i < baseData.data.length; i += baseData.columns.length)
 							popMarkerNameInfo[baseData.data[i + baseColumnIndex]] = baseData.data[i + baseNameIndex];
 						for (var i = count; i < pdata.length; i += count) {
@@ -222,10 +215,17 @@ var App = (function () {
 								popMarkerInfo[regionName] = value;
 							else
 								popMarkerInfo[regionName] += value;
-
-							if (popMarkerInfo[regionName] > max)
-								max = popMarkerInfo[regionName];
 						}
+
+						var max = -1;
+						var min = Infinity;
+						for (var rId in popMarkerInfo) {
+							if (popMarkerInfo[rId] > max)
+								max = popMarkerInfo[rId];
+							if (popMarkerInfo[rId] < min)
+								min = popMarkerInfo[rId];
+						}
+						_this.setLegendValues((min / 1000).toFixed(2), '', (max / 1000).toFixed(2) + 'th', true);
 
 						map['data'].setStyle(function (feature) {
 							var fId = feature.getId();
@@ -319,6 +319,8 @@ var App = (function () {
 
 					markers = _this.showAnswerStat(map, currentColumnIndex, currentAnswers, data, currentDate, regions, regionColumnIndex, regionNameIndex);
 
+					_this.setLegendValues();
+
 					var markersByRegionId = {};
 					markers.forEach(function (m) { return markersByRegionId[m['_regionId']] = m; });
 					map['data'].setStyle(function (feature) {
@@ -345,19 +347,6 @@ var App = (function () {
 							}
 						}
 					});
-
-					//markers.forEach(function (m) {
-					//	return google.maps.event.addListener(m, 'click', function (event) {
-					//		if ($('#optionProvinces').is(':checked'))
-					//			showProvincePassposrt(this._departmentName);
-					//		else if ($('#optionDepartments').is(':checked'))
-					//			showDepartmentPassposrt(this._departmentName);
-					//		else if ($('#optionCommunities').is(':checked'))
-					//			showCommunePassposrt(this._departmentName);
-					//		else if ($('#optionTownships').is(':checked'))
-					//			showTownshipPassposrt(this._departmentName);
-					//	});
-					//});
 				};
 				addMarkers();
 				$('#statistics').on('click', '.results', function (event) {
@@ -441,6 +430,29 @@ var App = (function () {
 		}
 
 		return regions;
+	};
+
+	App.setLegendValues = function (low, medium, high, back) {
+
+		var $legend = $('#legend');
+		$legend.find('.color-item').remove();
+
+		if (back) {
+			for (var i = 10; i > 0; i--) {
+				var item = $('<div class="color-item" style="background-color: ' + this.percentToRGB(i * 10) + ';"></div>');
+				$legend.append(item);
+			}
+		}
+		else {
+			for (var i = 0; i <= 10; i++) {
+				var item = $('<div class="color-item" style="background-color: ' + this.percentToRGB(i * 10) + ';"></div>');
+				$legend.append(item);
+			}
+		}
+
+		$('#legend_low').html(low != undefined ? low : '0');
+		$('#legend_medium').html(medium != undefined ? medium : '50');
+		$('#legend_high').html(high != undefined ? high : '100%');
 	};
 
 	App.getPoolsStructure = function (populationData) {
