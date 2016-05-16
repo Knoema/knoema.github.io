@@ -88,14 +88,17 @@
             var dimension = $(this).data('dimension');
             var filterValue = $(this).val();
             if ($(this).is(':checked')) {
-                _.remove(self.filters.hide[dimension], function(item) {
-                    return item === filterValue;
-                });
-            } else {
                 if (_.isUndefined(self.filters.hide[dimension])) {
                     self.filters.hide[dimension] = [];
                 }
                 self.filters.hide[dimension].push(filterValue);
+            } else {
+                _.remove(self.filters.hide[dimension], function(item) {
+                    return item === filterValue;
+                });
+                if (self.filters.hide[dimension].length === 0) {
+                    delete self.filters.hide[dimension];
+                }
             }
             self.reloadLayers();
         });
@@ -215,7 +218,7 @@
         if (!_.isEmpty(this.filters.hide)) {
             _.forIn(event.data.content, function(value, key) {
                 if (!_.isUndefined(self.filters.hide[key])) {
-                    event.data.visible = event.data.visible && _.indexOf(self.filters.hide[key], event.data.content[key]) < 0;
+                    event.data.visible = event.data.visible && _.indexOf(self.filters.hide[key], event.data.content[key]) >= 0;
                 }
             });
         }

@@ -8,7 +8,7 @@
     {{each(i, item) items}}
         <div class="checkbox">
             <label>
-                <input type="checkbox" data-dimension="${header}" value="${item.name}" checked> <span class="${item.name}">{{if className == 'ncd-sara-composite-score'}}<i class="fa fa-circle"></i>{{/if}}</span>
+                <input type="checkbox" data-dimension="${header}" value="${item.name}"> <span class="${item.name}">{{if className == 'ncd-sara-composite-score'}}<i class="fa fa-circle"></i>{{/if}}</span>
                 ${typeof item.displayName === 'undefined' ? item.name : item.displayName}
             </label>
             <a href="${datasetUrl}" class="source-link" target="_blank" title="Open source dataset in new window">
