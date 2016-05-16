@@ -105,6 +105,14 @@ header {
     margin: 10px -10px 10px 0;
 }
 
+#side-bar .reset {
+    float: right;
+    text-decoration: none;
+    margin-top: 6px;
+    margin-right: 2px;
+    display: none;
+}
+
 #map-canvas {
     background-color: #E5E3DF;
     margin: 0 -15px;

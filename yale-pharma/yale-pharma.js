@@ -84,6 +84,13 @@
 
         $('#search-input').keyup(_.debounce(keyupHandler, 250));
 
+        $('#side-bar').on('click', '.reset', function() {
+            $('#side-bar').find('.reset').hide();
+            self.filters.hide = {};
+            $('#side-bar').find('input[type="checkbox"]').prop('checked', false);
+            self.reloadLayers();
+        });
+
         $('#side-bar').on('change', 'input[type="checkbox"]', function() {
             var dimension = $(this).data('dimension');
             var filterValue = $(this).val();
@@ -96,9 +103,14 @@
                 _.remove(self.filters.hide[dimension], function(item) {
                     return item === filterValue;
                 });
-                if (self.filters.hide[dimension].length === 0) {
-                    delete self.filters.hide[dimension];
-                }
+            }
+            if (self.filters.hide[dimension].length === 0) {
+                delete self.filters.hide[dimension];
+            }
+            if (_.isEmpty(self.filters.hide)) {
+                $('#side-bar').find('.reset').hide();
+            } else {
+                $('#side-bar').find('.reset').show();
             }
             self.reloadLayers();
         });
