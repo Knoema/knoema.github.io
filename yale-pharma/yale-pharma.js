@@ -7,6 +7,7 @@
         this.geoPlaygroundId = 'rdedwfb';
         this.layers = {};
         this.drugSelectList = [];
+        this.markers = [];
         this.filters = {
             search: '',
             medicine: null,
@@ -202,6 +203,9 @@
 
     app.prototype.reloadLayers = function () {
         var self = this;
+        _.each(self.markers, function(marker) {
+            marker.setMap(null);
+        });
         _.each(_.keys(this.layers), function(layerId) {
             self.loadLayer(layerId);
         });
@@ -221,7 +225,6 @@
 
     app.prototype.onBeforeDraw = function (event, callback, id) {
         var self = this;
-        var url;
 
         if (!_.isEmpty(this.filters.search)) {
             event.data.visible = event.data.visible && event.data.content['Name of facility'].toLowerCase().indexOf(this.filters.search) >= 0;
@@ -239,7 +242,10 @@
             event.data.visible = event.data.visible && Boolean(event.data.content[this.filters.medicine]);
         }
 
+        var url;
         if (event.data.visible) {
+            event.data.visible = false;
+
             switch(event.data.content['NCD-SARA Composite Score']) {
                 case 'Red':
                     url = 'img/marker-red.png';
@@ -251,12 +257,19 @@
                     url = 'img/marker-yellow.png';
                     break;
             }
-            event.data.icon = {
-                url: url,
-                size: new google.maps.Size(25, 37),
-                origin: new google.maps.Point(0, 0),
-                anchor: new google.maps.Point(12, 37)
-            };
+
+            var marker = new google.maps.Marker({
+                title: event.data.content['Name of facility'],
+                position: event.data.position,
+                map: self.map,
+                icon: url
+            });
+
+            marker.addListener('click', function() {
+                self.markerClickHandler(event);
+            });
+
+            self.markers.push(marker);
         }
 
         callback(event.data);
@@ -281,30 +294,6 @@
 
             });
 
-            layer.on('click', function (e) {
-
-                self.hidePricesComparison();
-
-                var drugList = _.clone(self.drugSelectList);
-
-                _.each(drugList, function(listItem, i) {
-                    listItem.drugs = _.map(listItem.drugs, function(drug) {
-                        return _.assign(drug, {
-                            isAvailable: Boolean(e.data.tooltip[drug.drugName])
-                        });
-                    });
-                });
-
-                $('#modal-dialog-holder')
-                    .html($.tmpl('facility-profile.html', {
-                        data: e.data.tooltip,
-                        drugList: drugList,
-                        //TODO Find nearest hospital: google.maps.geometry.spherical.computeDistanceBetween (latLngA, latLngB);
-                        distance: '5km'
-                    }))
-                    .modal('show');
-            });
-
             layer.on('beforeDraw', function (e, callback) {
                 self.onBeforeDraw(e, callback, id);
             });
@@ -312,6 +301,29 @@
             self.layers[id] = layer;
         }
         layer.load();
+    };
+
+    app.prototype.markerClickHandler = function(event) {
+        var self = this;
+        self.hidePricesComparison();
+        var drugList = _.clone(self.drugSelectList);
+
+        _.each(drugList, function(listItem, i) {
+            listItem.drugs = _.map(listItem.drugs, function(drug) {
+                return _.assign(drug, {
+                    isAvailable: Boolean(event.data.content[drug.drugName])
+                });
+            });
+        });
+
+        $('#modal-dialog-holder')
+            .html($.tmpl('facility-profile.html', {
+                data: event.data.content,
+                drugList: drugList,
+                //TODO Find nearest hospital: google.maps.geometry.spherical.computeDistanceBetween (latLngA, latLngB);
+                distance: '5km'
+            }))
+            .modal('show');
     };
 
     app.prototype.initSideBar = function () {
