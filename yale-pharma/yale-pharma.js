@@ -89,6 +89,7 @@
             $('#side-bar').find('.reset').hide();
             self.filters.hide = {};
             $('#side-bar').find('input[type="checkbox"]').prop('checked', false);
+            $('#select-medicine').val('').trigger("change").trigger("chosen:updated");
             self.reloadLayers();
         });
 
@@ -108,11 +109,7 @@
             if (self.filters.hide[dimension].length === 0) {
                 delete self.filters.hide[dimension];
             }
-            if (_.isEmpty(self.filters.hide)) {
-                $('#side-bar').find('.reset').hide();
-            } else {
-                $('#side-bar').find('.reset').show();
-            }
+            self.handleResetControl();
             self.reloadLayers();
         });
 
@@ -185,6 +182,7 @@
 
             $('#select-medicine').on('change', function() {
                 self.filters.medicine = $(this).val();
+                self.handleResetControl();
                 self.reloadLayers();
             });
 
@@ -221,6 +219,15 @@
         $('#prices-comparison-tool').animate({
             width: 470
         });
+    };
+
+    app.prototype.handleResetControl = function () {
+        var self = this;
+        if (_.isEmpty(self.filters.hide) && _.isEmpty(self.filters.medicine)) {
+            $('#side-bar').find('.reset').hide();
+        } else {
+            $('#side-bar').find('.reset').show();
+        }
     };
 
     app.prototype.onBeforeDraw = function (event, callback, id) {
