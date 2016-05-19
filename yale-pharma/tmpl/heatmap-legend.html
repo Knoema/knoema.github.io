@@ -1,0 +1,11 @@
+<div id="heatmap-legend">
+    <div class="scale">
+        {{each(i, item) ranges}}
+        <span style="background-color:#${item.color}"></span>
+        {{/each}}
+    </div>
+    <div>
+        <span class="pull-left">${ranges[0].low}</span>
+        <span class="pull-right">${ranges[ranges.length - 1].high}</span>
+    </div>
+</div>

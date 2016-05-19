@@ -11,7 +11,8 @@
         this.filters = {
             search: '',
             medicine: null,
-            hide: {}
+            hide: {},
+            populationDensity: true
         };
     };
 
@@ -20,21 +21,6 @@
             client_id: 'EZj54KGFo3rzIvnLczrElvAitEyU28DGw9R73tif'
         }
     });
-
-    //Cross domain post request:
-    /*
-    $.ajax({
-        type: "POST",
-
-        crossDomain: true,
-
-        url: '//knoema.com/api/1.0/data/pivot',
-        data: {"Dataset":"CDIACTACHIINDUSAA","Header":[{"DimensionId":"Time","Members":[1992,1995,1998,{"Name":"1996-1998","Key":-1987,"Formula":[1996,1998,"avga"]},{"Name":"1980-1990","Key":-9876,"Formula":[1980,1990,"avga"]}]}],"Filter":[{"DimensionId":"Location","Members":[1000000]}],"Stub":[{"DimensionId":"Variable","Members":[1000000,1000010,1000020,{"Name":"TotalPrimaryEnergyproduction,AnnualAverageGrowth","Key":-1234,"Formula":[1134,"pcha"]},{"Name":"TotalPrimaryEnergyconsumption,AnnualAverageGrowth","Key":-1236,"Formula":[1486,"pcha"]},{"Name":"ConsumptiontoProductionratio","Key":-1238,"Formula":[1486,1134,"/"]}]}]},
-        success: function(pivotResponse) {
-            console.log('pivotResponse', pivotResponse);
-        }
-    });
-    */
 
     app.prototype.run = function() {
         var self = this;
@@ -88,7 +74,7 @@
         $('#side-bar').on('click', '.reset', function() {
             $('#side-bar').find('.reset').hide();
             self.filters.hide = {};
-            $('#side-bar').find('input[type="checkbox"]').prop('checked', false);
+            $('#side-bar').find('input.filter').prop('checked', false);
             $('#select-medicine').val('').trigger("change").trigger("chosen:updated");
             self.reloadLayers();
         });
@@ -96,7 +82,13 @@
         $('#side-bar').on('change', 'input[type="checkbox"]', function() {
             var dimension = $(this).data('dimension');
             var filterValue = $(this).val();
-            if ($(this).is(':checked')) {
+            var isChecked = $(this).is(':checked');
+
+            if (filterValue === 'populationDensity') {
+                self.filters.populationDensity = isChecked;
+            }
+
+            if (isChecked) {
                 if (_.isUndefined(self.filters.hide[dimension])) {
                     self.filters.hide[dimension] = [];
                 }
@@ -106,8 +98,10 @@
                     return item === filterValue;
                 });
             }
-            if (self.filters.hide[dimension].length === 0) {
-                delete self.filters.hide[dimension];
+            if (dimension) {
+                if (self.filters.hide[dimension].length === 0) {
+                    delete self.filters.hide[dimension];
+                }
             }
             self.handleResetControl();
             self.reloadLayers();
@@ -299,6 +293,12 @@
 
                 $('.nav').find('[disabled]').removeAttr('disabled');
 
+                if (layer2.layer.ranges && !$('#heatmap-legend').length) {
+                    $('#map-canvas').append($.tmpl('heatmap-legend.html', {
+                        ranges: layer2.layer.ranges
+                    }));
+                }
+
             });
 
             layer.on('beforeDraw', function (e, callback) {
@@ -307,7 +307,19 @@
 
             self.layers[id] = layer;
         }
-        layer.load();
+
+        if (layer.layerId === '5da3ae80-846f-c7b8-5445-3ecd00954e1c') {
+            if (layer.layer && !self.filters.populationDensity) {
+                layer.clean();
+                $('#heatmap-legend').hide();
+            } else {
+                layer.load();
+                $('#heatmap-legend').show();
+            }
+        } else {
+            layer.load();
+        }
+
     };
 
     app.prototype.markerClickHandler = function(event) {
@@ -463,6 +475,7 @@
             $.get('tmpl/side-bar-radio-section.html', compileTemplate),
             $.get('tmpl/facility-profile.html', compileTemplate),
             $.get('tmpl/select-medicine.html', compileTemplate),
+            $.get('tmpl/heatmap-legend.html', compileTemplate),
             $.get('tmpl/long-tooltip.html', compileTemplate)
         ];
         $.when.apply(null, templates).done(function onTemplatesLoaded() {

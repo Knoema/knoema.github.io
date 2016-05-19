@@ -491,3 +491,20 @@ only screen and (                min-resolution: 2dppx) {
     vertical-align: bottom;
     margin-top: 10px;
 }
+
+#heatmap-legend {
+    z-index: 10000;
+    position: absolute;
+    bottom: 15px;
+    right: 5px;
+    background-color: #C8D2E6;
+    padding: 4px 4px 0 4px;
+}
+
+.scale span {
+    display: inline-block;
+    width: 40px;
+    height: 20px;
+    float: left;
+    font-size: 10.5pt;
+}
