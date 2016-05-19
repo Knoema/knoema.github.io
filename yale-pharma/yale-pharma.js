@@ -5,6 +5,7 @@
         this.timelineHeight = 60;
         this.map = null;
         this.geoPlaygroundId = 'rdedwfb';
+        this.infoWindow = new google.maps.InfoWindow();
         this.layers = {};
         this.drugSelectList = [];
         this.markers = [];
@@ -195,6 +196,7 @@
 
     app.prototype.reloadLayers = function () {
         var self = this;
+        self.infoWindow.close();
         _.each(self.markers, function(marker) {
             marker.setMap(null);
         });
@@ -300,7 +302,15 @@
                 }
 
             });
-
+            layer.on('click', function (e) {
+                e.data.tooltip.time = (new Date(e.data.tooltip.time)).toISOString().slice(0, 4);
+                self.infoWindow.setContent($.tmpl('info-window-content.html', {
+                    tooltip: e.layer.tooltip,
+                    data: e.data.tooltip
+                })[0].outerHTML);
+                self.infoWindow.setPosition(e.data.latLng);
+                self.infoWindow.open(self.map);
+            });
             layer.on('beforeDraw', function (e, callback) {
                 self.onBeforeDraw(e, callback, id);
             });
@@ -473,6 +483,7 @@
         var templates = [
             $.get('tmpl/side-bar-checkbox-section.html', compileTemplate),
             $.get('tmpl/side-bar-radio-section.html', compileTemplate),
+            $.get('tmpl/info-window-content.html', compileTemplate),
             $.get('tmpl/facility-profile.html', compileTemplate),
             $.get('tmpl/select-medicine.html', compileTemplate),
             $.get('tmpl/heatmap-legend.html', compileTemplate),

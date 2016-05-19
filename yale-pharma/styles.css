@@ -508,3 +508,7 @@ only screen and (                min-resolution: 2dppx) {
     float: left;
     font-size: 10.5pt;
 }
+
+.infowindow-content {
+    text-transform: capitalize;
+}
