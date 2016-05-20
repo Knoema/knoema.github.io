@@ -63,7 +63,7 @@
                             <ul>
                                 {{each(j, drug) listItem.drugs}}
                                     <li>
-                                        <i class="fa ${drug.isAvailable ? 'fa-check' : 'fa-remove'}"></i> ${drug.drugName}
+                                        <i class="glyphicon ${drug.isAvailable ? 'glyphicon-ok' : 'glyphicon-remove'}"></i> ${drug.drugName}
                                     </li>
                                 {{/each}}
                             </ul>

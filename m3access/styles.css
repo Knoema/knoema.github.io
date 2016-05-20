@@ -232,6 +232,11 @@ only screen and (                min-resolution: 2dppx) {
     display: none;
 }
 
+.ncd-sara-composite-score .circle {
+    font-size: 1.2em;
+    line-height: 1em;
+}
+
 .ncd-sara-composite-score .Red {
     color: #DC040A;
 }
@@ -262,7 +267,7 @@ only screen and (                min-resolution: 2dppx) {
     cursor: pointer;
 }
 
-.fa-info-circle {
+.glyphicon-info-sign {
     color: #FF5B03;
     cursor: pointer;
 }
@@ -309,14 +314,14 @@ only screen and (                min-resolution: 2dppx) {
     background-color: #e6eef6;
 }
 
-#prices-comparison-tool .fa-remove {
+#prices-comparison-tool .glyphicon-remove {
     padding: 10px;
     cursor: pointer;
     position: absolute;
     right: 0;
 }
 
-#prices-comparison-tool .fa-remove:hover {
+#prices-comparison-tool .glyphicon-remove:hover {
     color: #dd0000;
 }
 
@@ -353,11 +358,11 @@ only screen and (                min-resolution: 2dppx) {
     white-space: nowrap;
 }
 
-.available-drugs .fa-check {
+.available-drugs .glyphicon-ok {
     color: #12A80D;
 }
 
-.available-drugs .fa-remove {
+.available-drugs .glyphicon-remove {
     color: #DC040A;
 }
 
@@ -511,4 +516,11 @@ only screen and (                min-resolution: 2dppx) {
 
 .infowindow-content {
     text-transform: capitalize;
+}
+
+.bootstrap-select .dropdown-toggle:focus {
+    outline: none!important;
+}
+.bootstrap-select.btn-group .dropdown-menu li a.opt:focus {
+    outline: none!important;
 }

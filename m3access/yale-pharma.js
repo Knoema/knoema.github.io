@@ -76,7 +76,7 @@
             $('#side-bar').find('.reset').hide();
             self.filters.hide = {};
             $('#side-bar').find('input.filter').prop('checked', false);
-            $('#select-medicine').val('').trigger("change").trigger("chosen:updated");
+            $('#select-medicine').selectpicker('deselectAll');
             self.reloadLayers();
         });
 
@@ -169,11 +169,9 @@
             $('#select-medicine')
                 .append($.tmpl('select-medicine.html', {
                     drugSelectList: self.drugSelectList
-                }))
-                .chosen({
-                    width: "100%",
-                    allow_single_deselect: true
-                });
+                }));
+
+            $('#select-medicine').selectpicker('refresh');
 
             $('#select-medicine').on('change', function() {
                 self.filters.medicine = $(this).val();
@@ -187,7 +185,7 @@
             self.showPricesComparison();
         });
 
-        $('#prices-comparison-tool').on('click', '.fa-remove', function() {
+        $('#prices-comparison-tool').on('click', '.glyphicon-remove', function() {
             self.hidePricesComparison();
         });
 
@@ -241,8 +239,11 @@
             });
         }
 
-        if (!_.isEmpty(this.filters.medicine)) {
-            event.data.visible = event.data.visible && Boolean(event.data.content[this.filters.medicine]);
+        if (event.data.visible && !_.isEmpty(this.filters.medicine)) {
+            var visible = _.reduce(this.filters.medicine, function(visible, nextFilter) {
+                return visible && Boolean(event.data.content[nextFilter]);
+            }, event.data.visible);
+            event.data.visible = event.data.visible && visible;
         }
 
         var url;
