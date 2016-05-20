@@ -524,3 +524,17 @@ only screen and (                min-resolution: 2dppx) {
 .bootstrap-select.btn-group .dropdown-menu li a.opt:focus {
     outline: none!important;
 }
+
+.bootstrap-select .divider {
+    display: none;
+}
+
+.bootstrap-select .dropdown-header {
+    font-size: 14px;
+    color: #1b3768;
+    font-weight: bold;
+}
+
+.bootstrap-select .check-mark {
+    color: #12A80D;
+}
