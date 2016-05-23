@@ -121,7 +121,7 @@
             }
         });
 
-        $.get('//yale.knoema.com/api/1.0/meta/dataset/zoxdoob/dimension/measure', function(measureDimension) {
+        $.get('//yale.knoema.com/api/1.0/meta/dataset/pvbple/dimension/measure', function(measureDimension) {
             var medicineList = [
                 {
                     disease: 'Diabetes',
@@ -136,7 +136,13 @@
                     drugs: [
                         "Nifedipine, cap/tab",
                         "ACE inhibitor (e.g. enalapril, lisinopril, captopril)",
-                        "Simvastatin, 20 mg cap/tab"
+                        "Simvastatin, 20 mg cap/tab",
+
+                        //measureDimension.items[9].name[0], measureDimension.items[9].name[9], measureDimension.items[9].name[11]
+                        //-> measureDimension.items[9].name.charCodeAt(0), (9), (11) -> 8203
+                        //http://www.fileformat.info/info/unicode/char/200b/index.htm
+                        //Invisible symbols! measureDimension.items[9].name != "Atenolol, 50mg cap/tab" (different length)
+                        measureDimension.items[9].name
                     ]
                 },
                 {
@@ -149,7 +155,7 @@
                 {
                     disease: 'Depression/Anexiety',
                     drugs: [
-                        "Fluoxetine" //Missing
+                        "Amitriptyline, 25mg cap/tab"
                     ]
                 }
             ];
@@ -158,8 +164,9 @@
                 item.drugs = _.map(item.drugs, function(drugName) {
                     return {
                         drugName: drugName,
-                        key: drugName === 'Fluoxetine' ? null : _.find(measureDimension.items, function (item) {
+                        key: _.find(measureDimension.items, function (item) {
                             return item.name === drugName;
+                            //return item.name === drugName || measureDimension.items[9].name.indexOf('Atenolol') > -1;
                         }).key
                     }
                 });
@@ -377,21 +384,20 @@
                     return _.indexOf(properOrder, item.name);
                 });
             }
-
             return $.tmpl('side-bar-checkbox-section.html', {
                 className: data.id,
                 header: data.name,
                 items: data.items,
                 tooltipContent: tooltipContent,
-                datasetUrl: '//yale.knoema.com/zoxdoob/sara-uganda-2013-selected-data'
+                datasetUrl: '//yale.knoema.com/pvbple/sara-uganda-2013-selected-data'
             });
         }
 
         var dimensionRequests = [
-            $.get('//yale.knoema.com/api/1.0/meta/dataset/zoxdoob/dimension/facility-type'),
-            $.get('//yale.knoema.com/api/1.0/meta/dataset/zoxdoob/dimension/location'),
-            $.get('//yale.knoema.com/api/1.0/meta/dataset/zoxdoob/dimension/sector'),
-            $.get('//yale.knoema.com/api/1.0/meta/dataset/zoxdoob/dimension/ncd-sara-composite-score')
+            $.get('//yale.knoema.com/api/1.0/meta/dataset/pvbple/dimension/facility-type'),
+            $.get('//yale.knoema.com/api/1.0/meta/dataset/pvbple/dimension/location'),
+            $.get('//yale.knoema.com/api/1.0/meta/dataset/pvbple/dimension/sector'),
+            $.get('//yale.knoema.com/api/1.0/meta/dataset/pvbple/dimension/ncd-sara-composite-score')
         ];
 
         $.when.apply(null, dimensionRequests).done(function onDimensionsLoaded(facilityType, location, sector, ncd) {
@@ -406,10 +412,10 @@
                         item.displayName = '0 - 2';
                         break;
                     case 'Yellow':
-                        item.displayName = '3 - 4';
+                        item.displayName = '3 - 6';
                         break;
                     case 'Green':
-                        item.displayName = '5 - 8';
+                        item.displayName = '7 - 10';
                         break;
                 }
             });
@@ -431,9 +437,6 @@
                 theme: "dark"
             });
         });
-        // //yale.knoema.com/api/1.0/meta/dataset/zoxdoob/dimension/name-of-facility
-        // //yale.knoema.com/api/1.0/meta/dataset/zoxdoob/dimension/location-of-facility
-        // //yale.knoema.com/api/1.0/meta/dataset/zoxdoob/dimension/measure
     };
 
     app.prototype.onResize = function () {
