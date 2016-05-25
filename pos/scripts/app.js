@@ -50,7 +50,7 @@ var App = (function () {
 		});
 		
 		var refreshVoteCount = function () {
-			$.getJSON('http://' + _this.host + '/api/forms/pos20160502/status').done(function (result) {
+			$.getJSON('http://' + _this.host + '/api/forms/pos20160523/status').done(function (result) {
 				var formatedVoteCount = window['numeral'](result.all).format('0,0');
 				$('#voteCount').html(formatedVoteCount);
 			});
@@ -161,8 +161,6 @@ var App = (function () {
 						}
 
 						var valIndex = 12;
-						var latIndex = 13;
-						var lngIndex = 14;
 
 						var regions;
 						var regionColumnIndex;
@@ -172,28 +170,28 @@ var App = (function () {
 
 						if ($('#optionProvinces').is(':checked')) {
 							regionColumnIndex = 2;
-							baseColumnIndex = 33;
+							baseColumnIndex = 42;
 							baseNameIndex = 2;
 							regions = provinces;
 							selectedRegions = _this.getSelectedRegions(poolsStructure.region);
 						}
 						else if ($('#optionDepartments').is(':checked')) {
 							regionColumnIndex = 5;
-							baseColumnIndex = 34;
+							baseColumnIndex = 43;
 							baseNameIndex = 3;
 							regions = departments;
 							selectedRegions = _this.getSelectedRegions(poolsStructure.dep);
 						}
 						else if ($('#optionCommunities').is(':checked')) {
 							regionColumnIndex = 8;
-							baseColumnIndex = 35;
+							baseColumnIndex = 44;
 							baseNameIndex = 4;
 							regions = communes;
 							selectedRegions = _this.getSelectedRegions(poolsStructure.communes);
 						}
 						else if ($('#optionTownships').is(':checked')) {
 							regionColumnIndex = 11;
-							baseColumnIndex = 32;
+							baseColumnIndex = 45;
 							baseNameIndex = 5;
 							regions = townships;
 							selectedRegions = _this.getSelectedRegions(poolsStructure.townships);
@@ -293,25 +291,25 @@ var App = (function () {
 
 					var isTwnshp = false;
 					if ($('#optionProvinces').is(':checked')) {
-						regionColumnIndex = 33;
+						regionColumnIndex = 42;
 						regionNameIndex = 2;
 						regions = provinces;
 						selectedRegions = _this.getSelectedRegions(poolsStructure.region);
 					}
 					else if ($('#optionDepartments').is(':checked')) {
-						regionColumnIndex = 34;
+						regionColumnIndex = 43;
 						regionNameIndex = 3;
 						regions = departments;
 						selectedRegions = _this.getSelectedRegions(poolsStructure.dep);
 					}
 					else if ($('#optionCommunities').is(':checked')) {
-						regionColumnIndex = 35;
+						regionColumnIndex = 44;
 						regionNameIndex = 4;
 						regions = communes;
 						selectedRegions = _this.getSelectedRegions(poolsStructure.communes);
 					}
 					else if ($('#optionTownships').is(':checked')) {
-						regionColumnIndex = 32;
+						regionColumnIndex = 45;
 						regionNameIndex = 5;
 						regions = townships;
 						selectedRegions = _this.getSelectedRegions(poolsStructure.townships);
@@ -803,8 +801,8 @@ var App = (function () {
 		'Nationality': 'QUEL EST VOTRE GROUPE ETHNIQUE ?',
 		'EvaluatePresident': 'COMMENT EVALUEZ-VOUS LE TRAVAIL DU PRESIDENT MACKY SALL DEPUIS 2012 ?',
 		'RightDirection': 'PENSEZ-VOUS QUE LE PAYS VA DANS LA BONNE DIRECTION ?',
-		'Satisfied': 'CITEZ VOS PLUS GRANDS MOTIFS DE SATISFACTION DU PRESIDENT DEPUIS 2012 ?',
-		'Dissatisfied': 'CITEZ VOS PLUS GRANDS MOTIF DE D’INSATISFACTION DU PRESIDENT DEPUIS 2012 ?',
+		//'Satisfied': 'CITEZ VOS PLUS GRANDS MOTIFS DE SATISFACTION DU PRESIDENT DEPUIS 2012 ?',
+		//'Dissatisfied': 'CITEZ VOS PLUS GRANDS MOTIF DE D’INSATISFACTION DU PRESIDENT DEPUIS 2012 ?',
 		'Priority1': 'QUELLES SONT LES TROIS PRIORITES OÙ VOUS ATTENDEZ LE PRESIDENT ? #1:',
 		'Priority2': 'QUELLES SONT LES TROIS PRIORITES OÙ VOUS ATTENDEZ LE PRESIDENT ? #2:',
 		'Priority3': 'QUELLES SONT LES TROIS PRIORITES OÙ VOUS ATTENDEZ LE PRESIDENT ? #3:',
