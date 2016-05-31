@@ -1,0 +1,5 @@
+{{each(i, layer) layers}}
+    <label class="btn btn-default {{if (i == 0)}}active{{/if}}">
+        <input type="radio" name="optionsRegion" id="optionTownships" autocomplete="off" data-layer-id="${layer.layerId}" {{if (i == 0)}}checked{{/if}}> ${layer.label}
+    </label>
+{{/each}}

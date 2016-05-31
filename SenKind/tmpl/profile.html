@@ -1,0 +1,38 @@
+<div class="modal-content">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">
+            ${profileData.objectName}, ${profileData.objectType}
+        </h4>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-xs-2">
+                <img src="img/facility.png" alt="{data['Name of facility']}" class="img-thumbnail pull-left facility-img" />
+            </div>
+            <div class="col-xs-10">
+                <ul class="nav nav-tabs profile-tabs" role="tablist">
+                    {{each(i, tab) profileData.tabs}}
+                    <li role="presentation" {{if (i==0)}}class="active"{{/if}}>
+                        <a href="#tab-${i}" aria-controls="home" role="tab" data-toggle="tab">${tab.tabName}</a>
+                    </li>
+                    {{/each}}
+                </ul>
+                <div class="tab-content">
+                    {{each(i, tab) profileData.tabs}}
+                    <div role="tabpanel" class="tab-pane {{if (i==0)}}active{{/if}}" id="tab-${i}">
+                        {{each(j, indicator) tab.indicators}}
+                        <div>
+                            <h5 class="item-header inline-header">${indicator.name}</h5>
+                            <div class="inline-value">
+                                ${indicator.value}
+                            </div>
+                        </div>
+                        {{/each}}
+                    </div>
+                    {{/each}}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
