@@ -338,3 +338,9 @@
     right: 0;
     left: 0;
 }
+
+#population-select
+{
+	font-size: 12pt;
+    width: 250px;
+}
