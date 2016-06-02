@@ -745,7 +745,7 @@ var App = (function () {
 	App.getRegionInfo = function () {
 		var _this = this;
 		var def = $.Deferred();
-		$.getJSON('./scripts/regions.json').done(function (senegal) {
+		$.getJSON('./Scripts/regions.json').done(function (senegal) {
 			var regions = {};
 			var departments = {};
 			var communes = {};
