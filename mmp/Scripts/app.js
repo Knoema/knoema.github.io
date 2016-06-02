@@ -101,15 +101,6 @@ var App = (function () {
 		//	$('#passportPopup').show();
 		//};
 
-		var loadMap = function (mapName) {
-
-			map['data'].forEach(function (feature) {
-				map['data'].remove(feature);
-			});
-
-			map['data'].loadGeoJson('./scripts/mauritania-' + mapName + '.json');
-		};
-
 		map['data'].addListener('click', function (event) {
 			if ($('#optionProvinces').is(':checked'))
 				showProvincePassposrt(event.feature.getProperty('regionName'));
@@ -551,7 +542,7 @@ var App = (function () {
 	};
 	App.fillMap = function (mapName, data) {
 
-		this._map['data'].loadGeoJson('./scripts/mauritania-' + mapName + '.json');
+		this._map['data'].loadGeoJson('./Scripts/mauritania-' + mapName + '.json');
 
 		var regions = []
 		switch(mapName){
