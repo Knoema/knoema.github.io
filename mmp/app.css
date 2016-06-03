@@ -192,8 +192,8 @@ body.loading > .ajax-loader {
 .filter-form ul li
 {
 	list-style-type: none;
-	font-size: 14pt;
-	padding: 5px 0 5px 5px;
+	font-size: 12pt;
+	padding: 3px 0 3px 5px;
 }
 .filter-form ul li.data-item
 {
@@ -1183,7 +1183,7 @@ ul.subtopic-content li a
 .gallery-wrapper
 {
 	position: relative;
-	width: 910px;
+	width: 800px;
 	margin: 30px auto;
 }
 .gallery-wrapper a
@@ -1197,10 +1197,34 @@ ul.subtopic-content li a
 }
 .gallery-wrapper a span
 {
-	width: 180px;
+	width: 360px;
 	height: 40px;
 	display: block;
 	text-align: center;
+	font-size: 12pt;
 	overflow: hidden;
+	margin-top: 5px;
 }
 /*end: dashboards*/
+
+.statistics-wrapper
+{
+	position: relative;
+	width: 800px;
+	margin: 30px auto;
+}
+.statistics-wrapper ul
+{
+	margin: 0;
+	padding: 0;
+}
+.statistics-wrapper ul li
+{
+	padding: 5px 0px;
+	list-style-type: disc;
+}
+.statistics-wrapper ul li a
+{
+	font-size: 12pt;
+	font-weight: bold;
+}
