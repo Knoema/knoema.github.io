@@ -176,9 +176,12 @@ var App = (function () {
 
 							var popMarkerInfo = {};
 							var popMarkerNameInfo = {};
-							for (var i = baseData.columns.length; i < baseData.data.length; i += baseData.columns.length)
-								if (regions[baseData.data[i + baseColumnIndex]])
-									popMarkerNameInfo[baseData.data[i + baseColumnIndex]] = regions[baseData.data[i + baseColumnIndex]].name;
+							//for (var i = baseData.columns.length; i < baseData.data.length; i += baseData.columns.length)
+							//	if (regions[baseData.data[i + baseColumnIndex]])
+							//		popMarkerNameInfo[baseData.data[i + baseColumnIndex]] = regions[baseData.data[i + baseColumnIndex]].name;
+							for (var r in regions) {
+								popMarkerNameInfo[r] = regions[r].name;
+							}
 							for (var i = count; i < pdata.length; i += count) {
 								var value = pdata[i + valIndex];
 								var regionName = pdata[i + regionColumnIndex];
