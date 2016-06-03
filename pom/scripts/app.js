@@ -534,7 +534,8 @@ var App = (function () {
 					"Frequencies": [],
 					"Dataset": _this.datasetId,
 					"Segments": null,
-					"MeasureAggregations": null
+					"MeasureAggregations": null,
+					"RegionIdsRequired": true
 				}).done(function (data) {
 					return def.resolve(data);
 				});
