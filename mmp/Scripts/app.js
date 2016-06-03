@@ -5,13 +5,13 @@ var access_token = "";
 
 $(function () {
 	/* Authentication via access token  */
-	var params = Knoema.Helpers.parseHashParams();
-	if (params == null)
-		Knoema.Helpers.getAccessToken('Ysyd9Tw', window.location, false, 'read_resources');
-	else {
-		if (params["access_token"] != undefined)
-			access_token = params["access_token"];
-	}
+	//var params = Knoema.Helpers.parseHashParams();
+	//if (params == null)
+	//	Knoema.Helpers.getAccessToken('Ysyd9Tw', window.location, false, 'read_resources');
+	//else {
+	//	if (params["access_token"] != undefined)
+	//		access_token = params["access_token"];
+	//}
 });
 
 var App = (function () {
@@ -40,6 +40,7 @@ var App = (function () {
 		this._currentIndicator = -1;
 		this._currentIndicatorData = {};
 		this._map = null;
+		this._layers = {};
 
 		var _this = this;
 
@@ -121,6 +122,15 @@ var App = (function () {
 			_this.getPopulationIndicators().done(function (dimItems) {
 
 				_this.displayPopulationItems(dimItems);
+
+				var key = '1000000';
+				_this.getPopulationData(key).done(function (indicatorData) {
+
+					$('.data-item:first').addClass('active');
+
+					_this._currentIndicatorData[key] = indicatorData;
+					_this.fillMap('regions', indicatorData);
+				});
 			});
 
 			$('#optionDepartments, #optionProvinces, #optionCommunities').on('change', function () {
@@ -149,6 +159,25 @@ var App = (function () {
 					else {
 						_this.clearMap();
 					}
+				}
+			});
+
+			$('#social-objects-legend li').on('click', function () {
+				var checked = $(this).find('input').attr('checked');
+
+				var layerId = $(this).find('input').data('layer-id');
+
+				if (checked) {
+					$(this).find('input').removeAttr('checked');
+
+					if (layerId)
+						_this.removeLayer(layerId);
+				}
+				else {
+					$(this).find('input').attr('checked', 'checked');
+
+					if (layerId)
+						_this.loadLayer(layerId);
 				}
 			});
 
@@ -533,6 +562,34 @@ var App = (function () {
 
 		//$stat.height($('#left-sidebar').outerHeight() - 141);
 	};
+	App.loadLayer = function (layerId) {
+		var _this = this;
+
+		var layer = new GeoPlayground.Layer({
+			map: _this._map,
+			layerId: layerId,
+			geoPlaygroundId: 'itucrlg'
+		}, function (layerData) {
+		});
+
+		layer.on('beforeDraw', function (layer, callback) {
+
+			layer.data.icon.url = layer.data.icon.url.replace('//knoema.com', '');
+
+			callback(layer.data);
+		});
+
+		layer.load();
+
+		this._layers[layerId] = layer;
+	};
+	App.removeLayer = function (layerId) {
+		
+		if (!this._layers[layerId])
+			return;
+
+		this._layers[layerId].clean();
+	};
 	App.clearMap = function() {
 
 		var _this = this;
@@ -611,35 +668,35 @@ var App = (function () {
 			}
 		});
 	};
-	App.getData = function () {
-		var _this = this;
-		var def = $.Deferred();
-		$.getJSON('http://knoema.com/api/1.0/meta/dataset/' + this.datasetId + '/dimension/region?access_token=' + access_token).done(function (dimension) {
-			if (typeof dimension == "string") {
-				$("#statistics").addClass("error").html(dimension).append("<p><a href='https://knoema.com/sys/login?returnUrl=" + location.protocol + '//' + location.host + location.pathname + "'>Try to use</a> different account</p>");
-			}
-			else
-				$.post('http://knoema.com/api/1.0/data/details?page_id=' + _this.datasetId + '&access_token=' + access_token, {
-					"Header": [],
-					"Stub": [],
-					"Filter": [{
-						"DimensionId": "region",
-						"Members": dimension.items.map(function (i) { return i.key; }),
-						"DimensionName": "region",
-						"DatasetId": _this.datasetId,
-						"Order": "0",
-						"isGeo": true
-					}],
-					"Frequencies": [],
-					"Dataset": _this.datasetId,
-					"Segments": null,
-					"MeasureAggregations": null
-				}).done(function (data) {
-					return def.resolve(data);
-				});
-		});
-		return def;
-	};
+	//App.getData = function () {
+	//	var _this = this;
+	//	var def = $.Deferred();
+	//	$.getJSON('http://knoema.com/api/1.0/meta/dataset/' + this.datasetId + '/dimension/region?access_token=' + access_token).done(function (dimension) {
+	//		if (typeof dimension == "string") {
+	//			$("#statistics").addClass("error").html(dimension).append("<p><a href='https://knoema.com/sys/login?returnUrl=" + location.protocol + '//' + location.host + location.pathname + "'>Try to use</a> different account</p>");
+	//		}
+	//		else
+	//			$.post('http://knoema.com/api/1.0/data/details?page_id=' + _this.datasetId + '&access_token=' + access_token, {
+	//				"Header": [],
+	//				"Stub": [],
+	//				"Filter": [{
+	//					"DimensionId": "region",
+	//					"Members": dimension.items.map(function (i) { return i.key; }),
+	//					"DimensionName": "region",
+	//					"DatasetId": _this.datasetId,
+	//					"Order": "0",
+	//					"isGeo": true
+	//				}],
+	//				"Frequencies": [],
+	//				"Dataset": _this.datasetId,
+	//				"Segments": null,
+	//				"MeasureAggregations": null
+	//			}).done(function (data) {
+	//				return def.resolve(data);
+	//			});
+	//	});
+	//	return def;
+	//};
 	App.displayPopulationItems = function (dimItems, selectedItem) {
 
 		var _this = this;

@@ -260,6 +260,7 @@ body.loading > .ajax-loader {
 {
 	list-style-type: none;
 	width: 240px;
+	cursor: pointer;
 }
 #social-objects-legend ul li img
 {
@@ -1177,3 +1178,29 @@ ul.subtopic-content li a
     bottom: 0;
 }
 /*end: sector monitor*/
+
+/*dashboards*/
+.gallery-wrapper
+{
+	position: relative;
+	width: 910px;
+	margin: 30px auto;
+}
+.gallery-wrapper a
+{
+	margin: 10px;
+	display: inline-block;
+}
+.gallery-wrapper a:hover
+{
+	box-shadow: 0px 0px 20px 5px rgba(0, 0, 0, 0.15);
+}
+.gallery-wrapper a span
+{
+	width: 180px;
+	height: 40px;
+	display: block;
+	text-align: center;
+	overflow: hidden;
+}
+/*end: dashboards*/
