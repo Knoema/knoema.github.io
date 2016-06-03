@@ -187,23 +187,25 @@
             });
             layer.on('click', function (e) {
 
-                //TODO Move handler to separate method (showProfile)
-                console.log('e.data.tooltip', e.data.tooltip);
-
-                var $modalHolder = $('#modal-dialog-holder');
-
-                $modalHolder
-                    .html($.tmpl('profile.html', {
-                        profileData: self.getProfileData(e.data.tooltip)
-                    }));
-
-                $modalHolder
-                    .find('.modal-content')
-                    .css({
-                        'height': $(window).height() - self.topBarHeight
-                    });
-
-                $modalHolder.modal('show');
+                if (e.data.tooltip.name) {
+                    self.infoWindow.setContent($.tmpl('info-window-content.html', { tooltip: e.data.tooltip })[0].outerHTML);
+                    self.infoWindow.setPosition(e.data.latLng);
+                    self.infoWindow.open(self.map);
+                    return;
+                } else {
+                    self.infoWindow.close();
+                    var $modalHolder = $('#modal-dialog-holder');
+                    $modalHolder
+                        .html($.tmpl('profile.html', {
+                            profileData: self.getProfileData(e.data.tooltip)
+                        }));
+                    $modalHolder
+                        .find('.modal-content')
+                        .css({
+                            'height': $(window).height() - self.topBarHeight
+                        });
+                    $modalHolder.modal('show');
+                }
 
             });
             layer.on('beforeDraw', function (e, callback) {
@@ -224,7 +226,7 @@
             'Facilities',
             'Staff',
             'Equipment'
-            ,'Additional info'
+            //,'Additional info'
         ];
 
         var tabs = _.map(tabNames, function (tabName) {
@@ -350,8 +352,6 @@
             return tab.indicators.length;
         });
 
-        console.log('tabs', tabs);
-
         return {
             objectName: data['Object Name'],
             objectType: data['Object Type'],
@@ -383,9 +383,10 @@
         }
         var templates = [
             $.get('tmpl/profile.html', compileTemplate),
+            $.get('tmpl/heatmap-legend.html', compileTemplate),
             $.get('tmpl/region-switcher.html', compileTemplate),
             $.get('tmpl/side-bar-content.html', compileTemplate),
-            $.get('tmpl/heatmap-legend.html', compileTemplate)
+            $.get('tmpl/info-window-content.html', compileTemplate)
         ];
         $.when.apply(null, templates).done(function onTemplatesLoaded() {
 
