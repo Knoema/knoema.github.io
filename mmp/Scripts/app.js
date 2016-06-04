@@ -57,9 +57,12 @@ var App = (function () {
 			center: { lat: 20.215167, lng: -10.777588 }
 		});
 		_this._map = map;
+		
+		this._infoWindow = new google.maps.InfoWindow();
 
 		var markers;
 		var popMarkers = [];
+		
 
 		this.getRegionInfo().done(function (provinces, departments, communes) {
 
@@ -259,7 +262,11 @@ var App = (function () {
 			if (popMarkerInfo[rId] < min)
 				min = popMarkerInfo[rId];
 		}
+		
+		this.setLegendValues('0', '', (max / 1000).toFixed(1) + 'k', true);
+		
 		var _this = this;
+		
 		this._map['data'].setStyle(function (feature) {
 			var fId = feature.getId();
 
@@ -276,6 +283,25 @@ var App = (function () {
 				}
 			}
 		});
+		
+		this._infoWindow.close();
+		
+		this._map['data'].addListener('click', function (event) {
+			
+			var region = event.feature.getProperty('name');
+			var val = popMarkerInfo[event.feature.getId()];
+			
+			if (val == undefined)
+				return;
+			
+			
+			_this._infoWindow.setPosition(event.latLng);
+			_this._infoWindow.setContent("<b>" + region + "</b><br/>" + "Value: " + val);
+			_this._infoWindow.open(_this._map);
+			
+		});
+		
+
 	};
 	App.displayPopulationItems = function (dimItems, selectedItem) {
 

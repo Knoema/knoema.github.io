@@ -243,14 +243,50 @@ body.loading > .ajax-loader {
 	bottom: 0;
 }
 
+#legend
+{
+	position: absolute;
+	right: 20px;
+	top: 20px;
+	width: 260px;
+	font-family: Roboto;
+	font-size: 12px;
+}
+#legend > .color-item {
+	float: left;
+	width: 10%;
+	height: 10px;
+}
+#legend_low
+{
+	position: absolute;
+	top: 100%;
+	left: 0;
+}
+#legend_medium {
+	position: absolute;
+	top: 100%;
+	left: 50%;
+	width: 30px;
+	margin-left: -7px;
+}
+#legend_high
+{
+	position: absolute;
+	top: 100%;
+	right: 0;
+}
+
+
 #social-objects-legend
 {
 	position: absolute;
 	background: #fff;
 	right: 20px;
-	top: 20px;
+	top: 80px;
 	padding: 10px;
 }
+
 #social-objects-legend ul
 {
 	margin: 0;
@@ -1228,3 +1264,4 @@ ul.subtopic-content li a
 	font-size: 12pt;
 	font-weight: bold;
 }
+
