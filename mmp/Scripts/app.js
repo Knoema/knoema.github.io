@@ -114,18 +114,18 @@ var App = (function () {
 			});
 
 			$('#social-objects-legend li').on('click', function () {
-				var checked = $(this).find('input').attr('checked');
+				var checked = $(this).find('input').prop('checked');
 
 				var layerId = $(this).find('input').data('layer-id');
 
 				if (checked) {
-					$(this).find('input').removeAttr('checked');
+					$(this).find('input').prop('checked', false);
 
 					if (layerId)
 						_this.removeLayer(layerId);
 				}
 				else {
-					$(this).find('input').attr('checked', 'checked');
+					$(this).find('input').prop('checked', true);
 
 					if (layerId)
 						_this.loadLayer(layerId);
