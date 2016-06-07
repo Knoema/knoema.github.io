@@ -33,60 +33,24 @@
                 Agence nationale de la Petite Enfance et de la Case des Tout Petit
             </div>
         </div>
+        <div class="main-menu pull-right">
+            <a class="country-overview" href="#">
+                Country Overview
+            </a>
+            <a class="dashboard" href="#dashboard">
+                Dashboard
+            </a>
+        </div>
     </header>
 
     <div class="container-fluid">
         <div class="row">
-            <!--<div class="col-xs-3 col-md-2">-->
-                <!--<div id="side-bar">-->
-                <!--</div>-->
-            <!--</div>-->
             <div class="col-xs-12">
-
                 <div id="map-canvas"></div>
-
-                <div class="btn-group" data-toggle="buttons" id="region-layer-switcher">
-                    <!--
-                    <label class="btn btn-default">
-                        <input type="radio" name="optionsRegion" id="optionTownships" autocomplete="off" data-map-name="township" checked> Townships
-                    </label>
-                    <label class="btn btn-default">
-                        <input type="radio" name="optionsRegion" id="optionCommunities" autocomplete="off" data-map-name="communes"> Communes
-                    </label>
-                    <label class="btn btn-default">
-                        <input type="radio" name="optionsRegion" id="optionDepartments" autocomplete="off" data-map-name="departments"> Departments
-                    </label>
-                    <label class="btn btn-default active">
-                        <input type="radio" name="optionsRegion" id="optionProvinces" autocomplete="off" checked="" data-map-name="provinces"> Regions
-                    </label>
-                    -->
+                <div id="dashboard-holder">
+                    <iframe src="https://knoema.com/resource/embed/zczedee?noHeader=1"></iframe>
                 </div>
-
-                <!--
-
-                <div id="timeline">
-                    <a href="#" class="play-button" title="Play">
-                        <span class="glyphicon glyphicon-play-circle"></span>
-                    </a>
-                    <div class="time-members">
-                        <div class="scroll-content">
-                            <a href="#" class="timepoint">2015 Jan</a>
-                            <a href="#" class="timepoint">2015 Feb</a>
-                            <a href="#" class="timepoint">2015 Mar</a>
-                            <a href="#" class="timepoint active">2015 Apr</a>
-                            <a href="#" class="timepoint">2015 May</a>
-                            <a href="#" class="timepoint">2015 Jun</a>
-                            <a href="#" class="timepoint">2015 Jul</a>
-                            <a href="#" class="timepoint">2015 Aug</a>
-                            <a href="#" class="timepoint">2015 Sep</a>
-                            <a href="#" class="timepoint">2015 Oct</a>
-                            <a href="#" class="timepoint">2015 Nov</a>
-                            <a href="#" class="timepoint">2015 Dec</a>
-                        </div>
-                    </div>
-                </div>
-                -->
-
+                <div class="btn-group" data-toggle="buttons" id="region-layer-switcher"></div>
             </div>
         </div>
     </div>
@@ -115,6 +79,7 @@
 
     <script src="deps/malihu-custom-scrollbar-plugin-3.1.3/jquery.mCustomScrollbar.concat.min.js"></script>
     <script src="deps/bootstrap-select.min.js"></script>
+    <script src="deps/jquery.ba-hashchange.js"></script>
     <script src="deps/jquery.tmpl.js"></script>
 
     <script src="app.js"></script>

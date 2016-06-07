@@ -26,11 +26,45 @@
 
     app.prototype.run = function() {
         var self = this;
+
         $(window).on('resize', $.proxy(this.onResize, this));
 
         $('#map-canvas').height($(window).height() - this.topBarHeight - this.timelineHeight);
 
         this.loadTemplates(function() {});
+
+        $(window).hashchange( function() {
+            var hash = location.hash;
+            $('.main-menu').find('.active').removeClass('active');
+            if (hash === '#dashboard') {
+                $('.main-menu').find('a.dashboard').addClass('active');
+                $('#region-layer-switcher').hide();
+                var h = $(window).height() - self.topBarHeight - 5;//2px bug with embedded resources
+                $('#dashboard-holder').find('iframe').css({
+                    "height": h
+                });
+                $('#dashboard-holder')
+                    .css({
+                        "visibility": "visible"
+                    });
+                $('#region-layer-switcher').hide();
+            } else {
+                $('.main-menu').find('a.country-overview').addClass('active');
+                $('#region-layer-switcher').show();
+                $('#dashboard-holder').css({
+                    "visibility": "hidden"
+                });
+                $('#region-layer-switcher').show();
+            }
+        });
+
+        self.loadMap();
+
+        $(window).hashchange();
+    };
+
+    app.prototype.loadMap = function() {
+        var self = this;
 
         this.map = new google.maps.Map(document.getElementById('map-canvas'), {
             center: {lat: 14.317615218946074, lng: -14.710693093750038},
@@ -75,27 +109,14 @@
             self.reloadLayers();
         };
 
-        $('#search-input').keyup(_.debounce(keyupHandler, 250));
-
+        $('#region-layer-switcher').off();
         $('#region-layer-switcher').on('change', 'input', function() {
             self.filters.activeRegionLayer = $(this).data('layerId');
             self.reloadLayers();
         });
 
-        $('#side-bar').on('change', 'input[type="checkbox"]', function() {
-            var $input = $(this);
-            var property = $input.data('value');
-            if ($input.is(':checked')) {
-                _.remove(self.filters.hide, function(item) {
-                    return item === property;
-                });
-            } else if (_.indexOf(self.filters.hide, property) < 0) {
-                self.filters.hide.push(property);
-            }
-            self.reloadLayers();
-        });
-
         $(window).trigger('resize');
+
     };
 
     app.prototype.reloadLayers = function () {

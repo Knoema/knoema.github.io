@@ -22,18 +22,6 @@ header {
     float: left;
 }
 
-@media
-only screen and (-webkit-min-device-pixel-ratio: 2),
-only screen and (   min--moz-device-pixel-ratio: 2),
-only screen and (     -o-min-device-pixel-ratio: 2/1),
-only screen and (        min-device-pixel-ratio: 2),
-only screen and (                min-resolution: 192dpi),
-only screen and (                min-resolution: 2dppx) {
-    .logo {
-        background-image: url('img/coat-x2.png');
-    }
-}
-
 .header-title {
     color: white;
     display: inline-block;
@@ -53,8 +41,21 @@ only screen and (                min-resolution: 2dppx) {
     user-select: none;
 }
 
-#map-canvas {
+#map-canvas, #dashboard-holder {
     margin: 0 -15px;
+}
+
+#dashboard-holder {
+    background-color: white;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    visibility: hidden;
+}
+
+#dashboard-holder iframe {
+    width: 100%;
 }
 
 #modal-dialog-holder {
@@ -82,4 +83,55 @@ only screen and (                min-resolution: 2dppx) {
     left: 7px;
     bottom: 35px;
     display: none;
+}
+
+.main-menu a {
+    display: inline-block;
+    line-height: 75px;
+    text-decoration: none;
+    padding: 0 20px 0 60px;
+    color: white;
+    background-repeat: no-repeat;
+    background-position: 10px center;
+    font-size: 1.3em;
+    margin: 0 -1px;
+}
+
+.main-menu a.active {
+    background-color: #015527;
+}
+
+.main-menu a:hover {
+    background-color: #3D8056;
+}
+.main-menu a:focus {
+    outline: none;
+}
+
+.main-menu a.country-overview {
+    background-image: url('img/ico-co.png');
+}
+.main-menu a.dashboard {
+    background-image: url('img/ico-db.png');
+}
+
+@media
+only screen and (-webkit-min-device-pixel-ratio: 2),
+only screen and (   min--moz-device-pixel-ratio: 2),
+only screen and (     -o-min-device-pixel-ratio: 2/1),
+only screen and (        min-device-pixel-ratio: 2),
+only screen and (                min-resolution: 192dpi),
+only screen and (                min-resolution: 2dppx) {
+    .logo {
+        background-image: url('img/coat-x2.png');
+        background-size: contain;
+    }
+    .main-menu a.country-overview {
+        background-image: url('img/ico-co-x2.png');
+        background-size: 15% auto;
+    }
+    .main-menu a.dashboard {
+        background-image: url('img/ico-db-x2.png');
+        background-size: 15% auto;
+    }
 }
