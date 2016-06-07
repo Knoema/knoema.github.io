@@ -1,0 +1,3113 @@
+{
+  "id": "ZM",
+  "name": "Zambia",
+  "map": "world",
+  "regions": [
+    {
+      "id": "ZM-01",
+      "name": "Western",
+      "map": "zambiaProvince",
+      "regions": [
+        {
+          "id": "ZM-01-LI",
+          "name": "Limulunga",
+          "map": "zambiaDistricts",
+          "regions": [
+            {
+              "id": "ZM-01-LI-C-LU",
+              "name": "Luena",
+              "map": "zambiaConstituency",
+              "regions": [],
+              "names": [
+                ""
+              ],
+              "latitude": null,
+              "longitude": null
+            }
+          ],
+          "names": [
+            ""
+          ],
+          "latitude": null,
+          "longitude": null
+        },
+        {
+          "id": "ZM-01-LA",
+          "name": "Luampa",
+          "map": "zambiaDistricts",
+          "regions": [
+            {
+              "id": "ZM-01-LA-C-LA",
+              "name": "Luampa",
+              "map": "zambiaConstituency",
+              "regions": [],
+              "names": [
+                ""
+              ],
+              "latitude": null,
+              "longitude": null
+            }
+          ],
+          "names": [
+            ""
+          ],
+          "latitude": null,
+          "longitude": null
+        },
+        {
+          "id": "ZM-01-MI",
+          "name": "Mitete",
+          "map": "zambiaDistricts",
+          "regions": [
+            {
+              "id": "ZM-01-MI-C-LW",
+              "name": "Lukulu West",
+              "map": "zambiaConstituency",
+              "regions": [],
+              "names": [
+                ""
+              ],
+              "latitude": null,
+              "longitude": null
+            }
+          ],
+          "names": [
+            ""
+          ],
+          "latitude": null,
+          "longitude": null
+        },
+        {
+          "id": "ZM-01-MW",
+          "name": "Mwandi",
+          "map": "zambiaDistricts",
+          "regions": [
+            {
+              "id": "ZM-01-MW-C-MW",
+              "name": "Mwandi",
+              "map": "zambiaConstituency",
+              "regions": [],
+              "names": [
+                ""
+              ],
+              "latitude": null,
+              "longitude": null
+            }
+          ],
+          "names": [
+            ""
+          ],
+          "latitude": null,
+          "longitude": null
+        },
+        {
+          "id": "ZM-01-MU",
+          "name": "Mulobezi",
+          "map": "zambiaDistricts",
+          "regions": [
+            {
+              "id": "ZM-01-MU-C-MU",
+              "name": "Mulobezi",
+              "map": "zambiaConstituency",
+              "regions": [],
+              "names": [
+                ""
+              ],
+              "latitude": null,
+              "longitude": null
+            }
+          ],
+          "names": [
+            ""
+          ],
+          "latitude": null,
+          "longitude": null
+        },
+        {
+          "id": "ZM-01-NA",
+          "name": "Nalolo",
+          "map": "zambiaDistricts",
+          "regions": [
+            {
+              "id": "ZM-01-NA-C-NA",
+              "name": "Nalolo",
+              "map": "zambiaConstituency",
+              "regions": [],
+              "names": [
+                ""
+              ],
+              "latitude": null,
+              "longitude": null
+            }
+          ],
+          "names": [
+            ""
+          ],
+          "latitude": null,
+          "longitude": null
+        },
+        {
+          "id": "ZM-01-NK",
+          "name": "Nkeyema",
+          "map": "zambiaDistricts",
+          "regions": [],
+          "names": [
+            ""
+          ],
+          "latitude": null,
+          "longitude": null
+        },
+        {
+          "id": "ZM-01-SK",
+          "name": "Sikongo",
+          "map": "zambiaDistricts",
+          "regions": [
+            {
+              "id": "ZM-01-SK-C-SK",
+              "name": "Sikongo",
+              "map": "zambiaConstituency",
+              "regions": [],
+              "names": [
+                ""
+              ],
+              "latitude": null,
+              "longitude": null
+            }
+          ],
+          "names": [
+            ""
+          ],
+          "latitude": null,
+          "longitude": null
+        },
+        {
+          "id": "ZM-01-SO",
+          "name": "Sioma",
+          "map": "zambiaDistricts",
+          "regions": [],
+          "names": [
+            ""
+          ],
+          "latitude": null,
+          "longitude": null
+        },
+        {
+          "id": "ZM-01-KA",
+          "name": "Kaoma",
+          "map": "zambiaDistricts",
+          "regions": [
+            {
+              "id": "ZM-01-KA-C-KA",
+              "name": "Kaoma Central",
+              "map": "zambiaConstituency",
+              "regions": [],
+              "names": [
+                ""
+              ],
+              "latitude": null,
+              "longitude": null
+            },
+            {
+              "id": "ZM-01-KA-C-MA",
+              "name": "Mangango",
+              "map": "zambiaConstituency",
+              "regions": [],
+              "names": [
+                ""
+              ],
+              "latitude": null,
+              "longitude": null
+            }
+          ],
+          "names": [
+            ""
+          ],
+          "latitude": null,
+          "longitude": null
+        },
+        {
+          "id": "ZM-01-KO",
+          "name": "Kalabo",
+          "map": "zambiaDistricts",
+          "regions": [
+            {
+              "id": "ZM-01-KO-C-KO",
+              "name": "Kalabo Central",
+              "map": "zambiaConstituency",
+              "regions": [],
+              "names": [
+                ""
+              ],
+              "latitude": null,
+              "longitude": null
+            },
+            {
+              "id": "ZM-01-KO-C-LI",
+              "name": "Liuwa",
+              "map": "zambiaConstituency",
+              "regions": [],
+              "names": [
+                ""
+              ],
+              "latitude": null,
+              "longitude": null
+            }
+          ],
+          "names": [
+            ""
+          ],
+          "latitude": null,
+          "longitude": null
+        },
+        {
+          "id": "ZM-01-LU",
+          "name": "Lukulu",
+          "map": "zambiaDistricts",
+          "regions": [
+            {
+              "id": "ZM-01-LU-C-EA",
+              "name": "Lukulu East",
+              "map": "zambiaConstituency",
+              "regions": [],
+              "names": [
+                ""
+              ],
+              "latitude": null,
+              "longitude": null
+            }
+          ],
+          "names": [
+            ""
+          ],
+          "latitude": null,
+          "longitude": null
+        },
+        {
+          "id": "ZM-01-MO",
+          "name": "Mongu",
+          "map": "zambiaDistricts",
+          "regions": [
+            {
+              "id": "ZM-01-MO-C-MC",
+              "name": "Mongu Central",
+              "map": "zambiaConstituency",
+              "regions": [],
+              "names": [
+                ""
+              ],
+              "latitude": null,
+              "longitude": null
+            },
+            {
+              "id": "ZM-01-MO-C-NA",
+              "name": "Nalikwanda",
+              "map": "zambiaConstituency",
+              "regions": [],
+              "names": [
+                ""
+              ],
+              "latitude": null,
+              "longitude": null
+            }
+          ],
+          "names": [
+            ""
+          ],
+          "latitude": null,
+          "longitude": null
+        },
+        {
+          "id": "ZM-01-SA",
+          "name": "Senanga",
+          "map": "zambiaDistricts",
+          "regions": [
+            {
+              "id": "ZM-01-SA-C-SA",
+              "name": "Senanga",
+              "map": "zambiaConstituency",
+              "regions": [],
+              "names": [
+                ""
+              ],
+              "latitude": null,
+              "longitude": null
+            }
+          ],
+          "names": [
+            ""
+          ],
+          "latitude": null,
+          "longitude": null
+        },
+        {
+          "id": "ZM-01-SE",
+          "name": "Sesheke",
+          "map": "zambiaDistricts",
+          "regions": [
+            {
+              "id": "ZM-01-SE-C-SE",
+              "name": "Sesheke",
+              "map": "zambiaConstituency",
+              "regions": [],
+              "names": [
+                ""
+              ],
+              "latitude": null,
+              "longitude": null
+            }
+          ],
+          "names": [
+            ""
+          ],
+          "latitude": null,
+          "longitude": null
+        },
+        {
+          "id": "ZM-01-SH",
+          "name": "Shangambo",
+          "map": "zambiaDistricts",
+          "regions": [
+            {
+              "id": "ZM-01-SH-C-SI",
+              "name": "Sinjembela",
+              "map": "zambiaConstituency",
+              "regions": [],
+              "names": [
+                ""
+              ],
+              "latitude": null,
+              "longitude": null
+            }
+          ],
+          "names": [
+            ""
+          ],
+          "latitude": null,
+          "longitude": null
+        }
+      ],
+      "names": [
+        ""
+      ],
+      "latitude": null,
+      "longitude": null
+    },
+    {
+      "id": "ZM-02",
+      "name": "Central",
+      "map": "zambiaProvince",
+      "regions": [
+        {
+          "id": "ZM-02-CT",
+          "name": "Chitambo",
+          "map": "zambiaDistricts",
+          "regions": [
+            {
+              "id": "ZM-02-CT-C-CT",
+              "name": "Chitambo",
+              "map": "zambiaConstituency",
+              "regions": [],
+              "names": [
+                ""
+              ],
+              "latitude": null,
+              "longitude": null
+            }
+          ],
+          "names": [
+            ""
+          ],
+          "latitude": null,
+          "longitude": null
+        },
+        {
+          "id": "ZM-02-CS",
+          "name": "Chisamba",
+          "map": "zambiaDistricts",
+          "regions": [
+            {
+              "id": "ZM-02-CS-C-CS",
+              "name": "Chisamba",
+              "map": "zambiaConstituency",
+              "regions": [],
+              "names": [
+                ""
+              ],
+              "latitude": null,
+              "longitude": null
+            }
+          ],
+          "names": [
+            ""
+          ],
+          "latitude": null,
+          "longitude": null
+        },
+        {
+          "id": "ZM-02-NG",
+          "name": "Ngabwe",
+          "map": "zambiaDistricts",
+          "regions": [],
+          "names": [
+            ""
+          ],
+          "latitude": null,
+          "longitude": null
+        },
+        {
+          "id": "ZM-02-LU",
+          "name": "Luano",
+          "map": "zambiaDistricts",
+          "regions": [
+            {
+              "id": "ZM-02-LU-C-MS",
+              "name": "Mkushi South",
+              "map": "zambiaConstituency",
+              "regions": [],
+              "names": [
+                ""
+              ],
+              "latitude": null,
+              "longitude": null
+            }
+          ],
+          "names": [
+            ""
+          ],
+          "latitude": null,
+          "longitude": null
+        },
+        {
+          "id": "ZM-02-CH",
+          "name": "Chibombo",
+          "map": "zambiaDistricts",
+          "regions": [
+            {
+              "id": "ZM-02-CH-C-KA",
+              "name": "Katuba",
+              "map": "zambiaConstituency",
+              "regions": [],
+              "names": [
+                ""
+              ],
+              "latitude": null,
+              "longitude": null
+            },
+            {
+              "id": "ZM-02-CH-C-KE",
+              "name": "Keembe",
+              "map": "zambiaConstituency",
+              "regions": [],
+              "names": [
+                ""
+              ],
+              "latitude": null,
+              "longitude": null
+            }
+          ],
+          "names": [
+            ""
+          ],
+          "latitude": null,
+          "longitude": null
+        },
+        {
+          "id": "ZM-02-KA",
+          "name": "Kabwe",
+          "map": "zambiaDistricts",
+          "regions": [
+            {
+              "id": "ZM-02-KA-C-BW",
+              "name": "Bwacha",
+              "map": "zambiaConstituency",
+              "regions": [],
+              "names": [
+                ""
+              ],
+              "latitude": null,
+              "longitude": null
+            },
+            {
+              "id": "ZM-02-KA-C-KA",
+              "name": "Kabwe Central",
+              "map": "zambiaConstituency",
+              "regions": [],
+              "names": [
+                ""
+              ],
+              "latitude": null,
+              "longitude": null
+            }
+          ],
+          "names": [
+            ""
+          ],
+          "latitude": null,
+          "longitude": null
+        },
+        {
+          "id": "ZM-02-KM",
+          "name": "Kapiri Mposhi",
+          "map": "zambiaDistricts",
+          "regions": [
+            {
+              "id": "ZM-02-KM-C-KM",
+              "name": "Kapiri Mposhi",
+              "map": "zambiaConstituency",
+              "regions": [],
+              "names": [
+                ""
+              ],
+              "latitude": null,
+              "longitude": null
+            }
+          ],
+          "names": [
+            ""
+          ],
+          "latitude": null,
+          "longitude": null
+        },
+        {
+          "id": "ZM-02-MK",
+          "name": "Mkushi",
+          "map": "zambiaDistricts",
+          "regions": [
+            {
+              "id": "ZM-02-MK-C-MK",
+              "name": "Mkushi North",
+              "map": "zambiaConstituency",
+              "regions": [],
+              "names": [
+                ""
+              ],
+              "latitude": null,
+              "longitude": null
+            }
+          ],
+          "names": [
+            ""
+          ],
+          "latitude": null,
+          "longitude": null
+        },
+        {
+          "id": "ZM-02-MU",
+          "name": "Mumbwa",
+          "map": "zambiaDistricts",
+          "regions": [
+            {
+              "id": "ZM-02-MU-C-MU",
+              "name": "Mumbwa",
+              "map": "zambiaConstituency",
+              "regions": [],
+              "names": [
+                ""
+              ],
+              "latitude": null,
+              "longitude": null
+            },
+            {
+              "id": "ZM-02-MU-C-NA",
+              "name": "Nangoma",
+              "map": "zambiaConstituency",
+              "regions": [],
+              "names": [
+                ""
+              ],
+              "latitude": null,
+              "longitude": null
+            }
+          ],
+          "names": [
+            ""
+          ],
+          "latitude": null,
+          "longitude": null
+        },
+        {
+          "id": "ZM-02-SE",
+          "name": "Serenje",
+          "map": "zambiaDistricts",
+          "regions": [
+            {
+              "id": "ZM-02-SE-C-MU",
+              "name": "Muchinga",
+              "map": "zambiaConstituency",
+              "regions": [],
+              "names": [
+                ""
+              ],
+              "latitude": null,
+              "longitude": null
+            },
+            {
+              "id": "ZM-02-SE-C-SE",
+              "name": "Serenje",
+              "map": "zambiaConstituency",
+              "regions": [],
+              "names": [
+                ""
+              ],
+              "latitude": null,
+              "longitude": null
+            }
+          ],
+          "names": [
+            ""
+          ],
+          "latitude": null,
+          "longitude": null
+        }
+      ],
+      "names": [
+        ""
+      ],
+      "latitude": null,
+      "longitude": null
+    },
+    {
+      "id": "ZM-03",
+      "name": "Eastern",
+      "map": "zambiaProvince",
+      "regions": [
+        {
+          "id": "ZM-03-SI",
+          "name": "Sinda",
+          "map": "zambiaDistricts",
+          "regions": [
+            {
+              "id": "ZM-03-SI-C-SI",
+              "name": "Sinda",
+              "map": "zambiaConstituency",
+              "regions": [],
+              "names": [
+                ""
+              ],
+              "latitude": null,
+              "longitude": null
+            }
+          ],
+          "names": [
+            ""
+          ],
+          "latitude": null,
+          "longitude": null
+        },
+        {
+          "id": "ZM-03-VU",
+          "name": "Vubwi",
+          "map": "zambiaDistricts",
+          "regions": [
+            {
+              "id": "ZM-03-VU-C-VU",
+              "name": "Vubwi",
+              "map": "zambiaConstituency",
+              "regions": [],
+              "names": [
+                ""
+              ],
+              "latitude": null,
+              "longitude": null
+            }
+          ],
+          "names": [
+            ""
+          ],
+          "latitude": null,
+          "longitude": null
+        },
+        {
+          "id": "ZM-03-CH",
+          "name": "Chadiza",
+          "map": "zambiaDistricts",
+          "regions": [
+            {
+              "id": "ZM-03-CH-C-CH",
+              "name": "Chadiza",
+              "map": "zambiaConstituency",
+              "regions": [],
+              "names": [
+                ""
+              ],
+              "latitude": null,
+              "longitude": null
+            }
+          ],
+          "names": [
+            ""
+          ],
+          "latitude": null,
+          "longitude": null
+        },
+        {
+          "id": "ZM-03-CP",
+          "name": "Chipata",
+          "map": "zambiaDistricts",
+          "regions": [
+            {
+              "id": "ZM-03-CP-C-CH",
+              "name": "Chipangali",
+              "map": "zambiaConstituency",
+              "regions": [],
+              "names": [
+                ""
+              ],
+              "latitude": null,
+              "longitude": null
+            },
+            {
+              "id": "ZM-03-CP-C-CC",
+              "name": "Chipata Central",
+              "map": "zambiaConstituency",
+              "regions": [],
+              "names": [
+                ""
+              ],
+              "latitude": null,
+              "longitude": null
+            },
+            {
+              "id": "ZM-03-CP-C-KA",
+              "name": "Kasenengwa",
+              "map": "zambiaConstituency",
+              "regions": [],
+              "names": [
+                ""
+              ],
+              "latitude": null,
+              "longitude": null
+            },
+            {
+              "id": "ZM-03-CP-C-LU",
+              "name": "Luangeni",
+              "map": "zambiaConstituency",
+              "regions": [],
+              "names": [
+                ""
+              ],
+              "latitude": null,
+              "longitude": null
+            }
+          ],
+          "names": [
+            ""
+          ],
+          "latitude": null,
+          "longitude": null
+        },
+        {
+          "id": "ZM-03-KA",
+          "name": "Katete",
+          "map": "zambiaDistricts",
+          "regions": [
+            {
+              "id": "ZM-03-KA-C-MI",
+              "name": "Milanzi",
+              "map": "zambiaConstituency",
+              "regions": [],
+              "names": [
+                ""
+              ],
+              "latitude": null,
+              "longitude": null
+            },
+            {
+              "id": "ZM-03-KA-C-MK",
+              "name": "Mkaika",
+              "map": "zambiaConstituency",
+              "regions": [],
+              "names": [
+                ""
+              ],
+              "latitude": null,
+              "longitude": null
+            }
+          ],
+          "names": [
+            ""
+          ],
+          "latitude": null,
+          "longitude": null
+        },
+        {
+          "id": "ZM-03-LU",
+          "name": "Lundazi",
+          "map": "zambiaDistricts",
+          "regions": [
+            {
+              "id": "ZM-03-LU-C-CH",
+              "name": "Chasefu",
+              "map": "zambiaConstituency",
+              "regions": [],
+              "names": [
+                ""
+              ],
+              "latitude": null,
+              "longitude": null
+            },
+            {
+              "id": "ZM-03-LU-C-LU",
+              "name": "Lumezi",
+              "map": "zambiaConstituency",
+              "regions": [],
+              "names": [
+                ""
+              ],
+              "latitude": null,
+              "longitude": null
+            },
+            {
+              "id": "ZM-03-LU-C-LN",
+              "name": "Lundazi",
+              "map": "zambiaConstituency",
+              "regions": [],
+              "names": [
+                ""
+              ],
+              "latitude": null,
+              "longitude": null
+            }
+          ],
+          "names": [
+            ""
+          ],
+          "latitude": null,
+          "longitude": null
+        },
+        {
+          "id": "ZM-03-MA",
+          "name": "Mambwe",
+          "map": "zambiaDistricts",
+          "regions": [
+            {
+              "id": "ZM-03-MA-C-MA",
+              "name": "Malambo",
+              "map": "zambiaConstituency",
+              "regions": [],
+              "names": [
+                ""
+              ],
+              "latitude": null,
+              "longitude": null
+            }
+          ],
+          "names": [
+            ""
+          ],
+          "latitude": null,
+          "longitude": null
+        },
+        {
+          "id": "ZM-03-NY",
+          "name": "Nyimba",
+          "map": "zambiaDistricts",
+          "regions": [
+            {
+              "id": "ZM-03-NY-C-NY",
+              "name": "Nyimba",
+              "map": "zambiaConstituency",
+              "regions": [],
+              "names": [
+                ""
+              ],
+              "latitude": null,
+              "longitude": null
+            }
+          ],
+          "names": [
+            ""
+          ],
+          "latitude": null,
+          "longitude": null
+        },
+        {
+          "id": "ZM-03-PE",
+          "name": "Petauke",
+          "map": "zambiaDistricts",
+          "regions": [
+            {
+              "id": "ZM-03-PE-C-KA",
+              "name": "Kapoche",
+              "map": "zambiaConstituency",
+              "regions": [],
+              "names": [
+                ""
+              ],
+              "latitude": null,
+              "longitude": null
+            },
+            {
+              "id": "ZM-03-PE-C-MS",
+              "name": "Msanzala",
+              "map": "zambiaConstituency",
+              "regions": [],
+              "names": [
+                ""
+              ],
+              "latitude": null,
+              "longitude": null
+            },
+            {
+              "id": "ZM-03-PE-C-PE",
+              "name": "Petauke",
+              "map": "zambiaConstituency",
+              "regions": [],
+              "names": [
+                ""
+              ],
+              "latitude": null,
+              "longitude": null
+            }
+          ],
+          "names": [
+            ""
+          ],
+          "latitude": null,
+          "longitude": null
+        }
+      ],
+      "names": [
+        ""
+      ],
+      "latitude": null,
+      "longitude": null
+    },
+    {
+      "id": "ZM-04",
+      "name": "Luapula",
+      "map": "zambiaProvince",
+      "regions": [
+        {
+          "id": "ZM-04-CE",
+          "name": "Chembe",
+          "map": "zambiaDistricts",
+          "regions": [],
+          "names": [
+            ""
+          ],
+          "latitude": null,
+          "longitude": null
+        },
+        {
+          "id": "ZM-04-LU",
+          "name": "Lunga",
+          "map": "zambiaDistricts",
+          "regions": [
+            {
+              "id": "ZM-04-LU-C-LU",
+              "name": "Luapula",
+              "map": "zambiaConstituency",
+              "regions": [],
+              "names": [
+                ""
+              ],
+              "latitude": null,
+              "longitude": null
+            }
+          ],
+          "names": [
+            ""
+          ],
+          "latitude": null,
+          "longitude": null
+        },
+        {
+          "id": "ZM-04-MWA",
+          "name": "Mwansabombwe",
+          "map": "zambiaDistricts",
+          "regions": [
+            {
+              "id": "ZM-04-MWA-C-MWA",
+              "name": "Mwansabombwe",
+              "map": "zambiaConstituency",
+              "regions": [],
+              "names": [
+                ""
+              ],
+              "latitude": null,
+              "longitude": null
+            }
+          ],
+          "names": [
+            ""
+          ],
+          "latitude": null,
+          "longitude": null
+        },
+        {
+          "id": "ZM-04-CI",
+          "name": "Chipili",
+          "map": "zambiaDistricts",
+          "regions": [
+            {
+              "id": "ZM-04-CI-C-CI",
+              "name": "Chipili",
+              "map": "zambiaConstituency",
+              "regions": [],
+              "names": [
+                ""
+              ],
+              "latitude": null,
+              "longitude": null
+            }
+          ],
+          "names": [
+            ""
+          ],
+          "latitude": null,
+          "longitude": null
+        },
+        {
+          "id": "ZM-04-CH",
+          "name": "Chiengi",
+          "map": "zambiaDistricts",
+          "regions": [
+            {
+              "id": "ZM-04-CH-C-CH",
+              "name": "Chiengi",
+              "map": "zambiaConstituency",
+              "regions": [],
+              "names": [
+                ""
+              ],
+              "latitude": null,
+              "longitude": null
+            }
+          ],
+          "names": [
+            ""
+          ],
+          "latitude": null,
+          "longitude": null
+        },
+        {
+          "id": "ZM-04-KA",
+          "name": "Kawambwa",
+          "map": "zambiaDistricts",
+          "regions": [
+            {
+              "id": "ZM-04-KA-C-KA",
+              "name": "Kawambwa",
+              "map": "zambiaConstituency",
+              "regions": [],
+              "names": [
+                ""
+              ],
+              "latitude": null,
+              "longitude": null
+            },
+            {
+              "id": "ZM-04-KA-C-PA",
+              "name": "Pambashe",
+              "map": "zambiaConstituency",
+              "regions": [],
+              "names": [
+                ""
+              ],
+              "latitude": null,
+              "longitude": null
+            }
+          ],
+          "names": [
+            ""
+          ],
+          "latitude": null,
+          "longitude": null
+        },
+        {
+          "id": "ZM-04-MA",
+          "name": "Mansa",
+          "map": "zambiaDistricts",
+          "regions": [
+            {
+              "id": "ZM-04-MA-C-BA",
+              "name": "Bahati",
+              "map": "zambiaConstituency",
+              "regions": [],
+              "names": [
+                ""
+              ],
+              "latitude": null,
+              "longitude": null
+            },
+            {
+              "id": "ZM-04-MA-C-MA",
+              "name": "Mansa Central",
+              "map": "zambiaConstituency",
+              "regions": [],
+              "names": [
+                ""
+              ],
+              "latitude": null,
+              "longitude": null
+            }
+          ],
+          "names": [
+            ""
+          ],
+          "latitude": null,
+          "longitude": null
+        },
+        {
+          "id": "ZM-04-MI",
+          "name": "Milenge",
+          "map": "zambiaDistricts",
+          "regions": [
+            {
+              "id": "ZM-04-MI-C-CH",
+              "name": "Chembe",
+              "map": "zambiaConstituency",
+              "regions": [],
+              "names": [
+                ""
+              ],
+              "latitude": null,
+              "longitude": null
+            }
+          ],
+          "names": [
+            ""
+          ],
+          "latitude": null,
+          "longitude": null
+        },
+        {
+          "id": "ZM-04-MW",
+          "name": "Mwense",
+          "map": "zambiaDistricts",
+          "regions": [
+            {
+              "id": "ZM-04-MW-C-MA",
+              "name": "Mambilima",
+              "map": "zambiaConstituency",
+              "regions": [],
+              "names": [
+                ""
+              ],
+              "latitude": null,
+              "longitude": null
+            },
+            {
+              "id": "ZM-04-MW-C-MW",
+              "name": "Mwense",
+              "map": "zambiaConstituency",
+              "regions": [],
+              "names": [
+                ""
+              ],
+              "latitude": null,
+              "longitude": null
+            }
+          ],
+          "names": [
+            ""
+          ],
+          "latitude": null,
+          "longitude": null
+        },
+        {
+          "id": "ZM-04-NC",
+          "name": "Nchelenge",
+          "map": "zambiaDistricts",
+          "regions": [
+            {
+              "id": "ZM-04-NC-C-NC",
+              "name": "Nchelenge",
+              "map": "zambiaConstituency",
+              "regions": [],
+              "names": [
+                ""
+              ],
+              "latitude": null,
+              "longitude": null
+            }
+          ],
+          "names": [
+            ""
+          ],
+          "latitude": null,
+          "longitude": null
+        },
+        {
+          "id": "ZM-04-SA",
+          "name": "Samfya",
+          "map": "zambiaDistricts",
+          "regions": [
+            {
+              "id": "ZM-04-SA-C-BA",
+              "name": "Bangweulu",
+              "map": "zambiaConstituency",
+              "regions": [],
+              "names": [
+                ""
+              ],
+              "latitude": null,
+              "longitude": null
+            },
+            {
+              "id": "ZM-04-SA-C-CH",
+              "name": "Chifunabuli",
+              "map": "zambiaConstituency",
+              "regions": [],
+              "names": [
+                ""
+              ],
+              "latitude": null,
+              "longitude": null
+            }
+          ],
+          "names": [
+            ""
+          ],
+          "latitude": null,
+          "longitude": null
+        }
+      ],
+      "names": [
+        ""
+      ],
+      "latitude": null,
+      "longitude": null
+    },
+    {
+      "id": "ZM-05",
+      "name": "Northern",
+      "map": "zambiaProvince",
+      "regions": [
+        {
+          "id": "ZM-05-NS",
+          "name": "Nsama",
+          "map": "zambiaDistricts",
+          "regions": [
+            {
+              "id": "ZM-05-NS-C-CH",
+              "name": "chimbamilonga",
+              "map": "zambiaConstituency",
+              "regions": [],
+              "names": [
+                ""
+              ],
+              "latitude": null,
+              "longitude": null
+            }
+          ],
+          "names": [
+            ""
+          ],
+          "latitude": null,
+          "longitude": null
+        },
+        {
+          "id": "ZM-05-CH",
+          "name": "Chilubi",
+          "map": "zambiaDistricts",
+          "regions": [
+            {
+              "id": "ZM-05-CH-C-CH",
+              "name": "Chilubi",
+              "map": "zambiaConstituency",
+              "regions": [],
+              "names": [
+                ""
+              ],
+              "latitude": null,
+              "longitude": null
+            }
+          ],
+          "names": [
+            ""
+          ],
+          "latitude": null,
+          "longitude": null
+        },
+        {
+          "id": "ZM-05-KA",
+          "name": "Kaputa",
+          "map": "zambiaDistricts",
+          "regions": [
+            {
+              "id": "ZM-05-KA-C-KA",
+              "name": "Kaputa",
+              "map": "zambiaConstituency",
+              "regions": [],
+              "names": [
+                ""
+              ],
+              "latitude": null,
+              "longitude": null
+            }
+          ],
+          "names": [
+            ""
+          ],
+          "latitude": null,
+          "longitude": null
+        },
+        {
+          "id": "ZM-05-KS",
+          "name": "Kasama",
+          "map": "zambiaDistricts",
+          "regions": [
+            {
+              "id": "ZM-05-KS-C-KS",
+              "name": "Kasama Central",
+              "map": "zambiaConstituency",
+              "regions": [],
+              "names": [
+                ""
+              ],
+              "latitude": null,
+              "longitude": null
+            },
+            {
+              "id": "ZM-05-KS-C-LU",
+              "name": "Lukashya",
+              "map": "zambiaConstituency",
+              "regions": [],
+              "names": [
+                ""
+              ],
+              "latitude": null,
+              "longitude": null
+            }
+          ],
+          "names": [
+            ""
+          ],
+          "latitude": null,
+          "longitude": null
+        },
+        {
+          "id": "ZM-05-LU",
+          "name": "Luwingu",
+          "map": "zambiaDistricts",
+          "regions": [
+            {
+              "id": "ZM-05-LU-C-LU",
+              "name": "Lubansenshi",
+              "map": "zambiaConstituency",
+              "regions": [],
+              "names": [
+                ""
+              ],
+              "latitude": null,
+              "longitude": null
+            },
+            {
+              "id": "ZM-05-LU-C-LP",
+              "name": "Lupososhi",
+              "map": "zambiaConstituency",
+              "regions": [],
+              "names": [
+                ""
+              ],
+              "latitude": null,
+              "longitude": null
+            }
+          ],
+          "names": [
+            ""
+          ],
+          "latitude": null,
+          "longitude": null
+        },
+        {
+          "id": "ZM-05-MB",
+          "name": "Mbala",
+          "map": "zambiaDistricts",
+          "regions": [
+            {
+              "id": "ZM-05-MB-C-MB",
+              "name": "Mbala",
+              "map": "zambiaConstituency",
+              "regions": [],
+              "names": [
+                ""
+              ],
+              "latitude": null,
+              "longitude": null
+            },
+            {
+              "id": "ZM-05-MB-C-SE",
+              "name": "Senga Hill",
+              "map": "zambiaConstituency",
+              "regions": [],
+              "names": [
+                ""
+              ],
+              "latitude": null,
+              "longitude": null
+            }
+          ],
+          "names": [
+            ""
+          ],
+          "latitude": null,
+          "longitude": null
+        },
+        {
+          "id": "ZM-05-MI",
+          "name": "Mungwi",
+          "map": "zambiaDistricts",
+          "regions": [
+            {
+              "id": "ZM-05-MI-C-MA",
+              "name": "Malole",
+              "map": "zambiaConstituency",
+              "regions": [],
+              "names": [
+                ""
+              ],
+              "latitude": null,
+              "longitude": null
+            }
+          ],
+          "names": [
+            ""
+          ],
+          "latitude": null,
+          "longitude": null
+        },
+        {
+          "id": "ZM-05-MO",
+          "name": "Mporokoso",
+          "map": "zambiaDistricts",
+          "regions": [
+            {
+              "id": "ZM-05-MO-C-LU",
+              "name": "Lunte",
+              "map": "zambiaConstituency",
+              "regions": [],
+              "names": [
+                ""
+              ],
+              "latitude": null,
+              "longitude": null
+            },
+            {
+              "id": "ZM-05-MO-C-MP",
+              "name": "Mporokoso",
+              "map": "zambiaConstituency",
+              "regions": [],
+              "names": [
+                ""
+              ],
+              "latitude": null,
+              "longitude": null
+            }
+          ],
+          "names": [
+            ""
+          ],
+          "latitude": null,
+          "longitude": null
+        },
+        {
+          "id": "ZM-05-MU",
+          "name": "Mpulungu",
+          "map": "zambiaDistricts",
+          "regions": [
+            {
+              "id": "ZM-05-MU-C-MU",
+              "name": "Mpulungu",
+              "map": "zambiaConstituency",
+              "regions": [],
+              "names": [
+                ""
+              ],
+              "latitude": null,
+              "longitude": null
+            }
+          ],
+          "names": [
+            ""
+          ],
+          "latitude": null,
+          "longitude": null
+        }
+      ],
+      "names": [
+        ""
+      ],
+      "latitude": null,
+      "longitude": null
+    },
+    {
+      "id": "ZM-06",
+      "name": "North-Western",
+      "map": "zambiaProvince",
+      "regions": [
+        {
+          "id": "ZM-06-MA",
+          "name": "Manyinga",
+          "map": "zambiaDistricts",
+          "regions": [
+            {
+              "id": "ZM-06-MA-C-KW",
+              "name": "Kabompo West",
+              "map": "zambiaConstituency",
+              "regions": [],
+              "names": [
+                ""
+              ],
+              "latitude": null,
+              "longitude": null
+            },
+            {
+              "id": "ZM-06-MA-C-KA",
+              "name": "Kabompo East",
+              "map": "zambiaConstituency",
+              "regions": [],
+              "names": [
+                ""
+              ],
+              "latitude": null,
+              "longitude": null
+            }
+          ],
+          "names": [
+            ""
+          ],
+          "latitude": null,
+          "longitude": null
+        },
+        {
+          "id": "ZM-06-KL",
+          "name": "Kalumbila",
+          "map": "zambiaDistricts",
+          "regions": [],
+          "names": [
+            ""
+          ],
+          "latitude": null,
+          "longitude": null
+        },
+        {
+          "id": "ZM-06-MS",
+          "name": "Mushindamo",
+          "map": "zambiaDistricts",
+          "regions": [],
+          "names": [
+            ""
+          ],
+          "latitude": null,
+          "longitude": null
+        },
+        {
+          "id": "ZM-06-CH",
+          "name": "Chavuma",
+          "map": "zambiaDistricts",
+          "regions": [
+            {
+              "id": "ZM-06-CH-C-CH",
+              "name": "Chavuma",
+              "map": "zambiaConstituency",
+              "regions": [],
+              "names": [
+                ""
+              ],
+              "latitude": null,
+              "longitude": null
+            }
+          ],
+          "names": [
+            ""
+          ],
+          "latitude": null,
+          "longitude": null
+        },
+        {
+          "id": "ZM-06-KA",
+          "name": "Kasempa",
+          "map": "zambiaDistricts",
+          "regions": [
+            {
+              "id": "ZM-06-KA-C-KA",
+              "name": "Kasempa",
+              "map": "zambiaConstituency",
+              "regions": [],
+              "names": [
+                ""
+              ],
+              "latitude": null,
+              "longitude": null
+            }
+          ],
+          "names": [
+            ""
+          ],
+          "latitude": null,
+          "longitude": null
+        },
+        {
+          "id": "ZM-06-KO",
+          "name": "Kabompo",
+          "map": "zambiaDistricts",
+          "regions": [
+            {
+              "id": "ZM-06-KO-C-KO",
+              "name": "Kabompo",
+              "map": "zambiaConstituency",
+              "regions": [],
+              "names": [
+                ""
+              ],
+              "latitude": null,
+              "longitude": null
+            }
+          ],
+          "names": [
+            ""
+          ],
+          "latitude": null,
+          "longitude": null
+        },
+        {
+          "id": "ZM-06-MU",
+          "name": "Mufumbwe",
+          "map": "zambiaDistricts",
+          "regions": [
+            {
+              "id": "ZM-06-MU-C-MU",
+              "name": "Mufumbwe",
+              "map": "zambiaConstituency",
+              "regions": [],
+              "names": [
+                ""
+              ],
+              "latitude": null,
+              "longitude": null
+            }
+          ],
+          "names": [
+            ""
+          ],
+          "latitude": null,
+          "longitude": null
+        },
+        {
+          "id": "ZM-06-MW",
+          "name": "Mwinilunga",
+          "map": "zambiaDistricts",
+          "regions": [
+            {
+              "id": "ZM-06-MU-C-MW",
+              "name": "Mwinilunga West",
+              "map": "zambiaConstituency",
+              "regions": [],
+              "names": [
+                ""
+              ],
+              "latitude": null,
+              "longitude": null
+            },
+            {
+              "id": "ZM-06-MU-C-ME",
+              "name": "Mwinilunga East",
+              "map": "zambiaConstituency",
+              "regions": [],
+              "names": [
+                ""
+              ],
+              "latitude": null,
+              "longitude": null
+            },
+            {
+              "id": "ZM-06-MW-C-MW",
+              "name": "Mwinilunga",
+              "map": "zambiaConstituency",
+              "regions": [],
+              "names": [
+                ""
+              ],
+              "latitude": null,
+              "longitude": null
+            }
+          ],
+          "names": [
+            ""
+          ],
+          "latitude": null,
+          "longitude": null
+        },
+        {
+          "id": "ZM-06-SO",
+          "name": "Solwezi",
+          "map": "zambiaDistricts",
+          "regions": [
+            {
+              "id": "ZM-06-SO-C-SC",
+              "name": "Solwezi Central",
+              "map": "zambiaConstituency",
+              "regions": [],
+              "names": [
+                ""
+              ],
+              "latitude": null,
+              "longitude": null
+            },
+            {
+              "id": "ZM-06-SO-C-SE",
+              "name": "Solwezi East",
+              "map": "zambiaConstituency",
+              "regions": [],
+              "names": [
+                ""
+              ],
+              "latitude": null,
+              "longitude": null
+            },
+            {
+              "id": "ZM-06-SO-C-SW",
+              "name": "Solwezi West",
+              "map": "zambiaConstituency",
+              "regions": [],
+              "names": [
+                ""
+              ],
+              "latitude": null,
+              "longitude": null
+            }
+          ],
+          "names": [
+            ""
+          ],
+          "latitude": null,
+          "longitude": null
+        },
+        {
+          "id": "ZM-06-ZA",
+          "name": "Zambezi",
+          "map": "zambiaDistricts",
+          "regions": [
+            {
+              "id": "ZM-06-ZA-C-ZE",
+              "name": "Zambezi  East",
+              "map": "zambiaConstituency",
+              "regions": [],
+              "names": [
+                ""
+              ],
+              "latitude": null,
+              "longitude": null
+            },
+            {
+              "id": "ZM-06-ZA-C-ZW",
+              "name": "Zambezi West",
+              "map": "zambiaConstituency",
+              "regions": [],
+              "names": [
+                ""
+              ],
+              "latitude": null,
+              "longitude": null
+            }
+          ],
+          "names": [
+            ""
+          ],
+          "latitude": null,
+          "longitude": null
+        },
+        {
+          "id": "ZM-06-IK",
+          "name": "Ikelenge",
+          "map": "zambiaDistricts",
+          "regions": [
+            {
+              "id": "ZM-06-IK-C-IK",
+              "name": "Ikelenge",
+              "map": "zambiaConstituency",
+              "regions": [],
+              "names": [
+                ""
+              ],
+              "latitude": null,
+              "longitude": null
+            }
+          ],
+          "names": [
+            ""
+          ],
+          "latitude": null,
+          "longitude": null
+        }
+      ],
+      "names": [
+        ""
+      ],
+      "latitude": null,
+      "longitude": null
+    },
+    {
+      "id": "ZM-07",
+      "name": "Southern",
+      "map": "zambiaProvince",
+      "regions": [
+        {
+          "id": "ZM-07-CI",
+          "name": "Chikankata",
+          "map": "zambiaDistricts",
+          "regions": [
+            {
+              "id": "ZM-07-CI-C-CI",
+              "name": "Chikankata",
+              "map": "zambiaConstituency",
+              "regions": [],
+              "names": [
+                ""
+              ],
+              "latitude": null,
+              "longitude": null
+            }
+          ],
+          "names": [
+            ""
+          ],
+          "latitude": null,
+          "longitude": null
+        },
+        {
+          "id": "ZM-07-PE",
+          "name": "Pemba",
+          "map": "zambiaDistricts",
+          "regions": [
+            {
+              "id": "ZM-07-PE-C-PE",
+              "name": "Pemba",
+              "map": "zambiaConstituency",
+              "regions": [],
+              "names": [
+                ""
+              ],
+              "latitude": null,
+              "longitude": null
+            }
+          ],
+          "names": [
+            ""
+          ],
+          "latitude": null,
+          "longitude": null
+        },
+        {
+          "id": "ZM-07-ZI",
+          "name": "Zimba",
+          "map": "zambiaDistricts",
+          "regions": [
+            {
+              "id": "ZM-07-ZI-C-MA",
+              "name": "Mapatizya",
+              "map": "zambiaConstituency",
+              "regions": [],
+              "names": [
+                ""
+              ],
+              "latitude": null,
+              "longitude": null
+            }
+          ],
+          "names": [
+            ""
+          ],
+          "latitude": null,
+          "longitude": null
+        },
+        {
+          "id": "ZM-07-CH",
+          "name": "Choma",
+          "map": "zambiaDistricts",
+          "regions": [
+            {
+              "id": "ZM-07-CH-C-CC",
+              "name": "Choma Central",
+              "map": "zambiaConstituency",
+              "regions": [],
+              "names": [
+                ""
+              ],
+              "latitude": null,
+              "longitude": null
+            },
+            {
+              "id": "ZM-07-CH-C-MB",
+              "name": "Mbabala",
+              "map": "zambiaConstituency",
+              "regions": [],
+              "names": [
+                ""
+              ],
+              "latitude": null,
+              "longitude": null
+            }
+          ],
+          "names": [
+            ""
+          ],
+          "latitude": null,
+          "longitude": null
+        },
+        {
+          "id": "ZM-07-GW",
+          "name": "Gwembe",
+          "map": "zambiaDistricts",
+          "regions": [
+            {
+              "id": "ZM-07-GW-C-GW",
+              "name": "Gwembe",
+              "map": "zambiaConstituency",
+              "regions": [],
+              "names": [
+                ""
+              ],
+              "latitude": null,
+              "longitude": null
+            }
+          ],
+          "names": [
+            ""
+          ],
+          "latitude": null,
+          "longitude": null
+        },
+        {
+          "id": "ZM-07-IT",
+          "name": "Itezhi-tezhi",
+          "map": "zambiaDistricts",
+          "regions": [
+            {
+              "id": "ZM-07-IT-C-IT",
+              "name": "Itezhi-tezhi",
+              "map": "zambiaConstituency",
+              "regions": [],
+              "names": [
+                ""
+              ],
+              "latitude": null,
+              "longitude": null
+            }
+          ],
+          "names": [
+            ""
+          ],
+          "latitude": null,
+          "longitude": null
+        },
+        {
+          "id": "ZM-07-KA",
+          "name": "Kazungula",
+          "map": "zambiaDistricts",
+          "regions": [
+            {
+              "id": "ZM-07-KA-C-KA",
+              "name": "katombola",
+              "map": "zambiaConstituency",
+              "regions": [],
+              "names": [
+                ""
+              ],
+              "latitude": null,
+              "longitude": null
+            }
+          ],
+          "names": [
+            ""
+          ],
+          "latitude": null,
+          "longitude": null
+        },
+        {
+          "id": "ZM-07-KO",
+          "name": "Kalomo",
+          "map": "zambiaDistricts",
+          "regions": [
+            {
+              "id": "ZM-07-KO-C-DU",
+              "name": "Dundumwenzi",
+              "map": "zambiaConstituency",
+              "regions": [],
+              "names": [
+                ""
+              ],
+              "latitude": null,
+              "longitude": null
+            },
+            {
+              "id": "ZM-07-KO-C-KO",
+              "name": "Kalomo Central",
+              "map": "zambiaConstituency",
+              "regions": [],
+              "names": [
+                ""
+              ],
+              "latitude": null,
+              "longitude": null
+            }
+          ],
+          "names": [
+            ""
+          ],
+          "latitude": null,
+          "longitude": null
+        },
+        {
+          "id": "ZM-07-LI",
+          "name": "Livingstone",
+          "map": "zambiaDistricts",
+          "regions": [
+            {
+              "id": "ZM-07-LI-C-LI",
+              "name": "Livingstone",
+              "map": "zambiaConstituency",
+              "regions": [],
+              "names": [
+                ""
+              ],
+              "latitude": null,
+              "longitude": null
+            }
+          ],
+          "names": [
+            ""
+          ],
+          "latitude": null,
+          "longitude": null
+        },
+        {
+          "id": "ZM-07-MA",
+          "name": "Mazabuka",
+          "map": "zambiaDistricts",
+          "regions": [
+            {
+              "id": "ZM-07-MA-C-MA",
+              "name": "Magoye",
+              "map": "zambiaConstituency",
+              "regions": [],
+              "names": [
+                ""
+              ],
+              "latitude": null,
+              "longitude": null
+            },
+            {
+              "id": "ZM-07-MA-C-MC",
+              "name": "Mazabuka Central",
+              "map": "zambiaConstituency",
+              "regions": [],
+              "names": [
+                ""
+              ],
+              "latitude": null,
+              "longitude": null
+            }
+          ],
+          "names": [
+            ""
+          ],
+          "latitude": null,
+          "longitude": null
+        },
+        {
+          "id": "ZM-07-MO",
+          "name": "Monze",
+          "map": "zambiaDistricts",
+          "regions": [
+            {
+              "id": "ZM-07-MO-C-BW",
+              "name": "Bweengwa",
+              "map": "zambiaConstituency",
+              "regions": [],
+              "names": [
+                ""
+              ],
+              "latitude": null,
+              "longitude": null
+            },
+            {
+              "id": "ZM-07-MO-C-MC",
+              "name": "Monze Central",
+              "map": "zambiaConstituency",
+              "regions": [],
+              "names": [
+                ""
+              ],
+              "latitude": null,
+              "longitude": null
+            },
+            {
+              "id": "ZM-07-MO-C-MO",
+              "name": "Moomba",
+              "map": "zambiaConstituency",
+              "regions": [],
+              "names": [
+                ""
+              ],
+              "latitude": null,
+              "longitude": null
+            }
+          ],
+          "names": [
+            ""
+          ],
+          "latitude": null,
+          "longitude": null
+        },
+        {
+          "id": "ZM-07-NA",
+          "name": "Namwala",
+          "map": "zambiaDistricts",
+          "regions": [
+            {
+              "id": "ZM-07-NA-C-NA",
+              "name": "Namwala",
+              "map": "zambiaConstituency",
+              "regions": [],
+              "names": [
+                ""
+              ],
+              "latitude": null,
+              "longitude": null
+            }
+          ],
+          "names": [
+            ""
+          ],
+          "latitude": null,
+          "longitude": null
+        },
+        {
+          "id": "ZM-07-SA",
+          "name": "Siavonga",
+          "map": "zambiaDistricts",
+          "regions": [
+            {
+              "id": "ZM-07-SA-C-SI",
+              "name": "Siavonga",
+              "map": "zambiaConstituency",
+              "regions": [],
+              "names": [
+                ""
+              ],
+              "latitude": null,
+              "longitude": null
+            }
+          ],
+          "names": [
+            ""
+          ],
+          "latitude": null,
+          "longitude": null
+        },
+        {
+          "id": "ZM-07-SI",
+          "name": "Sinazongwe",
+          "map": "zambiaDistricts",
+          "regions": [
+            {
+              "id": "ZM-07-SI-C-SI",
+              "name": "Sinazongwe",
+              "map": "zambiaConstituency",
+              "regions": [],
+              "names": [
+                ""
+              ],
+              "latitude": null,
+              "longitude": null
+            }
+          ],
+          "names": [
+            ""
+          ],
+          "latitude": null,
+          "longitude": null
+        }
+      ],
+      "names": [
+        ""
+      ],
+      "latitude": null,
+      "longitude": null
+    },
+    {
+      "id": "ZM-08",
+      "name": "Copperbelt",
+      "map": "zambiaProvince",
+      "regions": [
+        {
+          "id": "ZM-08-CA",
+          "name": "Chingola",
+          "map": "zambiaDistricts",
+          "regions": [
+            {
+              "id": "ZM-08-CA-C-CA",
+              "name": "Chingola",
+              "map": "zambiaConstituency",
+              "regions": [],
+              "names": [
+                ""
+              ],
+              "latitude": null,
+              "longitude": null
+            },
+            {
+              "id": "ZM-08-CA-C-NC",
+              "name": "Nchanga",
+              "map": "zambiaConstituency",
+              "regions": [],
+              "names": [
+                ""
+              ],
+              "latitude": null,
+              "longitude": null
+            }
+          ],
+          "names": [
+            ""
+          ],
+          "latitude": null,
+          "longitude": null
+        },
+        {
+          "id": "ZM-08-CH",
+          "name": "Chililabombwe",
+          "map": "zambiaDistricts",
+          "regions": [
+            {
+              "id": "ZM-08-CH-C-CH",
+              "name": "Chililabombwe",
+              "map": "zambiaConstituency",
+              "regions": [],
+              "names": [
+                ""
+              ],
+              "latitude": null,
+              "longitude": null
+            }
+          ],
+          "names": [
+            ""
+          ],
+          "latitude": null,
+          "longitude": null
+        },
+        {
+          "id": "ZM-08-KA",
+          "name": "Kalulushi",
+          "map": "zambiaDistricts",
+          "regions": [
+            {
+              "id": "ZM-08-KA-C-KA",
+              "name": "Kalulushi",
+              "map": "zambiaConstituency",
+              "regions": [],
+              "names": [
+                ""
+              ],
+              "latitude": null,
+              "longitude": null
+            }
+          ],
+          "names": [
+            ""
+          ],
+          "latitude": null,
+          "longitude": null
+        },
+        {
+          "id": "ZM-08-KI",
+          "name": "Kitwe",
+          "map": "zambiaDistricts",
+          "regions": [
+            {
+              "id": "ZM-08-KI-C-CH",
+              "name": "Chimwemwe",
+              "map": "zambiaConstituency",
+              "regions": [],
+              "names": [
+                ""
+              ],
+              "latitude": null,
+              "longitude": null
+            },
+            {
+              "id": "ZM-08-KI-C-KA",
+              "name": "Kamfinsa",
+              "map": "zambiaConstituency",
+              "regions": [],
+              "names": [
+                ""
+              ],
+              "latitude": null,
+              "longitude": null
+            },
+            {
+              "id": "ZM-08-KI-C-KW",
+              "name": "Kwacha",
+              "map": "zambiaConstituency",
+              "regions": [],
+              "names": [
+                ""
+              ],
+              "latitude": null,
+              "longitude": null
+            },
+            {
+              "id": "ZM-08-KI-C-NK",
+              "name": "Nkana",
+              "map": "zambiaConstituency",
+              "regions": [],
+              "names": [
+                ""
+              ],
+              "latitude": null,
+              "longitude": null
+            },
+            {
+              "id": "ZM-08-KI-C-WU",
+              "name": "Wusakile",
+              "map": "zambiaConstituency",
+              "regions": [],
+              "names": [
+                ""
+              ],
+              "latitude": null,
+              "longitude": null
+            }
+          ],
+          "names": [
+            ""
+          ],
+          "latitude": null,
+          "longitude": null
+        },
+        {
+          "id": "ZM-08-LA",
+          "name": "Lufwanyama",
+          "map": "zambiaDistricts",
+          "regions": [
+            {
+              "id": "ZM-08-LA-C-LA",
+              "name": "Lufwanyama",
+              "map": "zambiaConstituency",
+              "regions": [],
+              "names": [
+                ""
+              ],
+              "latitude": null,
+              "longitude": null
+            }
+          ],
+          "names": [
+            ""
+          ],
+          "latitude": null,
+          "longitude": null
+        },
+        {
+          "id": "ZM-08-LU",
+          "name": "Luanshya",
+          "map": "zambiaDistricts",
+          "regions": [
+            {
+              "id": "ZM-08-LU-C-LU",
+              "name": "Luanshya",
+              "map": "zambiaConstituency",
+              "regions": [],
+              "names": [
+                ""
+              ],
+              "latitude": null,
+              "longitude": null
+            },
+            {
+              "id": "ZM-08-LU-C-RO",
+              "name": "Roan",
+              "map": "zambiaConstituency",
+              "regions": [],
+              "names": [
+                ""
+              ],
+              "latitude": null,
+              "longitude": null
+            }
+          ],
+          "names": [
+            ""
+          ],
+          "latitude": null,
+          "longitude": null
+        },
+        {
+          "id": "ZM-08-MA",
+          "name": "Masaiti",
+          "map": "zambiaDistricts",
+          "regions": [
+            {
+              "id": "ZM-08-MA-C-KA",
+              "name": "Kafulafuta",
+              "map": "zambiaConstituency",
+              "regions": [],
+              "names": [
+                ""
+              ],
+              "latitude": null,
+              "longitude": null
+            },
+            {
+              "id": "ZM-08-MA-C-MA",
+              "name": "Masaiti",
+              "map": "zambiaConstituency",
+              "regions": [],
+              "names": [
+                ""
+              ],
+              "latitude": null,
+              "longitude": null
+            }
+          ],
+          "names": [
+            ""
+          ],
+          "latitude": null,
+          "longitude": null
+        },
+        {
+          "id": "ZM-08-MP",
+          "name": "Mpongwe",
+          "map": "zambiaDistricts",
+          "regions": [
+            {
+              "id": "ZM-08-MP-C-MO",
+              "name": "Mpongwe",
+              "map": "zambiaConstituency",
+              "regions": [],
+              "names": [
+                ""
+              ],
+              "latitude": null,
+              "longitude": null
+            }
+          ],
+          "names": [
+            ""
+          ],
+          "latitude": null,
+          "longitude": null
+        },
+        {
+          "id": "ZM-08-MU",
+          "name": "Mufulira",
+          "map": "zambiaDistricts",
+          "regions": [
+            {
+              "id": "ZM-08-MU-C-KA",
+              "name": "kankoyo",
+              "map": "zambiaConstituency",
+              "regions": [],
+              "names": [
+                ""
+              ],
+              "latitude": null,
+              "longitude": null
+            },
+            {
+              "id": "ZM-08-MU-C-KN",
+              "name": "kantanshi",
+              "map": "zambiaConstituency",
+              "regions": [],
+              "names": [
+                ""
+              ],
+              "latitude": null,
+              "longitude": null
+            },
+            {
+              "id": "ZM-08-MU-C-MU",
+              "name": "mufulira",
+              "map": "zambiaConstituency",
+              "regions": [],
+              "names": [
+                ""
+              ],
+              "latitude": null,
+              "longitude": null
+            }
+          ],
+          "names": [
+            ""
+          ],
+          "latitude": null,
+          "longitude": null
+        },
+        {
+          "id": "ZM-08-ND",
+          "name": "Ndola",
+          "map": "zambiaDistricts",
+          "regions": [
+            {
+              "id": "ZM-08-ND-C-BW",
+              "name": "Bwana Mkubwa",
+              "map": "zambiaConstituency",
+              "regions": [],
+              "names": [
+                ""
+              ],
+              "latitude": null,
+              "longitude": null
+            },
+            {
+              "id": "ZM-08-ND-C-CH",
+              "name": "Chifubu",
+              "map": "zambiaConstituency",
+              "regions": [],
+              "names": [
+                ""
+              ],
+              "latitude": null,
+              "longitude": null
+            },
+            {
+              "id": "ZM-08-ND-C-KA",
+              "name": "Kabushi",
+              "map": "zambiaConstituency",
+              "regions": [],
+              "names": [
+                ""
+              ],
+              "latitude": null,
+              "longitude": null
+            },
+            {
+              "id": "ZM-08-ND-C-ND",
+              "name": "Ndola Central",
+              "map": "zambiaConstituency",
+              "regions": [],
+              "names": [
+                ""
+              ],
+              "latitude": null,
+              "longitude": null
+            }
+          ],
+          "names": [
+            ""
+          ],
+          "latitude": null,
+          "longitude": null
+        }
+      ],
+      "names": [
+        ""
+      ],
+      "latitude": null,
+      "longitude": null
+    },
+    {
+      "id": "ZM-09",
+      "name": "Lusaka",
+      "map": "zambiaProvince",
+      "regions": [
+        {
+          "id": "ZM-09-CL",
+          "name": "Chilanga",
+          "map": "zambiaDistricts",
+          "regions": [
+            {
+              "id": "ZM-09-CL-C-CL",
+              "name": "Chilanga",
+              "map": "zambiaConstituency",
+              "regions": [],
+              "names": [
+                ""
+              ],
+              "latitude": null,
+              "longitude": null
+            }
+          ],
+          "names": [
+            ""
+          ],
+          "latitude": null,
+          "longitude": null
+        },
+        {
+          "id": "ZM-09-CR",
+          "name": "Chirundu",
+          "map": "zambiaDistricts",
+          "regions": [],
+          "names": [
+            ""
+          ],
+          "latitude": null,
+          "longitude": null
+        },
+        {
+          "id": "ZM-09-RU",
+          "name": "Rufunsa",
+          "map": "zambiaDistricts",
+          "regions": [
+            {
+              "id": "ZM-09-RU-C-RU",
+              "name": "Rufunsa",
+              "map": "zambiaConstituency",
+              "regions": [],
+              "names": [
+                ""
+              ],
+              "latitude": null,
+              "longitude": null
+            }
+          ],
+          "names": [
+            ""
+          ],
+          "latitude": null,
+          "longitude": null
+        },
+        {
+          "id": "ZM-09-SH",
+          "name": "Shibuyunji",
+          "map": "zambiaDistricts",
+          "regions": [
+            {
+              "id": "ZM-09-SH-C-MW",
+              "name": "Mwmbeshi",
+              "map": "zambiaConstituency",
+              "regions": [],
+              "names": [
+                ""
+              ],
+              "latitude": null,
+              "longitude": null
+            }
+          ],
+          "names": [
+            ""
+          ],
+          "latitude": null,
+          "longitude": null
+        },
+        {
+          "id": "ZM-09-CH",
+          "name": "Chongwe",
+          "map": "zambiaDistricts",
+          "regions": [
+            {
+              "id": "ZM-09-CH-C-CH",
+              "name": "Chongwe",
+              "map": "zambiaConstituency",
+              "regions": [],
+              "names": [
+                ""
+              ],
+              "latitude": null,
+              "longitude": null
+            },
+            {
+              "id": "ZM-09-CH-CH",
+              "name": "Chongwe (City)",
+              "map": "",
+              "regions": [],
+              "names": [
+                ""
+              ],
+              "latitude": null,
+              "longitude": null
+            }
+          ],
+          "names": [
+            ""
+          ],
+          "latitude": null,
+          "longitude": null
+        },
+        {
+          "id": "ZM-09-KA",
+          "name": "Kafue",
+          "map": "zambiaDistricts",
+          "regions": [
+            {
+              "id": "ZM-09-KA-C-KA",
+              "name": "Kafue",
+              "map": "zambiaConstituency",
+              "regions": [],
+              "names": [
+                ""
+              ],
+              "latitude": null,
+              "longitude": null
+            }
+          ],
+          "names": [
+            ""
+          ],
+          "latitude": null,
+          "longitude": null
+        },
+        {
+          "id": "ZM-09-LD",
+          "name": "Lusaka (District)",
+          "map": "zambiaDistricts",
+          "regions": [
+            {
+              "id": "ZM-09-LD-C-CH",
+              "name": "Chawama",
+              "map": "zambiaConstituency",
+              "regions": [],
+              "names": [
+                ""
+              ],
+              "latitude": null,
+              "longitude": null
+            },
+            {
+              "id": "ZM-09-LD-C-KA",
+              "name": "Kabwata",
+              "map": "zambiaConstituency",
+              "regions": [],
+              "names": [
+                ""
+              ],
+              "latitude": null,
+              "longitude": null
+            },
+            {
+              "id": "ZM-09-LD-C-KN",
+              "name": "Kanyama",
+              "map": "zambiaConstituency",
+              "regions": [],
+              "names": [
+                ""
+              ],
+              "latitude": null,
+              "longitude": null
+            },
+            {
+              "id": "ZM-09-LD-C-LU",
+              "name": "Lusaka Central",
+              "map": "zambiaConstituency",
+              "regions": [],
+              "names": [
+                ""
+              ],
+              "latitude": null,
+              "longitude": null
+            },
+            {
+              "id": "ZM-09-LD-C-MA",
+              "name": "Mandevu",
+              "map": "zambiaConstituency",
+              "regions": [],
+              "names": [
+                ""
+              ],
+              "latitude": null,
+              "longitude": null
+            },
+            {
+              "id": "ZM-09-LD-C-MT",
+              "name": "Matero",
+              "map": "zambiaConstituency",
+              "regions": [],
+              "names": [
+                ""
+              ],
+              "latitude": null,
+              "longitude": null
+            },
+            {
+              "id": "ZM-09-LD-C-MU",
+              "name": "Munali",
+              "map": "zambiaConstituency",
+              "regions": [],
+              "names": [
+                ""
+              ],
+              "latitude": null,
+              "longitude": null
+            },
+            {
+              "id": "ZM-09-LD-LU",
+              "name": "Lusaka (City)",
+              "map": "",
+              "regions": [],
+              "names": [
+                ""
+              ],
+              "latitude": null,
+              "longitude": null
+            }
+          ],
+          "names": [
+            ""
+          ],
+          "latitude": null,
+          "longitude": null
+        },
+        {
+          "id": "ZM-09-LU",
+          "name": "Luangwa",
+          "map": "zambiaDistricts",
+          "regions": [
+            {
+              "id": "ZM-09-LU-C-FI",
+              "name": "Feira",
+              "map": "zambiaConstituency",
+              "regions": [],
+              "names": [
+                ""
+              ],
+              "latitude": null,
+              "longitude": null
+            }
+          ],
+          "names": [
+            ""
+          ],
+          "latitude": null,
+          "longitude": null
+        }
+      ],
+      "names": [
+        ""
+      ],
+      "latitude": null,
+      "longitude": null
+    },
+    {
+      "id": "ZM-10",
+      "name": "Muchinga",
+      "map": "zambiaProvince",
+      "regions": [
+        {
+          "id": "ZM-03-SH",
+          "name": "Shiwa'Ngandu",
+          "map": "zambiaDistricts",
+          "regions": [
+            {
+              "id": "ZM-03-SH-C-SH",
+              "name": "Shiwa'Ngandu",
+              "map": "zambiaConstituency",
+              "regions": [],
+              "names": [
+                ""
+              ],
+              "latitude": null,
+              "longitude": null
+            }
+          ],
+          "names": [
+            ""
+          ],
+          "latitude": null,
+          "longitude": null
+        },
+        {
+          "id": "ZM-03-CA",
+          "name": "Chama",
+          "map": "zambiaDistricts",
+          "regions": [
+            {
+              "id": "ZM-03-CA-C-NO",
+              "name": "ChamaNorth",
+              "map": "zambiaConstituency",
+              "regions": [],
+              "names": [
+                ""
+              ],
+              "latitude": null,
+              "longitude": null
+            },
+            {
+              "id": "ZM-03-CA-C-SO",
+              "name": "Chama South",
+              "map": "zambiaConstituency",
+              "regions": [],
+              "names": [
+                ""
+              ],
+              "latitude": null,
+              "longitude": null
+            }
+          ],
+          "names": [
+            ""
+          ],
+          "latitude": null,
+          "longitude": null
+        },
+        {
+          "id": "ZM-05-CI",
+          "name": "Chinsali",
+          "map": "zambiaDistricts",
+          "regions": [
+            {
+              "id": "ZM-05-CI-C-CI",
+              "name": "Chinsali",
+              "map": "zambiaConstituency",
+              "regions": [],
+              "names": [
+                ""
+              ],
+              "latitude": null,
+              "longitude": null
+            }
+          ],
+          "names": [
+            ""
+          ],
+          "latitude": null,
+          "longitude": null
+        },
+        {
+          "id": "ZM-05-IS",
+          "name": "Isoka",
+          "map": "zambiaDistricts",
+          "regions": [
+            {
+              "id": "ZM-05-IS-C-IS",
+              "name": "Isoka",
+              "map": "zambiaConstituency",
+              "regions": [],
+              "names": [
+                ""
+              ],
+              "latitude": null,
+              "longitude": null
+            },
+            {
+              "id": "ZM-05-IS-C-EA",
+              "name": "Isoka East",
+              "map": "zambiaConstituency",
+              "regions": [],
+              "names": [
+                ""
+              ],
+              "latitude": null,
+              "longitude": null
+            },
+            {
+              "id": "ZM-05-IS-C-WE",
+              "name": "Isoka West",
+              "map": "zambiaConstituency",
+              "regions": [],
+              "names": [
+                ""
+              ],
+              "latitude": null,
+              "longitude": null
+            }
+          ],
+          "names": [
+            ""
+          ],
+          "latitude": null,
+          "longitude": null
+        },
+        {
+          "id": "ZM-05-MP",
+          "name": "Mpika",
+          "map": "zambiaDistricts",
+          "regions": [
+            {
+              "id": "ZM-05-MP-C-KA",
+              "name": "Kanchibiya",
+              "map": "zambiaConstituency",
+              "regions": [],
+              "names": [
+                ""
+              ],
+              "latitude": null,
+              "longitude": null
+            },
+            {
+              "id": "ZM-05-MP-C-MF",
+              "name": "Mfuwe",
+              "map": "zambiaConstituency",
+              "regions": [],
+              "names": [
+                ""
+              ],
+              "latitude": null,
+              "longitude": null
+            },
+            {
+              "id": "ZM-05-MP-C-MP",
+              "name": "Mpika",
+              "map": "zambiaConstituency",
+              "regions": [],
+              "names": [
+                ""
+              ],
+              "latitude": null,
+              "longitude": null
+            }
+          ],
+          "names": [
+            ""
+          ],
+          "latitude": null,
+          "longitude": null
+        },
+        {
+          "id": "ZM-05-NA",
+          "name": "Nakonde",
+          "map": "zambiaDistricts",
+          "regions": [
+            {
+              "id": "ZM-05-NA-C-NA",
+              "name": "Nakonde",
+              "map": "zambiaConstituency",
+              "regions": [],
+              "names": [
+                ""
+              ],
+              "latitude": null,
+              "longitude": null
+            }
+          ],
+          "names": [
+            ""
+          ],
+          "latitude": null,
+          "longitude": null
+        },
+        {
+          "id": "ZM-10-MA",
+          "name": "Mafinga",
+          "map": "zambiaDistricts",
+          "regions": [
+            {
+              "id": "ZM-10-MA-C-MA",
+              "name": "Mafinga",
+              "map": "zambiaConstituency",
+              "regions": [],
+              "names": [
+                ""
+              ],
+              "latitude": null,
+              "longitude": null
+            }
+          ],
+          "names": [
+            ""
+          ],
+          "latitude": null,
+          "longitude": null
+        }
+      ],
+      "names": [
+        ""
+      ],
+      "latitude": null,
+      "longitude": null
+    }
+  ],
+  "names": [
+    "Zambian",
+    "Замбия"
+  ],
+  "latitude": -13.45824,
+  "longitude": 27.77475
+}

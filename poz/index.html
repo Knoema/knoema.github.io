@@ -1,0 +1,171 @@
+﻿<!DOCTYPE html>
+
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<title>ZAMBIA PRESIDENTIAL ELECTION 2016</title>
+	<link href='https://fonts.googleapis.com/css?family=Roboto:400,500,700' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" href="./styles/app.css" type="text/css" />
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/css/bootstrap-select.min.css">
+	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" />
+</head>
+<body>
+	<input type="hidden" id="settings_datasetId" value="rhiyjoe" />
+	<input type="hidden" id="settings_host" value="collect.knoema.com" />
+
+	<input type="hidden" id="settings_dashCountrySummary" value="qctsvkf" />
+	<input type="hidden" id="settings_dashCountryDetails" value="ijeosj" />
+	<input type="hidden" id="settings_dashRegionSummary" value="ocrorrb" />
+	<input type="hidden" id="settings_dashRegionDetails" value="inssgkf" />
+	<input type="hidden" id="settings_dashDepSummary" value="kevgpkd" />
+	<input type="hidden" id="settings_dashDepDetails" value="uzjsglc" />
+	<input type="hidden" id="settings_dashCommuneSummary" value="xwgswse" />
+	<input type="hidden" id="settings_dashCommuneDetails" value="noehfkg" />
+	<!--<input type="hidden" id="settings_dashTownshipSummary" value="rohpxrg" />
+	<input type="hidden" id="settings_dashTownshipDetails" value="zjmrjpc" />-->
+
+	<input type="hidden" id="settings_skipFirstColumns" value="5" />
+	<input type="hidden" id="settings_departmentColumnIndex" value="3" />
+	<input type="hidden" id="settings_provinceColumnIndex" value="2" />
+	<input type="hidden" id="settings_dateColumnIndex" value="1" />
+
+	<div id="left-sidebar">
+		<img src="./img/coat.png" style="position: absolute; left: 15px; top: 13px; width: 53px;" />
+		<div class="title">ZAMBIA PRESIDENTIAL ELECTION 2016</div>
+		<a id="source-link" href="//knoema.com/rhiyjoe" target="_blank"><i class="fa fa-external-link" title="View data"></i></a>
+		<!--<div class="questionnaire">
+			<label>questionnaire
+				<select class="form-control input-sm">
+					<option>PULSE OF THE NATION</option>
+				</select>
+			</label>
+		</div>-->
+
+		<div class="vote">
+			<span class="sr-label pull-left">
+				<br />
+				A VOTé</span>
+			<span id="voteCount" class="value pull-left"></span>
+			<span class="sr-label pull-left">VOTES SUR<br />
+				LA DATE<br />
+				SéLECTIONNEé</span>
+			<span id="voteCountByDate" class="value pull-left"></span>
+			<button id="showCountrySummary" type="button" class="btn btn-default btn-sm pull-right">Résumé du pays</button>
+		</div>
+		<div id="statistics"></div>
+	</div>
+	<div id="content">
+		<div id="map"></div>
+
+		<div class="btn-group" data-toggle="buttons" style="position: absolute; left: 15px; top: 15px;">
+			<!--<div class="pools-wrapper">
+				<select id="pools" class="selectpicker" multiple style="display: none;">
+					<option selected="selected" value="Pole 1">Pole 1</option>
+					<option selected="selected" value="Pole 2">Pole 2</option>
+					<option selected="selected" value="Pole 3">Pole 3</option>
+					<option selected="selected" value="Pole 4">Pole 4</option>
+					<option selected="selected" value="Pole 5">Pole 5</option>
+				</select>
+			</div>-->
+			<label class="btn btn-default active">
+				<input type="radio" name="optionsRegion" id="option-provinces" autocomplete="off" checked data-map-name="regions">
+				Regions
+		
+			</label>
+			<label class="btn btn-default">
+				<input type="radio" name="optionsRegion" id="option-districts" autocomplete="off" data-map-name="districts">
+				Districts
+		
+			</label>
+			<label class="btn btn-default">
+				<input type="radio" name="optionsRegion" id="option-constituencies" autocomplete="off" data-map-name="constituencies">
+				Constituencies
+		
+			</label>
+			<!--<label class="btn btn-default">
+				<input type="radio" name="optionsRegion" id="optionTownships" autocomplete="off" data-map-name="township"> Townships
+			</label>-->
+		</div>
+
+		<div style="position: absolute; right: 15px; top: 15px; width: 150px;">
+			<div class="btn-group" data-toggle="buttons" style="display: none;">
+				<label class="btn btn-default">
+					<input type="radio" name="optionsVisualization" id="optionBubbles" autocomplete="off">
+					Bubbles
+			
+				</label>
+				<label class="btn btn-default active">
+					<input type="radio" name="optionsVisualization" id="optionHeatmap" autocomplete="off" checked>
+					Heatmap
+			
+				</label>
+			</div>
+			<div id="legend">
+				<div id="legend_low"></div>
+				<div id="legend_medium"></div>
+				<div id="legend_high"></div>
+			</div>
+		</div>
+
+		<div class="btn-group" data-toggle="buttons" style="position: absolute; left: 15px; bottom: 50px;">
+			<!--<label class="btn btn-default active" >
+				<input type="radio" name="mapType" id="optionPopulation" autocomplete="off" checked> Population
+			</label>
+			<label class="btn btn-default">
+				<input type="radio" name="mapType" id="optionQuestionnaire" autocomplete="off"> Questionnaire
+			</label>-->
+			<select class="form-control input-sm" id="population-select">
+				<option value="q">Questionnaire</option>
+			</select>
+		</div>
+
+		<div id="timeline"></div>
+	</div>
+
+	<div id="passportPopup" class="passport-popup">
+		<div class="passport__close"></div>
+		<div class="passport__content">
+			<h1 class="title"></h1>
+			<ul class="nav nav-tabs" role="tablist">
+				<li role="presentation" class="active"><a href="#tab-summary" aria-controls="summary" role="tab" data-toggle="tab">Summary</a></li>
+				<li role="presentation"><a href="#tab-details" aria-controls="details" role="tab" data-toggle="tab">Details</a></li>
+			</ul>
+			<div class="tab-content">
+				<div role="tabpanel" class="tab-pane active text-center" id="tab-summary">...</div>
+				<div role="tabpanel" class="tab-pane text-center" id="tab-details">...</div>
+			</div>
+		</div>
+	</div>
+
+	<div id="countrySummaryPopup" class="passport-popup">
+		<div class="passport__close"></div>
+		<div class="passport__content">
+			<h1 class="title">Résumé</h1>
+			<ul class="nav nav-tabs" role="tablist">
+				<li role="presentation" class="active"><a href="#tab-country-summary" aria-controls="country-summary" role="tab" data-toggle="tab">Summary</a></li>
+				<li role="presentation"><a href="#tab-country-details" aria-controls="country-details" role="tab" data-toggle="tab">Details</a></li>
+			</ul>
+			<div class="tab-content">
+				<div role="tabpanel" class="tab-pane active text-center" id="tab-country-summary"></div>
+				<div role="tabpanel" class="tab-pane text-center" id="tab-country-details"></div>
+			</div>
+		</div>
+	</div>
+
+	<script src="http://code.jquery.com/jquery-2.2.1.min.js"></script>
+	<script src="https://maps.googleapis.com/maps/api/js?libraries=visualization"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+	<script type="text/javascript" src="http://knoema.com/app-script?version=2.0"></script>
+
+	<!-- Latest compiled and minified JavaScript -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/js/bootstrap-select.min.js"></script>
+
+	<script src="./scripts/numeral.min.js"></script>
+	<script src="./scripts/app.js"></script>
+
+	<script>
+		App.init();
+	</script>
+</body>
+</html>
