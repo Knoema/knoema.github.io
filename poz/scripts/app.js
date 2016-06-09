@@ -48,7 +48,7 @@ var App = (function () {
 		['skipFirstColumns', 'departmentColumnIndex', 'provinceColumnIndex', 'dateColumnIndex'].forEach(function (field) {
 			_this[field] = parseInt($('#settings_' + field).val());
 		});
-		
+
 		var refreshVoteCount = function () {
 			$.getJSON('http://' + _this.host + '/api/forms/zpe20160530/status').done(function (result) {
 				var formatedVoteCount = window['numeral'](result.all).format('0,0');
@@ -73,6 +73,13 @@ var App = (function () {
 				$('#tab-country-details').html('<iframe src="' + detailsUrl + '">');
 			}
 			$('#countrySummaryPopup').show();
+		});
+
+		$('#top-bar .tab').on('click', function () {
+			var $this = $(this);
+			$this.siblings('a').removeClass('active');
+			$this.addClass('active');
+			$('.tab1, .tab2').toggle();
 		});
 
 		var showProvincePassposrt = function (regionName) {
@@ -108,7 +115,7 @@ var App = (function () {
 			$('#tab-details').html('<iframe src="' + detailsUrl + '">');
 			$('#passportPopup').show();
 		};
-		
+
 		var loadMap = function (mapName) {
 
 			map['data'].forEach(function (feature) {
@@ -356,6 +363,8 @@ var App = (function () {
 				$timeline.on('click', '.item:not(.disabled)', function (event) {
 					$(event.delegateTarget).find('.item.active').removeClass('active');
 					currentDate = $(event.currentTarget).toggleClass('active', true).data('date');
+					if ($(this).parent().hasClass('timeline'))
+						return false;
 					_this.refreshSidebar(data, currentDate);
 					if (currentColumnIndex != null) {
 						if (currentAnswers != null) {
@@ -553,12 +562,12 @@ var App = (function () {
 		var $items = [];
 		for (var i = 0; i < dimItems.length; i++) {
 			var item = dimItems[i];
-			
+
 			var options = {
 				value: item.key,
 				text: (item.level == 1 ? '\xa0\xa0\xa0' : '') + item.name
 			};
-			if(!item.hasData)
+			if (!item.hasData)
 				options.disabled = 'disabled';
 			if (item.key == selectedItem)
 				options.selected = 'selected';
@@ -753,7 +762,9 @@ var App = (function () {
 		'q11': 'Are you aware of the referendum?',
 		'q12': 'Are you voting?',
 		'q13': 'Who is your preferred presidential candidate for 2016?',
-		'q14': 'Which party exhibits more violent acts in Zambia?'
+		'q14': 'Which party exhibits more violent acts in Zambia?',
+		'q15': 'Which MP do you prefer in your constituency?',
+		'q16': 'Which campaign materials people have received most?'
 	};
 
 	return App;

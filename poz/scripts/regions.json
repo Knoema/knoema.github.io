@@ -1693,33 +1693,22 @@
           "regions": [
             {
               "id": "ZM-06-MU-C-MW",
-              "name": "Mwinilunga West",
+              "name": "Ikelenge",
               "map": "zambiaConstituency",
               "regions": [],
               "names": [
-                ""
+                "Mwinilunga West"
               ],
               "latitude": null,
               "longitude": null
             },
             {
               "id": "ZM-06-MU-C-ME",
-              "name": "Mwinilunga East",
-              "map": "zambiaConstituency",
-              "regions": [],
-              "names": [
-                ""
-              ],
-              "latitude": null,
-              "longitude": null
-            },
-            {
-              "id": "ZM-06-MW-C-MW",
               "name": "Mwinilunga",
               "map": "zambiaConstituency",
               "regions": [],
               "names": [
-                ""
+                "Mwinilunga East"
               ],
               "latitude": null,
               "longitude": null
@@ -1814,19 +1803,7 @@
           "id": "ZM-06-IK",
           "name": "Ikelenge",
           "map": "zambiaDistricts",
-          "regions": [
-            {
-              "id": "ZM-06-IK-C-IK",
-              "name": "Ikelenge",
-              "map": "zambiaConstituency",
-              "regions": [],
-              "names": [
-                ""
-              ],
-              "latitude": null,
-              "longitude": null
-            }
-          ],
+          "regions": [],
           "names": [
             ""
           ],
@@ -2966,34 +2943,23 @@
           "map": "zambiaDistricts",
           "regions": [
             {
-              "id": "ZM-05-IS-C-IS",
+              "id": "ZM-05-IS-C-WE",
               "name": "Isoka",
               "map": "zambiaConstituency",
               "regions": [],
               "names": [
-                ""
+                "Isoka West"
               ],
               "latitude": null,
               "longitude": null
             },
             {
               "id": "ZM-05-IS-C-EA",
-              "name": "Isoka East",
+              "name": "Mafinga",
               "map": "zambiaConstituency",
               "regions": [],
               "names": [
-                ""
-              ],
-              "latitude": null,
-              "longitude": null
-            },
-            {
-              "id": "ZM-05-IS-C-WE",
-              "name": "Isoka West",
-              "map": "zambiaConstituency",
-              "regions": [],
-              "names": [
-                ""
+                "Isoka East"
               ],
               "latitude": null,
               "longitude": null
@@ -3077,19 +3043,7 @@
           "id": "ZM-10-MA",
           "name": "Mafinga",
           "map": "zambiaDistricts",
-          "regions": [
-            {
-              "id": "ZM-10-MA-C-MA",
-              "name": "Mafinga",
-              "map": "zambiaConstituency",
-              "regions": [],
-              "names": [
-                ""
-              ],
-              "latitude": null,
-              "longitude": null
-            }
-          ],
+          "regions": [],
           "names": [
             ""
           ],

@@ -11,7 +11,7 @@
 	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" />
 </head>
 <body>
-	<input type="hidden" id="settings_datasetId" value="rhiyjoe" />
+	<input type="hidden" id="settings_datasetId" value="ckpsnxd" />
 	<input type="hidden" id="settings_host" value="collect.knoema.com" />
 
 	<input type="hidden" id="settings_dashCountrySummary" value="qctsvkf" />
@@ -30,11 +30,19 @@
 	<input type="hidden" id="settings_provinceColumnIndex" value="2" />
 	<input type="hidden" id="settings_dateColumnIndex" value="1" />
 
-	<div id="left-sidebar">
-		<img src="./img/coat.png" style="position: absolute; left: 15px; top: 13px; width: 53px;" />
+	<div id="top-bar">
+		<img src="./img/coat.png" />
 		<div class="title">ZAMBIA PRESIDENTIAL ELECTION 2016</div>
-		<a id="source-link" href="//knoema.com/rhiyjoe" target="_blank"><i class="fa fa-external-link" title="View data"></i></a>
-		<!--<div class="questionnaire">
+		<a id="source-link" href="//knoema.com/ckpsnxd" target="_blank"><i class="fa fa-external-link" title="View data"></i></a>
+		<a class="questionnaire tab active">questionnaire</a>
+		<a class="candidates tab">candidates</a>
+	</div>
+	<div class="tab1">
+		<div id="left-sidebar">
+
+
+
+			<!--<div class="questionnaire">
 			<label>questionnaire
 				<select class="form-control input-sm">
 					<option>PULSE OF THE NATION</option>
@@ -42,25 +50,25 @@
 			</label>
 		</div>-->
 
-		<div class="vote">
-			<span class="sr-label pull-left">
+			<div class="vote">
+				<span class="sr-label pull-left">
+					<br />
+					VOTED TOTAL</span>
+				<span id="voteCount" class="value pull-left"></span>
+				<span class="sr-label pull-left">VOTED ON 
 				<br />
-				VOTED TOTAL</span>
-			<span id="voteCount" class="value pull-left"></span>
-			<span class="sr-label pull-left">VOTED ON 
-				<br />
-				THE SELECTED<br />
-				DATE</span>
-			<span id="voteCountByDate" class="value pull-left"></span>
-			<button id="showCountrySummary" type="button" class="btn btn-default btn-sm pull-right">COUNTRY REPORT</button>
+					THE SELECTED<br />
+					DATE</span>
+				<span id="voteCountByDate" class="value pull-left"></span>
+				<button id="showCountrySummary" type="button" class="btn btn-default btn-sm pull-right">COUNTRY REPORT</button>
+			</div>
+			<div id="statistics"></div>
 		</div>
-		<div id="statistics"></div>
-	</div>
-	<div id="content">
-		<div id="map"></div>
+		<div id="content">
+			<div id="map"></div>
 
-		<div class="btn-group" data-toggle="buttons" style="position: absolute; left: 15px; top: 15px;">
-			<!--<div class="pools-wrapper">
+			<div class="btn-group" data-toggle="buttons" style="position: absolute; left: 15px; top: 15px;">
+				<!--<div class="pools-wrapper">
 				<select id="pools" class="selectpicker" multiple style="display: none;">
 					<option selected="selected" value="Pole 1">Pole 1</option>
 					<option selected="selected" value="Pole 2">Pole 2</option>
@@ -69,59 +77,195 @@
 					<option selected="selected" value="Pole 5">Pole 5</option>
 				</select>
 			</div>-->
-			<label class="btn btn-default active">
-				<input type="radio" name="optionsRegion" id="option-provinces" autocomplete="off" checked data-map-name="regions">
-				Regions
+				<label class="btn btn-default active">
+					<input type="radio" name="optionsRegion" id="option-provinces" autocomplete="off" checked data-map-name="regions">
+					Regions
 		
-			</label>
-			<label class="btn btn-default">
-				<input type="radio" name="optionsRegion" id="option-districts" autocomplete="off" data-map-name="districts">
-				Districts
+				</label>
+				<label class="btn btn-default">
+					<input type="radio" name="optionsRegion" id="option-districts" autocomplete="off" data-map-name="districts">
+					Districts
 		
-			</label>
-			<label class="btn btn-default">
-				<input type="radio" name="optionsRegion" id="option-constituencies" autocomplete="off" data-map-name="constituencies">
-				Constituencies
+				</label>
+				<label class="btn btn-default">
+					<input type="radio" name="optionsRegion" id="option-constituencies" autocomplete="off" data-map-name="constituencies">
+					Constituencies
 		
-			</label>
-			<!--<label class="btn btn-default">
+				</label>
+				<!--<label class="btn btn-default">
 				<input type="radio" name="optionsRegion" id="optionTownships" autocomplete="off" data-map-name="township"> Townships
 			</label>-->
-		</div>
-
-		<div style="position: absolute; right: 15px; top: 15px; width: 150px;">
-			<div class="btn-group" data-toggle="buttons" style="display: none;">
-				<label class="btn btn-default">
-					<input type="radio" name="optionsVisualization" id="optionBubbles" autocomplete="off">
-					Bubbles
-			
-				</label>
-				<label class="btn btn-default active">
-					<input type="radio" name="optionsVisualization" id="optionHeatmap" autocomplete="off" checked>
-					Heatmap
-			
-				</label>
 			</div>
-			<div id="legend">
-				<div id="legend_low"></div>
-				<div id="legend_medium"></div>
-				<div id="legend_high"></div>
-			</div>
-		</div>
 
-		<div class="btn-group" data-toggle="buttons" style="position: absolute; left: 15px; bottom: 50px;">
-			<!--<label class="btn btn-default active" >
+			<div style="position: absolute; right: 15px; top: 15px; width: 150px;">
+				<div class="btn-group" data-toggle="buttons" style="display: none;">
+					<label class="btn btn-default">
+						<input type="radio" name="optionsVisualization" id="optionBubbles" autocomplete="off">
+						Bubbles
+			
+					</label>
+					<label class="btn btn-default active">
+						<input type="radio" name="optionsVisualization" id="optionHeatmap" autocomplete="off" checked>
+						Heatmap
+			
+					</label>
+				</div>
+				<div id="legend">
+					<div id="legend_low"></div>
+					<div id="legend_medium"></div>
+					<div id="legend_high"></div>
+				</div>
+			</div>
+
+			<div class="btn-group" data-toggle="buttons" style="position: absolute; left: 15px; bottom: 50px;">
+				<!--<label class="btn btn-default active" >
 				<input type="radio" name="mapType" id="optionPopulation" autocomplete="off" checked> Population
 			</label>
 			<label class="btn btn-default">
 				<input type="radio" name="mapType" id="optionQuestionnaire" autocomplete="off"> Questionnaire
 			</label>-->
-			<select class="form-control input-sm" id="population-select">
-				<option value="q">Questionnaire</option>
-			</select>
+				<select class="form-control input-sm" id="population-select">
+					<option value="q">Questionnaire</option>
+				</select>
+			</div>
+
+			<div id="timeline"></div>
+		</div>
+	</div>
+
+	<div class="tab2">
+		<div class="candidate" id="edgar">
+			<div class="pic">
+				<span class="img"></span>
+				<div class="name">
+					<span>Edgar Lungu</span> <span>(PF)</span>
+				</div>
+			</div>
+			<div class="rating">
+				<div><span class="year">2016</span> <span class="vote-percent"></span><span class="value">49.5%</span></div>
+				<div><span class="year">2015</span> <span class="vote-percent"></span><span class="value">49.17%</span></div>
+			</div>
+			<a class="view"></a>
+		</div>
+		<div class="candidate" id="hakainde">
+			<div class="pic">
+				<span class="img"></span>
+				<div class="name">
+					<span>Hakainde Hichilema 
+					</span><span>(UPND)</span>
+				</div>
+			</div>
+			<div class="rating">
+				<div><span class="year">2016</span> <span class="vote-percent"></span><span class="value">43.51%</span></div>
+				<div><span class="year">2015</span> <span class="vote-percent"></span><span class="value">44.91%</span></div>
+			</div>
+			<a class="view"></a>
+		</div>
+		<div class="candidate" id="tilyenji">
+			<div class="pic">
+				<span class="img"></span>
+				<div class="name">
+					<span>Tilyenji Kaunda
+					</span><span>(UNIP)</span>
+				</div>
+			</div>
+			<div class="rating">
+				<div><span class="year">2016</span> <span class="vote-percent"></span><span class="value">1.35%</span></div>
+				<div><span class="year">2015</span> <span class="vote-percent"></span><span class="value">0.70%</span></div>
+			</div>
+			<a class="view"></a>
+		</div>
+		<div class="candidate" id="edith">
+			<div class="pic">
+				<span class="img"></span>
+				<div class="name">
+					<span>Edith Nawakwi 
+					</span><span>(FDD)</span>
+				</div>
+			</div>
+			<div class="rating">
+				<div><span class="year">2016</span> <span class="vote-percent"></span><span class="value">1.04%</span></div>
+				<div><span class="year">2015</span> <span class="vote-percent"></span><span class="value">1.09%</span></div>
+			</div>
+			<a class="view"></a>
+		</div>
+		<div class="candidate" id="saviour">
+			<div class="pic">
+				<span class="img"></span>
+				<div class="name">
+					<span>Saviour Chishimba 
+					</span><span>(UPP)</span>
+				</div>
+			</div>
+			<div class="rating">
+				<div><span class="year">2016</span> <span class="vote-percent"></span><span class="value">0.72%</span></div>
+				<div><span class="year">2015</span> <span class="vote-percent"></span><span class="value dnp">Did not participate</span></div>
+			</div>
+			<a class="view"></a>
+		</div>
+		<div class="candidate" id="peter">
+			<div class="pic">
+				<span class="img"></span>
+				<div class="name">
+					<span>Peter Sinkamba 
+					</span><span>(Green Party)</span>
+				</div>
+			</div>
+			<div class="rating">
+				<div><span class="year">2016</span> <span class="vote-percent"></span><span class="value">0.49%</span></div>
+				<div><span class="year">2015</span> <span class="vote-percent"></span><span class="value">0.09%</span></div>
+			</div>
+			<a class="view"></a>
+		</div>
+		<div class="candidate" id="wynter">
+			<div class="pic">
+				<span class="img"></span>
+				<div class="name">
+					<span>Wynter Kabimba 
+					</span><span>(Rainbow Party)</span>
+				</div>
+			</div>
+			<div class="rating">
+				<div><span class="year">2016</span> <span class="vote-percent"></span><span class="value">0.1%</span></div>
+				<div><span class="year">2015</span> <span class="vote-percent"></span><span class="value dnp">Did not participate</span></div>
+			</div>
+			<a class="view"></a>
+		</div>
+		<div class="candidate" id="andy">
+			<div class="pic">
+				<span class="img"></span>
+				<div class="name">
+					<span>Andy Banda 
+					</span><span>(PAC)</span>
+				</div>
+			</div>
+			<div class="rating">
+				<div><span class="year">2016</span> <span class="vote-percent"></span><span class="value">0.09%</span></div>
+				<div><span class="year">2015</span> <span class="vote-percent"></span><span class="value dnp">Did not participate</span></div>
+			</div>
+			<a class="view"></a>
+		</div>
+		<div class="candidate" id="maxwell">
+			<div class="pic">
+				<span class="img"></span>
+				<div class="name">
+					<span>Maxwell Mwamba 
+					</span><span>(DA)</span>
+				</div>
+			</div>
+			<div class="rating">
+				<div><span class="year">2016</span> <span class="vote-percent"></span><span class="value">0.05%</span></div>
+				<div><span class="year">2015</span> <span class="vote-percent"></span><span class="value dnp">Did not participate</span></div>
+			</div>
+			<a class="view"></a>
 		</div>
 
-		<div id="timeline"></div>
+		<div id="timeline" class="timeline">
+			<div style="width: 25%;" class="item " data-date="05/30/2016"><span class="day">2</span>&nbsp;<span class="month">mai</span></div>
+			<div style="width: 25%;" class="item " data-date="05/31/2016"><span class="day">4</span>&nbsp;<span class="month">mai</span></div>
+			<div style="width: 25%;" class="item " data-date="06/01/2016"><span class="day">5</span>&nbsp;<span class="month">mai</span></div>
+			<div style="width: 25%;" class="item active" data-date="06/02/2016"><span class="day">6</span>&nbsp;<span class="month">mai</span></div>
+		</div>
 	</div>
 
 	<div id="passportPopup" class="passport-popup">
