@@ -281,17 +281,17 @@ var App = (function () {
 
 					var isTwnshp = false;
 					if ($('#option-provinces').is(':checked')) {
-						regionColumnIndex = 19;
+						regionColumnIndex = 21;
 						regionNameIndex = 2;
 						regions = provinces;
 					}
 					else if ($('#option-districts').is(':checked')) {
-						regionColumnIndex = 20;
+						regionColumnIndex = 22;
 						regionNameIndex = 3;
 						regions = departments;
 					}
 					else if ($('#option-constituencies').is(':checked')) {
-						regionColumnIndex = 21;
+						regionColumnIndex = 23;
 						regionNameIndex = 4;
 						regions = communes;
 					}

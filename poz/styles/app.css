@@ -95,7 +95,7 @@
 
 		.tab2 #edgar .pic .img
 		{
-			background-image: url('/img/can-Edgar-Lungu.png');
+			background-image: url('../img/can-Edgar-Lungu.png');
 			margin-top: 10px;
 		}
 
@@ -122,7 +122,7 @@
 
 	.tab2 #tilyenji .pic .img
 	{
-		background-image: url('/img/can-Tilyenji-Kaunda.png');
+		background-image: url('../img/can-Tilyenji-Kaunda.png');
 		margin-top: 10px;
 	}
 
@@ -138,7 +138,7 @@
 
 	.tab2 #edith .pic .img
 	{
-		background-image: url('/img/can-Edith-Nawakwi.png');
+		background-image: url('../img/can-Edith-Nawakwi.png');
 		margin-top: 10px;
 	}
 
@@ -154,7 +154,7 @@
 
 	.tab2 #saviour .pic .img
 	{
-		background-image: url('/img/can-Saviour-Chishimba.png');
+		background-image: url('../img/can-Saviour-Chishimba.png');
 		margin-top: 10px;
 	}
 
@@ -170,7 +170,7 @@
 
 	.tab2 #peter .pic .img
 	{
-		background-image: url('/img/can-Peter-Sinkamba.png');
+		background-image: url('../img/can-Peter-Sinkamba.png');
 		margin-top: 10px;
 	}
 
@@ -186,7 +186,7 @@
 
 	.tab2 #wynter .pic .img
 	{
-		background-image: url('/img/can-Wynter-Kabimba.png');
+		background-image: url('../img/can-Wynter-Kabimba.png');
 		margin-top: 10px;
 	}
 
@@ -202,7 +202,7 @@
 
 	.tab2 #andy .pic .img
 	{
-		background-image: url('/img/can-Andy-Banda.png');
+		background-image: url('../img/can-Andy-Banda.png');
 		margin-top: 10px;
 	}
 
@@ -218,7 +218,7 @@
 
 	.tab2 #maxwell .pic .img
 	{
-		background-image: url('/img/can-Maxwell-Mwamba.png');
+		background-image: url('../img/can-Maxwell-Mwamba.png');
 		margin-top: 10px;
 	}
 
@@ -323,7 +323,7 @@
 	{
 		width: 14px;
 		height: 23px;
-		background: #5ea835 url('/img/arrow.png') center center no-repeat;
+		background: #5ea835 url('../img/arrow.png') center center no-repeat;
 		border-radius: 3px;
 		float: right;
 		width: 75px;
