@@ -330,15 +330,391 @@
 		height: 40px;
 		margin-top: 25px;
 		margin-right: 20px;
+		cursor: pointer;
 	}
 
-	.tab2 .timeline
+	.tab2 .timeline, .tab3 .timeline
 	{
 		position: relative !important;
 		top: 50px;
 		width: 1050px;
 		margin: auto;
 	}
+
+
+.tab3
+{
+	display: none;
+	width: 1050px;
+	margin: auto;
+	margin-top: 70px;
+}
+
+	.tab3 .timeline
+	{
+		top: 0;
+	}
+
+	.tab3 .score
+	{
+		border-bottom: 1px solid #5ea835;
+		color: #0a5209;
+		padding-bottom: 20px;
+		height: 430px;
+	}
+
+	.tab3 .head
+	{
+		height: 80px;
+	}
+
+		.tab3 .head .back
+		{
+			display: inline-block;
+			float: left;
+			color: #5ea835;
+			margin-left: 30px;
+			font-size: 10.5pt;
+			text-transform: uppercase;
+			margin-top: 25px;
+			text-decoration: none;
+		}
+
+			.tab3 .head .back i
+			{
+				color: #5ea835;
+				font-size: 18pt;
+				font-weight: bold;
+				padding-right: 10px;
+				vertical-align: sub;
+			}
+
+		.tab3 .head .pic
+		{
+			width: 300px;
+			display: inline-block;
+			margin-left: 360px;
+		}
+
+			.tab3 .head .pic .img
+			{
+				display: inline-block;
+				height: 60px;
+				width: 60px;
+				vertical-align: text-bottom;
+				margin-top: 10px;
+			}
+
+		.tab3 .head.edgar .pic .img
+		{
+			background-image: url('../img/can-Edgar-Lungu.png');
+		}
+
+		.tab3 .head.hakainde .pic .img
+		{
+			background-image: url('../img/can-Hakainde-Hichilema.png');
+		}
+
+		.tab3 .head.tilyenji .pic .img
+		{
+			background-image: url('../img/can-Tilyenji-Kaunda.png');
+		}
+
+		.tab3 .head.edith .pic .img
+		{
+			background-image: url('../img/can-Edith-Nawakwi.png');
+		}
+
+		.tab3 .head.saviour .pic .img
+		{
+			background-image: url('../img/can-Saviour-Chishimba.png');
+		}
+
+		.tab3 .head.peter .pic .img
+		{
+			background-image: url('../img/can-Peter-Sinkamba .png');
+		}
+
+		.tab3 .head.wynter .pic .img
+		{
+			background-image: url('../img/can-Wynter-Kabimba.png');
+		}
+
+		.tab3 .head.andy .pic .img
+		{
+			background-image: url('../img/can-Andy-Banda .png');
+		}
+
+		.tab3 .head.maxwell .pic .img
+		{
+			background-image: url('../img/can-Maxwell-Mwamba .png');
+		}
+
+		.tab3 .head .pic .name
+		{
+			display: inline-block;
+			font: 500 16px 'Roboto', sans-serif;
+			color: #0a5209;
+			position: relative;
+			top: -12px;
+			margin-left: 15px;
+		}
+
+
+
+			.tab3 .head .pic .name span:last-child
+			{
+				color: #5ea835;
+				display: block;
+			}
+
+
+	.tab3 .score .header
+	{
+		text-align: center;
+		font-size: 24px;
+		color: #0a5209;
+		padding: 20px 0px;
+	}
+
+	.tab3 .map
+	{
+		float: left;
+		height: 475px;
+		width: 490px;
+		margin-left: 20px;
+		padding-right: 20px;
+		margin-top: -80px;
+	}
+
+	.tab3 .districts .map
+	{
+		position: relative;
+		left: -48px;
+	}
+
+	.tab3 .constituencey .map
+	{
+		position: relative;
+		left: -108px;
+	}
+
+	.tab3 .constituencey .header, .tab3 .districts .header
+	{
+		position: relative;
+		left: -275px;
+	}
+
+	.tab3 .chart
+	{
+		float: right;
+		height: 330px;
+		width: 540px;
+		border-left: 1px solid #5ea835;
+	}
+
+	.tab3 path
+	{
+		pointer-events: all;
+		stroke: #0a5209;
+		cursor: pointer;
+	}
+
+		.tab3 path.selected
+		{
+			fill: #5ea835;
+			cursor: pointer;
+		}
+
+		.tab3 path:hover
+		{
+			fill: #5ea835;
+			cursor: pointer;
+		}
+
+		.tab3 path.active
+		{
+			fill: #0a5209;
+		}
+
+			.tab3 path.active:hover
+			{
+				fill: #0a5209;
+			}
+
+
+	/*#region chart*/
+	.tab3 .chart .candidate
+	{
+	}
+
+		.tab3 .chart .candidate .pic, .tab3 .chart .candidate .rating
+		{
+			display: inline-block;
+		}
+
+		.tab3 .chart .candidate .pic
+		{
+			padding: 0 5px;
+			font-size: 10.5pt;
+			width: 199px;
+		}
+
+			.tab3 .chart .candidate .pic .img
+			{
+				display: inline-block;
+				padding: 0 10px;
+			}
+
+			.tab3 .chart .candidate .pic .name
+			{
+				display: inline-block;
+				font: 500 16px 'Roboto', sans-serif;
+				color: #0a5209;
+				margin-left: 5px;
+			}
+
+
+
+		.tab3 .chart .candidate .rating
+		{
+			display: inline-block;
+			position: relative;
+			top: 5px;
+		}
+
+			.tab3 .chart .candidate .rating div
+			{
+				display: block;
+				height: 10px;
+			}
+
+				.tab3 .chart .candidate .rating div .year, .tab3 .chart .candidate .rating div .value
+				{
+					display: inline-block;
+					font-size: 8px;
+				}
+
+				.tab3 .chart .candidate .rating div:first-child .vote-percent
+				{
+					display: inline-block;
+					width: 260px;
+					background-color: #075f57;
+					height: 5px;
+					margin-left: 10px;
+				}
+
+				.tab3 .chart .candidate .rating div:last-child .vote-percent
+				{
+					display: inline-block;
+					width: 260px;
+					background-color: #b9619e;
+					height: 5px;
+					margin-left: 10px;
+				}
+
+				.tab3 .chart .candidate .rating div .value
+				{
+					margin-left: 15px;
+				}
+
+		.tab3 .chart .candidate .dnp
+		{
+			margin-left: 0 !important;
+			color: #b9619e;
+		}
+
+
+		.tab3 .chart .candidate.edgar .rating div:first-child .vote-percent
+		{
+			width: 270px;
+		}
+
+		.tab3 .chart .candidate.hakainde .rating div:first-child .vote-percent
+		{
+			width: 230px;
+		}
+
+		.tab3 .chart .candidate.hakainde .rating div:last-child .vote-percent
+		{
+			width: 240px;
+		}
+
+		.tab3 .chart .candidate.tilyenji .rating div:first-child .vote-percent
+		{
+			width: 30px;
+		}
+
+		.tab3 .chart .candidate.tilyenji .rating div:last-child .vote-percent
+		{
+			width: 15px;
+		}
+
+		.tab3 .chart .candidate.edith .rating div:first-child .vote-percent
+		{
+			width: 25px;
+		}
+
+		.tab3 .chart .candidate.edith .rating div:last-child .vote-percent
+		{
+			width: 30px;
+		}
+
+		.tab3 .chart .candidate.saviour .rating div:first-child .vote-percent
+		{
+			width: 18px;
+		}
+
+		.tab3 .chart .candidate.saviour .rating div:last-child .vote-percent
+		{
+			width: 0px;
+		}
+
+		.tab3 .chart .candidate.peter .rating div:first-child .vote-percent
+		{
+			width: 13px;
+		}
+
+		.tab3 .chart .candidate.peter .rating div:last-child .vote-percent
+		{
+			width: 8px;
+		}
+
+		.tab3 .chart .candidate.wynter .rating div:first-child .vote-percent
+		{
+			width: 10px;
+		}
+
+		.tab3 .chart .candidate.wynter .rating div:last-child .vote-percent
+		{
+			width: 0px;
+		}
+
+		.tab3 .chart .candidate.andy .rating div:first-child .vote-percent
+		{
+			width: 8px;
+		}
+
+		.tab3 .chart .candidate.andy .rating div:last-child .vote-percent
+		{
+			width: 0px;
+		}
+
+		.tab3 .chart .candidate.maxwell .rating div:first-child .vote-percent
+		{
+			width: 2px;
+		}
+
+		.tab3 .chart .candidate.maxwell .rating div:last-child .vote-percent
+		{
+			width: 0px;
+		}
+
+
+
+/*#endregion*/
+
+
 
 #left-sidebar
 {

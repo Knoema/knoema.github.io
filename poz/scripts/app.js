@@ -82,6 +82,169 @@ var App = (function () {
 			$('.tab1, .tab2').toggle();
 		});
 
+		var candidate = {
+			'edgar': {
+				'name': 'Edgar Lungu',
+				'party': '(PF)'
+			},
+			'hakainde': {
+				'name': 'Hakainde Hichilema ',
+				'party': '(UPND)'
+			},
+			'tilyenji': {
+				'name': 'Tilyenji Kaunda',
+				'party': '(UNIP)'
+			},
+			'edith': {
+				'name': 'Edith Nawakwi',
+				'party': '(FDD)'
+			},
+			'saviour': {
+				'name': 'Saviour Chishimba',
+				'party': '(UPP)'
+			},
+			'peter': {
+				'name': 'Peter Sinkamba',
+				'party': '(Greens Party)'
+			},
+			'winter': {
+				'name': 'Winter Kabimba',
+				'party': '(Rainbow Party)'
+			},
+			'andy': {
+				'name': 'Andy Banda',
+				'party': '(PAC)'
+			},
+			'maxwell': {
+				'name': 'Maxwell Mwamba',
+				'party': '(DA)'
+			}
+		};
+
+		$('.tab2 .candidate .view').on('click', function () {
+			var $this = $(this);
+			$('.tab2').hide('slow');
+			$('.tab3').show('slow');
+			var $head = $('.head');
+			var id = $this.parent().get(0).id;
+			$head.addClass(id);
+			var can = candidate[id];
+			$head.find('.name span:first-child').text(can.name).end().find('.name span:last-child').text(can.party);
+			return false;
+		});
+
+		$('.tab3 .head .back').on('click', function () {
+			$('.tab2').show('slow');
+			$('.tab3').hide('slow');
+			return false;
+		});
+
+		$('.tab3 g#zambia-province path').on('click', function () {
+			var $this = $(this);
+			var province = App.regions.find(function (region) { return $this.get(0).id === region.id; });
+			$this.siblings('path').removeClass('active');
+			$this.addClass('active');
+			var $districtsMap = $('#zambia-districts');
+			$districtsMap.find('path').removeClass('selected active');
+			$('.tab3 .districts .header').text(province.name + " province");
+			province.regions.forEach(function (district, idx) {
+				if (idx == 0) {
+					$districtsMap.find('#' + district.id).addClass('active')
+					selectConst(district);
+				}
+				$districtsMap.find('#' + district.id).addClass('selected').data('regions', district);
+			});
+		});
+
+		var selectConst = function (district) {
+			var $consMap = $('#zambia-constituency');
+			$consMap.find('path').removeClass('selected active');
+			$('.tab3 .constituencey .header').text(district.name + " district");
+			district.regions.forEach(function (cons, idx) {
+				if (idx == 0)
+					$consMap.find('#' + cons.id).addClass('selected active');
+				else
+					$consMap.find('#' + cons.id).addClass('selected');
+			});
+		};
+
+		$('.tab3 g#zambia-districts').on('click', 'path.selected', function () {
+			var $this = $(this);
+			var districts = $this.data('regions');
+
+			$this.siblings('path').removeClass('active');
+			$this.addClass('active');
+			var $districtsMap = $('#zambia-districts');
+			$('.tab3 .constituencey .header').text(districts.name + " district");
+			selectConst(districts);
+		});
+
+		$('.tab3 g#zambia-constituency ').on('click', 'path.selected', function () {
+			var $this = $(this);
+			$this.siblings('path').removeClass('active');
+			$this.addClass('active');
+		});
+
+
+
+		//$('.tab3 g#zambiaProvince path').on('click', function () {
+		//	var $this = $(this);
+
+		//	var $parent = $this.parent();
+		//	if ($parent.get(0).id == "zambiaProvince") {
+
+		//	}
+		//	else if ($parent.get(0).id == "zambiaDistricts") {
+		//		var districts = getRegion($this.get(0).id)
+		//		$this.addClass('active');
+		//		var $districtsMap = $('#zambiaDistricts');
+		//		var $consMap = $('#ZambiaConstituency');
+		//		districts.regions.forEach(function (district, idx) {
+		//			if (idx == 0) {
+		//				$districtsMap.find('#' + district.id).addClass('selected active');
+
+		//				districts.regions.forEach(function (cons, idx) {
+		//					if (idx == 0)
+		//						$consMap.find('#' + cons.id).addClass('selected active');
+		//					else
+		//						$consMap.find('#' + cons.id).addClass('active');
+		//				});
+		//			}
+		//			else {
+		//				$districtsMap.find('#' + district.id).addClass('active');
+		//			}
+		//		});
+		//	}
+		//});
+
+		var getRegion = function (regionId, regionLevel) {
+
+
+
+			var regionData;
+			if (regionLevel == 'province') {
+				App.regions.forEach(function (region) {
+					if (regionId == region.id) {
+						regionData = region;
+						return true;
+					}
+				});
+			};
+
+			return regionData;
+			//else {
+			//	App.regions.forEach(function (region) {
+			//		regions[region.id] = region;
+
+			//		region.regions.forEach(function (department) {
+
+			//			if (regionId == department.id)
+			//				return department;
+			//		});
+			//	});
+			//}
+		};
+
 		var showProvincePassposrt = function (regionName) {
 			if (regionName == null)
 				return;
@@ -618,6 +781,7 @@ var App = (function () {
 		var _this = this;
 		var def = $.Deferred();
 		$.getJSON('./scripts/regions.json').done(function (senegal) {
+			_this.regions = senegal.regions;
 			var regions = {};
 			var departments = {};
 			var communes = {};
@@ -632,7 +796,7 @@ var App = (function () {
 					});
 				});
 			});
-
+			$('#ZM-01').click();
 			_this.getPopulationIndicators().done(function (dimItems) {
 
 				var totalPopulation = '1000000';
