@@ -139,6 +139,13 @@ var App = (function () {
 			return false;
 		});
 
+		$('.tab3 .timeline .item, .tab2 .timeline .item').on('click', function (event) {
+			var $this = $(this);
+			$this.parent().find('.item.active').removeClass('active');
+			$this.toggleClass('active', true);
+			return false;
+		});
+
 		$('.tab3 g#zambia-province path').on('click', function () {
 			var $this = $(this);
 			var province = App.regions.find(function (region) { return $this.get(0).id === region.id; });
