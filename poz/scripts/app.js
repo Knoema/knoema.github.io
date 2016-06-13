@@ -92,12 +92,16 @@ var App = (function () {
 				for (var key in _this.candidate) {
 					if (_this.candidate[key].votePercent) {
 						$('#' + key).find(".rating div:first-child .value").text(_this.candidate[key].votePercent + ' %');
-						$('#' + key).find(".rating div:first-child .vote-percent").css('width', _this.candidate[key].votePercent * 8);
+						$('#' + key).find(".rating div:first-child .vote-percent").css('width', _this.candidate[key].votePercent * 5);
+
 					}
 					else {
 						$('#' + key).find(".rating div:first-child .value").text(_this.candidate[key].votePercent + ' %');
 						$('#' + key).find(".rating div:first-child .vote-percent").css('width', 0);
 					}
+
+					if (_this.candidate[key].lastYearData)
+						$('#' + key).find(".rating div:last-child .vote-percent").css('width', _this.candidate[key].lastYearData * 5);
 
 				}
 			}
@@ -107,7 +111,7 @@ var App = (function () {
 			'edgar': {
 				'name': 'Edgar Lungu',
 				'party': '(PF)',
-				'2015': true,
+				'lastYearData': 49.17,
 				'id': 1000020,
 				'actualName': 'Edgar Lungu (PF)',
 				'vote': 0
@@ -115,7 +119,7 @@ var App = (function () {
 			'hakainde': {
 				'name': 'Hakainde Hichilema ',
 				'party': '(UPND)',
-				'2015': true,
+				'lastYearData': 44.91,
 				'id': 1000030,
 				'actualName': 'Hakainde Hichilema (UPND)',
 				'vote': 0
@@ -123,7 +127,7 @@ var App = (function () {
 			'tilyenji': {
 				'name': 'Tilyenji Kaunda',
 				'party': '(UNIP)',
-				'2015': true,
+				'lastYearData': 0.70,
 				'id': 1000060,
 				'actualName': 'Tilyenji Kaunda (UNIP)',
 				'vote': 0
@@ -131,7 +135,7 @@ var App = (function () {
 			'edith': {
 				'name': 'Edith Nawakwi',
 				'party': '(FDD)',
-				'2015': true,
+				'lastYearData': 1.09,
 				'id': 1000040,
 				'actualName': 'Edith Nawakwi (FDD)',
 				'vote': 0
@@ -145,7 +149,7 @@ var App = (function () {
 			'peter': {
 				'name': 'Peter Sinkamba',
 				'party': '(Greens Party)',
-				'2015': true,
+				'lastYearData': 0.09,
 				'id': 1000120,
 				'actualName': 'Peter Sinkamba (GPZ)',
 				'vote': 0
@@ -766,7 +770,7 @@ var App = (function () {
 		for (var key in candidate) {
 			if (tempCan[key] && tempCan[key].votePercent) {
 				$('#' + key).find(".rating div:first-child .value").text(tempCan[key].votePercent + ' %');
-				$('#' + key).find(".rating div:first-child .vote-percent").css('width', tempCan[key].votePercent * 8);
+				$('#' + key).find(".rating div:first-child .vote-percent").css('width', tempCan[key].votePercent * 5);
 			}
 			else {
 				$('#' + key).find(".rating div:first-child .value").text(0 + ' %');
