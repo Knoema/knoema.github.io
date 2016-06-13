@@ -77,47 +77,85 @@ var App = (function () {
 
 		$('#top-bar .tab').on('click', function () {
 			var $this = $(this);
+
+			if ($this.hasClass('active'))
+				return false;
+
 			$this.siblings('a').removeClass('active');
 			$this.addClass('active');
-			$('.tab1, .tab2').toggle();
+			$('.tab1, .tab2, .tab3').hide();
+
+			if ($this.hasClass('questionnaire'))
+				$('.tab1').show();
+			else
+				$('.tab2').show();
+
 		});
 
 		var candidate = {
 			'edgar': {
 				'name': 'Edgar Lungu',
-				'party': '(PF)'
+				'party': '(PF)',
+				'2015': true,
+				'id': 1000020,
+				'actualName': 'Edgar Lungu (PF)',
+				'vote': 0
 			},
 			'hakainde': {
 				'name': 'Hakainde Hichilema ',
-				'party': '(UPND)'
+				'party': '(UPND)',
+				'2015': true,
+				'id': 1000030,
+				'actualName': 'Hakainde Hichilema (UPND)',
+				'vote': 0
 			},
 			'tilyenji': {
 				'name': 'Tilyenji Kaunda',
-				'party': '(UNIP)'
+				'party': '(UNIP)',
+				'2015': true,
+				'id': 1000060,
+				'actualName': 'Tilyenji Kaunda (UNIP)',
+				'vote': 0
 			},
 			'edith': {
 				'name': 'Edith Nawakwi',
-				'party': '(FDD)'
+				'party': '(FDD)',
+				'2015': true,
+				'id': 1000040,
+				'actualName': 'Edith Nawakwi (FDD)',
+				'vote': 0
 			},
 			'saviour': {
 				'name': 'Saviour Chishimba',
-				'party': '(UPP)'
+				'party': '(UPP)',
+				'actualName': 'Saviour Chishimba (UPP)',
+				'vote': 0
 			},
 			'peter': {
 				'name': 'Peter Sinkamba',
-				'party': '(Greens Party)'
+				'party': '(Greens Party)',
+				'2015': true,
+				'id': 1000120,
+				'actualName': 'Peter Sinkamba (GPZ)',
+				'vote': 0
 			},
 			'winter': {
 				'name': 'Winter Kabimba',
-				'party': '(Rainbow Party)'
+				'party': '(Rainbow Party)',
+				'actualName': 'Wynter Kabimba (Rainbow Party)',
+				'vote': 0
 			},
 			'andy': {
 				'name': 'Andy Banda',
-				'party': '(PAC)'
+				'party': '(PAC)',
+				'actualName': 'Andy Banda (PAC)',
+				'vote': 0
 			},
 			'maxwell': {
 				'name': 'Maxwell Mwamba',
-				'party': '(DA)'
+				'party': '(DA)',
+				'actualName': 'Maxwell Mwamba (DA)',
+				'vote': 0
 			}
 		};
 
@@ -193,37 +231,6 @@ var App = (function () {
 		});
 
 
-
-		//$('.tab3 g#zambiaProvince path').on('click', function () {
-		//	var $this = $(this);
-
-		//	var $parent = $this.parent();
-		//	if ($parent.get(0).id == "zambiaProvince") {
-
-		//	}
-		//	else if ($parent.get(0).id == "zambiaDistricts") {
-		//		var districts = getRegion($this.get(0).id)
-		//		$this.addClass('active');
-		//		var $districtsMap = $('#zambiaDistricts');
-		//		var $consMap = $('#ZambiaConstituency');
-		//		districts.regions.forEach(function (district, idx) {
-		//			if (idx == 0) {
-		//				$districtsMap.find('#' + district.id).addClass('selected active');
-
-		//				districts.regions.forEach(function (cons, idx) {
-		//					if (idx == 0)
-		//						$consMap.find('#' + cons.id).addClass('selected active');
-		//					else
-		//						$consMap.find('#' + cons.id).addClass('active');
-		//				});
-		//			}
-		//			else {
-		//				$districtsMap.find('#' + district.id).addClass('active');
-		//			}
-		//		});
-		//	}
-		//});
-
 		var getRegion = function (regionId, regionLevel) {
 
 
@@ -256,8 +263,8 @@ var App = (function () {
 			if (regionName == null)
 				return;
 
-			var summaryUrl = 'http://knoema.com/resource/embed/' + _this.dashRegionSummary + '/?noHeader=1&Region=' + encodeURI(regionName);
-			var detailsUrl = 'http://knoema.com/resource/embed/' + _this.dashRegionDetails + '/?noHeader=1&Region=' + encodeURI(regionName);
+			var summaryUrl = 'http://knoema.com/resource/embed/' + _this.dashRegionSummary + '/?noHeader=1&Region=' + encodeURI(regionName + " Province");
+			var detailsUrl = 'http://knoema.com/resource/embed/' + _this.dashRegionDetails + '/?noHeader=1&province=' + encodeURI(regionName + " Province");
 			$('#passportPopup .title').html(regionName);
 			$('#tab-summary').html('<iframe src="' + summaryUrl + '">');
 			$('#tab-details').html('<iframe src="' + detailsUrl + '">');
@@ -267,8 +274,8 @@ var App = (function () {
 			if (regionName == null)
 				return;
 
-			var summaryUrl = 'http://knoema.com/resource/embed/' + _this.dashDepSummary + '/?noHeader=1&dept=' + encodeURI(regionName.toUpperCase()) + '&Region=' + encodeURI(regionName + ' Department');
-			var detailsUrl = 'http://knoema.com/resource/embed/' + _this.dashDepDetails + '/?noHeader=1&dept=' + encodeURI(regionName.toUpperCase()) + '&Region=' + encodeURI(regionName + ' Department');
+			var summaryUrl = 'http://knoema.com/resource/embed/' + _this.dashDepSummary + '/?noHeader=1&district=' + encodeURI(regionName) + '&Region=' + encodeURI(regionName);
+			var detailsUrl = 'http://knoema.com/resource/embed/' + _this.dashDepDetails + '/?noHeader=1&district=' + encodeURI(regionName);
 			$('#passportPopup .title').html(regionName);
 			$('#tab-summary').html('<iframe src="' + summaryUrl + '">');
 			$('#tab-details').html('<iframe src="' + detailsUrl + '">');
@@ -278,8 +285,8 @@ var App = (function () {
 			if (regionName == null)
 				return;
 
-			var summaryUrl = 'http://knoema.com/resource/embed/' + _this.dashCommuneSummary + '/?noHeader=1&commune=' + encodeURI(regionName) + '&Region=' + encodeURI(regionName);
-			var detailsUrl = 'http://knoema.com/resource/embed/' + _this.dashCommuneDetails + '/?noHeader=1&commune=' + encodeURI(regionName) + '&Region=' + encodeURI(regionName);
+			var summaryUrl = 'http://knoema.com/resource/embed/' + _this.dashCommuneSummary + '/?noHeader=1&constituency=' + encodeURI(regionName.toUpperCase()) + '&Region=' + encodeURI(regionName);
+			var detailsUrl = 'http://knoema.com/resource/embed/' + _this.dashCommuneDetails + '/?noHeader=1&constituency=' + encodeURI(regionName.toUpperCase());
 			$('#passportPopup .title').html(regionName);
 			$('#tab-summary').html('<iframe src="' + summaryUrl + '">');
 			$('#tab-details').html('<iframe src="' + detailsUrl + '">');
@@ -353,9 +360,15 @@ var App = (function () {
 
 							var popMarkerInfo = {};
 							var popMarkerNameInfo = {};
-							//for (var i = baseData.columns.length; i < baseData.data.length; i += baseData.columns.length)
-							//	if (regions[baseData.data[i + baseColumnIndex]])
-							//		popMarkerNameInfo[baseData.data[i + baseColumnIndex]] = regions[baseData.data[i + baseColumnIndex]].name;
+							//for (var i = 0; i < baseData.data.length; i += baseData.columns.length) {
+							//	for (var key in candidate)
+							//		if (candidate[key].actualName == baseData.data[i + 17])
+							//			candidate[key].vote += 1;
+							//}
+							//if (regions[baseData.data[i + baseColumnIndex]])
+							//	popMarkerNameInfo[baseData.data[i + baseColumnIndex]] = regions[baseData.data[i + baseColumnIndex]].name;
+
+
 							for (var r in regions) {
 								popMarkerNameInfo[r] = regions[r].name;
 							}
@@ -784,6 +797,53 @@ var App = (function () {
 
 		return def;
 	};
+
+	App.getCandidatesData = function (memberId) {
+		var self = this;
+		var def = $.Deferred();
+		var datasetId = 'ECZPERRR2016';
+		$.post('http://knoema.com//api/1.0/data/pivot?page_id=' + datasetId + '&access_token=' + access_token, {
+			"Header": [{
+				'DatasetId': "ECZPERRR2016",
+				'DimensionId': "Time",
+				'DimensionName': "Time",
+				'Members': ['2015-2015'],
+				"Order": "0",
+				"UiMode": "range"
+			}],
+			"Stub": [{
+				'DatasetId': "ECZPERRR2016",
+				'DimensionId': "region",
+				'DimensionName': "Region",
+				'Members': [],
+				"Order": "0",
+				"isGeo": true
+			},
+			{
+				'DatasetId': "ECZPERRR2016",
+				'DimensionId': "indicator",
+				'DimensionName': "Indicator",
+				'Members': ["1000020", "1000030", "1000040", "1000060", "1000120"],
+				"Order": "1",
+			}],
+			"Filter": [{
+				"DimensionId": "measure",
+				"Members": ['1000010'],
+				"DimensionName": "Measure",
+				"DatasetId": datasetId,
+				"Order": "0"
+			}],
+			"Frequencies": [],
+			"Dataset": datasetId,
+			"Segments": null,
+			"MeasureAggregations": null
+		}).done(function (data) {
+			return def.resolve(data);
+		});
+
+		return def;
+	};
+
 	App.getDepartments = function () {
 		var _this = this;
 		var def = $.Deferred();
