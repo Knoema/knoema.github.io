@@ -425,7 +425,7 @@ var App = (function () {
 					var width = 100 / dates.length;
 					dates.forEach(function (date, index) {
 						var dateParts = date.split('/');
-						$timeline.append('<div style="width:' + width + '%;" class="item ' + (index == (dates.length - 1) ? 'active' : '') + '" data-date="' + date + '"><span class="day">' + parseInt(dateParts[1]) + '</span>&nbsp;<span class="month">mai</span></div>');
+						$timeline.append('<div style="width:' + width + '%;" class="item ' + (index == (dates.length - 1) ? 'active' : '') + '" data-date="' + date + '"><span class="day">' + parseInt(dateParts[1]) + '</span>&nbsp;<span class="month">may</span></div>');
 					});
 					currentDate = dates[dates.length - 1];
 				}
