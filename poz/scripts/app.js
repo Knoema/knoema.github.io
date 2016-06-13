@@ -87,12 +87,23 @@ var App = (function () {
 
 			if ($this.hasClass('questionnaire'))
 				$('.tab1').show();
-			else
+			else {
 				$('.tab2').show();
+				for (var key in _this.candidate) {
+					if (_this.candidate[key].votePercent) {
+						$('#' + key).find(".rating div:first-child .value").text(_this.candidate[key].votePercent + ' %');
+						$('#' + key).find(".rating div:first-child .vote-percent").css('width', _this.candidate[key].votePercent * 8);
+					}
+					else {
+						$('#' + key).find(".rating div:first-child .value").text(_this.candidate[key].votePercent + ' %');
+						$('#' + key).find(".rating div:first-child .vote-percent").css('width', 0);
+					}
 
+				}
+			}
 		});
 
-		var candidate = {
+		this.candidate = {
 			'edgar': {
 				'name': 'Edgar Lungu',
 				'party': '(PF)',
@@ -142,7 +153,7 @@ var App = (function () {
 			'winter': {
 				'name': 'Winter Kabimba',
 				'party': '(Rainbow Party)',
-				'actualName': 'Wynter Kabimba (Rainbow Party)',
+				'actualName': 'Winter Kabimba (Rainbow Party)',
 				'vote': 0
 			},
 			'andy': {
@@ -360,11 +371,19 @@ var App = (function () {
 
 							var popMarkerInfo = {};
 							var popMarkerNameInfo = {};
-							//for (var i = 0; i < baseData.data.length; i += baseData.columns.length) {
-							//	for (var key in candidate)
-							//		if (candidate[key].actualName == baseData.data[i + 17])
-							//			candidate[key].vote += 1;
-							//}
+							var candidate = _this.candidate;
+							for (var i = 0; i < baseData.data.length; i += baseData.columns.length) {
+								for (var key in candidate)
+									if (candidate[key].actualName == baseData.data[i + 17])
+										candidate[key].vote += 1;
+							}
+							var totalRows = baseData.data.length / baseData.columns.length;
+							for (var key in candidate)
+								if (candidate[key].vote > 0) {
+									candidate[key].votePercent = ((candidate[key].vote / totalRows) * 100).toFixed(2);
+								}
+								else
+									candidate[key].votePercent = 0;
 							//if (regions[baseData.data[i + baseColumnIndex]])
 							//	popMarkerNameInfo[baseData.data[i + baseColumnIndex]] = regions[baseData.data[i + baseColumnIndex]].name;
 
@@ -425,7 +444,7 @@ var App = (function () {
 				var currentAnswers;
 				var currentColumnIndex;
 				var currentDate;
-				var $timeline = $('#timeline');
+				var $timeline = $('.timeline');
 				{
 					var dates = [];
 					for (var rowOffset = 0; rowOffset < data.data.length; rowOffset += data.columns.length) {
@@ -546,8 +565,10 @@ var App = (function () {
 				$timeline.on('click', '.item:not(.disabled)', function (event) {
 					$(event.delegateTarget).find('.item.active').removeClass('active');
 					currentDate = $(event.currentTarget).toggleClass('active', true).data('date');
-					if ($(this).parent().hasClass('timeline'))
+					if ($(this).parents('.tab2, .tab3').length) {
+						_this.changeRating(data, currentDate);
 						return false;
+					}
 					_this.refreshSidebar(data, currentDate);
 					if (currentColumnIndex != null) {
 						if (currentAnswers != null) {
@@ -709,6 +730,49 @@ var App = (function () {
 		});
 
 		$stat.height($('#left-sidebar').outerHeight() - 141);
+	};
+	App.changeRating = function (data, currentDate) {
+		var _this = this;
+		// prepare stat structure (skip 3 first columns)
+		var stat = data.columns.slice(this.skipFirstColumns).map(function (column) {
+			return {
+				question: column.name,
+				answers: {}
+			};
+		});
+		// calc counts (skip 3 first columns)
+		var voteCount = 0;
+		var tempCan = {};
+		var candidate = this.candidate;
+		for (var rowOffset = 0; rowOffset < data.data.length; rowOffset += data.columns.length) {
+			if (data.data[rowOffset + this.dateColumnIndex] != null && data.data[rowOffset + this.dateColumnIndex].value == currentDate) {
+				voteCount++;
+
+				for (var key in candidate)
+					if (candidate[key].actualName == data.data[rowOffset + 17]) {
+						if (!tempCan[key])
+							tempCan[key] = {
+								'vote': 0
+							};
+						tempCan[key].vote += 1;
+					}
+			}
+		}
+		for (var key in tempCan)
+			if (tempCan[key].vote > 0) {
+				tempCan[key].votePercent = ((tempCan[key].vote / voteCount) * 100).toFixed(2);
+			}
+
+		for (var key in candidate) {
+			if (tempCan[key] && tempCan[key].votePercent) {
+				$('#' + key).find(".rating div:first-child .value").text(tempCan[key].votePercent + ' %');
+				$('#' + key).find(".rating div:first-child .vote-percent").css('width', tempCan[key].votePercent * 8);
+			}
+			else {
+				$('#' + key).find(".rating div:first-child .value").text(0 + ' %');
+				$('#' + key).find(".rating div:first-child .vote-percent").css('width', 0);
+			}
+		}
 	};
 	App.getData = function () {
 		var _this = this;

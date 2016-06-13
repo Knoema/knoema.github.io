@@ -930,7 +930,7 @@
 	bottom: 40px;
 }
 
-#timeline
+.timeline
 {
 	position: absolute;
 	bottom: 0;
@@ -944,7 +944,7 @@
 	background-color: #74B475;
 }
 
-	#timeline .item
+	.timeline .item
 	{
 		float: left;
 		height: 100%;
@@ -954,27 +954,27 @@
 		box-sizing: border-box;
 	}
 
-		#timeline .item:not(.disabled)
+		.timeline .item:not(.disabled)
 		{
 			cursor: pointer;
 		}
 
-		#timeline .item.active
+		.timeline .item.active
 		{
 			background-color: #358B38;
 		}
 
-		#timeline .item.disabled
+		.timeline .item.disabled
 		{
 			color: #687459;
 		}
 
-		#timeline .item > .day
+		.timeline .item > .day
 		{
 			font-size: 20px;
 		}
 
-		#timeline .item > .month
+		.timeline .item > .month
 		{
 			font-size: 13px;
 		}
