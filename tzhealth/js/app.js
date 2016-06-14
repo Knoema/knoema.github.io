@@ -83,19 +83,14 @@
             'Assistant Nurse Officer-Holds a Diploma': 'Assistant Nurse Officer - Holds a Diploma',
             'Enrolled Nurse- Certificate': 'Enrolled Nurse - Certificate',
             'Laboratory Technologist Officer-Holds a Degree': 'Laboratory Technologist Officer - Holds a Degree',
-            'Assistant Laboratory Technologist-Holds Certificate': 'Assistant Laboratory Technologist - Holds Certificate',
             'Assistant Laboratory Technologist-Holds Certificate': 'Assistant Laboratory Technologist - Holds Certificate'
         };
 
         //http://knoema.com/cltckhb/tanzania-health-monitor
         this.geoPlaygroundId = 'cltckhb';
 
-        //Will store whole playground here
-        this.geoPlaygroundContent = null;
-
         this.layers = {};
         this.view = 'map';
-        this.loans = null;
 
         //hashmap "Facility Name" -> attributes
         this.allData = {};
@@ -120,7 +115,6 @@
             var idleTimeout = window.setTimeout(function () {
                 var url = '//knoema.com/api/1.0/frontend/resource/' + self.geoPlaygroundId + '/content';
                 Knoema.Helpers.get(url, function(content) {
-                    self.geoPlaygroundContent = content;
                     for (var layerId in content.layers) {
                         self.loadLayer(layerId);
                     }
@@ -545,9 +539,9 @@
                 self.settings.priorityFor = $(this).data('priorityFor');
 
                 if (self.settings.priorityFor !== 'None') {
-
-                    var vacancies = self.groupedByVacancyName[self.settings.priorityFor];
-
+                    var vacancies = _.uniqBy(self.groupedByVacancyName[self.settings.priorityFor], function(v) {
+                        return v[2];
+                    });
                     self.sortedVacancies = _.sortBy(vacancies, function(v) {
                         return -1 * Number(v[0]);
                     }).filter(function(v) {
