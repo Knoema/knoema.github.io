@@ -680,7 +680,8 @@
                             'Ward Name',
                             'Clinic',
                             'Ownership',
-                            'Hours of Operation, Total'
+                            //'Hours of Operation, Total'
+                            'Hours of Operation (opening hours)'
                         ];
                     }
                     break;
