@@ -184,18 +184,18 @@
 		width: 15px;
 	}
 
-	.tab2 #wynter .pic .img
+	.tab2 #winter .pic .img
 	{
 		background-image: url('../img/can-Wynter-Kabimba.png');
 		margin-top: 10px;
 	}
 
-	.tab2 #wynter .rating div:first-child .vote-percent
+	.tab2 #winter .rating div:first-child .vote-percent
 	{
 		width: 20px;
 	}
 
-	.tab2 #wynter .rating div:last-child .vote-percent
+	.tab2 #winter .rating div:last-child .vote-percent
 	{
 		width: 0px;
 	}
@@ -435,7 +435,7 @@
 			background-image: url('../img/can-Peter-Sinkamba .png');
 		}
 
-		.tab3 .head.wynter .pic .img
+		.tab3 .head.winter .pic .img
 		{
 			background-image: url('../img/can-Wynter-Kabimba.png');
 		}
@@ -534,7 +534,7 @@
 
 		.tab3 path.active
 		{
-			fill: #0a5209;
+			fill: #0a5209 !important;
 		}
 
 			.tab3 path.active:hover
@@ -680,12 +680,12 @@
 			width: 8px;
 		}
 
-		.tab3 .chart .candidate.wynter .rating div:first-child .vote-percent
+		.tab3 .chart .candidate.winter .rating div:first-child .vote-percent
 		{
 			width: 10px;
 		}
 
-		.tab3 .chart .candidate.wynter .rating div:last-child .vote-percent
+		.tab3 .chart .candidate.winter .rating div:last-child .vote-percent
 		{
 			width: 0px;
 		}

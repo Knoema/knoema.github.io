@@ -89,21 +89,7 @@ var App = (function () {
 				$('.tab1').show();
 			else {
 				$('.tab2').show();
-				for (var key in _this.candidate) {
-					if (_this.candidate[key].votePercent) {
-						$('#' + key).find(".rating div:first-child .value").text(_this.candidate[key].votePercent + ' %');
-						$('#' + key).find(".rating div:first-child .vote-percent").css('width', _this.candidate[key].votePercent * 5);
-
-					}
-					else {
-						$('#' + key).find(".rating div:first-child .value").text(_this.candidate[key].votePercent + ' %');
-						$('#' + key).find(".rating div:first-child .vote-percent").css('width', 0);
-					}
-
-					if (_this.candidate[key].lastYearData)
-						$('#' + key).find(".rating div:last-child .vote-percent").css('width', _this.candidate[key].lastYearData * 5);
-
-				}
+				$('.tab2 .timeline .item:last-child').click();
 			}
 		});
 
@@ -181,21 +167,15 @@ var App = (function () {
 			var $head = $('.head');
 			var id = $this.parent().get(0).id;
 			$head.addClass(id);
-			var can = candidate[id];
+			var can = _this.candidate[id];
 			$head.find('.name span:first-child').text(can.name).end().find('.name span:last-child').text(can.party);
+			$('.tab3 .timeline .item:last-child').click();
 			return false;
 		});
 
 		$('.tab3 .head .back').on('click', function () {
 			$('.tab2').show('slow');
 			$('.tab3').hide('slow');
-			return false;
-		});
-
-		$('.tab3 .timeline .item, .tab2 .timeline .item').on('click', function (event) {
-			var $this = $(this);
-			$this.parent().find('.item.active').removeClass('active');
-			$this.toggleClass('active', true);
 			return false;
 		});
 
@@ -209,11 +189,15 @@ var App = (function () {
 			$('.tab3 .districts .header').text(province.name + " province");
 			province.regions.forEach(function (district, idx) {
 				if (idx == 0) {
-					$districtsMap.find('#' + district.id).addClass('active')
+					$districtsMap.find('#' + district.id).addClass('active');
 					selectConst(district);
 				}
 				$districtsMap.find('#' + district.id).addClass('selected').data('regions', district);
 			});
+			$this.data('regions', province);
+			var currentDate = $('.tab3 .timeline .item.active').data('date');
+
+			_this.changeRating(null, currentDate, false, "districts", $this.get(0).id);
 		});
 
 		var selectConst = function (district) {
@@ -237,6 +221,9 @@ var App = (function () {
 			var $districtsMap = $('#zambia-districts');
 			$('.tab3 .constituencey .header').text(districts.name + " district");
 			selectConst(districts);
+			var currentDate = $('.tab3 .timeline .item.active').data('date');
+
+			_this.changeRating(null, currentDate, false, "constituency", $this.get(0).id);
 		});
 
 		$('.tab3 g#zambia-constituency ').on('click', 'path.selected', function () {
@@ -245,11 +232,7 @@ var App = (function () {
 			$this.addClass('active');
 		});
 
-
 		var getRegion = function (regionId, regionLevel) {
-
-
-
 			var regionData;
 			if (regionLevel == 'province') {
 				App.regions.forEach(function (region) {
@@ -261,17 +244,6 @@ var App = (function () {
 			};
 
 			return regionData;
-			//else {
-			//	App.regions.forEach(function (region) {
-			//		regions[region.id] = region;
-
-			//		region.regions.forEach(function (department) {
-
-			//			if (regionId == department.id)
-			//				return department;
-			//		});
-			//	});
-			//}
 		};
 
 		var showProvincePassposrt = function (regionName) {
@@ -372,25 +344,20 @@ var App = (function () {
 							var count = populationData.columns.length;
 							var pdata = populationData.data;
 							var baseData = data;
+							var candidateColumnIndex = 17;
+							var regionColumnIndex = 21;
 
 							var popMarkerInfo = {};
 							var popMarkerNameInfo = {};
-							var candidate = _this.candidate;
-							for (var i = 0; i < baseData.data.length; i += baseData.columns.length) {
-								for (var key in candidate)
-									if (candidate[key].actualName == baseData.data[i + 17])
-										candidate[key].vote += 1;
-							}
-							var totalRows = baseData.data.length / baseData.columns.length;
-							for (var key in candidate)
-								if (candidate[key].vote > 0) {
-									candidate[key].votePercent = ((candidate[key].vote / totalRows) * 100).toFixed(2);
-								}
-								else
-									candidate[key].votePercent = 0;
-							//if (regions[baseData.data[i + baseColumnIndex]])
-							//	popMarkerNameInfo[baseData.data[i + baseColumnIndex]] = regions[baseData.data[i + baseColumnIndex]].name;
 
+							var lists = _.groupBy(data.data, function (element, index) {
+								return Math.floor(index / baseData.columns.length);
+							});
+
+							lists = _.toArray(lists);
+							_this.votesByDate = _.groupBy(lists, function (element, index) {
+								return element[1].value
+							});
 
 							for (var r in regions) {
 								popMarkerNameInfo[r] = regions[r].name;
@@ -570,7 +537,10 @@ var App = (function () {
 					$(event.delegateTarget).find('.item.active').removeClass('active');
 					currentDate = $(event.currentTarget).toggleClass('active', true).data('date');
 					if ($(this).parents('.tab2, .tab3').length) {
-						_this.changeRating(data, currentDate);
+						var isFirstPage = true;
+						if ($(this).parents('.tab3').length)
+							isFirstPage = false;
+						_this.changeRating(data, currentDate, isFirstPage, 'province');
 						return false;
 					}
 					_this.refreshSidebar(data, currentDate);
@@ -735,49 +705,160 @@ var App = (function () {
 
 		$stat.height($('#left-sidebar').outerHeight() - 141);
 	};
-	App.changeRating = function (data, currentDate) {
+
+	App.populateZambiaChart = function (votesByCurrentDate, regionLevel) {
 		var _this = this;
-		// prepare stat structure (skip 3 first columns)
-		var stat = data.columns.slice(this.skipFirstColumns).map(function (column) {
-			return {
-				question: column.name,
-				answers: {}
-			};
-		});
-		// calc counts (skip 3 first columns)
-		var voteCount = 0;
-		var tempCan = {};
-		var candidate = this.candidate;
-		for (var rowOffset = 0; rowOffset < data.data.length; rowOffset += data.columns.length) {
-			if (data.data[rowOffset + this.dateColumnIndex] != null && data.data[rowOffset + this.dateColumnIndex].value == currentDate) {
-				voteCount++;
+		var votesByCandidate = _.groupBy(votesByCurrentDate, 17);
+		var $tab = $('.tab3 .' + regionLevel + '.score .chart');
+		for (var key in _this.candidate) {
 
-				for (var key in candidate)
-					if (candidate[key].actualName == data.data[rowOffset + 17]) {
-						if (!tempCan[key])
-							tempCan[key] = {
-								'vote': 0
-							};
-						tempCan[key].vote += 1;
-					}
-			}
-		}
-		for (var key in tempCan)
-			if (tempCan[key].vote > 0) {
-				tempCan[key].votePercent = ((tempCan[key].vote / voteCount) * 100).toFixed(2);
-			}
-
-		for (var key in candidate) {
-			if (tempCan[key] && tempCan[key].votePercent) {
-				$('#' + key).find(".rating div:first-child .value").text(tempCan[key].votePercent + ' %');
-				$('#' + key).find(".rating div:first-child .vote-percent").css('width', tempCan[key].votePercent * 5);
+			var canDet = votesByCandidate[_this.candidate[key].actualName];
+			if (canDet) {
+				var votePercent = ((canDet.length / votesByCurrentDate.length) * 100).toFixed(2);
+				$tab.find('.' + key).find(".rating div:first-child .value").text(votePercent + ' %');
+				$tab.find('.' + key).find(".rating div:first-child .vote-percent").css('width', votePercent * 2.5);
 			}
 			else {
-				$('#' + key).find(".rating div:first-child .value").text(0 + ' %');
-				$('#' + key).find(".rating div:first-child .vote-percent").css('width', 0);
+				$tab.find('.' + key).find(".rating div:first-child .value").text(0 + ' %');
+				$tab.find('.' + key).find(".rating div:first-child .vote-percent").css('width', 0);
+			}
+
+			if (_this.candidate[key].lastYearData)
+				$tab.find('.' + key).find(".rating div:last-child .vote-percent").css('width', _this.candidate[key].lastYearData * 2.5);
+		};
+	};
+
+	App.getGreenToRed = function (percent) {
+		r = percent < 50 ? 255 : Math.floor(255 - (percent * 2 - 100) * 255 / 100);
+		g = percent > 50 ? 255 : Math.floor((percent * 2) * 255 / 100);
+		b = percent > 50 ? 255 : Math.floor(200 - (percent * 2) * 200 / 100);
+		return 'rgb(' + g + ',' + r + ',' + b + ')';
+	};
+
+	App.changeRating = function (data, currentDate, isFirstPage, regionLevel, selectedregion) {
+		var _this = this;
+		var voteCount = 0;
+		var tempCan = {};
+		var candidate = _this.candidate;
+		if (isFirstPage) {
+			for (var rowOffset = 0; rowOffset < data.data.length; rowOffset += data.columns.length) {
+				if (data.data[rowOffset + _this.dateColumnIndex] != null && data.data[rowOffset + _this.dateColumnIndex].value == currentDate) {
+					voteCount++;
+
+					for (var key in candidate)
+						if (candidate[key].actualName == data.data[rowOffset + 17]) {
+							if (!tempCan[key])
+								tempCan[key] = {
+									'vote': 0
+								};
+							tempCan[key].vote += 1;
+						}
+				}
+			}
+
+			for (var key in tempCan)
+				if (tempCan[key].vote > 0) {
+					tempCan[key].votePercent = ((tempCan[key].vote / voteCount) * 100).toFixed(2);
+				}
+
+			for (var key in candidate) {
+				if (tempCan[key] && tempCan[key].votePercent) {
+					$('#' + key).find(".rating div:first-child .value").text(tempCan[key].votePercent + ' %');
+					$('#' + key).find(".rating div:first-child .vote-percent").css('width', tempCan[key].votePercent * 5);
+				}
+				else {
+					$('#' + key).find(".rating div:first-child .value").text(0 + ' %');
+					$('#' + key).find(".rating div:first-child .vote-percent").css('width', 0);
+				}
+
+				if (candidate[key].lastYearData)
+					$('#' + key).find(".rating div:last-child .vote-percent").css('width', candidate[key].lastYearData * 5);
+			}
+		}
+		else {
+			var votesByCurrentDate = _this.votesByDate[currentDate];
+			var votesByProvince = _.groupBy(votesByCurrentDate, 21);
+
+			var canId = $('.head').attr('class').split(" ")[1];
+			var can = _this.candidate[canId];
+			if (regionLevel == "province") {
+				var votePercent = {};
+				for (var key in votesByProvince) {
+					var votesByCandidateForEach = _.groupBy(votesByProvince[key], 17);
+					var canDet = votesByCandidateForEach[can.actualName];
+					if (canDet)
+						votePercent[key] = (canDet.length / votesByCurrentDate.length) * 100;
+					else
+						votePercent[key] = 0;
+				}
+				$('#zambia-province path').removeClass('active').css('fill', '#fff');
+
+				for (var key in votePercent)
+					$('#' + key).css('fill', _this.getGreenToRed(votePercent[key]));
+				_this.populateZambiaChart(votesByCurrentDate, regionLevel);
+
+				var provincekey;
+				for (var k in votesByProvince) {
+					provincekey = k;
+					break;
+				}
+
+				_this.changeRating(null, currentDate, false, "districts", provincekey);
+			}
+			else if (regionLevel == "districts") {
+				var voteForProvince = votesByProvince[selectedregion];
+				var voteByDistricts = _.groupBy(voteForProvince, 22);
+				var votePercent = {};
+				for (var key in voteByDistricts) {
+					var votesByCandidateForEach = _.groupBy(voteByDistricts[key], 17);
+					var canDet = votesByCandidateForEach[can.actualName];
+					if (canDet)
+						votePercent[key] = (canDet.length / voteForProvince.length) * 100;
+					else
+						votePercent[key] = 0;
+				}
+
+				$('#zambia-districts path').removeClass('active').css('fill', '#fff');
+
+				for (var key in votePercent)
+					$('#' + key).css('fill', _this.getGreenToRed(votePercent[key]));
+				$('#' + selectedregion).addClass('active');
+
+				_this.populateZambiaChart(voteForProvince, regionLevel);
+
+				var provincekey;
+				for (var k in voteByDistricts) {
+					provincekey = k;
+					break;
+				}
+
+				_this.changeRating(null, currentDate, false, "constituencey", provincekey);
+			}
+			else {
+				var voteForProvince = votesByProvince[selectedregion.substring(0, 5)];
+				var voteByDistricts = _.groupBy(voteForProvince, 22)[selectedregion];
+				var voteByCons = _.groupBy(voteByDistricts, 23)
+
+
+				var votePercent = {};
+				for (var key in voteByCons) {
+					var votesByCandidateForEach = _.groupBy(voteByCons[key], 17);
+					var canDet = votesByCandidateForEach[can.actualName];
+					if (canDet)
+						votePercent[key] = (canDet.length / voteByDistricts.length) * 100;
+					else
+						votePercent[key] = 0;
+				}
+
+				$('#zambia-constituency path').removeClass('active').css('fill', '#fff');
+
+				for (var key in votePercent)
+					$('#' + key).css('fill', _this.getGreenToRed(votePercent[key]));
+				_this.populateZambiaChart(voteByDistricts, regionLevel);
 			}
 		}
 	};
+
 	App.getData = function () {
 		var _this = this;
 		var def = $.Deferred();
@@ -931,7 +1012,6 @@ var App = (function () {
 					});
 				});
 			});
-			$('#ZM-01').click();
 			_this.getPopulationIndicators().done(function (dimItems) {
 
 				var totalPopulation = '1000000';
