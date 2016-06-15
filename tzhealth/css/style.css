@@ -349,6 +349,7 @@ tr.header {
 	-webkit-box-shadow: inset 0px 0px 18px -7px rgba(0,0,0,0.41);
 	-moz-box-shadow: inset 0px 0px 18px -7px rgba(0,0,0,0.41);
 	box-shadow: inset 0px 0px 18px -7px rgba(0,0,0,0.41);
+	white-space: nowrap;
 }
 
 #test-table {
