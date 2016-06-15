@@ -26,7 +26,7 @@
                         {{if tab.tabName == 'Needed workers'}}
                         <h3> Needed workers</h3>
                         {{if typeof tab.neededWorkers !== 'undefined'}}
-                            <table class="table table-striped table-condensed drug-list-table">
+                            <table class="table table-condensed drug-list-table">
                                 <thead>
                                 <tr>
                                     <th>Cadre type</th>
@@ -39,7 +39,7 @@
                                 </thead>
                                 <tbody>
                                 {{each(j, vacancy) tab.neededWorkers}}
-                                <tr>
+                                <tr class="${vacancy[vacancy.length - 1]}">
                                     <td>${vacancy[1]}</td>
                                     <td>${Globalize.format(vacancy[6])}</td>
                                     <td>${Globalize.format(vacancy[7])}</td>

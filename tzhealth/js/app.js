@@ -165,13 +165,13 @@
         $(window).trigger('resize');
 
         Knoema.Helpers.post('//knoema.com/api/1.0/data/details', neededWorkesDataDescriptor, function(response) {
+            var vacancies = _.chunk(response.data, response.columns.length);
 
-            //TODO Maybe store raw data and iterate on demand?
-            self.groupedByVacancyName = _.groupBy(_.chunk(response.data, response.columns.length), function(d) {
+            self.groupedByVacancyName = _.groupBy(vacancies, function(d) {
                 return d[1];
             });
 
-            self.neededWorkers = _.groupBy(_.chunk(response.data, response.columns.length), function(d) {
+            self.neededWorkers = _.groupBy(vacancies, function(d) {
                 return d[2];
             });
         });
@@ -183,8 +183,6 @@
         });
 
     };
-
-    //app.prototype.handleLayerClick = function(event) {
 
     app.prototype.handleLayerClick = function(event) {
         var self = this;
@@ -1072,9 +1070,28 @@
         }
 
         if (typeof self.neededWorkers[facilityName] !== 'undefined') {
+            var neededWorkers = _.sortBy(self.neededWorkers[facilityName], function(w) {
+                return Number(w[0]);
+            });
+
+            _.each(neededWorkers, function(vacancy, i) {
+                var className;
+
+                //"Priority Index", "Budget left, TZS" -> 6,7`
+                var priorityIndex = vacancy[6];
+                var budgetLeft = vacancy[7];
+
+                if (priorityIndex > 999.999) {
+                    className = 'green';
+                } else {
+                    className = (budgetLeft > 0) ? 'yellow' : 'red';
+                }
+                vacancy.push(className);
+            });
+
             profileData.push({
                 tabName: 'Needed workers',
-                neededWorkers: _.sortBy(self.neededWorkers[facilityName], function(w) { return Number(w[0]); })
+                neededWorkers: neededWorkers
             });
         }
 
@@ -1182,10 +1199,26 @@
 
                 //TODO Get proper index for current facility
 
-                var index = 1 + _.findIndex(self.sortedVacancies, function(v) {
-                    return v[2] === event.data.content['Facility Name'];
-                });
+                // var index = 1 + _.findIndex(self.sortedVacancies, function(v) {
+                //     return v[2] === event.data.content['Facility Name'];
+                // });
 
+                // Label should look like "N/M" where
+                // N - number of persons needed by a facility, M - number of persons for which the facility has budget.
+
+                // N - this should be a number of all rows with the selected cadre
+                // M - this should be a number of rows with the selected cadre where the "Budget left..." value is above zero
+
+                var N = _.filter(self.neededWorkers[event.data.content['Facility Name']], function(v) {
+                    return v[1] === self.settings.priorityFor;
+                }).length;
+                var M = _.filter(self.neededWorkers[event.data.content['Facility Name']], function(v) {
+                    return v[1] === self.settings.priorityFor && v[7] > 0;
+                }).length;
+
+                var index = N/M;
+
+                index = isFinite(index) ? index : '&#8734;';
 
                 var marker = new MarkerWithLabel({
                     //anchor property doesn't work

@@ -367,7 +367,15 @@ tr.header {
 	width: 90%;
 }
 
-
+.drug-list-table tr.green {
+	background-color: #d9fbd9;
+}
+.drug-list-table tr.red {
+	background-color: #ffd1d1;
+}
+.drug-list-table tr.yellow {
+	background-color: #fbf2c5;
+}
 
 
 
