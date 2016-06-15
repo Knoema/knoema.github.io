@@ -455,7 +455,7 @@
     app.prototype.initSideBar = function () {
         var self = this;
 
-        Knoema.Helpers.get('//knoema.com/api/1.0/meta/dataset/TANSAT2016/dimension/indicator', function(response) {
+        Knoema.Helpers.get('//knoema.com/api/1.0/meta/dataset/TANSATR2016R/dimension/indicator', function(response) {
 
             self.items = response.items;
 
