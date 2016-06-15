@@ -779,24 +779,21 @@ var App = (function () {
 					var canDet = votesByCandidateForEach[can.actualName];
 					if (canDet)
 						votePercent[key] = ((canDet.length / votesByCurrentDate.length) * 100).toFixed(2);
-					else
-						votePercent[key] = 0;
 				}
 				$('#zambia-province path').removeClass('active').css('fill', '#fff');
 
 				for (var key in votePercent) {
 					if (votePercent[key])
-						$('#' + key).css('fill', _this.percentToRGB(votePercent[key]));
+						$('#' + key).css({ 'fill': _this.percentToRGB(votePercent[key]), 'opacity': '0.3' });
 				}
 				_this.populateZambiaChart(votesByCurrentDate, regionLevel);
 
 				var provincekey;
-				for (var k in votesByProvince) {
+				for (var k in votePercent) {
 					provincekey = k;
 					break;
 				}
-
-				_this.changeRating(null, currentDate, false, "districts", provincekey);
+				$('#' + provincekey).click();
 			}
 			else if (regionLevel == "districts") {
 				if (selectedregion) {
@@ -808,27 +805,25 @@ var App = (function () {
 						var canDet = votesByCandidateForEach[can.actualName];
 						if (canDet)
 							votePercent[key] = ((canDet.length / voteForProvince.length) * 100).toFixed(2);
-						else
-							votePercent[key] = 0;
 					}
 
 					$('#zambia-districts path').removeClass('active').css('fill', '#fff');
 
 					for (var key in votePercent) {
 						if (votePercent[key])
-							$('#' + key).css('fill', _this.percentToRGB(votePercent[key]));
+							$('#' + key).css({ 'fill': _this.percentToRGB(votePercent[key]), 'opacity': '0.5' });
 					}
 					$('#' + selectedregion).addClass('active');
 
 					_this.populateZambiaChart(voteForProvince, regionLevel);
 
 					var provincekey;
-					for (var k in voteByDistricts) {
+					for (var k in votePercent) {
 						provincekey = k;
 						break;
 					}
 
-					_this.changeRating(null, currentDate, false, "constituencey", provincekey);
+					$('#' + provincekey).click();
 				}
 			}
 			else {
@@ -844,15 +839,13 @@ var App = (function () {
 						var canDet = votesByCandidateForEach[can.actualName];
 						if (canDet)
 							votePercent[key] = ((canDet.length / voteByDistricts.length) * 100).toFixed(2);
-						else
-							votePercent[key] = 0;
 					}
 
 					$('#zambia-constituency path').removeClass('active').css('fill', '#fff');
 
 					for (var key in votePercent) {
 						if (votePercent[key])
-							$('#' + key).css('fill', _this.percentToRGB(votePercent[key]));
+							$('#' + key).css({ 'fill': _this.percentToRGB(votePercent[key]), 'opacity': '0.5' });
 					}
 					_this.populateZambiaChart(voteByDistricts, regionLevel);
 				}
