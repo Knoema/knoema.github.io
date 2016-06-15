@@ -342,11 +342,13 @@ tr.header {
 .labels {
 	color: #222;
 	background-color: white;
-	border-radius: 50%;
-	padding: 3px;
+	border-radius: 3px;
+	padding: 3px 5px;
 	font-size: 10px;
 	min-width: 18px;
-	text-align: center;
+	-webkit-box-shadow: inset 0px 0px 18px -7px rgba(0,0,0,0.41);
+	-moz-box-shadow: inset 0px 0px 18px -7px rgba(0,0,0,0.41);
+	box-shadow: inset 0px 0px 18px -7px rgba(0,0,0,0.41);
 }
 
 #test-table {

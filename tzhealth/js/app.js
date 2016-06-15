@@ -1081,7 +1081,7 @@
                 var priorityIndex = vacancy[6];
                 var budgetLeft = vacancy[7];
 
-                if (priorityIndex > 999.999) {
+                if (priorityIndex >= 99999) {
                     className = 'green';
                 } else {
                     className = (budgetLeft > 0) ? 'yellow' : 'red';
@@ -1216,9 +1216,7 @@
                     return v[1] === self.settings.priorityFor && v[7] > 0;
                 }).length;
 
-                var index = N/M;
-
-                index = isFinite(index) ? index : '&#8734;';
+                var index = N.toString() + ' / ' + M.toString();
 
                 var marker = new MarkerWithLabel({
                     //anchor property doesn't work
