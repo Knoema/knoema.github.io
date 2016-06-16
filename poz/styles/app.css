@@ -516,8 +516,9 @@
 	.tab3 path
 	{
 		pointer-events: all;
-		stroke: #0a5209;
+		stroke: #000;
 		cursor: pointer;
+		stroke-width: 2px;
 	}
 
 		.tab3 path.selected
@@ -535,7 +536,7 @@
 		.tab3 path.active
 		{
 			fill: #0a5209;
-			opacity: 0.3;
+			opacity: 0.7;
 		}
 
 			.tab3 path.active:hover

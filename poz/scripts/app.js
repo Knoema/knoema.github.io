@@ -224,7 +224,7 @@ var App = (function () {
 			selectConst(districts);
 			var currentDate = $('.tab3 .timeline .item.active').data('date');
 
-			_this.changeRating(null, currentDate, false, "constituency", $this.get(0).id);
+			_this.changeRating(null, currentDate, false, "constituencey", $this.get(0).id);
 		});
 
 		$('.tab3 g#zambia-constituency ').on('click', 'path.selected', function () {
@@ -1088,6 +1088,15 @@ var App = (function () {
 				}
 			}
 		}
+
+		for (var key in depAnswerStat) {
+			if (depAnswerStat[key] == 0) {
+				delete depAnswerStat[key];
+				if (depStat[key])
+					delete depStat[key];
+			}
+		}
+
 		var max = 0;
 		for (var depName in depStat) {
 			if (depStat[depName] > max) {
