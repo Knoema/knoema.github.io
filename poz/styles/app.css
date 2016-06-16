@@ -534,7 +534,8 @@
 
 		.tab3 path.active
 		{
-			fill: #0a5209 !important;
+			fill: #0a5209;
+			opacity: 0.3;
 		}
 
 			.tab3 path.active:hover

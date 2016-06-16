@@ -175,6 +175,7 @@ var App = (function () {
 
 		$('.tab3 .head .back').on('click', function () {
 			$('.tab2').show('slow');
+			$('.tab3 .head').attr('class', 'head');
 			$('.tab3').hide('slow');
 			return false;
 		});
