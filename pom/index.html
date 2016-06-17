@@ -14,16 +14,18 @@
 	<input type="hidden" id="settings_datasetId" value="rypjzof" />
 	<input type="hidden" id="settings_host" value="collect.knoema.com" />
 
+	<input type="hidden" id="settings_dashCountryOverview" value="bavmmed" />
 	<input type="hidden" id="settings_dashCountrySummary" value="qctsvkf" />
 	<input type="hidden" id="settings_dashCountryDetails" value="ijeosj" />
+	<input type="hidden" id="settings_dashRegionOverview" value="zlpjik" />
 	<input type="hidden" id="settings_dashRegionSummary" value="ocrorrb" />
 	<input type="hidden" id="settings_dashRegionDetails" value="inssgkf" />
+	<input type="hidden" id="settings_dashDepOverview" value="gmxudee" />
 	<input type="hidden" id="settings_dashDepSummary" value="kevgpkd" />
 	<input type="hidden" id="settings_dashDepDetails" value="uzjsglc" />
+	<input type="hidden" id="settings_dashCommuneOverview" value="ckyykxc" />
 	<input type="hidden" id="settings_dashCommuneSummary" value="xwgswse" />
 	<input type="hidden" id="settings_dashCommuneDetails" value="noehfkg" />
-	<!--<input type="hidden" id="settings_dashTownshipSummary" value="rohpxrg" />
-	<input type="hidden" id="settings_dashTownshipDetails" value="zjmrjpc" />-->
 
 	<input type="hidden" id="settings_skipFirstColumns" value="5" />
 	<input type="hidden" id="settings_departmentColumnIndex" value="3" />
@@ -34,13 +36,6 @@
 		<img src="./img/logo.png" style="position: absolute; left: 15px; top: 13px; width: 53px;" />
 		<div class="title">MAURITANIA ELECTION MONITOR</div>
 		<a id="source-link" href="//knoema.com/rypjzof" target="_blank"><i class="fa fa-external-link" title="View data"></i></a>
-		<!--<div class="questionnaire">
-			<label>questionnaire
-				<select class="form-control input-sm">
-					<option>PULSE OF THE NATION</option>
-				</select>
-			</label>
-		</div>-->
 
 		<div class="vote">
 			<span class="sr-label pull-left"><br />A VOTé</span>
@@ -114,11 +109,13 @@
 		<div class="passport__content">
 			<h1 class="title"></h1>
 			<ul class="nav nav-tabs" role="tablist">
-				<li role="presentation" class="active"><a href="#tab-summary" aria-controls="summary" role="tab" data-toggle="tab">Summary</a></li>
+				<li role="presentation" class="active"><a href="#tab-overview" aria-controls="overview" role="tab" data-toggle="tab">Overview</a></li>
+				<li role="presentation"><a href="#tab-summary" aria-controls="summary" role="tab" data-toggle="tab">Summary</a></li>
 				<li role="presentation"><a href="#tab-details" aria-controls="details" role="tab" data-toggle="tab">Details</a></li>
 			</ul>
 			<div class="tab-content">
-				<div role="tabpanel" class="tab-pane active text-center" id="tab-summary">...</div>
+				<div role="tabpanel" class="tab-pane active text-center" id="tab-overview">...</div>
+				<div role="tabpanel" class="tab-pane text-center" id="tab-summary">...</div>
 				<div role="tabpanel" class="tab-pane text-center" id="tab-details">...</div>
 			</div>
 		</div>
@@ -129,11 +126,13 @@
 		<div class="passport__content">
 			<h1 class="title">Résumé</h1>
 			<ul class="nav nav-tabs" role="tablist">
-				<li role="presentation" class="active"><a href="#tab-country-summary" aria-controls="country-summary" role="tab" data-toggle="tab">Summary</a></li>
+				<li role="presentation" class="active"><a href="#tab-country-overview" aria-controls="country-overview" role="tab" data-toggle="tab">Overview</a></li>
+				<li role="presentation"><a href="#tab-country-summary" aria-controls="country-summary" role="tab" data-toggle="tab">Summary</a></li>
 				<li role="presentation"><a href="#tab-country-details" aria-controls="country-details" role="tab" data-toggle="tab">Details</a></li>
 			</ul>
 			<div class="tab-content">
-				<div role="tabpanel" class="tab-pane active text-center" id="tab-country-summary"></div>
+				<div role="tabpanel" class="tab-pane active text-center" id="tab-country-overview"></div>
+				<div role="tabpanel" class="tab-pane text-center" id="tab-country-summary"></div>
 				<div role="tabpanel" class="tab-pane text-center" id="tab-country-details"></div>
 			</div>
 		</div>

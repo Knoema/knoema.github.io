@@ -42,7 +42,7 @@ var App = (function () {
 		$('#pools').selectpicker();
 
 		// read settings
-		['datasetId', 'host', 'dashCountrySummary', 'dashCountryDetails', 'dashRegionSummary', 'dashRegionDetails', 'dashDepSummary', 'dashDepDetails', 'dashCommuneSummary', 'dashCommuneDetails', 'dashTownshipSummary', 'dashTownshipDetails'].forEach(function (field) {
+		['datasetId', 'host', 'dashCountryOverview', 'dashCountrySummary', 'dashCountryDetails', 'dashRegionOverview', 'dashRegionSummary', 'dashRegionDetails', 'dashDepOverview', 'dashDepSummary', 'dashDepDetails', 'dashCommuneOverview', 'dashCommuneSummary', 'dashCommuneDetails'].forEach(function (field) {
 			_this[field] = $('#settings_' + field).val();
 		});
 		['skipFirstColumns', 'departmentColumnIndex', 'provinceColumnIndex', 'dateColumnIndex'].forEach(function (field) {
@@ -67,8 +67,10 @@ var App = (function () {
 
 		$('#showCountrySummary').on('click', function (event) {
 			if ($('#tab-country-summary iframe').length <= 0) {
+				var overviewUrl = 'http://knoema.com/resource/embed/' + _this.dashCountryOverview + '/?noHeader=1';
 				var summaryUrl = 'http://knoema.com/resource/embed/' + _this.dashCountrySummary + '/?noHeader=1';
 				var detailsUrl = 'http://knoema.com/resource/embed/' + _this.dashCountryDetails + '/?noHeader=1';
+				$('#tab-country-overview').html('<iframe src="' + overviewUrl + '">');
 				$('#tab-country-summary').html('<iframe src="' + summaryUrl + '">');
 				$('#tab-country-details').html('<iframe src="' + detailsUrl + '">');
 			}
@@ -79,9 +81,11 @@ var App = (function () {
 			if (regionName == null)
 				return;
 
+			var overviewUrl = 'http://knoema.com/resource/embed/' + _this.dashRegionOverview + '/?noHeader=1&Region=' + encodeURI(regionName);
 			var summaryUrl = 'http://knoema.com/resource/embed/' + _this.dashRegionSummary + '/?noHeader=1&Region=' + encodeURI(regionName);
 			var detailsUrl = 'http://knoema.com/resource/embed/' + _this.dashRegionDetails + '/?noHeader=1&Region=' + encodeURI(regionName);
 			$('#passportPopup .title').html(regionName);
+			$('#tab-overview').html('<iframe src="' + overviewUrl + '">');
 			$('#tab-summary').html('<iframe src="' + summaryUrl + '">');
 			$('#tab-details').html('<iframe src="' + detailsUrl + '">');
 			$('#passportPopup').show();
@@ -89,10 +93,12 @@ var App = (function () {
 		var showDepartmentPassposrt = function (regionName) {
 			if (regionName == null)
 				return;
-
+			
+			var overviewUrl = 'http://knoema.com/resource/embed/' + _this.dashDepOverview + '/?noHeader=1&region=' + encodeURI(regionName.toUpperCase()) + '&fgaqdnb.moukataa=' + encodeURI(regionName.toUpperCase()) + '&dtirit.moukataa=' + encodeURI(regionName.toUpperCase()) + '&sfpsahf.moukataa=' + encodeURI(regionName.toUpperCase()) + '&louwet.moukataa=' + encodeURI(regionName.toUpperCase());
 			var summaryUrl = 'http://knoema.com/resource/embed/' + _this.dashDepSummary + '/?noHeader=1&dept=' + encodeURI(regionName.toUpperCase()) + '&Region=' + encodeURI(regionName + ' Department');
 			var detailsUrl = 'http://knoema.com/resource/embed/' + _this.dashDepDetails + '/?noHeader=1&dept=' + encodeURI(regionName.toUpperCase()) + '&Region=' + encodeURI(regionName + ' Department');
 			$('#passportPopup .title').html(regionName);
+			$('#tab-overview').html('<iframe src="' + overviewUrl + '">');
 			$('#tab-summary').html('<iframe src="' + summaryUrl + '">');
 			$('#tab-details').html('<iframe src="' + detailsUrl + '">');
 			$('#passportPopup').show();
@@ -101,9 +107,11 @@ var App = (function () {
 			if (regionName == null)
 				return;
 
+			var overviewUrl = 'http://knoema.com/resource/embed/' + _this.dashCommuneOverview + '/?noHeader=1&region=' + encodeURI(regionName.toUpperCase()) + '&fgaqdnb.commune=' + encodeURI(regionName.toUpperCase()) + '&rfzcdbd.commune=' + encodeURI(regionName.toUpperCase()) + '&qmulsr.commune=' + encodeURI(regionName.toUpperCase()) + '&zxahkce.commune=' + encodeURI(regionName.toUpperCase()) + '&sfpsahf.commune=' + encodeURI(regionName.toUpperCase()) + '&louwet.commune=' + encodeURI(regionName.toUpperCase());
 			var summaryUrl = 'http://knoema.com/resource/embed/' + _this.dashCommuneSummary + '/?noHeader=1&commune=' + encodeURI(regionName) + '&Region=' + encodeURI(regionName);
 			var detailsUrl = 'http://knoema.com/resource/embed/' + _this.dashCommuneDetails + '/?noHeader=1&commune=' + encodeURI(regionName) + '&Region=' + encodeURI(regionName);
 			$('#passportPopup .title').html(regionName);
+			$('#tab-overview').html('<iframe src="' + overviewUrl + '">');
 			$('#tab-summary').html('<iframe src="' + summaryUrl + '">');
 			$('#tab-details').html('<iframe src="' + detailsUrl + '">');
 			$('#passportPopup').show();
