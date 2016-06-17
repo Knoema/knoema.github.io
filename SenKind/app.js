@@ -199,7 +199,7 @@
                 $(document.body).removeClass('loading');
 
                 $('.nav').find('[disabled]').removeAttr('disabled');
-                debugger;
+
                 if (layer2.layer.ranges) {
                     $('#heatmap-legend').remove();
                     $('#map-canvas').append($.tmpl('heatmap-legend.html', {
