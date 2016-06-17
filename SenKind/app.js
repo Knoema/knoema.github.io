@@ -184,6 +184,7 @@
 
         //TODO $(document.body).addClass('loading');
 
+        //activeRegionLayer
         if (!layer) {
 
             if (self.layersMetadata[layerId].layerType === 'region' && layerId !== self.filters.activeRegionLayer) {
@@ -198,8 +199,9 @@
                 $(document.body).removeClass('loading');
 
                 $('.nav').find('[disabled]').removeAttr('disabled');
-
-                if (layer2.layer.ranges && !$('#heatmap-legend').length) {
+                debugger;
+                if (layer2.layer.ranges) {
+                    $('#heatmap-legend').remove();
                     $('#map-canvas').append($.tmpl('heatmap-legend.html', {
                         ranges: layer2.layer.ranges
                     }));

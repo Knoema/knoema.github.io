@@ -135,3 +135,26 @@ only screen and (                min-resolution: 2dppx) {
         background-size: 15% auto;
     }
 }
+
+#heatmap-legend {
+    background-color: #efefef;
+    border-radius: 3px;
+    border: 1px solid gray;
+    height: 45px;
+    position: absolute;
+    padding: 4px;
+    top: 15px;
+    right: 15px;
+}
+
+#heatmap-legend .scale span {
+    width: 50px;
+    height: 10px;
+    display: inline-block;
+    margin: 0;
+    padding: 0;
+    margin-left: -4px;
+}
+#heatmap-legend .scale span:first-child {
+    margin-left: 0;
+}
