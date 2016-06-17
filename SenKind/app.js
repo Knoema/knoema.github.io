@@ -202,12 +202,15 @@
 
                 if (layer2.layer.ranges) {
                     $('#heatmap-legend').remove();
+                    var ranges = [].concat(layer2.layer.ranges);
+                    ranges[0].low = Globalize.format(ranges[0].low);
+                    ranges[ranges.length - 1].high = Globalize.format(ranges[ranges.length - 1].high);
                     $('#map-canvas').append($.tmpl('heatmap-legend.html', {
-                        ranges: layer2.layer.ranges
+                        ranges: ranges
                     }));
                 }
-
             });
+
             layer.on('click', function (e) {
 
                 if (e.data.tooltip.name) {
