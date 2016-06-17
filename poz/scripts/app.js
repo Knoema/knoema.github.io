@@ -198,7 +198,7 @@ var App = (function () {
 			$this.data('regions', province);
 			var currentDate = $('.tab3 .timeline .item.active').data('date');
 
-			_this.changeRating(null, currentDate, false, "districts", $this.get(0).id);
+			_this.changeRating(null, currentDate, false, "districts", $this.get(0).id, province);
 		});
 
 		var selectConst = function (district) {
@@ -224,7 +224,7 @@ var App = (function () {
 			selectConst(districts);
 			var currentDate = $('.tab3 .timeline .item.active').data('date');
 
-			_this.changeRating(null, currentDate, false, "constituencey", $this.get(0).id);
+			_this.changeRating(null, currentDate, false, "constituencey", $this.get(0).id, districts);
 		});
 
 		$('.tab3 g#zambia-constituency ').on('click', 'path.selected', function () {
@@ -727,7 +727,21 @@ var App = (function () {
 		};
 	};
 
-	App.changeRating = function (data, currentDate, isFirstPage, regionLevel, selectedregion) {
+	App.addText = function (p, text, fontSize) {
+		var t = document.createElementNS("http://www.w3.org/2000/svg", "text");
+		var b = p.getBBox();
+		if (p.id == "ZM-04")
+			t.setAttribute("transform", "translate(415.5450439453125 215.44628810882568)");
+		else
+			t.setAttribute("transform", "translate(" + ((b.x + b.width / 2) - 10) + " " + ((b.y + b.height / 2) + 10) + ")");
+
+		t.textContent = text;
+		t.setAttribute("fill", "black");
+		t.setAttribute("font-size", fontSize);
+		p.parentNode.insertBefore(t, p.nextSibling);
+	};
+
+	App.changeRating = function (data, currentDate, isFirstPage, regionLevel, selectedregion, regions) {
 		var _this = this;
 		var voteCount = 0;
 		var tempCan = {};
@@ -773,19 +787,53 @@ var App = (function () {
 
 			var canId = $('.head').attr('class').split(" ")[1];
 			var can = _this.candidate[canId];
+
+			function getRegion(key) {
+				var regionData;
+				_this.regions.forEach(function (region) {
+
+					region.regions.forEach(function (department) {
+						if (key == department.id)
+							regionData = department;
+
+						department.regions.forEach(function (commune) {
+							if (key == commune.id)
+								regionData = commune;
+						});
+					});
+				});
+
+				return regionData;
+			};
 			if (regionLevel == "province") {
 				var votePercent = {};
 				for (var key in votesByProvince) {
 					var votesByCandidateForEach = _.groupBy(votesByProvince[key], 17);
 					var canDet = votesByCandidateForEach[can.actualName];
-					if (canDet)
-						votePercent[key] = ((canDet.length / votesByProvince[key].length) * 100).toFixed(2);
+					if (canDet) {
+						votePercent[key] = {};
+						votePercent[key].percent = ((canDet.length / votesByProvince[key].length) * 100).toFixed(2);
+						var position = 1;
+						for (var k in votesByCandidateForEach) {
+							if (k != can.actualName) {
+								if (votesByCandidateForEach[k].length > canDet.length)
+									position += 1;
+							}
+						}
+						votePercent[key].position = position;
+					}
 				}
 				$('#zambia-province path').removeClass('active').css('fill', '#fff');
+				$('#zambia-province').find('text').remove().end().find('title').remove();
 
 				for (var key in votePercent) {
-					if (votePercent[key])
-						$('#' + key).css({ 'fill': _this.percentToRGB(votePercent[key]), 'opacity': '0.5' });
+					if (votePercent[key]) {
+						var province = _this.regions.find(function (region) { return key === region.id; });
+						var $region = $('#' + key);
+						$region.css({ 'fill': _this.percentToRGB(votePercent[key].percent), 'opacity': '0.5' });
+						$region.html("<title>Region Name: " + province.name + "<br/>Position: " + votePercent[key].position + "</title>");
+						_this.addText($region.get(0), votePercent[key].position, "32pt");
+					}
 				}
 				_this.populateZambiaChart(votesByCurrentDate, regionLevel);
 
@@ -804,15 +852,33 @@ var App = (function () {
 					for (var key in voteByDistricts) {
 						var votesByCandidateForEach = _.groupBy(voteByDistricts[key], 17);
 						var canDet = votesByCandidateForEach[can.actualName];
-						if (canDet)
-							votePercent[key] = ((canDet.length / voteByDistricts[key].length) * 100).toFixed(2);
+						if (canDet) {
+							votePercent[key] = {};
+							votePercent[key].percent = ((canDet.length / voteByDistricts[key].length) * 100).toFixed(2);
+							var position = 1;
+							for (var k in votesByCandidateForEach) {
+								if (k != can.actualName) {
+									if (votesByCandidateForEach[k].length > canDet.length)
+										position += 1;
+								}
+							}
+							votePercent[key].position = position;
+						}
 					}
 
 					$('#zambia-districts path').removeClass('active').css('fill', '#fff');
+					$('#zambia-districts').find('text').remove().end().find('title').remove();
 
 					for (var key in votePercent) {
-						if (votePercent[key])
-							$('#' + key).css({ 'fill': _this.percentToRGB(votePercent[key]), 'opacity': '0.5' });
+						if (votePercent[key]) {
+							var $region = $('#' + key);
+							$region.css({ 'fill': _this.percentToRGB(votePercent[key].percent), 'opacity': '0.5' });
+							var region = getRegion(key);
+							if (region)
+								$region.html("<title>Region Name: " + region.name + "<br/>Position: " + votePercent[key].position + "</title>");
+							if ($region.length)
+								_this.addText($region.get(0), votePercent[key].position, "18pt");
+						}
 					}
 					$('#' + selectedregion).addClass('active');
 
@@ -831,22 +897,36 @@ var App = (function () {
 				if (selectedregion) {
 					var voteForProvince = votesByProvince[selectedregion.substring(0, 5)];
 					var voteByDistricts = _.groupBy(voteForProvince, 22)[selectedregion];
-					var voteByCons = _.groupBy(voteByDistricts, 23)
-
-
+					var voteByCons = _.groupBy(voteByDistricts, 23);
 					var votePercent = {};
 					for (var key in voteByCons) {
 						var votesByCandidateForEach = _.groupBy(voteByCons[key], 17);
 						var canDet = votesByCandidateForEach[can.actualName];
-						if (canDet)
-							votePercent[key] = ((canDet.length / voteByCons[key].length) * 100).toFixed(2);
+						if (canDet) {
+							votePercent[key] = {};
+							votePercent[key].percent = ((canDet.length / voteByCons[key].length) * 100).toFixed(2);
+							var position = 1;
+							for (var k in votesByCandidateForEach) {
+								if (k != can.actualName) {
+									if (votesByCandidateForEach[k].length > canDet.length)
+										position += 1;
+								}
+							}
+							votePercent[key].position = position;
+						}
 					}
-
 					$('#zambia-constituency path').removeClass('active').css('fill', '#fff');
+					$('#zambia-constituency').find('text').remove().end().find('title').remove();
 
 					for (var key in votePercent) {
-						if (votePercent[key])
-							$('#' + key).css({ 'fill': _this.percentToRGB(votePercent[key]), 'opacity': '0.5' });
+						if (votePercent[key]) {
+							var $region = $('#' + key);
+							$region.css({ 'fill': _this.percentToRGB(votePercent[key].percent), 'opacity': '0.5' });
+							var region = getRegion(key);
+							if (region)
+								$region.html("<title>Region Name: " + region.name + "<br/>Position: " + votePercent[key].position + "</title>");
+							_this.addText($region.get(0), votePercent[key].position, "15pt");
+						}
 					}
 					_this.populateZambiaChart(voteByDistricts, regionLevel);
 				}
