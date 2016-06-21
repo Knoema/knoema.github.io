@@ -360,7 +360,7 @@
 		border-bottom: 1px solid #5ea835;
 		color: #0a5209;
 		padding-bottom: 20px;
-		height: 430px;
+		height: 450px;
 	}
 
 	.tab3 .head
@@ -487,22 +487,23 @@
 		margin-top: -80px;
 	}
 
-	.tab3 .districts .map
+	.tab3 .districts .map, .tab3 .constituencey .map
 	{
 		position: relative;
 		left: -48px;
+		margin-top: -25px;
+		height: 380px;
 	}
 
 	.tab3 .constituencey .map
 	{
-		position: relative;
-		left: -108px;
+
 	}
 
 	.tab3 .constituencey .header, .tab3 .districts .header
 	{
 		position: relative;
-		left: -275px;
+		/*left: -275px;*/
 	}
 
 	.tab3 .chart

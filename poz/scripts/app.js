@@ -36,6 +36,28 @@ var App = (function () {
 		b = 0;
 		return "rgb(" + r + "," + g + "," + b + ")";
 	};
+
+	App.setMapZoomCoordinates = function (id) {
+		var zoomCo = {
+			'ZM-05': [{ x: -550, y: -130, scale: 4 }, { x: -490, y: -35, scale: 4 }],
+			'ZM-10': [{ x: -590, y: -210, scale: 3.3 }, { x: -520, y: -80, scale: 3.1 }],
+			'ZM-04': [{ x: -450, y: -160, scale: 3.5 }, { x: -450, y: -40, scale: 3.2 }],
+			'ZM-08': [{ x: -400, y: -360, scale: 5 }, { x: -400, y: -200, scale: 5 }],
+			'ZM-06': [{ x: -130, y: -330, scale: 3.2 }, { x: -185, y: -170, scale: 3 }],
+			'ZM-01': [{ x: -130, y: -520, scale: 3.7 }, { x: -185, y: -290, scale: 3 }],
+			'ZM-07': [{ x: -325, y: -620, scale: 4.5 }, { x: -335, y: -380, scale: 4.3 }],
+			'ZM-09': [{ x: -500, y: -550, scale: 6 }, { x: -450, y: -300, scale: 5 }],
+			'ZM-03': [{ x: -660, y: -385, scale: 4.4 }, { x: -570, y: -205, scale: 4 }],
+			'ZM-02': [{ x: -370, y: -400, scale: 3 }, { x: -355, y: -205, scale: 2.75 }]
+		}
+
+		var zoom = zoomCo[id];
+
+		$('#zambia-districts').attr('transform', 'scale(' + zoom[0].scale + ') translate(' + zoom[0].x + ', ' + zoom[0].y + ')');
+		$('#zambia-constituency').attr('transform', 'scale(' + zoom[1].scale + ') translate(' + zoom[1].x + ', ' + zoom[1].y + ')');
+
+		return zoomCo[id];
+	};
 	App.init = function () {
 		var _this = this;
 
@@ -198,7 +220,12 @@ var App = (function () {
 			$this.data('regions', province);
 			var currentDate = $('.tab3 .timeline .item.active').data('date');
 
+			//Zoom Map;
+
+			_this.setMapZoomCoordinates($this.get(0).id);
+
 			_this.changeRating(null, currentDate, false, "districts", $this.get(0).id, province);
+
 		});
 
 		var selectConst = function (district) {
@@ -730,15 +757,34 @@ var App = (function () {
 	App.addText = function (p, text, fontSize) {
 		var t = document.createElementNS("http://www.w3.org/2000/svg", "text");
 		var b = p.getBBox();
-		if (p.id == "ZM-04")
-			t.setAttribute("transform", "translate(415.5450439453125 215.44628810882568)");
-		else
-			t.setAttribute("transform", "translate(" + ((b.x + b.width / 2) - 10) + " " + ((b.y + b.height / 2) + 10) + ")");
+		switch (p.id) {
+			case "ZM-04":
+				t.setAttribute("transform", "translate(415.5450439453125 215.44628810882568)");
+				break;
+			case "ZM-03":
+				t.setAttribute("transform", "translate(571.9194183349609 350.94896697998047)");
+				break;
+			case "ZM-02":
+				t.setAttribute("transform", "translate(369.48036193847656 390.87974548339844)");
+				break;
+			case "ZM-09":
+				t.setAttribute("transform", "translate(412.24009704589844 445.35498046875)");
+				break;
+			default:
+				t.setAttribute("transform", "translate(" + ((b.x + b.width / 2) - 10) + " " + ((b.y + b.height / 2) - 3) + ")");
+		}
 
 		t.textContent = text;
 		t.setAttribute("fill", "black");
 		t.setAttribute("font-size", fontSize);
 		p.parentNode.insertBefore(t, p.nextSibling);
+	};
+
+	App.getColor = function (position) {
+
+		var colors = ["rgb(0, 255, 0)", "rgb(255, 169, 0)", "rgb(255, 255, 0)", "rgb(255, 85, 0)"];
+
+		return colors[position - 1];
 	};
 
 	App.changeRating = function (data, currentDate, isFirstPage, regionLevel, selectedregion, regions) {
@@ -830,7 +876,7 @@ var App = (function () {
 					if (votePercent[key]) {
 						var province = _this.regions.find(function (region) { return key === region.id; });
 						var $region = $('#' + key);
-						$region.css({ 'fill': _this.percentToRGB(votePercent[key].percent), 'opacity': '0.5' });
+						$region.css({ 'fill': _this.getColor(votePercent[key].position), 'opacity': '0.5' });
 						$region.html("<title>Region Name: " + province.name + "<br/>Position: " + votePercent[key].position + "</title>");
 						_this.addText($region.get(0), votePercent[key].position, "32pt");
 					}
@@ -842,7 +888,14 @@ var App = (function () {
 					provincekey = k;
 					break;
 				}
-				$('#' + provincekey).click();
+				if (provincekey)
+					$('#' + provincekey).click();
+				else {
+					$('#zambia-districts path').removeClass('active').css('fill', '#fff');
+					$('#zambia-districts').find('text').remove().end().find('title').remove();
+					$('#zambia-constituency path').removeClass('active').css('fill', '#fff');
+					$('#zambia-constituency').find('text').remove().end().find('title').remove();
+				}
 			}
 			else if (regionLevel == "districts") {
 				if (selectedregion) {
@@ -872,12 +925,12 @@ var App = (function () {
 					for (var key in votePercent) {
 						if (votePercent[key]) {
 							var $region = $('#' + key);
-							$region.css({ 'fill': _this.percentToRGB(votePercent[key].percent), 'opacity': '0.5' });
+							$region.css({ 'fill': _this.getColor(votePercent[key].position), 'opacity': '0.5' });
 							var region = getRegion(key);
 							if (region)
 								$region.html("<title>Region Name: " + region.name + "<br/>Position: " + votePercent[key].position + "</title>");
 							if ($region.length)
-								_this.addText($region.get(0), votePercent[key].position, "18pt");
+								_this.addText($region.get(0), votePercent[key].position, "10.5pt");
 						}
 					}
 					$('#' + selectedregion).addClass('active');
@@ -890,7 +943,12 @@ var App = (function () {
 						break;
 					}
 
-					$('#' + provincekey).click();
+					if (provincekey)
+						$('#' + provincekey).click();
+					else {
+						$('#zambia-constituency path').removeClass('active').css('fill', '#fff');
+						$('#zambia-constituency').find('text').remove().end().find('title').remove();
+					}
 				}
 			}
 			else {
@@ -921,11 +979,11 @@ var App = (function () {
 					for (var key in votePercent) {
 						if (votePercent[key]) {
 							var $region = $('#' + key);
-							$region.css({ 'fill': _this.percentToRGB(votePercent[key].percent), 'opacity': '0.5' });
+							$region.css({ 'fill': _this.getColor(votePercent[key].position), 'opacity': '0.5' });
 							var region = getRegion(key);
 							if (region)
 								$region.html("<title>Region Name: " + region.name + "<br/>Position: " + votePercent[key].position + "</title>");
-							_this.addText($region.get(0), votePercent[key].position, "15pt");
+							_this.addText($region.get(0), votePercent[key].position, "5pt");
 						}
 					}
 					_this.populateZambiaChart(voteByDistricts, regionLevel);
