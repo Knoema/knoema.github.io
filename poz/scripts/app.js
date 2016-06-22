@@ -705,7 +705,7 @@ var App = (function () {
 			if (lastPercentage != null) {
 				lastPercentage.value = 100 - percentSum;
 				if (answers.length > 4) {
-					lastPercentage.label = 'AUTRE';
+					lastPercentage.label = 'OTHER';
 					lastPercentage.answers = percentages.slice(3).map(function (p) { return p.label; });
 				}
 			}
