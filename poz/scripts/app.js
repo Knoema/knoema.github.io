@@ -754,26 +754,22 @@ var App = (function () {
 		};
 	};
 
+	App.regionTextPosition = {
+		"ZM-04": "translate(415.5450439453125 215.44628810882568)",
+		"ZM-03": "translate(571.9194183349609 350.94896697998047)",
+		"ZM-02": "translate(369.48036193847656 390.87974548339844)",
+		"ZM-09": "translate(412.24009704589844 445.35498046875)"
+	};
+
 	App.addText = function (p, text, fontSize) {
 		var t = document.createElementNS("http://www.w3.org/2000/svg", "text");
 		var b = p.getBBox();
-		switch (p.id) {
-			case "ZM-04":
-				t.setAttribute("transform", "translate(415.5450439453125 215.44628810882568)");
-				break;
-			case "ZM-03":
-				t.setAttribute("transform", "translate(571.9194183349609 350.94896697998047)");
-				break;
-			case "ZM-02":
-				t.setAttribute("transform", "translate(369.48036193847656 390.87974548339844)");
-				break;
-			case "ZM-09":
-				t.setAttribute("transform", "translate(412.24009704589844 445.35498046875)");
-				break;
-			default:
-				t.setAttribute("transform", "translate(" + ((b.x + b.width / 2) - 10) + " " + ((b.y + b.height / 2) - 3) + ")");
-		}
 
+		var transform = App.regionTextPosition[p.id];
+		if (transform)
+			t.setAttribute("transform", transform);
+		else
+			t.setAttribute("transform", "translate(" + ((b.x + b.width / 2) - 10) + " " + ((b.y + b.height / 2) - 3) + ")");
 		t.textContent = text;
 		t.setAttribute("fill", "black");
 		t.setAttribute("font-size", fontSize);
@@ -953,7 +949,7 @@ var App = (function () {
 			}
 			else {
 				if (selectedregion) {
-					var voteForProvince = votesByProvince[selectedregion.substring(0, 5)];
+					var voteForProvince = votesByProvince[$('#zambia-province').find('path.active').get(0).id]; // Recently formed Province will reference to old province constituency id.
 					var voteByDistricts = _.groupBy(voteForProvince, 22)[selectedregion];
 					var voteByCons = _.groupBy(voteByDistricts, 23);
 					var votePercent = {};
