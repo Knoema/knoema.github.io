@@ -755,10 +755,46 @@ var App = (function () {
 	};
 
 	App.regionTextPosition = {
-		"ZM-04": "translate(415.5450439453125 215.44628810882568)",
-		"ZM-03": "translate(571.9194183349609 350.94896697998047)",
-		"ZM-02": "translate(369.48036193847656 390.87974548339844)",
-		"ZM-09": "translate(412.24009704589844 445.35498046875)"
+		"ZM-04": "translate(416 215)",
+		"ZM-03": "translate(572 351)",
+		"ZM-02": "translate(369 391)",
+		"ZM-09": "translate(412 445)",
+		"ZM-04-MW-C-MW": "translate(515 145)",
+		"ZM-04-MW-C-MA": "translate(518 162)",
+		"ZM-04-MW-C-BA": "translate(525 178)",
+		"ZM-04-MI-C-CH": "translate(510 200)",
+		"ZM-05-LU-C-LP": "translate(568 161)",
+		"ZM-05-LU-C-LU": "translate(578 145)",
+		"ZM-04-NC-C-NC": "translate(515 100)",
+		"ZM-04-CH-C-CH": "translate(524 80)",
+		"ZM-05-KA-C-KA": "translate(555 65)",
+		"ZM-05-MB-C-MB": "translate(650 75)",
+		"ZM-05-MP-C-MP": "translate(650 224)",
+		"ZM-05-MP-C-MF": "translate(675 225)",
+		"ZM-03-LU-C-CH": "translate(732 230)",
+		"ZM-01-KA-C-MA": "translate(290 365)",
+		"ZM-01-MI-C-LW": "translate(225 335)",
+		"ZM-01-KA": "translate(235 594)",
+		"ZM-01-MI": "translate(160 560)",
+		"ZM-07-MO-C-MO": "translate(463 443)",
+		"ZM-07-MA-C-MA": "translate(463 430)",
+		"ZM-09-SH-C-MW": "translate(470 405)",
+		"ZM-06-MU-C-MW": "translate(290 210)",
+		"ZM-06-SO-C-SE": "translate(440 230)",
+		"ZM-08-MP-C-MO": "translate(476 302)",
+		"ZM-08-CH-C-CH": "translate(471 249)",
+		"ZM-08-CA-C-CA": "translate(468 261)",
+		"ZM-03-CP-C-LU": "translate(710 325)",
+		"ZM-03-PE-C-KA": "translate(650 355)",
+		"ZM-09-LU": "translate(645 640)",
+		"ZM-09-LU-C-FI": "translate(580 400)",
+		"ZM-02-KA": "translate(530 580)",
+		"ZM-02-KA-C-BW": "translate(498 350)",
+		"ZM-09-LD": "translate(530 647)",
+		"ZM-03-CP": "translate(808 530)",
+		"ZM-08-CA": "translate(495 448)",
+		"ZM-01-KA": "translate(240 590)",
+		"ZM-07-MO-C-MC": "translate(455 450)"
 	};
 
 	App.addText = function (p, text, fontSize) {
@@ -768,8 +804,13 @@ var App = (function () {
 		var transform = App.regionTextPosition[p.id];
 		if (transform)
 			t.setAttribute("transform", transform);
-		else
-			t.setAttribute("transform", "translate(" + ((b.x + b.width / 2) - 10) + " " + ((b.y + b.height / 2) - 3) + ")");
+		else {
+			var offsetX = b.width <= 50 ? 0 : 5;
+			var offsetY = b.height <= 50 ? 0 : 5;
+
+			t.setAttribute("transform", "translate(" + ((b.x + b.width / 2) - offsetX) + " " + ((b.y + b.height / 2) + offsetY) + ")");
+		}
+
 		t.textContent = text;
 		t.setAttribute("fill", "black");
 		t.setAttribute("font-size", fontSize);
@@ -926,7 +967,7 @@ var App = (function () {
 							if (region)
 								$region.html("<title>Region Name: " + region.name + "<br/>Position: " + votePercent[key].position + "</title>");
 							if ($region.length)
-								_this.addText($region.get(0), votePercent[key].position, "10.5pt");
+								_this.addText($region.get(0), votePercent[key].position, "7pt");
 						}
 					}
 					$('#' + selectedregion).addClass('active');
