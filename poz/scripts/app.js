@@ -774,7 +774,6 @@ var App = (function () {
 		"ZM-03-LU-C-CH": "translate(732 230)",
 		"ZM-01-KA-C-MA": "translate(290 365)",
 		"ZM-01-MI-C-LW": "translate(225 335)",
-		"ZM-01-KA": "translate(235 594)",
 		"ZM-01-MI": "translate(160 560)",
 		"ZM-07-MO-C-MO": "translate(463 443)",
 		"ZM-07-MA-C-MA": "translate(463 430)",
@@ -794,7 +793,12 @@ var App = (function () {
 		"ZM-03-CP": "translate(808 530)",
 		"ZM-08-CA": "translate(495 448)",
 		"ZM-01-KA": "translate(240 590)",
-		"ZM-07-MO-C-MC": "translate(455 450)"
+		"ZM-07-MO-C-MC": "translate(455 450)",
+		"ZM-01-LA-C-LA": "translate(310 396)",
+		"ZM-07-LI-C-LI": "translate(380 522)",
+		"ZM-01-KO": "translate(136 585)",
+		"ZM-01-LA": "translate(275 635)",
+		"ZM-07-LI": "translate(390 800)",
 	};
 
 	App.addText = function (p, text, fontSize) {
