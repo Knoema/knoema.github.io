@@ -452,9 +452,23 @@ var App = (function () {
 					}
 					dates = dates.sort();
 					var width = 100 / dates.length;
+					var month = {
+						'01': "Jan",
+						'02': "Feb",
+						"03": "Mar",
+						"04": "Apr",
+						"05": "May",
+						"06": "Jun",
+						"07": "Jul",
+						"08": "Aug",
+						"09": "Sep",
+						"10": "Oct",
+						"11": "Nov",
+						"12": "Dec"
+					};
 					dates.forEach(function (date, index) {
 						var dateParts = date.split('/');
-						$timeline.append('<div style="width:' + width + '%;" class="item ' + (index == (dates.length - 1) ? 'active' : '') + '" data-date="' + date + '"><span class="day">' + parseInt(dateParts[1]) + '</span>&nbsp;<span class="month">may</span></div>');
+						$timeline.append('<div style="width:' + width + '%;" class="item ' + (index == (dates.length - 1) ? 'active' : '') + '" data-date="' + date + '"><span class="day">' + parseInt(dateParts[1]) + '</span>&nbsp;<span class="month">' + month[dateParts[0]] + '</span></div>');
 					});
 					currentDate = dates[dates.length - 1];
 				}
