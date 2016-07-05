@@ -50,7 +50,7 @@ var App = (function () {
 		});
 		
 		var refreshVoteCount = function () {
-			$.getJSON('http://' + _this.host + '/api/forms/pos20160523/status').done(function (result) {
+			$.getJSON('http://' + _this.host + '/api/forms/pos20160630/status').done(function (result) {
 				var formatedVoteCount = window['numeral'](result.all).format('0,0');
 				$('#voteCount').html(formatedVoteCount);
 			});
@@ -291,13 +291,13 @@ var App = (function () {
 
 					var isTwnshp = false;
 					if ($('#optionProvinces').is(':checked')) {
-						regionColumnIndex = 42;
+						regionColumnIndex = 45;
 						regionNameIndex = 2;
 						regions = provinces;
 						selectedRegions = _this.getSelectedRegions(poolsStructure.region);
 					}
 					else if ($('#optionDepartments').is(':checked')) {
-						regionColumnIndex = 43;
+						regionColumnIndex = 46;
 						regionNameIndex = 3;
 						regions = departments;
 						selectedRegions = _this.getSelectedRegions(poolsStructure.dep);
@@ -309,8 +309,8 @@ var App = (function () {
 						selectedRegions = _this.getSelectedRegions(poolsStructure.communes);
 					}
 					else if ($('#optionTownships').is(':checked')) {
-						regionColumnIndex = 45;
-						regionNameIndex = 5;
+						regionColumnIndex = 47;
+						regionNameIndex = 4;
 						regions = townships;
 						selectedRegions = _this.getSelectedRegions(poolsStructure.townships);
 					}
@@ -625,7 +625,8 @@ var App = (function () {
 					"Frequencies": [],
 					"Dataset": _this.datasetId,
 					"Segments": null,
-					"MeasureAggregations": null
+					"MeasureAggregations": null,
+					"RegionIdsRequired": true
 				}).done(function (data) {
 					return def.resolve(data);
 				});
@@ -641,7 +642,7 @@ var App = (function () {
 			"Stub": [],
 			"Filter": [{
 				"DimensionId": "measure",
-				"Members": ['5042180'],
+				"Members": ['5045390'],
 				"DimensionName": "measure",
 				"DatasetId": datasetId,
 				"Order": "0",
@@ -791,23 +792,57 @@ var App = (function () {
 		return markers;
 	};
 	App.datasetColumnNames = {
-		'PastElections': 'QUELLE EST LA DERNIERE ELECTION A LAQUELLE VOUS AVEZ PARTICIPE ?',
-		'CommuneVotedOrNot': 'SUR VOTRE CARTE D’ELECTEUR QUELLE EST VOTRE COMMUNE DE VOTE?',
 		'Sex': 'GENRE ?',
 		'Education': 'QUEL EST VOTRE NIVEAU D’EDUCATION ?',
 		'Profession': 'QUELLE EST VOTRE SITUATION PROFESSIONNELLE ?',
 		'Age': 'QUEL EST VOTRE GROUPE D’AGE',
 		'Religion': 'QUELLE EST VOTRE AFFILIATION RELIGIEUSE ?',
 		'Nationality': 'QUEL EST VOTRE GROUPE ETHNIQUE ?',
+
+		'Elections2017': 'AVEZ-VOUS L’INTENTION DE VOTER AUX PROCHAINES ELECTIONS LEGISLATIVES DE 2017',
+		'ElectionCard': 'DISPOSEZ-VOUS D’UNE CARTE D’ELECTEUR ?',
+		'WhyDidntVote': 'RAISONS POUR LESQUELLES VOUS N’AVEZ PAS L’INTENTION DE VOTER ?',
+
 		'EvaluatePresident': 'COMMENT EVALUEZ-VOUS LE TRAVAIL DU PRESIDENT MACKY SALL DEPUIS 2012 ?',
-		'RightDirection': 'PENSEZ-VOUS QUE LE PAYS VA DANS LA BONNE DIRECTION ?',
-		//'Satisfied': 'CITEZ VOS PLUS GRANDS MOTIFS DE SATISFACTION DU PRESIDENT DEPUIS 2012 ?',
-		//'Dissatisfied': 'CITEZ VOS PLUS GRANDS MOTIF DE D’INSATISFACTION DU PRESIDENT DEPUIS 2012 ?',
-		'Priority1': 'QUELLES SONT LES TROIS PRIORITES OÙ VOUS ATTENDEZ LE PRESIDENT ? #1:',
-		'Priority2': 'QUELLES SONT LES TROIS PRIORITES OÙ VOUS ATTENDEZ LE PRESIDENT ? #2:',
-		'Priority3': 'QUELLES SONT LES TROIS PRIORITES OÙ VOUS ATTENDEZ LE PRESIDENT ? #3:',
-		'Program': 'QUEL EST LE PROGRAMME DU PRESIDENT QUE VOUS APPRECIEZ LE PLUS ?',
-		'Participate': 'SERIEZ-VOUS INTERESSÉ A REPONDRE A DES QUESTIONS SUR LES AFFAIRES DU PAYS UNE FOIS PAR MOIS PAR TELEPHONE OU CONTACT DIRECT ?',
+		'IfElectionsToday': 'SI LES ELECTIONS PRESIDENTIELLES SE PASSAIENT AUJOURD’HUI VOTERIEZ-VOUS POUR LE PRESIDENT MACKY SALL?',
+
+		'EvaluateEcon': 'COMMENT EVALUEZ-VOUS LE TRAVAIL DU PRESIDENT DANS LES SECTEUR Economie?',
+		'EvaluateAgri': 'COMMENT EVALUEZ-VOUS LE TRAVAIL DU PRESIDENT DANS LES SECTEUR Agriculture?',
+		'EvaluateEdu': 'COMMENT EVALUEZ-VOUS LE TRAVAIL DU PRESIDENT DANS LES SECTEUR Education?',
+		'EvaluateSante': 'COMMENT EVALUEZ-VOUS LE TRAVAIL DU PRESIDENT DANS LES SECTEUR Santé?',
+		'EvaluateEmplyment': 'COMMENT EVALUEZ-VOUS LE TRAVAIL DU PRESIDENT DANS LES SECTEUR Emploi?',
+		'EvaluateRelig': 'COMMENT EVALUEZ-VOUS LE TRAVAIL DU PRESIDENT DANS LES SECTEUR Affaires Religieuses?',
+		'EvaluateSecur': 'COMMENT EVALUEZ-VOUS LE TRAVAIL DU PRESIDENT DANS LES SECTEUR Sécurité?',
+		'EvaluateSoc': 'COMMENT EVALUEZ-VOUS LE TRAVAIL DU PRESIDENT DANS LES SECTEUR Protection sociale?',
+		'EvaluateGov': 'COMMENT EVALUEZ-VOUS LE TRAVAIL DU PRESIDENT DANS LES SECTEUR Gouvernance?',
+		'EvaluateStolen': 'COMMENT EVALUEZ-VOUS LE TRAVAIL DU PRESIDENT DANS LES SECTEUR Traque des biens mal acquis?',
+
+		'Priority1': 'QUELLES SONT LES TROIS PRIORITES SUR LESQUELLES VOUS ATTENDEZ LE PRESIDENT ? #1:',
+		'Priority2': 'QUELLES SONT LES TROIS PRIORITES SUR LESQUELLES VOUS ATTENDEZ LE PRESIDENT ? #2:',
+		'Priority3': 'QUELLES SONT LES TROIS PRIORITES SUR LESQUELLES VOUS ATTENDEZ LE PRESIDENT ? #3:',
+		'Program1': 'QQUEL EST LE PROGRAMME DU PRESIDENT MACKY SALL QUE VOUS APPRECIEZ LE PLUS ? #1:',
+		'Program2': 'QUEL EST LE PROGRAMME DU PRESIDENT MACKY SALL QUE VOUS APPRECIEZ LE PLUS ? #2:',
+		'Program3': 'QUEL EST LE PROGRAMME DU PRESIDENT MACKY SALL QUE VOUS APPRECIEZ LE PLUS ? #3:',
+
+		'Participate': 'SERIEZ-VOUS INTERESSÉ A REPONDRE A DES QUESTIONS SUR LES AFFAIRES DU PAYS UNE FOIS PAR MOIS PAR TELEPHONE OU FACE A FACE?'
+
+		//'PastElections': 'QUELLE EST LA DERNIERE ELECTION A LAQUELLE VOUS AVEZ PARTICIPE ?',
+		//'CommuneVotedOrNot': 'SUR VOTRE CARTE D’ELECTEUR QUELLE EST VOTRE COMMUNE DE VOTE?',
+		//'Sex': 'GENRE ?',
+		//'Education': 'QUEL EST VOTRE NIVEAU D’EDUCATION ?',
+		//'Profession': 'QUELLE EST VOTRE SITUATION PROFESSIONNELLE ?',
+		//'Age': 'QUEL EST VOTRE GROUPE D’AGE',
+		//'Religion': 'QUELLE EST VOTRE AFFILIATION RELIGIEUSE ?',
+		//'Nationality': 'QUEL EST VOTRE GROUPE ETHNIQUE ?',
+		//'EvaluatePresident': 'COMMENT EVALUEZ-VOUS LE TRAVAIL DU PRESIDENT MACKY SALL DEPUIS 2012 ?',
+		//'RightDirection': 'PENSEZ-VOUS QUE LE PAYS VA DANS LA BONNE DIRECTION ?',
+		////'Satisfied': 'CITEZ VOS PLUS GRANDS MOTIFS DE SATISFACTION DU PRESIDENT DEPUIS 2012 ?',
+		////'Dissatisfied': 'CITEZ VOS PLUS GRANDS MOTIF DE D’INSATISFACTION DU PRESIDENT DEPUIS 2012 ?',
+		//'Priority1': 'QUELLES SONT LES TROIS PRIORITES OÙ VOUS ATTENDEZ LE PRESIDENT ? #1:',
+		//'Priority2': 'QUELLES SONT LES TROIS PRIORITES OÙ VOUS ATTENDEZ LE PRESIDENT ? #2:',
+		//'Priority3': 'QUELLES SONT LES TROIS PRIORITES OÙ VOUS ATTENDEZ LE PRESIDENT ? #3:',
+		//'Program': 'QUEL EST LE PROGRAMME DU PRESIDENT QUE VOUS APPRECIEZ LE PLUS ?',
+		//'Participate': 'SERIEZ-VOUS INTERESSÉ A REPONDRE A DES QUESTIONS SUR LES AFFAIRES DU PAYS UNE FOIS PAR MOIS PAR TELEPHONE OU CONTACT DIRECT ?',
 	};
 
 	return App;
