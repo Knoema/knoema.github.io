@@ -11,6 +11,8 @@ App.prototype.loadStuff = function (callback) {
     }
     var templates = [
         $.get('tmpl/brexit-table.html', compileTemplate),
+        $.get('tmpl/simulation-inputs.html', compileTemplate),
+
         $.ajax({
             method: 'POST',
             url: '//knoema.com/api/1.0/data/details',
@@ -236,9 +238,9 @@ App.prototype.loadMaps = function () {
             "map": "ukRegions",
             "name": "United Kingdom Regions",
             "file": "ukRegions-2013-04-18",
-            "scale": "1",
-            "x": "0",
-            "y": "0"
+            "scale": "1.5",
+            "x": "-50",
+            "y": "-120"
         },
         timeSeries: timeSeries,
         regionCodeToName: {
@@ -258,22 +260,24 @@ App.prototype.loadMaps = function () {
         }
     };
 
+    var mapOptions2 = _.clone(mapOptions);
+
     for (var key in mapOptions.timeSeries[0].data) {
         var entry = _.find(self.regionsForMap, function(d) {return d.fields.regionid === key});
         mapOptions.timeSeries[0].data[key] = String(entry.percentBrexit);
     }
-
     $('#brexit-percent-map').mapp(mapOptions);
 
     for (var key in mapOptions.timeSeries[0].data) {
         var entry = _.find(self.regionsForMap, function(d) {return d.fields.regionid === key});
-        mapOptions.timeSeries[0].data[key] = String(entry.percentBremain);
+        mapOptions2.timeSeries[0].data[key] = String(entry.percentBremain);
     }
-
-    $('#bremain-percent-map').mapp(mapOptions);
+    $('#bremain-percent-map').mapp(mapOptions2);
 };
 
 App.prototype.run = function () {
+    $('#simulation-inputs').append($.tmpl('simulation-inputs.html'));
+
     $('#voter-turnout-regional').on('change', $.proxy(this.calculateValues, this));
     this.calculateValues();
 };

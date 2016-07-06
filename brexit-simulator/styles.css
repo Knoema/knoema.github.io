@@ -4,20 +4,21 @@ body {
 
 h1,h2,h3,h4 {
     text-align: center;
+    font-weight: bold;
 }
 
 header {
     background-image: url('img/head.jpg');
-    background-repeat: repeat;
+    background-repeat: no-repeat;
+    background-position: center top;
     background-size: contain;
-    width: 1200px;
     height: 120px;
     color: white;
     text-align: center;
     margin: 0 auto;
 }
 header span {
-    line-height: 120px;
+    line-height: 2.3em;
     font-size: 2.3em;
     font-weight: bold;
 }
@@ -26,16 +27,78 @@ section {
     text-align: center;
 }
 
+.form-holder {
+    border: 1px solid #a4e0ff;
+    padding: 10px;
+}
+
+.form {
+    display: flex;
+}
+.form-section {
+    width: 25%;
+}
+.input {
+    border: 1px solid #a4e0ff;
+    height: 36px;
+    width: 69px;
+    background-color: blue;
+    display: inline-block;
+}
+
+.field {
+    text-align: right;
+    line-height: 36px;
+    width: 49px;
+    display: inline-block;
+    background-color: green;
+}
+
+.controls {
+    float: right;
+}
+
+.control {
+    cursor: pointer;
+    color: #4a4a4a;
+}
+
+.control:hover {
+    color: gray;
+}
+
 .content {
-    background-color: lightgray;
-    width: 940px;
+    width: 910px;
     margin: 0 auto;
 }
 
 .brexit-table-2 {
     border-collapse: collapse;
-    border-color: gray;
     margin-bottom: 20px;
+}
+
+.button {
+    padding: 20px 50px;
+    color: white;
+    border: 0;
+    cursor: pointer;
+    margin: 50px 0;
+}
+
+.button:focus {
+    outline: none;
+}
+.change-inputs {
+    background-color: #db1a1a;
+}
+.change-inputs:hover {
+    background-color: #c00a0a;
+}
+.re-estimate {
+    background-color: #09a709;
+}
+.re-estimate:hover {
+    background-color: #047b04;
 }
 
 table.brexit-table {
@@ -85,9 +148,13 @@ tr.level-2 td:first-child span {
     margin-left: 25px;
 }
 
+.map-section {
+    height: 550px;
+}
+
 .map-holder {
-    height: 350px;
-    width: 470px;
+    height: 500px;
+    width: 455px;
     display: inline-block;
     float: left;
     box-sizing: border-box;
@@ -95,7 +162,7 @@ tr.level-2 td:first-child span {
 
 .map-holder .map {
     display: block;
-    height: 350px;
+    height: 500px;
     width: 470px;
 }
 
@@ -122,7 +189,7 @@ tr.level-2 td:first-child span {
 
 .map-zoomin, .map-zoomout {
     position: relative;
-    top: -360px;
+    top: -520px;
 }
 
 @media
