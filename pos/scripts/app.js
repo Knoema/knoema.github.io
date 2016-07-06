@@ -560,9 +560,6 @@ var App = (function () {
 					answers: [answer]
 				};
 			});
-			if (!(item.question in questionAnswers)) {
-				percentages = percentages.sort(function (a, b) { return b.value - a.value; });
-			}
 			item.percentages = percentages.slice(0, 4);
 			var percentSum = 0;
 			item.percentages.slice(0, item.percentages.length - 1).forEach(function (answer) { return percentSum += answer.value; });
