@@ -39,7 +39,7 @@ App.prototype.loadStuff = function (callback) {
 App.prototype.calculateValues = function () {
     var self = this;
 
-    var voterTurnoutRegional = $('#voter-turnout-regional').val();
+    var voterTurnoutRegional = Number($('#voter-turnout-regional').text());
 
     var columns = [
         {
@@ -125,10 +125,12 @@ App.prototype.calculateValues = function () {
         })[5];
 
         //This value should be taken from input fields
-        //var X = _.find(data, function(data) {
-        //     return data[4] === 'X';
+        // var X = _.find(data, function(data) {
+        //      return data[4] === 'X';
         // });
-        var X = $('#' + region.name).text();
+
+        var X = $('#' + region.fields.regionid).text();
+
         if (X) {
             region.brexit = region.persons * P / 100 + ( I * region.values[region.values.length - 1]/100 ) * (Number(X)/100);
             //region.defaultFormData = X;
@@ -278,60 +280,73 @@ App.prototype.loadMaps = function () {
 };
 
 App.prototype.run = function () {
+    var self = this;
     $('#simulation-inputs').append($.tmpl('simulation-inputs.html', {
         formSections: [
             [
                 {
+                    id: "UKC",
                     name: "North-East",
                     data: 8
                 },
                 {
+                    id: "UKD",
                     name: "North-West",
                     data: 7
                 },
                 {
+                    id: "UKE",
                     name: "Yorkshire and the Humber",
                     data: 8
                 }
             ],
             [
                 {
+                    id: "UKF",
                     name: "East Midlands",
                     data: 7
                 },
                 {
+                    id: "UKG",
                     name: "West Midlands",
                     data: 8
                 },
                 {
+                    id: "UKH",
                     name: "East",
                     data: 7
                 }
             ],
             [
                 {
+                    id: "UKI",
                     name: "London",
                     data: 3
                 },
                 {
+                    id: "UKJ",
                     name: "South East",
                     data: 4
                 },
                 {
+                    id: "UKK",
                     name: "South West",
                     data: 4
                 }
             ],
             [
                 {
+                    id: "UKL",
                     name: "Wales",
                     data: 7
                 },
                 {
+                    id: "UKM",
                     name: "Northern Ireland",
                     data: 5
                 },
                 {
+                    id: "UKN",
                     name: "Scotland",
                     data: 4
                 }
@@ -339,6 +354,25 @@ App.prototype.run = function () {
         ]
     }));
 
+    $('.control').on('click', function() {
+        var $control = $(this);
+        var $input = $(this).parent().parent().find('.field');
+        var newValue = null;
+        var oldValue = $input.text();
+        if ($control.hasClass('up')) {
+            newValue = Number(oldValue) + 1;
+        } else {
+            if (oldValue == 0) {
+                return;
+            }
+            newValue = Number(oldValue) - 1;
+        }
+        $input.text(newValue);
+    });
+
+    $('#js-re-estimate').on('click', $.proxy(this.calculateValues, this));
+
     $('#voter-turnout-regional').on('change', $.proxy(this.calculateValues, this));
+
     this.calculateValues();
 };

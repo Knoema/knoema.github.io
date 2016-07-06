@@ -34,6 +34,9 @@ section {
 
 .form {
     display: flex;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
 }
 .form-section {
     width: 25%;
@@ -42,7 +45,7 @@ section {
     border: 1px solid #a4e0ff;
     height: 36px;
     width: 69px;
-    background-color: blue;
+    //background-color: blue;
     display: inline-block;
 }
 
@@ -52,11 +55,11 @@ section {
 }
 
 .field {
-    text-align: right;
+    text-align: center;
     line-height: 36px;
     width: 49px;
     display: inline-block;
-    background-color: green;
+    //background-color: green;
 }
 
 .controls {
@@ -66,6 +69,7 @@ section {
 .control {
     cursor: pointer;
     color: #4a4a4a;
+    user-select: none;
 }
 
 .control:hover {

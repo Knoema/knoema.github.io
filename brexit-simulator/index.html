@@ -48,14 +48,29 @@
         <h3>
             Voter Turnout Regional (%)
         </h3>
-        <select id="voter-turnout-regional">
-            <option value="69.3">69.3</option>
-            <option value="72.5">72.5</option>
-            <option value="72" selected>72</option>
-        </select>
 
         <section>
-            <button class="button re-estimate">
+            <div class="voter-turnout-regional">
+                <div class="input-holder">
+                    <div class="input">
+                        <div id="voter-turnout-regional" class="field">72</div>
+                        <div class="controls">
+                            <div class="control up">▲</div>
+                            <div class="control down">▼</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!--<select id="voter-turnout-regional">-->
+            <!--<option value="69.3">69.3</option>-->
+            <!--<option value="72.5">72.5</option>-->
+            <!--<option value="72" selected>72</option>-->
+        <!--</select>-->
+
+        <section>
+            <button class="button re-estimate" id="js-re-estimate">
                 Re-estimate the results
             </button>
         </section>
