@@ -264,7 +264,7 @@ var App = (function () {
 					var width = 100 / dates.length;
 					dates.forEach(function (date, index) {
 						var dateParts = date.split('/');
-						$timeline.append('<div style="width:' + width + '%;" class="item ' + (index == (dates.length - 1) ? 'active' : '') + '" data-date="' + date + '"><span class="day">' + parseInt(dateParts[1]) + '</span>&nbsp;<span class="month">mai</span></div>');
+						$timeline.append('<div style="width:' + width + '%;" class="item ' + (index == (dates.length - 1) ? 'active' : '') + '" data-date="' + date + '"><span class="day">' + parseInt(dateParts[1]) + '</span>&nbsp;<span class="month">july</span></div>');
 					});
 					currentDate = dates[dates.length - 1];
 				}
@@ -541,23 +541,16 @@ var App = (function () {
 		}
 		var formatedVoteCount = window['numeral'](voteCount).format('0,0');
 		$('#voteCountByDate').html(formatedVoteCount);
-		var questionAnswers = {
-			'HowYouVote': ['OUI', 'NON', 'ABSTENTION'],
-			'ChangedYourMind': ['OUI', 'NON'],
-			'Sex': ['Homme', 'Femme']
-		};
+
 		// calc percentages
 		stat.forEach(function (item) {
 			var total = 0;
 			var answers = [];
-			if (item.question in questionAnswers) {
-				answers = questionAnswers[item.question];
+
+			for (var answer in item.answers) {
+				answers.push(answer);
 			}
-			else {
-				for (var answer in item.answers) {
-					answers.push(answer);
-				}
-			}
+
 			answers.forEach(function (answer) { return total += item.answers[answer]; });
 			var percentages = answers.map(function (answer) {
 				var percent = Math.round(item.answers[answer] / total * 100);
