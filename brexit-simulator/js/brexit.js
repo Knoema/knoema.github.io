@@ -125,14 +125,14 @@ App.prototype.calculateValues = function () {
         })[5];
 
         //This value should be taken from input fields
-        var X = _.find(data, function(data) {
-            return data[4] === 'X';
-        });
-
+        //var X = _.find(data, function(data) {
+        //     return data[4] === 'X';
+        // });
+        var X = $('#' + region.name).text();
         if (X) {
-            region.brexit = region.persons * P / 100 + ( I * region.values[region.values.length - 1]/100 ) * (X[5]/100);
-            region.defaultFormData = X[5];
-            console.log(region.name, region.defaultFormData);
+            region.brexit = region.persons * P / 100 + ( I * region.values[region.values.length - 1]/100 ) * (Number(X)/100);
+            //region.defaultFormData = X;
+            //console.log(region.name, region.defaultFormData);
         }
 
         region.bremain = region.persons - region.brexit;
