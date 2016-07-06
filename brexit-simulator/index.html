@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Brexit Simulator</title>
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700" rel="stylesheet" type="text/css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/normalize/4.2.0/normalize.min.css" rel="stylesheet" type="text/css">
+    <link href="styles.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+    <header>
+        <span>Simulator of UK EU Membership Referendum Results</span>
+    </header>
+    <div class="content">
+
+        <h3>
+            Voter Turnout Regional (%)
+        </h3>
+
+        <select id="voter-turnout-regional">
+            <option value="69.3">69.3</option>
+            <option value="72.5">72.5</option>
+            <option value="74.2" selected>74.2</option>
+        </select>
+
+        <h2>
+            Estimated Outcome (No. of Votes)
+        </h2>
+
+        <div id="estimated-voter-turnout">
+
+        </div>
+
+        <section>
+            <hr />
+            <button>
+                Change inputs and re-estimate the results
+            </button>
+        </section>
+
+        <h1>Estimated Voter Turnout by Age Groups (%)</h1>
+
+        <h1>Simulation Inputs</h1>
+        <h3>Un decideds Vouting Brexit (%)</h3>
+
+        <div>
+            Form goes here
+        </div>
+
+        <button>
+            Re-estimate the results
+        </button>
+
+        <h1>
+            Reference Data
+        </h1>
+
+        <em>Embedded dashboard goes here</em>
+        <!--
+        <iframe src="//knoema.com/resource/embed/btoubgc/c3e804ea-209a-3ebd-34cb-58dae2a46dd4" scrolling="no" frameborder="0" style="height:1300px; width:904px;"></iframe>
+        -->
+
+    </div>
+
+    <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.6.1/lodash.min.js"></script>
+    <script src="//knoema.com/app-script?version=2.0"></script>
+    <script>
+        Knoema.Helpers.clientId = 'EZj54KGFo3rzIvnLczrElvAitEyU28DGw9R73tif';
+    </script>
+
+    <script src="js/jquery.tmpl.js"></script>
+    <script src="js/dataDescriptor.js"></script>
+    <script src="js/brexit.js"></script>
+    <script>
+        var app = new App();
+    </script>
+</body>
+</html>

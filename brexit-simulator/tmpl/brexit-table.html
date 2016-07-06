@@ -1,0 +1,26 @@
+<table class="brexit-table">
+    <thead>
+        <tr>
+            <th>&nbsp;</th>
+            {{each(i, column) columns}}
+                <th>${column.columnTitle}</th>
+            {{/each}}
+        </tr>
+    </thead>
+    <tbody>
+        {{each(j, region) regions}}
+            {{if j > 0}}
+            <tr class="level-${region.level}">
+                <td>
+                    <span>${region.name}</span>
+                </td>
+                {{each(i, value) region.values}}
+                    <td>
+                        ${value}
+                    </td>
+                {{/each}}
+            </tr>
+            {{/if}}
+        {{/each}}
+    </tbody>
+</table>

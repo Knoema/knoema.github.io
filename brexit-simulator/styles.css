@@ -1,0 +1,96 @@
+body {
+    font-family: 'Lato', sans-serif;
+}
+
+h1,h2,h3,h4 {
+    text-align: center;
+}
+
+header {
+    background-image: url('img/head.jpg');
+    background-repeat: repeat;
+    background-size: contain;
+    width: 1200px;
+    height: 120px;
+    color: white;
+    text-align: center;
+    margin: 0 auto;
+}
+header span {
+    line-height: 120px;
+    font-size: 2.3em;
+    font-weight: bold;
+}
+
+section {
+    text-align: center;
+}
+
+.content {
+    background-color: lightgray;
+    width: 940px;
+    margin: 0 auto;
+}
+
+.brexit-table-2 {
+    border-collapse: collapse;
+    border-color: gray;
+    margin-bottom: 20px;
+}
+
+table.brexit-table {
+    background-image: url('img/tablebg.jpg');
+    background-repeat: repeat;
+    background-size: cover;
+    width: 910px;
+    height: 640px;
+    border-collapse: collapse;
+    /*border-color: red;*/
+}
+
+table.brexit-table thead tr {
+    height: 100px;
+    color: white;
+    font-size: 1.2em;
+    font-weight: bold;
+    /*background-color: lime;*/
+    /*opacity: 0.5;*/
+}
+
+table.brexit-table tbody tr:nth-child(odd) {
+    /*background-color: red;*/
+    /*opacity: 0.3;*/
+}
+table.brexit-table tbody tr:nth-child(even) {
+    /*background-color: black;*/
+    /*opacity: 0.3;*/
+}
+
+table.brexit-table tbody tr {
+    height: 30px;
+}
+
+table.brexit-table tbody tr.england {
+    /*background-color: gold;*/
+    /*opacity: 0.5;*/
+    height: 40px;
+}
+
+tr.level-2 td:first-child span {
+    margin-left: 20px;
+}
+
+@media
+only screen and (-webkit-min-device-pixel-ratio: 2)      and (min-width: 1300px),
+only screen and (   min--moz-device-pixel-ratio: 2)      and (min-width: 1300px),
+only screen and (     -o-min-device-pixel-ratio: 2/1)    and (min-width: 1300px),
+only screen and (        min-device-pixel-ratio: 2)      and (min-width: 1300px),
+only screen and (                min-resolution: 192dpi) and (min-width: 1300px),
+only screen and (                min-resolution: 2dppx)  and (min-width: 1300px) {
+    table.brexit-table {
+        background-image: url('img/tablebg-x2.jpg');
+    }
+    header {
+        background-image: url('img/head-x2.jpg');
+    }
+}
