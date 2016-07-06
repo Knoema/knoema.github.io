@@ -7,7 +7,7 @@ jQuery.fn.extend({
 
 		var $domElement = this;
 
-		var div = $('<div class="loading"><img src="./img/loader.gif" /></div>');
+		var div = $('<div class="loading"></div>');//<img src="./img/loader.gif" />
 		
 		var initialPosition = $domElement.css("position");
 		if (initialPosition == "static") {
