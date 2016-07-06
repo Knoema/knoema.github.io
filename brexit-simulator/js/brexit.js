@@ -318,9 +318,9 @@ App.prototype.loadMaps = function () {
             "map": "ukRegions",
             "name": "United Kingdom Regions",
             "file": "ukRegions-2013-04-18",
-            //"scale": "1.5",
-            // "x": "-50",
-            // "y": "-120"
+            "scale": "1.2",
+            "x": "-50",
+            "y": "-50"
         },
         timeSeries: timeSeries,
         regionCodeToName: {

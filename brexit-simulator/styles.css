@@ -43,20 +43,20 @@ section {
 }
 .input {
     border: 1px solid #a4e0ff;
-    height: 36px;
+    height: 34px;
     width: 69px;
-    //background-color: blue;
+    margin-bottom: 14px;
     display: inline-block;
 }
 
 .label {
-    width: 100px;
+    width: 122px;
     float: left;
 }
 
 .field {
     text-align: center;
-    line-height: 36px;
+    line-height: 32px;
     width: 49px;
     display: inline-block;
     //background-color: green;
@@ -194,12 +194,10 @@ tr.level-2 td:first-child span {
 }
 
 .map-holder {
-    height: 500px;
-    width: 50%;
-
-    display: inline-block;
-    float: left;
+    height: 600px;
+    width: 750px;
     box-sizing: border-box;
+    margin-left: 223px;
 }
 
 .map-holder .map {
