@@ -55,34 +55,68 @@ App.prototype.calculateValues = function () {
 
     var voterTurnoutRegional = $('#voter-turnout-regional').val();
 
-    var columns = [{
-        columnTitle: 'Regional',
-        formula: ''
-    }];
+    var columns = [
+        {
+            columnTitle: '18-24',
+            columnId: 'K'
+        },
+        {
+            columnTitle: '25-49',
+            columnId: 'L'
+        },
+        {
+            columnTitle: '50-64',
+            columnId: 'M'
+        },
+        {
+            columnTitle: '65+',
+            columnId: 'N'
+        },
+        {
+            columnTitle: 'Regional',
+            columnId: null
+        }
+    ];
 
     var UK = _.find(this.dataByRegion['UK'], function(d) {return d[4] === 'J'});
-
-    var TOTAL = UK[5];
+    var J21 = UK[5];
 
     var regions = _.map(this.regions, function(region) {
-        //TODO Calculate new value for each column
-        var indicator = _.find(this.dataByRegion[region.name], function(data) {
-            return data[4] === 'O';//O - "Historical Regional Voter Turnout (%)"
+
+        var data = this.dataByRegion[region.name];
+
+        var indicator = _.find(data, function(data) {
+            //O - "Historical Regional Voter Turnout (%)"
+            return data[4] === 'O';
         });
         if (typeof indicator === 'undefined') {
-            region.values = [null];
+            region.values = Array(columns.length);
             return region;
         }
-        region.values = [indicator[5] / voterTurnoutRegional * TOTAL];
+        var W = indicator[5];
+
+        var regionalValue = (W / J21) * Number(voterTurnoutRegional);
+
+        var ddd = _.map(columns, function(c) {
+            if (_.isNull(c.columnId)) {
+                return regionalValue;
+            } else {
+                var column = _.find(data, function(d) {
+                    return d[4] === c.columnId;
+                });
+                return (column[5] / J21) * regionalValue;
+            }
+        });
+
+        //TODO _.map columns
+        region.values = ddd;
+
         return region;
+
     }.bind(this));
 
     $('#estimated-voter-turnout').empty().append($.tmpl('brexit-table.html', {
-        columns: [
-            {
-                columnTitle: 'Regional'
-            }
-        ],
+        columns: columns,
         regions: regions
     }))
 };

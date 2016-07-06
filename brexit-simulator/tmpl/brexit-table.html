@@ -16,7 +16,7 @@
                 </td>
                 {{each(i, value) region.values}}
                     <td>
-                        ${value}
+                        ${value == null ? '' : Globalize.format(value)}
                     </td>
                 {{/each}}
             </tr>
