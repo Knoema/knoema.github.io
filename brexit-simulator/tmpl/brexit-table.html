@@ -3,23 +3,26 @@
         <tr>
             <th>&nbsp;</th>
             {{each(i, column) columns}}
-                <th>${column.columnTitle}</th>
+                <th>
+                    <p>${column.columnTitle}</p>
+                    <p>${column.columnSubTitle}</p>
+                </th>
             {{/each}}
         </tr>
     </thead>
     <tbody>
         {{each(j, region) regions}}
             {{if j > 0}}
-            <tr class="level-${region.level}">
-                <td>
-                    <span>${region.name}</span>
-                </td>
-                {{each(i, value) region.values}}
+                <tr class="level-${region.level}">
                     <td>
-                        ${value == null ? '' : Globalize.format(value)}
+                        <span>${region.name}</span>
                     </td>
-                {{/each}}
-            </tr>
+                    {{each(i, entry) region.columnData}}
+                    <td>
+                        ${entry.displayText}
+                    </td>
+                    {{/each}}
+                </tr>
             {{/if}}
         {{/each}}
     </tbody>

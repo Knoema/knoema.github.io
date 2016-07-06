@@ -99,6 +99,21 @@ App.prototype.calculateValues = function () {
             }
         });
 
+        region.columnData = _.map(columns, function(c) {
+            if (_.isNull(c.columnId)) {
+                return {
+                    displayText: Number(regionalValue).toFixed(1)
+                };
+            } else {
+                var column = _.find(data, function(d) {
+                    return d[4] === c.columnId;
+                });
+                return {
+                    displayText: Number((column[5] / J21) * regionalValue).toFixed(1)
+                };
+            }
+        });
+
         var calc = 0;
         _.each(columns, function(c, i) {
             if (c.columnTitle != 'Regional') {
@@ -132,12 +147,16 @@ App.prototype.calculateValues = function () {
         var X = $('#' + region.fields.regionid).text();
 
         if (X) {
-            region.brexit = region.persons * P / 100 + ( I * region.values[region.values.length - 1]/100 ) * (Number(X)/100);
+            region.brexit = Math.floor(region.persons * P / 100 + ( I * region.values[region.values.length - 1]/100 ) * (Number(X)/100));
             //region.defaultFormData = X;
             //console.log(region.name, region.defaultFormData);
         }
 
-        region.bremain = region.persons - region.brexit;
+        region.bremain = Math.floor(region.persons - region.brexit);
+
+        if (isNaN(region.bremain)) {
+            region.bremain = 0;
+        }
 
         region.percentBrexit = 100 * region.brexit / region.persons;
         region.percentBremain = 100 * region.bremain / region.persons;
@@ -168,10 +187,35 @@ App.prototype.calculateValues = function () {
         }
     });
 
+    var columnData = _.map(columns, function(column, i) {
+        if (_.isNull(column.columnId2)) {
+            return {
+                displayText: voterTurnoutRegional
+            };
+        } else {
+            var sum = 0;
+            var E21 = null;
+            _.each(regions, function(region, j) {
+                var ddd = _.find(self.dataByRegion[region.name], function(d) {return d[4] === column.columnId2});
+                if (region.name === 'UK') {
+                    E21 = ddd[5];
+                } else {
+                    if (region.name !== 'England') {
+                        sum += (region.values[i]/100) * ddd[5];
+                    }
+                }
+            });
+            return {
+                displayText: Number((sum / E21) * 100).toFixed(1)
+            };
+        }
+    });
+
     regions.push({
         name: 'National',
         level: 1,
-        values: newValues
+        values: newValues,
+        columnData: columnData
     });
 
     $('#estimated-voter-turnout').empty().append($.tmpl('brexit-table.html', {
@@ -179,30 +223,61 @@ App.prototype.calculateValues = function () {
         regions: regions
     }));
 
-    var columns2 = [
-        {
-            columnTitle: 'Brexit',
-            columnId: 'K'
-        },
-        {
-            columnTitle: 'Bremain',
-            columnId: 'M'
-        },
-    ];
+
     var regions2 = [].concat(regions);
 
     _.each(regions2, function(r) {
+        var emptyString = r.name === 'UK' || r.name === 'England';
+
         r.values = [
             r.brexit,
             r.bremain
         ];
+        r.columnData = [
+            {
+                displayText: emptyString ? '' : r.brexit + ' (' + Number(r.percentBrexit).toFixed(1) + '%)',
+            },
+            {
+                displayText: emptyString ? '' : r.bremain + ' (' + Number(r.percentBremain).toFixed(1) + '%)'
+            }
+        ]
     });
 
     regions2 = regions2.slice(0, regions2.length - 1);
 
+    var brexitSum = _.sumBy(regions2, function(region) {
+        if (_.isUndefined(region.brexit)) {
+            return 0;
+        }
+        return Number(region.brexit);
+    });
+
+    var bremainSum = _.sumBy(regions2, function(region) {
+        if (_.isUndefined(region.bremain)) {
+            return 0;
+        }
+        return Number(region.bremain);
+    });
+
+    var total = brexitSum + bremainSum;
+
+    var brexitTotalPersent = Number(brexitSum * 100 / total).toFixed(1);
+    var bremainTotalPersent = 100 - brexitTotalPersent;//bremainSum * 100 / total;
+
     $('#estimated-outcome').empty().append($.tmpl('brexit-table.html', {
-        columns: columns2,
-        regions: regions2
+        regions: regions2,
+        columns: [
+            {
+                columnTitle: 'Brexit',
+                columnSubTitle: Globalize.format(brexitSum) + ' (' + brexitTotalPersent + '%)',
+                columnId: 'K'
+            },
+            {
+                columnTitle: 'Bremain',
+                columnSubTitle: Globalize.format(bremainSum) + ' (' + bremainTotalPersent + '%)',
+                columnId: 'M'
+            }
+        ]
     }));
 
     this.loadMaps();
