@@ -14,32 +14,40 @@
     </header>
     <div class="content">
 
-        <h2>
+        <h2 id="estimated-outcome-header">
             Estimated Outcome (No. of Votes)
         </h2>
         <div id="estimated-outcome"></div>
 
         <section>
-            <button class="button change-inputs">
+            <button class="button change-inputs" id="scroll-to-inputs">
                 Change inputs and re-estimate the outcome
             </button>
         </section>
 
+        <section>
+            <h3>Brexit, % of voter turnout</h3>
+        </section>
+
         <div class="map-section">
             <div class="map-holder">
-                <h3>Brexit, % of voter turnout</h3>
                 <div class="map" id="brexit-percent-map"></div>
             </div>
-            <div class="map-holder">
-                <h3>Bremain, % of voter turnout</h3>
-                <div class="map" id="bremain-percent-map"></div>
-            </div>
+
+            <!--<div class="map-holder">-->
+                <!--<h3>Bremain, % of voter turnout</h3>-->
+                <!--<div class="map" id="bremain-percent-map"></div>-->
+            <!--</div>-->
+
         </div>
 
         <h2>Estimated Voter Turnout by Age Groups (%)</h2>
         <div id="estimated-voter-turnout"></div>
 
-        <h1>Simulation Inputs</h1>
+        <h1 id="simulation-inputs-header">
+            Simulation Inputs
+        </h1>
+
         <h3>Undecided Voting Brexit (%)</h3>
 
         <div id="simulation-inputs" class="form-holder">
@@ -99,6 +107,7 @@
     <script src="js/jquery.tmpl.js"></script>
     <script src="js/dataDescriptor.js"></script>
     <script src="js/globalize.js"></script>
+    <script src="js/decimal.min.js"></script>
     <script src="js/brexit.js"></script>
     <script>
         window.app = new App();

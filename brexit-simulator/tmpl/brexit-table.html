@@ -1,11 +1,11 @@
-<table class="brexit-table">
+<table class="brexit-table ${className}">
     <thead>
         <tr>
             <th>&nbsp;</th>
             {{each(i, column) columns}}
                 <th>
                     <p>${column.columnTitle}</p>
-                    <p>${column.columnSubTitle}</p>
+                    <p class="subtitle">${column.columnSubTitle}</p>
                 </th>
             {{/each}}
         </tr>

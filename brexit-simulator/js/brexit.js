@@ -219,6 +219,7 @@ App.prototype.calculateValues = function () {
     });
 
     $('#estimated-voter-turnout').empty().append($.tmpl('brexit-table.html', {
+        className: 'brexit-table2',
         columns: columns,
         regions: regions
     }));
@@ -282,6 +283,11 @@ App.prototype.calculateValues = function () {
 
     this.loadMaps();
 
+    if (!this.loaded) {
+        this.loaded = true;
+    } else {
+        $('html, body').animate({ scrollTop: $('#estimated-outcome-header').offset().top }, 500);
+    }
 };
 
 App.prototype.loadMaps = function () {
@@ -317,9 +323,9 @@ App.prototype.loadMaps = function () {
             "map": "ukRegions",
             "name": "United Kingdom Regions",
             "file": "ukRegions-2013-04-18",
-            "scale": "1.5",
-            "x": "-50",
-            "y": "-120"
+            //"scale": "1.5",
+            // "x": "-50",
+            // "y": "-120"
         },
         timeSeries: timeSeries,
         regionCodeToName: {
@@ -434,18 +440,23 @@ App.prototype.run = function () {
         var $input = $(this).parent().parent().find('.field');
         var newValue = null;
         var oldValue = $input.text();
-        if ($control.hasClass('up')) {
-            newValue = Number(oldValue) + 1;
-        } else {
-            if (oldValue == 0) {
-                return;
-            }
-            newValue = Number(oldValue) - 1;
+
+        var supplement = $control.hasClass('up') ? 0.1 : -0.1;
+
+        if (oldValue == 0 && $control.hasClass('down')) {
+            return;
         }
+
+        newValue = (new Decimal(Number(oldValue))).plus(new Decimal(supplement)).toString();
+
         $input.text(newValue);
     });
 
     $('#js-re-estimate').on('click', $.proxy(this.calculateValues, this));
+
+    $('#scroll-to-inputs').on('click', function() {
+        $('html, body').animate({ scrollTop: $('#simulation-inputs-header').offset().top }, 500);
+    });
 
     $('#voter-turnout-regional').on('change', $.proxy(this.calculateValues, this));
 

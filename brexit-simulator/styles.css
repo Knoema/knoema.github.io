@@ -81,11 +81,6 @@ section {
     margin: 0 auto;
 }
 
-.brexit-table-2 {
-    border-collapse: collapse;
-    margin-bottom: 20px;
-}
-
 .button {
     padding: 20px 50px;
     color: white;
@@ -110,14 +105,51 @@ section {
     background-color: #047b04;
 }
 
+
+.subtitle {
+    font-size: 1.4em;
+    margin: -0.2em 0 0 0;
+}
+
+table.brexit-table td {
+    text-align: left;
+    width: 120px;
+    padding-left: 10px;
+}
+
+table.brexit-table td, table.brexit-table th {
+    padding-left: 10px;
+}
+
+table.brexit-table td:first-child{
+    width: 166px;
+    /*background-color: red;*/
+}
+
 table.brexit-table {
     background-image: url('img/tablebg1.png');
     background-repeat: repeat;
     background-size: cover;
     width: 910px;
-    height: 640px;
+    height: 620px;
     border-collapse: collapse;
-    /*border-color: red;*/
+    text-align: left;
+}
+
+table.brexit-table.brexit-table2 {
+    background-image: url('img/tablebg2.png');
+    height: 665px;
+}
+
+table.brexit-table.brexit-table2 td, table.brexit-table2 th {
+    text-align: center;
+    width: 120px;
+    padding-left: 5px;
+}
+table.brexit-table2 td:first-child{
+    width: 312px;
+    text-align: left;
+    /*background-color: green;*/
 }
 
 table.brexit-table thead tr {
@@ -163,7 +195,8 @@ tr.level-2 td:first-child span {
 
 .map-holder {
     height: 500px;
-    width: 455px;
+    width: 600px;
+    margin-left: 230px;
     display: inline-block;
     float: left;
     box-sizing: border-box;
@@ -172,7 +205,6 @@ tr.level-2 td:first-child span {
 .map-holder .map {
     display: block;
     height: 500px;
-    width: 470px;
 }
 
 .map-tooltip {
@@ -210,6 +242,9 @@ only screen and (                min-resolution: 192dpi) and (min-width: 1300px)
 only screen and (                min-resolution: 2dppx)  and (min-width: 1300px) {
     table.brexit-table {
         background-image: url('img/tablebg1-x2.png');
+    }
+    table.brexit-table.brexit-table2 {
+        background-image: url('img/tablebg2-x2.png');
     }
     header {
         background-image: url('img/head-x2.jpg');
