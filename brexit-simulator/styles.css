@@ -76,8 +76,53 @@ table.brexit-table tbody tr.england {
     height: 40px;
 }
 
+tr.level-1 td:first-child span {
+    margin-left: 5px;
+    font-weight: bold;
+}
+
 tr.level-2 td:first-child span {
-    margin-left: 20px;
+    margin-left: 25px;
+}
+
+.map-holder {
+    height: 350px;
+    width: 470px;
+    display: inline-block;
+    float: left;
+    box-sizing: border-box;
+}
+
+.map-holder .map {
+    display: block;
+    height: 350px;
+    width: 470px;
+}
+
+.map-tooltip {
+    position: absolute;
+    display: block;
+    z-index: 1500;
+}
+
+.map-tooltip-cont {
+    padding: 2px 5px 2px 5px;
+    background-color: white;
+    font-size: 10pt;
+    color: black;
+    -moz-box-shadow: 0 0 5px 0 #E1E1E1;
+    -webkit-box-shadow: 0 0 5px 0 #E1E1E1;
+    box-shadow: 0 0 5px 0 #E1E1E1;
+    overflow: hidden;
+}
+
+.map-simple-legend {
+    position: relative;
+}
+
+.map-zoomin, .map-zoomout {
+    position: relative;
+    top: -360px;
 }
 
 @media

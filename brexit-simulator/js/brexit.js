@@ -121,6 +121,8 @@ App.prototype.calculateValues = function () {
         var I = _.find(data, function(data) {
             return data[4] === 'I';
         })[5];
+
+        //This value should be taken from input fields
         var X = _.find(data, function(data) {
             return data[4] === 'X';
         });
@@ -131,9 +133,14 @@ App.prototype.calculateValues = function () {
 
         region.bremain = region.persons - region.brexit;
 
+        region.percentBrexit = 100 * region.brexit / region.persons;
+        region.percentBremain = 100 * region.bremain / region.persons;
+
         return region;
 
     }.bind(this));
+
+    self.regionsForMap = regions;
 
     var newValues = _.map(columns, function(column, i) {
         if (_.isNull(column.columnId2)) {
@@ -157,7 +164,7 @@ App.prototype.calculateValues = function () {
 
     regions.push({
         name: 'National',
-        level: 0,
+        level: 1,
         values: newValues
     });
 
@@ -185,13 +192,85 @@ App.prototype.calculateValues = function () {
         ];
     });
 
-    regions2 = regions2.slice(0, regions2.length - 1)
+    regions2 = regions2.slice(0, regions2.length - 1);
 
     $('#estimated-outcome').empty().append($.tmpl('brexit-table.html', {
         columns: columns2,
         regions: regions2
     }));
 
+    this.loadMaps();
+
+};
+
+App.prototype.loadMaps = function () {
+    var self = this;
+    var timeSeries = [
+        {
+            "id": "Value",
+            "data": {
+                "UKC": "2624621.00",
+                "UKD": "7173835.00",
+                "UKE": "5390576.00",
+                "UKF": "4677038.00",
+                "UKG": "5751000.00",
+                "UKH": "6076451.00",
+                "UKI": "8673713.00",
+                "UKJ": "8947913.00",
+                "UKK": "5471180.00",
+                "UKL": "3099086.00",
+                "UKM": "5373000.00",
+                "UKN": "1851621.00"
+            },
+            "unit": "",
+            "scale": 1,
+            "time": "2016"
+        }
+    ];
+    var mapOptions = {
+        url: 'https://knoema.com/page/map/ukRegions-2013-04-18',
+        simpleColorScale: true,
+        legendIntervals: [null, "93d04f", null, "ffc001", null, "fe0000", null],
+        legendScale: "equalRegion",
+        transform: {
+            "map": "ukRegions",
+            "name": "United Kingdom Regions",
+            "file": "ukRegions-2013-04-18",
+            "scale": "1",
+            "x": "0",
+            "y": "0"
+        },
+        timeSeries: timeSeries,
+        regionCodeToName: {
+            "UK": "UK",
+            "UKC": "North-East",
+            "UKD": "North-West",
+            "UKE": "Yorkshire and the Humber",
+            "UKF": "East Midlands",
+            "UKG": "West Midlands",
+            "UKH": "East",
+            "UKI": "London",
+            "UKJ": "South East",
+            "UKK": "South West",
+            "UKL": "Wales",
+            "UKM": "Northern Ireland",
+            "UKN": "Scotland"
+        }
+    };
+
+    for (var key in mapOptions.timeSeries[0].data) {
+        var entry = _.find(self.regionsForMap, function(d) {return d.fields.regionid === key});
+        mapOptions.timeSeries[0].data[key] = String(entry.percentBrexit);
+    }
+
+    $('#brexit-percent-map').mapp(mapOptions);
+
+    for (var key in mapOptions.timeSeries[0].data) {
+        var entry = _.find(self.regionsForMap, function(d) {return d.fields.regionid === key});
+        mapOptions.timeSeries[0].data[key] = String(entry.percentBremain);
+    }
+
+    $('#bremain-percent-map').mapp(mapOptions);
 };
 
 App.prototype.run = function () {
