@@ -195,8 +195,8 @@ tr.level-2 td:first-child span {
 
 .map-holder {
     height: 500px;
-    width: 600px;
-    margin-left: 230px;
+    width: 50%;
+
     display: inline-block;
     float: left;
     box-sizing: border-box;

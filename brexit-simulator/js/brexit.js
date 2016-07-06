@@ -139,12 +139,7 @@ App.prototype.calculateValues = function () {
             return data[4] === 'I';
         })[5];
 
-        //This value should be taken from input fields
-        // var X = _.find(data, function(data) {
-        //      return data[4] === 'X';
-        // });
-
-        var X = $('#' + region.fields.regionid).text();
+        var X = $('#simulation-inputs').find('#' + region.fields.regionid).text();
 
         if (X) {
             region.brexit = Math.floor(region.persons * P / 100 + ( I * region.values[region.values.length - 1]/100 ) * (Number(X)/100));
@@ -236,10 +231,10 @@ App.prototype.calculateValues = function () {
         ];
         r.columnData = [
             {
-                displayText: emptyString ? '' : r.brexit + ' (' + Number(r.percentBrexit).toFixed(1) + '%)',
+                displayText: emptyString ? '' : Globalize.format(r.brexit) + ' (' + Number(r.percentBrexit).toFixed(1) + '%)',
             },
             {
-                displayText: emptyString ? '' : r.bremain + ' (' + Number(r.percentBremain).toFixed(1) + '%)'
+                displayText: emptyString ? '' : Globalize.format(r.bremain) + ' (' + Number(r.percentBremain).toFixed(1) + '%)'
             }
         ]
     });
