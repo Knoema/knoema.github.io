@@ -131,6 +131,8 @@ App.prototype.calculateValues = function () {
 
         if (X) {
             region.brexit = region.persons * P / 100 + ( I * region.values[region.values.length - 1]/100 ) * (X[5]/100);
+            region.defaultFormData = X[5];
+            console.log(region.name, region.defaultFormData);
         }
 
         region.bremain = region.persons - region.brexit;
@@ -276,7 +278,66 @@ App.prototype.loadMaps = function () {
 };
 
 App.prototype.run = function () {
-    $('#simulation-inputs').append($.tmpl('simulation-inputs.html'));
+    $('#simulation-inputs').append($.tmpl('simulation-inputs.html', {
+        formSections: [
+            [
+                {
+                    name: "North-East",
+                    data: 8
+                },
+                {
+                    name: "North-West",
+                    data: 7
+                },
+                {
+                    name: "Yorkshire and the Humber",
+                    data: 8
+                }
+            ],
+            [
+                {
+                    name: "East Midlands",
+                    data: 7
+                },
+                {
+                    name: "West Midlands",
+                    data: 8
+                },
+                {
+                    name: "East",
+                    data: 7
+                }
+            ],
+            [
+                {
+                    name: "London",
+                    data: 3
+                },
+                {
+                    name: "South East",
+                    data: 4
+                },
+                {
+                    name: "South West",
+                    data: 4
+                }
+            ],
+            [
+                {
+                    name: "Wales",
+                    data: 7
+                },
+                {
+                    name: "Northern Ireland",
+                    data: 5
+                },
+                {
+                    name: "Scotland",
+                    data: 4
+                }
+            ]
+        ]
+    }));
 
     $('#voter-turnout-regional').on('change', $.proxy(this.calculateValues, this));
     this.calculateValues();

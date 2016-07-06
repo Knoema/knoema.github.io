@@ -1,15 +1,12 @@
-<!--
-["UK", ,
-"England"
-, , , ]
--->
 <div class="form">
+    {{each(i, section) formSections}}
     <div class="form-section">
+        {{each(j, entry) section}}
         <div class="input-holder">
-            <span>North-East</span>
+            <div class="label">${entry.name}</div>
             <div class="input">
-                <div id="North-East" class="field">
-                    45
+                <div id="${entry.name}" class="field">
+                    ${entry.data}
                 </div>
                 <div class="controls">
                     <div class="control up">&#9650;</div>
@@ -17,20 +14,7 @@
                 </div>
             </div>
         </div>
+        {{/each}}
     </div>
-    <div class="form-section">
-        "East Midlands"
-        "West Midlands"
-        "East"
-    </div>
-    <div class="form-section">
-        "London"
-        "South East"
-        "South West"
-    </div>
-    <div class="form-section">
-        "Wales"
-        "Northern Ireland"
-        "Scotland"
-    </div>
+    {{/each}}
 </div>
