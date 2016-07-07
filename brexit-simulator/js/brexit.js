@@ -334,8 +334,8 @@ App.prototype.loadMaps = function () {
             "UKJ": "South East",
             "UKK": "South West",
             "UKL": "Wales",
-            "UKM": "Northern Ireland",
-            "UKN": "Scotland"
+            "UKN": "Northern Ireland",
+            "UKM": "Scotland"
         }
     };
 
