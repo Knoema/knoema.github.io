@@ -287,28 +287,6 @@ App.prototype.calculateValues = function () {
 
 App.prototype.loadMaps = function () {
     var self = this;
-    var timeSeries = [
-        {
-            "id": "Value",
-            "data": {
-                "UKC": "2624621.00",
-                "UKD": "7173835.00",
-                "UKE": "5390576.00",
-                "UKF": "4677038.00",
-                "UKG": "5751000.00",
-                "UKH": "6076451.00",
-                "UKI": "8673713.00",
-                "UKJ": "8947913.00",
-                "UKK": "5471180.00",
-                "UKL": "3099086.00",
-                "UKM": "5373000.00",
-                "UKN": "1851621.00"
-            },
-            "unit": "",
-            "scale": 1,
-            "time": "2016"
-        }
-    ];
     var mapOptions = {
         url: 'https://knoema.com/page/map/ukRegions-2013-04-18',
         simpleColorScale: true,
@@ -322,7 +300,28 @@ App.prototype.loadMaps = function () {
             "x": "-50",
             "y": "-50"
         },
-        timeSeries: timeSeries,
+        timeSeries: [
+            {
+                "data": {
+                    "UKC": "2624621.00",
+                    "UKD": "7173835.00",
+                    "UKE": "5390576.00",
+                    "UKF": "4677038.00",
+                    "UKG": "5751000.00",
+                    "UKH": "6076451.00",
+                    "UKI": "8673713.00",
+                    "UKJ": "8947913.00",
+                    "UKK": "5471180.00",
+                    "UKL": "3099086.00",
+                    "UKM": "5373000.00",
+                    "UKN": "1851621.00"
+                },
+                "id": "Value",
+                "unit": "",
+                "scale": 1,
+                "time": "2016"
+            }
+        ],
         regionCodeToName: {
             "UK": "UK",
             "UKC": "North-East",
@@ -340,19 +339,27 @@ App.prototype.loadMaps = function () {
         }
     };
 
-    var mapOptions2 = _.clone(mapOptions);
-
     for (var key in mapOptions.timeSeries[0].data) {
         var entry = _.find(self.regionsForMap, function(d) {return d.fields.regionid === key});
         mapOptions.timeSeries[0].data[key] = String(entry.percentBrexit);
     }
-    $('#brexit-percent-map').mapp(mapOptions);
+
+    var mapOptions2 = _.clone(mapOptions);
+
+    mapOptions2.timeSeries = [{
+        "data": {},
+        "id": "Value",
+        "unit": "",
+        "scale": 1,
+        "time": "2016"
+    }];
 
     for (var key in mapOptions.timeSeries[0].data) {
         var entry = _.find(self.regionsForMap, function(d) {return d.fields.regionid === key});
         mapOptions2.timeSeries[0].data[key] = String(entry.percentBremain);
     }
-    $('#bremain-percent-map').mapp(mapOptions2);
+    new jQuery.Mapp($('#brexit-percent-map'), mapOptions);
+    new jQuery.Mapp($('#bremain-percent-map'), mapOptions2);
 };
 
 App.prototype.run = function () {

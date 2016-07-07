@@ -190,14 +190,15 @@ tr.level-2 td:first-child span {
 }
 
 .map-section {
-    height: 550px;
+    height: 600px;
+    display: flex;
 }
 
 .map-holder {
-    height: 600px;
-    width: 750px;
+    height: 550px;
+    width: 455px;
     box-sizing: border-box;
-    margin-left: 223px;
+    margin-left: 50px;
 }
 
 .map-holder .map {
