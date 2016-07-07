@@ -424,12 +424,12 @@ App.prototype.run = function () {
                     data: 7
                 },
                 {
-                    id: "UKM",
+                    id: "UKN",
                     name: "Northern Ireland",
                     data: 5
                 },
                 {
-                    id: "UKN",
+                    id: "UKM",
                     name: "Scotland",
                     data: 4
                 }
