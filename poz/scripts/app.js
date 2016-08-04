@@ -278,7 +278,7 @@ var App = (function () {
 			if (regionName == null)
 				return;
 
-			var summaryUrl = 'http://knoema.com/resource/embed/' + _this.dashRegionSummary + '/?noHeader=1&Region=' + encodeURI(regionName + " Province");
+			var summaryUrl = 'http://knoema.com/resource/embed/' + _this.dashRegionSummary + '/?noHeader=1&region=' + encodeURI(regionName + " Province") + '&rhiyjoe.province=' + encodeURI(regionName + " Province") + '&foccdjb.province=' + encodeURI(regionName + " Province");
 			var detailsUrl = 'http://knoema.com/resource/embed/' + _this.dashRegionDetails + '/?noHeader=1&province=' + encodeURI(regionName + " Province");
 			$('#passportPopup .title').html(regionName);
 			$('#tab-summary').html('<iframe src="' + summaryUrl + '">');
@@ -300,8 +300,8 @@ var App = (function () {
 			if (regionName == null)
 				return;
 
-			var summaryUrl = 'http://knoema.com/resource/embed/' + _this.dashCommuneSummary + '/?noHeader=1&constituency=' + encodeURI(regionName.toUpperCase()) + '&Region=' + encodeURI(regionName);
-			var detailsUrl = 'http://knoema.com/resource/embed/' + _this.dashCommuneDetails + '/?noHeader=1&constituency=' + encodeURI(regionName.toUpperCase());
+			var summaryUrl = 'http://knoema.com/resource/embed/' + _this.dashCommuneSummary + '/?noHeader=1&rhiyjoe.constituency=' + encodeURI(regionName.toUpperCase()) + '&Region=' + encodeURI(regionName) + '&foccdjb.constituency=' + encodeURI(regionName.toUpperCase());
+			var detailsUrl = 'http://knoema.com/resource/embed/' + _this.dashCommuneDetails + '/?noHeader=1&rhiyjoe.constituency=' + encodeURI(regionName.toUpperCase()) + '&foccdjb.constituency=' + encodeURI(regionName.toUpperCase());
 			$('#passportPopup .title').html(regionName);
 			$('#tab-summary').html('<iframe src="' + summaryUrl + '">');
 			$('#tab-details').html('<iframe src="' + detailsUrl + '">');
