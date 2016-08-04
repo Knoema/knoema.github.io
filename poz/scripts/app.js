@@ -72,7 +72,7 @@ var App = (function () {
 		});
 
 		var refreshVoteCount = function () {
-			$.getJSON('http://' + _this.host + '/api/forms/zpe20160530/status').done(function (result) {
+			$.getJSON('http://' + _this.host + '/api/forms/zpe20160701/status').done(function (result) {
 				var formatedVoteCount = window['numeral'](result.all).format('0,0');
 				$('#voteCount').html(formatedVoteCount);
 			});
