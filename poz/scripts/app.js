@@ -1340,7 +1340,7 @@ var App = (function () {
 		'q13': 'Who is your preferred presidential candidate for 2016?',
 		'q14': 'Which party exhibits more violent acts in Zambia?',
 		'q15': 'Which MP do you prefer in your constituency?',
-		'q16': 'Which campaign materials people have received most?'
+		'q16': 'Which party has distributed the most campaign materials in your area?'
 	};
 
 	return App;
