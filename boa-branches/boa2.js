@@ -351,12 +351,12 @@
 	};
 
 	app.prototype.getBoaBranchDimension = function () {
-		return $.getJSON('http://knoema.com/api/1.0/meta/dataset/' + datasetId + '/dimension/boa-branch?client_id=EZj54KGFo3rzIvnLczrElvAitEyU28DGw9R73tif');
+		return $.getJSON('//knoema.com/api/1.0/meta/dataset/' + datasetId + '/dimension/boa-branch?client_id=EZj54KGFo3rzIvnLczrElvAitEyU28DGw9R73tif');
 	};
 
 	app.prototype.getLoanData = function (boaBranchName) {
 		//TODO Refactor usig Knoema.Helpers.post?
-		return $.post('http://knoema.com/api/1.0/data/details?client_id=EZj54KGFo3rzIvnLczrElvAitEyU28DGw9R73tif&page_id=' + datasetId, {
+		return $.post('//knoema.com/api/1.0/data/details?client_id=EZj54KGFo3rzIvnLczrElvAitEyU28DGw9R73tif&page_id=' + datasetId, {
 			Dataset: datasetId,
 			Filter: [{
 				DatasetId: datasetId,
