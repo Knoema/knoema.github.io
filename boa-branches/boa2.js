@@ -35,7 +35,7 @@
 		//TODO Refactor using branchKeys
 		//Ogoja -> 1000010
 		self.branches = {};
-		$.getJSON('//knoema.com/api/1.0/meta/dataset/srvintb/dimension/business-outlets', function(branchDimension) {
+		$.getJSON('https://knoema.com/api/1.0/meta/dataset/srvintb/dimension/business-outlets', function(branchDimension) {
 			_.each(branchDimension.items, function(item) {
 				//TODO Refactor using branchKeys
 				self.branches[item.name] = item.key;
@@ -351,12 +351,12 @@
 	};
 
 	app.prototype.getBoaBranchDimension = function () {
-		return $.getJSON('//knoema.com/api/1.0/meta/dataset/' + datasetId + '/dimension/boa-branch?client_id=EZj54KGFo3rzIvnLczrElvAitEyU28DGw9R73tif');
+		return $.getJSON('https://knoema.com/api/1.0/meta/dataset/' + datasetId + '/dimension/boa-branch?client_id=EZj54KGFo3rzIvnLczrElvAitEyU28DGw9R73tif');
 	};
 
 	app.prototype.getLoanData = function (boaBranchName) {
 		//TODO Refactor usig Knoema.Helpers.post?
-		return $.post('//knoema.com/api/1.0/data/details?client_id=EZj54KGFo3rzIvnLczrElvAitEyU28DGw9R73tif&page_id=' + datasetId, {
+		return $.post('https://knoema.com/api/1.0/data/details?client_id=EZj54KGFo3rzIvnLczrElvAitEyU28DGw9R73tif&page_id=' + datasetId, {
 			Dataset: datasetId,
 			Filter: [{
 				DatasetId: datasetId,
