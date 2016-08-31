@@ -59,7 +59,10 @@
             var idleTimeout = window.setTimeout(function () {
                 $.get('//knoema.com/api/1.0/frontend/resource/' + self.geoPlaygroundId + '/content', function(content) {
                     for (var layerId in content.layers) {
-                        self.loadLayer(layerId);
+                        //CLI-3634 Turn off layer on M3 Access
+                        if (layerId !== '5da3ae80-846f-c7b8-5445-3ecd00954e1c') {
+                            self.loadLayer(layerId);
+                        }
                     }
                 });
             }, 300);
