@@ -13,7 +13,7 @@
             search: '',
             medicine: null,
             hide: {},
-            populationDensity: true
+            populationDensity: false
         };
     };
 
@@ -59,10 +59,7 @@
             var idleTimeout = window.setTimeout(function () {
                 $.get('//knoema.com/api/1.0/frontend/resource/' + self.geoPlaygroundId + '/content', function(content) {
                     for (var layerId in content.layers) {
-                        //CLI-3634 Turn off layer on M3 Access
-                        if (layerId !== '5da3ae80-846f-c7b8-5445-3ecd00954e1c') {
-                            self.loadLayer(layerId);
-                        }
+                        self.loadLayer(layerId);
                     }
                 });
             }, 300);
@@ -312,7 +309,14 @@
                     }));
                 }
 
+                if (layer2.layerId == '5da3ae80-846f-c7b8-5445-3ecd00954e1c') {
+                    if (layer2.layer && !self.filters.populationDensity) {
+                        layer.clean();
+                        $('#heatmap-legend').hide();
+                    }
+                }
             });
+
             layer.on('click', function (e) {
                 e.data.tooltip.time = (new Date(e.data.tooltip.time)).toISOString().slice(0, 4);
                 self.infoWindow.setContent($.tmpl('info-window-content.html', {
