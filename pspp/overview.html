@@ -1,0 +1,611 @@
+﻿<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>Plan Senegal emergent</title>
+    <link rel='stylesheet' type='text/css' href='https://fonts.googleapis.com/css?family=Roboto'>
+    <link rel='stylesheet' type='text/css' href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,700'>
+	<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.7.3/css/bootstrap-select.min.css"/>
+	<link rel="stylesheet" type="text/css" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.9.4/css/bootstrap-select.min.css">
+	<link rel="stylesheet" type="text/css" href="app.css"/>	
+</head>
+<body class="loading">
+	<div class="ajax-loader"></div>
+
+	<div class="main-menu">
+		<a href="index.html"><div class="logo">Plateforme de suivi des politiques publiques</div></a>
+		<ul class="items nav nav-tabs" role="tablist">
+    		<li>
+    			<a href="index.html" class="s1" data-toggle="tab">
+					<img src="./img/icons-banner-01.png" />
+    			</a>
+    		</li>
+    		<li class="active">
+				<a href="overview.html" class="s2" data-toggle="tab">
+					<img src="./img/icons-banner-02.png" />
+					Aperçu Global du Pays
+				</a>
+			</li>
+			<li>
+				<a href="overview.html" class="s3" data-toggle="tab">
+					<img src="./img/icons-banner-03.png" />
+					Traqueur des Réformes Nationales
+				</a>
+			</li>
+			<li>
+				<a href="sectorMonitor.html" class="s3"  data-toggle="tab">
+					<img src="./img/icons-banner-04.png" />
+					Principaux Indicateurs de Suivi
+				</a>
+			</li>
+			<li>
+				<a href="globalStanding.html" class="s2"  data-toggle="tab">
+					<img src="./img/icons-banner-05.png" />
+					Notoriété Internationale
+				</a>
+			</li>
+			<li>
+				<a href="sdg.html" class="s4"  data-toggle="tab">
+					<img src="./img/icons-banner-06.png" />
+					Suivi des Objectifs de Développent Durable
+				</a>
+			</li>
+		</ul>
+	</div>
+
+	<div class="tab-content">
+		<!-- COUNTRY OVERVIEW -->
+    	<div id="overview" class="tab-pane active">
+			<form id="overviewFilter" class="filter-form">
+				<h2 class="left-menu" style="">Axis:</h2>
+				<label><input type="checkbox" name="axis" value="1"/>Axis 1</label>
+				<label><input type="checkbox" name="axis" value="2"/>Axis 2</label>
+				<label><input type="checkbox" name="axis" value="3"/>Axis 3</label>
+
+				<h2 class="left-menu">The 27 Flagship Projects of the PSE:</h2>
+				<select class="form-control input-sm ppp-projects-container" id="ppp-projects" multiple>
+					<option value="Undefined">Undefined</option>
+					<option value="100-150 aggregation projects focused on livestock and high value added agriculture sectors">PP1&nbsp;&nbsp;&nbsp;&nbsp;100-150 aggregation projects focused on livestock and high value added agriculture sectors</option>
+					<option value="3-4 grain development corridors">PP2&nbsp;&nbsp;&nbsp;&nbsp;3-4 grain development corridors</option>
+					<option value="150-200 Micro-projects supporting family farming">PP3&nbsp;&nbsp;&nbsp;&nbsp;150-200 Micro-projects supporting family farming</option>
+					<option value="Restructuring of the ground nut sector">PP4&nbsp;&nbsp;&nbsp;&nbsp;Restructuring of the ground nut sector</option>
+					<option value="Accelerated development of aquaculture">PP5&nbsp;&nbsp;&nbsp;&nbsp;Accelerated development of aquaculture</option>
+					<option value="Social housing acceleration program">PP6&nbsp;&nbsp;&nbsp;&nbsp;Social housing acceleration program</option>
+					<option value="20 craft development centers">PP7&nbsp;&nbsp;&nbsp;&nbsp;20 craft development centers</option>
+					<option value="Arts and craft sector pilot">PP8&nbsp;&nbsp;&nbsp;&nbsp;Arts and craft sector pilot</option>
+					<option value="Micro-tourism sector pilot">PP9&nbsp;&nbsp;&nbsp;&nbsp;Micro-tourism sector pilot</option>
+					<option value="Commercial infrastructure">PP10&nbsp;&nbsp;Commercial infrastructure</option>
+					<option value="Iron ore recovery project - Faleme mine">PP11&nbsp;&nbsp;Iron ore recovery project - Faleme mine</option>
+					<option value="Development of the phosphate industry">PP12&nbsp;&nbsp;Development of the phosphate industry</option>
+					<option value="Acceleration of the exploitation of zircon">PP13&nbsp;&nbsp;Acceleration of the exploitation of zircon</option>
+					<option value="Acceleration of the operation of the gold sector; national scale mining program">PP14&nbsp;&nbsp;Acceleration of the operation of the gold sector; national scale mining program</option>
+					<option value="Regional mining hub">PP15&nbsp;&nbsp;Regional mining hub</option>
+					<option value="2-3 integrated industrial platforms">PP16&nbsp;&nbsp;2-3 integrated industrial platforms</option>
+					<option value="Integrated industrial hubs">PP17&nbsp;&nbsp;Integrated industrial hubs</option>
+					<option value="Integrated logistics hubs">PP18&nbsp;&nbsp;Integrated logistics hubs</option>
+					<option value="Digital-economy zones dedicated to export services">PP19&nbsp;&nbsp;Digital-economy zones dedicated to export services</option>
+					<option value="Business park for regional headquarters and bases">PP20&nbsp;&nbsp;Business park for regional headquarters and bases</option>
+					<option value="Dakar medical city">PP21&nbsp;&nbsp;Dakar medical city</option>
+					<option value="Dakar regional reference campus">PP22&nbsp;&nbsp;Dakar regional reference campus</option>
+					<option value="3-6 integrated tourist areas">PP23&nbsp;&nbsp;3-6 integrated tourist areas</option>
+					<option value="Air recovery plan">PP24&nbsp;&nbsp;Air recovery plan</option>
+					<option value="Integrated electricity recovery plan">PP25&nbsp;&nbsp;Integrated electricity recovery plan</option>
+					<option value="Hydrocarbon supply">PP26&nbsp;&nbsp;Hydrocarbon supply</option>
+					<option value="Electrified Villages">PP27&nbsp;&nbsp;Universal energy service</option>
+				</select>
+				<button id="ppp-select-button">Select</button>
+
+				<h2 class="left-menu">Ptip "Three year investment plan":</h2>
+				<label><input type="radio" name="plan" value="TRUE" checked/>Yes</label>
+				<label><input type="radio" name="plan" value="FALSE"/>No</label>
+
+				<h2 class="left-menu">Budget de depenses</h2>
+				<input type="text" name="budget-min" id="budget-min" class="budget-input" value="0" />
+				<input type="text" name="budget-max" id="budget-max" class="budget-input" value="100"/>
+				<div id="slider-range"></div>
+
+				<h2 class="left-menu">Ecart de depenses</h2>
+				<label><input type="checkbox" name="ecart" value="10"/><img src="./img/bullet-circle-green.png"/>10% or less of total</label>
+				<label><input type="checkbox" name="ecart" value="25"/><img src="./img/bullet-circle-yellow.png"/>25% to 11%</label>
+				<label><input type="checkbox" name="ecart" value="100"/><img src="./img/bullet-circle-red.png"/>exceeds 25%</label>
+
+				<h2 class="left-menu">Status</h2>
+				<label><input type="checkbox" name="status" value="10"/>Annonce</label>
+				<label><input type="checkbox" name="status" value="10"/>En cours</label>
+				<label><input type="checkbox" name="status" value="10"/>Complete</label>
+				<label><input type="checkbox" name="status" value="10"/>Operationel</label>
+
+				<!--<h2 class="left-menu">Social and Productive infrastructure:</h2>
+				<select class="form-control input-sm" id="consumers" multiple>
+					<option value="Airports">Airports</option>
+					<option value="Agriculture">Agriculture</option>
+					<option value="Energy and Mining">Energy and Mining</option>
+					<option value="Diesel Power Plant,Hydro Power Sources,Solar Power Stations,Thermal Power Stations">Power stations</option>
+					<option value="Factories and Industrial Parks">Factories and industrial parks</option>
+					<option value="Housing">Housing</option>
+					<option value="Hospital">Hospitals</option>
+					<option value="Hotel">Hotels</option>
+					<option value="Ports">Ports</option>
+					<option value="Refinery">Refineries</option>
+					<option value="School">Schools</option>
+					<option value="Tourism">Tourism</option>
+					<option value="Train">Train</option>
+				</select>-->
+
+				<!--<label><input type="checkbox" name="Consumers" value="Airports"><span class="custom-checkbox"></span><i class="icon point-airports"></i>Airports</label>
+				<label><input type="checkbox" name="Consumers" value="Agriculture"><span class="custom-checkbox"></span><i class="icon point-agriculture"></i>Agriculture</label>
+				<label><input type="checkbox" name="Consumers" value="Energy and Mining"><span class="custom-checkbox"></span><i class="icon point-energy"></i>Energy and Mining</label>
+				<label><input type="checkbox" name="Consumers" value="Diesel Power Plant,Hydro Power Sources,Solar Power Stations,Thermal Power Stations"><span class="custom-checkbox"></span><i class="icon point-power"></i>Power stations</label>
+				<label><input type="checkbox" name="Consumers" value="Factories and Industrial Parks"><span class="custom-checkbox"></span><i class="icon point-factories"></i>Factories and industrial parks</label>
+				<label><input type="checkbox" name="Consumers" value="Housing"><span class="custom-checkbox"></span><i class="icon point-housing"></i>Housing</label>
+				<label><input type="checkbox" name="Consumers" value="Hospital"><span class="custom-checkbox"></span><i class="icon point-hospital"></i>Hospitals</label>
+				<label><input type="checkbox" name="Consumers" value="Hotel"><span class="custom-checkbox"></span><i class="icon point-hotels"></i>Hotels</label>
+				<label><input type="checkbox" name="Consumers" value="Ports"><span class="custom-checkbox"></span><i class="icon point-ports"></i>Ports</label>
+				<label><input type="checkbox" name="Consumers" value="Refinery"><span class="custom-checkbox"></span><i class="icon point-refineries"></i>Refineries</label>
+				<label><input type="checkbox" name="Consumers" value="School"><span class="custom-checkbox"></span><i class="icon point-schools"></i>Schools</label>
+				<label><input type="checkbox" name="Consumers" value="Tourism"><span class="custom-checkbox"></span><i class="icon point-tourism"></i>Tourism</label>
+				<label><input type="checkbox" name="Consumers" value="Train"><span class="custom-checkbox"></span><i class="icon point-train"></i>Train</label>-->
+
+				<!--<label><input type="checkbox" name="Consumers" value="Undefined"><span class="custom-checkbox"></span><i class="icon point-undefined"></i>Undefined</label>-->
+
+				<!--<label><input type="checkbox" name="Consumers" value="Hospital"> <i class="icon point-hospitals"></i> Hospitals</label>
+				<label><input type="checkbox" name="Consumers" value=""> <i class="icon point-government"></i> Government buildings</label>
+				<label><input type="checkbox" name="Consumers" value="Airports"> <i class="icon point-airports"></i> Airports</label>
+				<label><input type="checkbox" name="Consumers" value="Ports"> <i class="icon point-ports"></i> Ports</label>
+				<label><input type="checkbox" name="Consumers" value="Factory Chemical,Industrial Zone"> <i class="icon point-factories"></i> Factories and industrial parks</label>
+				<label><input type="checkbox" name="Consumers" value="Refinery"> <i class="icon point-oil"></i> Oil refineries</label>
+				<label><input type="checkbox" name="Consumers" value="Hotel"> <i class="icon point-hotels"></i> Hotels</label>-->
+				
+
+				<!--<label><input name="PowerPlants" value="1" type="checkbox"> Power plants</label>
+				<label></label>
+				<select name="PowerPlantsSelect" class="selectpicker" data-style="btn-sm btn-default" data-width="100%" multiple title="All">
+					<option value="Thermal Power Stations​">Thermal</option>
+					<option value="Hydro Power Sources">Hydro-electric</option>
+					<option value="Diesel Power Plant">Diesel</option>
+					<option value="Solar Power Stations​">Solar</option>
+					<option>Geo-thermal</option>
+					<option>Tidal</option>
+				</select>
+				<label><input name="PowerGrid" type="checkbox"> Power grid</label>
+				<label><input name="PowerSubsta>tions" type="checkbox"> Power substations</label-->
+				
+				<!--<h2>CONSUMERS:</h2>-->
+				<!--<label><input type="checkbox" name="Consumers" value="School"> <i class="icon point-schools"></i> Schools</label>-->
+				<!--<label><input type="checkbox" name="Consumers" value="Hospital"> <i class="icon point-hospitals"></i> Hospitals</label>-->
+				<!--label><input type="checkbox" name="Consumers" value=""> <i class="icon point-military"></i> Military objects</label-->
+				<!--<label><input type="checkbox" name="Consumers" value=""> <i class="icon point-government"></i> Government buildings</label>-->
+				<!--<label><input type="checkbox" name="Consumers" value="Airports"> <i class="icon point-airports"></i> Airports</label>-->
+				<!--<label><input type="checkbox" name="Consumers" value="Ports"> <i class="icon point-ports"></i> Ports</label>-->
+				<!--<label><input type="checkbox" name="Consumers" value="Factory Chemical,Industrial Zone"> <i class="icon point-factories"></i> Factories and industrial parks</label>-->
+				<!--<label><input type="checkbox" name="Consumers" value="Refinery"> <i class="icon point-oil"></i> Oil refineries</label>-->
+				<!--<label><input type="checkbox" name="Consumers" value="Hotel"> <i class="icon point-hotels"></i> Hotels</label>-->
+
+				<!--<h2>TYPE OF OBJECT:</h2>
+				<label><input type="checkbox" name="Status" checked value="announced"> <i class="icon plan"></i>Announced</label>
+				<label><input type="checkbox" name="Status" checked value="in progress"> <i class="icon construct"></i>In progress</label>
+				<label><input type="checkbox" name="Status" checked value="completed"> <i class="icon run"></i>Completed</label>
+				
+				<h2>GOALS:</h2>
+                <label><input type="radio" name="Layer" value="none" checked> None</label>
+				<label><input type="radio" name="Layer" value="population"> GDP growth rate (%)</label>
+				<label><input type="radio" name="Layer" value="accessToElectricity"> GDP per capita (thousand CFA)</label>
+				<label><input type="radio" name="Layer" value="costOfElectricity"> Job creation (count)</label>
+				<label><input type="radio" name="Layer" value="electricityConsumption"> Investment (billion CFA)</label>
+                
+				<div id="legend" style="display: none;">
+					<img src="Images/legend.png">
+					<div id="legend_low">Low</div>
+					<div id="legend_high">High</div>
+                </div>-->
+				
+				<!--<br />
+				<button id="radius-button" class="btn btn-success" type="button" 
+					style="width: 100%; font-family: 'Roboto', sans-serif; font-size: 14px; font-weight: bold; color: white; background-color: #46b02e !important;">Show area profile</button>-->
+			</form>
+    		<div id="map-canvas" class="filtered-content"></div>
+
+			<div id="regions-control" class="form-inline">
+				<div class="input-group">
+					<span class="input-group-addon">REGIONS:</span>
+					<select id="regions">
+						<option value="-1">Senegal</option>
+						<option value="SN-DK">Dakar</option>
+						<option value="SN-DB">Diourbel</option>
+						<option value="SN-FK">Fatick</option>
+						<option value="SN-KE">Kédougou</option>
+						<option value="SN-KA">Kaffrine</option>
+						<option value="SN-KL">Kaolack</option>
+						<option value="SN-KD">Kolda</option>
+						<option value="SN-LG">Louga</option>
+						<option value="SN-MT">Matam</option>
+						<option value="SN-SE">Sédhiou</option>
+						<option value="SN-SL">Saint-Louis</option>
+						<option value="SN-TC">Tambacounda</option>
+						<option value="SN-TH">Thiès</option>
+						<option value="SN-ZG">Ziguinchor</option>
+					</select>
+				</div>
+
+				<div class="input-group" style="background-color: transparent;">
+					<button class="region-profile-button">Show region profile</button>
+				</div>
+			</div>
+
+			<div id="pdf-frame-popup" class="passport-popup">
+    			<div class="passport__close"></div>
+    			<div class="passport__content"></div>
+		   </div>
+
+			<div id="senegal-frame-popup" class="passport-popup">
+    			<div class="passport__close"></div>
+    			<div class="passport__content"></div>
+		   </div>
+
+			<div id="ppp-frame-popup" class="passport2-popup">
+				<div class="inner-content">
+				<div class="passport__title" style="text-transform: uppercase;">The 27 flagship projects of the PSE</div>
+				<div class="passport__close"></div>
+    			<div class="passport2__content">
+					<div class="ppp-item" data-value="Undefined">
+						<div class="pp-title"><div class="checkbox"></div>Undefined<div class="pp-icon i00"></div></div>
+						<div class="pp-name"></div>
+					</div>
+					<div class="ppp-item" data-value="100-150 aggregation projects focused on livestock and high value added agriculture sectors">
+						<div class="pp-title"><div class="checkbox"></div>PP1<div class="pp-icon i01"></div></div>
+						<div class="pp-name">100-150 aggregation projects focused on livestock and high value added agriculture sectors</div>
+					</div>
+					<div class="ppp-item" data-value="3-4 grain development corridors">
+						<div class="pp-title"><div class="checkbox"></div>PP2<div class="pp-icon i02"></div></div>
+						<div class="pp-name">3-4 grain development corridors</div>
+					</div>
+					<div class="ppp-item" data-value="150-200 Micro-projects supporting family farming">
+						<div class="pp-title"><div class="checkbox"></div>PP3<div class="pp-icon i03"></div></div>
+						<div class="pp-name">150-200 Micro-projects supporting family farming</div>
+					</div>
+					<div class="ppp-item" data-value="Restructuring of the ground nut sector">
+						<div class="pp-title"><div class="checkbox"></div>PP4<div class="pp-icon i04"></div></div>
+						<div class="pp-name">Restructuring of the ground nut sector</div>
+					</div>
+					<div class="ppp-item" data-value="Accelerated development of aquaculture">
+						<div class="pp-title"><div class="checkbox"></div>PP5<div class="pp-icon i05"></div></div>
+						<div class="pp-name">Accelerated development of aquaculture</div>
+					</div>
+					<div class="ppp-item" data-value="Social housing acceleration program">
+						<div class="pp-title"><div class="checkbox"></div>PP6<div class="pp-icon i06"></div></div>
+						<div class="pp-name">Social housing acceleration program</div>
+					</div>
+					<div class="ppp-item" data-value="20 craft development centers">
+						<div class="pp-title"><div class="checkbox"></div>PP7<div class="pp-icon i07"></div></div>
+						<div class="pp-name">20 craft development centers</div>
+					</div>
+					<div class="ppp-item" data-value="Arts and craft sector pilot">
+						<div class="pp-title"><div class="checkbox"></div>PP8<div class="pp-icon i08"></div></div>
+						<div class="pp-name">Arts and craft sector pilot</div>
+					</div>
+					<div class="ppp-item" data-value="Micro-tourism sector pilot">
+						<div class="pp-title"><div class="checkbox"></div>PP9<div class="pp-icon i09"></div></div>
+						<div class="pp-name">Micro-tourism sector pilot</div>
+					</div>
+					<div class="ppp-item" data-value="Commercial infrastructure">
+						<div class="pp-title"><div class="checkbox"></div>PP10<div class="pp-icon i10"></div></div>
+						<div class="pp-name">Commercial infrastructure</div>
+					</div>
+					<div class="ppp-item" data-value="Iron ore recovery project - Faleme mine">
+						<div class="pp-title"><div class="checkbox"></div>PP11<div class="pp-icon i11"></div></div>
+						<div class="pp-name">Iron ore recovery project - Faleme mine</div>
+					</div>
+					<div class="ppp-item" data-value="Development of the phosphate industry">
+						<div class="pp-title"><div class="checkbox"></div>PP12<div class="pp-icon i12"></div></div>
+						<div class="pp-name">Development of the phosphate industry</div>
+					</div>
+					<div class="ppp-item" data-value="Acceleration of the exploitation of zircon">
+						<div class="pp-title"><div class="checkbox"></div>PP13<div class="pp-icon i13"></div></div>
+						<div class="pp-name">Acceleration of the exploitation of zircon</div>
+					</div>
+					<div class="ppp-item" data-value="Acceleration of the operation of the gold sector; national scale mining program">
+						<div class="pp-title"><div class="checkbox"></div>PP14<div class="pp-icon i14"></div></div>
+						<div class="pp-name">Acceleration of the operation of the gold sector; national scale mining program</div>
+					</div>
+					<div class="ppp-item" data-value="Regional mining hub">
+						<div class="pp-title"><div class="checkbox"></div>PP15<div class="pp-icon i15"></div></div>
+						<div class="pp-name">Regional mining hub</div>
+					</div>
+					<div class="ppp-item" data-value="2-3 integrated industrial platforms">
+						<div class="pp-title"><div class="checkbox"></div>PP16<div class="pp-icon i16"></div></div>
+						<div class="pp-name">2-3 integrated industrial platforms</div>
+					</div>
+					<div class="ppp-item" data-value="Integrated industrial hubs">
+						<div class="pp-title"><div class="checkbox"></div>PP17<div class="pp-icon i17"></div></div>
+						<div class="pp-name">Integrated industrial hubs</div>
+					</div>
+					<div class="ppp-item" data-value="Integrated logistics hubs">
+						<div class="pp-title"><div class="checkbox"></div>PP18<div class="pp-icon i18"></div></div>
+						<div class="pp-name">Integrated logistics hubs</div>
+					</div>
+					<div class="ppp-item" data-value="Digital-economy zones dedicated to export services">
+						<div class="pp-title"><div class="checkbox"></div>PP19<div class="pp-icon i19"></div></div>
+						<div class="pp-name">Digital-economy zones dedicated to export services</div>
+					</div>
+					<div class="ppp-item" data-value="Business park for regional headquarters and bases">
+						<div class="pp-title"><div class="checkbox"></div>PP20<div class="pp-icon i20"></div></div>
+						<div class="pp-name">Business park for regional headquarters and bases</div>
+					</div>
+					<div class="ppp-item" data-value="Dakar medical city">
+						<div class="pp-title"><div class="checkbox"></div>PP21<div class="pp-icon i21"></div></div>
+						<div class="pp-name">Dakar medical city</div>
+					</div>
+					<div class="ppp-item" data-value="Dakar regional reference campus">
+						<div class="pp-title"><div class="checkbox"></div>PP22<div class="pp-icon i22"></div></div>
+						<div class="pp-name">Dakar regional reference campus</div>
+					</div>
+					<div class="ppp-item" data-value="3-6 integrated tourist areas">
+						<div class="pp-title"><div class="checkbox"></div>PP23<div class="pp-icon i23"></div></div>
+						<div class="pp-name">3-6 integrated tourist areas</div>
+					</div>
+					<div class="ppp-item" data-value="Air recovery plan">
+						<div class="pp-title"><div class="checkbox"></div>PP24<div class="pp-icon i24"></div></div>
+						<div class="pp-name">Air recovery plan</div>
+					</div>
+					<div class="ppp-item" data-value="Integrated electricity recovery plan">
+						<div class="pp-title"><div class="checkbox"></div>PP25<div class="pp-icon i25"></div></div>
+						<div class="pp-name">Integrated electricity recovery plan</div>
+					</div>
+					<div class="ppp-item" data-value="Hydrocarbon supply">
+						<div class="pp-title"><div class="checkbox"></div>PP26<div class="pp-icon i26"></div></div>
+						<div class="pp-name">Hydrocarbon supply</div>
+					</div>
+					<div class="ppp-item" data-value="Electrified Villages">
+						<div class="pp-title"><div class="checkbox"></div>PP27<div class="pp-icon i27"></div></div>
+						<div class="pp-name">Universal energy service</div>
+					</div>
+    			</div>
+				<div class="passport__buttons">
+					<button class="pp-btn" id="pp-select-all">Select all</button>
+					<button class="pp-btn" id="pp-deselect-all">Deselect all</button>
+					<button class="pp-btn" id="pp-ok">Ok</button>
+					<button class="pp-btn" id="pp-cancel">Cancel</button>
+				</div>
+				</div>
+			</div>
+
+    		<div id="passportPopup" class="passport-popup">
+    			<div class="passport__close"></div>
+    			<div class="passport__content">
+    				<table style="width: 100%;">
+    					<tr>
+    						<td style="width: 1px; padding-right: 20px; vertical-align: top;">
+								<div class="passport__map"></div>
+    						</td>
+    						<td>
+    							<div class="passport__title"></div>
+			    				<div class="passport__fields">
+			    					<div class="passport__fields__column"></div>
+			    					<div class="passport__fields__column"></div>
+			    					<div class="passport__fields__column"></div>
+			    				</div>
+    						</td>
+    					</tr>
+    				</table>
+    				<hr>
+    				<div class="passport__images">
+    					<div class="passport__image"><img src=""></div>
+    					<!--div class="passport__image"><img src="./Images/passport1.jpg"></div>
+    					<a href="#" class="passport__image_mini first"><img src="./Images/passport2.jpg"></a>
+    					<a href="#" class="passport__image_mini"><img src="./Images/passport2.jpg"></a>
+    					<a href="#" class="passport__image_mini"><img src="./Images/passport2.jpg"></a>
+    					<a href="#" class="passport__image_mini text-center"><div style="margin-top: 13px;">View<br>more</div></a-->
+    				</div>
+    				<div class="passport__chart_left">
+						<img src="./Images/passport_chart1.png">
+    				</div>
+    				<div class="passport__chart_right">
+    					<img src="./Images/passport_chart2.png">
+    				</div>
+    			</div>
+    		</div>
+    	</div>
+    </div>
+
+	<div id="timeline">
+		<div class="play-btn"></div>
+		<div class="year-item">
+			<p class="month">2016</p>
+		</div>
+		<div class="v-arrow left"></div>
+<!--		<div class="calendar-content">
+			<div class="item" data-date="2014.01" data-month="1">
+				<p class="month">Jan</p>
+			</div>
+			<div class="item active" data-date="2014.02" data-month="2">
+				<p class="month">Feb</p>
+			</div>
+			<div class="item" data-date="2014.03" data-month="3">
+				<p class="month">Mar</p>
+			</div>
+			<div class="item" data-date="2014.04" data-month="4">
+				<p class="month">Apr</p>
+			</div>
+			<div class="item" data-date="2014.05" data-month="5">
+				<p class="month">May</p>
+			</div>
+			<div class="item" data-date="2014.06" data-month="6">
+				<p class="month">Jun</p>
+			</div>
+			<div class="item" data-date="2014.07" data-month="7">
+				<p class="month">Jul</p>
+			</div>
+			<div class="item" data-date="2014.08" data-month="8">
+				<p class="month">Aug</p>
+			</div>
+			<div class="item" data-date="2014.09" data-month="9">
+				<p class="month">Sep</p>
+			</div>
+			<div class="item" data-date="2014.10" data-month="10">
+				<p class="month">Oct</p>
+			</div>
+			<div class="item" data-date="2014.11" data-month="11">
+				<p class="month">Nov</p>
+			</div>
+			<div class="item" data-date="2014.12" data-month="12">
+				<p class="month">Dec</p>
+			</div>
+		</div>
+		<div class="v-arrow right"></div>-->
+	</div>
+
+	<div id="footer">
+		<div><a href="http://www.presidence.sn" target="_blank">Le Bureau du President</a></div>
+	</div>
+
+	<script id="region-profile" type="text/x-handlebars-template">
+		<div class="map-tooltip">
+
+			<p class="tooltip-header">{{=it.regionName}}</p>
+
+			<div class="data-block-r">
+
+				<div><h3>Economic Development</h3></div>
+				<div class="{{=it.averageData["GDP per capita"]}}"><label>GDP per capita:&nbsp;</label>{{=it.indicatorData["GDP per capita"]}}</div>
+				<div class="odd {{=it.averageData["Non-farm economy, weight"]}}"><label>Non-farm economy, weight:&nbsp;</label>{{=it.indicatorData["Non-farm economy, weight"]}}</div>
+				<div class="{{=it.averageData["GDP growth (2005-2011)"]}}"><label>GDP growth (2005-2011):&nbsp;</label>{{=it.indicatorData["GDP growth (2005-2011)"]}}</div>
+				<div class="odd {{=it.averageData["Share in GDP Growth (2005-2011)"]}}"><label>Share in GDP Growth (2005-2011):&nbsp;</label>{{=it.indicatorData["Share in GDP Growth (2005-2011)"]}}</div>
+				<div class="{{=it.averageData["Deviation from average of economic development"]}}"><label>Deviation from average of economic development:&nbsp;</label>{{=it.indicatorData["Deviation from average of economic development"]}}</div>
+
+			</div>
+			<div class="data-block-r">
+
+				<div><h3>Human Development</h3></div>
+				<div class="{{=it.averageData["Literacy"]}}"><label>Literacy:&nbsp;</label>{{=it.indicatorData["Literacy"]}}</div>
+				<div class="odd {{=it.averageData["Life expectancy"]}}"><label>Life expectancy:&nbsp;</label>{{=it.indicatorData["Life expectancy"]}}</div>
+				<div class="{{=it.averageData["Population above the poverty line"]}}"><label>Population above the poverty line:&nbsp;</label>{{=it.indicatorData["Population above the poverty line"]}}</div>
+				<div class="odd {{=it.averageData["Deviation from average of human development"]}}"><label>Deviation from average of human development:&nbsp;</label>{{=it.indicatorData["Deviation from average of human development"]}}</div>
+
+			</div>
+			<div class="data-block-r">
+				<p>Note: Performance on a development indicator in red was less than half that of the highest scoring region</p>
+			</div>
+		</div>
+	</script>
+
+	<script id="senegal-profile" type="text/x-handlebars-template">
+		<div class="map-tooltip">
+
+			<p class="tooltip-header">Senegal profile</p>
+
+			<div class="data-block-r">
+
+				<div><h3>Macroeconomic Framework</h3></div>
+				<div><label>Real Gdp Growth Rate:&nbsp;</label>{{=it.indicatorData["Real Gdp Growth Rate"]}}<label class="right">&nbsp;%</label></div>
+				<div><label>Investment Rate (Gfcf):&nbsp;</label>{{=it.indicatorData["Investment Rate (Gfcf)"]}}<label class="right">&nbsp;%</label></div>
+				<div><label>Inflation Rate (Hicp):&nbsp;</label>{{=it.indicatorData["Inflation Rate (Hicp)"]}}<label class="right">&nbsp;%</label></div>
+				<div><label>Budget Deficit As% Of Gdp:&nbsp;</label>{{=it.indicatorData["Budget Deficit As% Of Gdp"]}}<label class="right">&nbsp;%</label></div>
+				<div><label>Current Account Deficit As% Of Gdp:&nbsp;</label>{{=it.indicatorData["Current Account Deficit As% Of Gdp"]}}<label class="right">&nbsp;%</label></div>
+				<div><label>Percentage Of Population Living Below The Absolute Poverty Line:&nbsp;</label>{{=it.indicatorData["Percentage Of Population Living Below The Absolute Poverty Line (%)"]}}<label class="right">&nbsp;%</label></div>
+
+			</div>
+			<div class="data-block-r">
+
+				<div><h3>Trade</h3></div>
+				<div><label>Growth In Export Values:&nbsp;</label>{{=it.indicatorData["Growth In Export Values"]}}<label class="right">&nbsp;%</label></div>
+				<div><label>Import Growth Rate Of Goods And Services:&nbsp;</label>{{=it.indicatorData["Import Growth Rate Of Goods And Services"]}}<label class="right">&nbsp;%</label></div>
+				<div><label>Of Coverage Of Imports By Exports:&nbsp;</label>{{=it.indicatorData["Of Coverage Of Imports By Exports"]}}<label class="right">&nbsp;%</label></div>
+
+			</div>
+			<div class="data-block-r">
+
+				<div><h3>Energy</h3></div>
+				<div><label>Average Production Cost Per Kwh (Fcfa):&nbsp;</label>{{=it.indicatorData["Average Production Cost Per Kwh (Fcfa)"]}}<label class="right">&nbsp;KWH</label></div>
+				<div><label>Number Of Megawatts Into Service (Installed Power):&nbsp;</label>{{=it.indicatorData["Number Of Megawatts Into Service (Installed Power)"]}}<label class="right">&nbsp;number</label></div>
+				<div><label>Energy Not Distributed To Customers (Gwh):&nbsp;</label>{{=it.indicatorData["Energy Not Distributed To Customers (Gwh)"]}}<label class="right">&nbsp;GWH</label></div>
+				<div><label>Rural Electrification Rate:&nbsp;</label>{{=it.indicatorData["Rural Electrification Rate"]}}<label class="right">&nbsp;%</label></div>
+
+			</div>
+			<div class="data-block-r">
+
+				<div><h3>National Education</h3></div>
+				<div><label>Gross Intake Rate At Ci (Tba):&nbsp;</label>{{=it.indicatorData["Gross Intake Rate At Ci (Tba)"]}}<label class="right">&nbsp;%</label></div>
+				<div><label>Gross Enrollment Rate In Elementary (Tbs):&nbsp;</label>{{=it.indicatorData["Gross Enrollment Rate In Elementary (Tbs)"]}}<label class="right">&nbsp;%</label></div>
+				<div><label>Completion Rates At Primary (Tap):&nbsp;</label>{{=it.indicatorData["Completion Rates At Primary (Tap)"]}}<label class="right">&nbsp;%</label></div>
+
+			</div>
+			<div class="data-block-r">
+				<div><h3>Health And Nutrition</h3></div>
+				<div><label>Rate Of Births Attended By Trained Personnel:&nbsp;</label>{{=it.indicatorData["Rate Of Births Attended By Trained Personnel"]}}<label class="right">&nbsp;%</label></div>
+				<div><label>Contraceptive Prevalence Rate:&nbsp;</label>{{=it.indicatorData["Contraceptive Prevalence Rate"]}}<label class="right">&nbsp;%</label></div>
+				<div><label>Completion Rate (Adequate Coverage) In Eic:&nbsp;</label>{{=it.indicatorData["Completion Rate (Adequate Coverage) In Eic"]}}<label class="right">&nbsp;%</label></div>
+				<div><label>Child Mortality Rate:&nbsp;</label>{{=it.indicatorData["Child Mortality Rate"]}}<label class="right">&nbsp;%</label></div>
+				
+			</div>
+		</div>
+	</script>
+
+	<script id="senegal-region-profile" type="text/x-handlebars-template">
+		
+	</script>
+
+	<script id="pdf-frame" type="text/x-handlebars-template">
+		<iframe src="./pdf/{{=it.name}}.pdf" width="100%" height="100%"  />
+	</script>
+
+	<script id="area-profile-template" type="text/x-handlebars-template">
+		<div class="area-profile">
+			<h4>Area Profile</h4>
+			<div class="row">
+				<div class="col-md-6">
+					<div><label>Region:</label> {{=it.region}}</div>
+					<div><label>Village(s):</label> {{=it.village}}</div>
+				</div>
+				<div class="col-md-6">
+					<div><label>Population:</label> {{=it.population}}</div>
+					<div><label>Incidence of poverty:</label> {{=it.incidence}}</div>
+				</div>
+			</div>
+			<hr>
+			<div><label>Access to electricity:</label> {{=it.access}}</div>
+			<div><label>Electricity consumption (average per capita):</label> {{=it.consumption}}</div>
+			<div><label>Cost of electricity:</label> {{=it.cost}}</div>
+			<div><label>National grid connection:</label> {{=it.grid}}</div>
+			<div><label>Primary electricity source:</label> {{=it.source}}</div>
+			<br />
+			<div><label>Nearest hospital:</label> {{=it.hospital}}</div>
+			<div><label>Number of local shools:</label> {{=it.schools}}</div>
+			<br />
+			<div>
+				<label>Ongoing investment project:</label> 
+				<ul>
+					<li>Name: {{=it.investmentProject.name}}</li>
+					<li>Location: {{=it.investmentProject.location}}</li>
+					<li>End date: {{=it.investmentProject.endDate}}</li>
+				</ul>
+			</div>
+			<div><label>Investor:</label> {{=it.investor}}</div>
+		</div>
+	</script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+	<script src="bootstrap/js/bootstrap.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.7.3/js/bootstrap-select.min.js"></script>
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDW5mB0UdDWi7EdcoH3eE-IunlT7nISRuA&v=3.exp&libraries=visualization,drawing"></script>
+	<script src="http://code.jquery.com/ui/1.11.4/jquery-ui.min.js" type="text/javascript"></script>
+	<script src="http://code.highcharts.com/highcharts.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.9.4/js/bootstrap-select.min.js"></script>
+	<script src="Scripts/marketwithlabel.js"></script>
+	<script src="Scripts/doT.min.js"></script>
+	<script src="Scripts/app.js"></script>
+
+	<script>
+		(function () {
+			$('.more-item').on('click', function (e) {
+
+				$('.more-menu-items').toggleClass('show');
+
+				e.stopPropagation();
+				return false;
+			});
+		})()
+	</script>
+</body>
+</html>
