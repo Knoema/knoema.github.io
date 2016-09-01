@@ -8,7 +8,7 @@ body {
 /*index page*/
 body.landing
 {
-	background: url(/img/bg.jpg) no-repeat;
+	background: url(./img/bg.jpg) no-repeat;
 	background-size: 100%;
 }
 
