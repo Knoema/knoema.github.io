@@ -285,7 +285,7 @@ h2.left-menu
 
 .ppp-projects-container
 {
-	width: 180px !important;
+	width: 177px !important;
 	margin-top: -6px;
 }
 #ppp-select-button
@@ -297,8 +297,6 @@ h2.left-menu
 	padding: 6px 12px;
 	font-size: 11pt;
 	text-transform: uppercase;
-	display: block;
-	margin-top: 10px;
 }
 .ppp-item
 {
