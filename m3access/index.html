@@ -70,17 +70,40 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-xs-6">
+                            <div class="col-xs-4">
                                 <div class="form-group">
-                                    <label>Select medicine</label>
+                                    <label>Health Service Delivery Indicators</label>
+                                    <br />
+                                    <select id="service-delivery-indicators" title="Choose an indicator..." class="selectpicker form-control" data-selected-text-format="count" data-actions-box="true">
+                                        <optgroup label="Essential Medicines">
+                                            <option>Communicable Diseases</option>
+                                            <option>Non-Communicable Diseases</option>
+                                            <option>Other</option>
+                                        </optgroup>
+                                        <optgroup label="Human Resources for Health">
+                                            <option>Medical providers</option>
+                                            <option>Nurses</option>
+                                            <option>Laboratory Technicians</option>
+                                            <option>Radiology Technicians</option>
+                                            <option>Counsellors</option>
+                                        </optgroup>
+                                        <optgroup label="Equipment">
+                                            <option>Equipment</option>
+                                        </optgroup>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-xs-4">
+                                <div class="form-group">
+                                    <label>Select Health Service</label>
                                     <br />
                                     <select id="select-medicine" title="Choose a medicine..." class="selectpicker form-control" multiple data-selected-text-format="count" data-actions-box="true">
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-xs-6">
+                            <div class="col-xs-4">
                                 <div class="form-group">
-                                    <label>Medication price&nbsp;&nbsp;<i class="glyphicon glyphicon-info-sign" data-toggle="tooltip" data-placement="right" title="Cost for 100 tablets, roughly a three month course, excluding inhalers"></i></label>
+                                    <label>Price&nbsp;&nbsp;<i class="glyphicon glyphicon-info-sign" data-toggle="tooltip" data-placement="right" title="Cost for 100 tablets, roughly a three month course, excluding inhalers"></i></label>
                                     <br />
                                     <input id="min" class="form-control slider-limit" disabled />
                                     <input id="max" class="form-control slider-limit pull-right" disabled />
@@ -243,7 +266,6 @@
     <script src="//maps.googleapis.com/maps/api/js?v=3.exp&libraries=visualization,drawing,geometry"></script>
 
     <script src="//knoema.com/app-script?version=2.0"></script>
-    <script src="//knoema.com/js/googlemap/bubbles-overlay.js?v=1"></script>
     <script src="//knoema.com/js/geoplayground/geo-playground-layer.js?v=2"></script>
 
     <script src="deps/malihu-custom-scrollbar-plugin-3.1.3/jquery.mCustomScrollbar.concat.min.js"></script>
