@@ -1,7 +1,23 @@
 ﻿/// <reference path="typings/jquery.d.ts"/>
 /// <reference path="typings/google.maps.d.ts"/>
+
+var access_token = "";
+
+$(function () {
+	/* Authentication via access token  */
+	var params = Knoema.Helpers.parseHashParams();
+	if (params == null)
+		Knoema.Helpers.getAccessToken('Ysyd9Tw', window.location, false, 'read_resources');
+	else {
+		if (params["access_token"] != undefined)
+			access_token = params["access_token"];
+	}
+});
+
 var Infrastructure;
 (function (Infrastructure) {
+	var host = 'http://pspp.knoema.com/';
+
     var TypeNameToId = {
     	'Airports': 1000230,
     	'Agriculture': 1000220,
@@ -300,6 +316,10 @@ var Infrastructure;
                 	position: google.maps.ControlPosition.LEFT_TOP
                 },
                 mapTypeId: google.maps.MapTypeId.HYBRID
+            });
+
+            this.getRegionsData().done(function (data) {
+            	var i = 0;
             });
 
             this.initAreaProfile();
@@ -1339,7 +1359,7 @@ var Infrastructure;
         };
 
         Application.prototype.getObjects = function (objectTypeIds) {
-        	var url = 'http://knoema.com/api/1.0/data/details?client_id=EZj54KGFo3rzIvnLczrElvAitEyU28DGw9R73tif&page_id=cygxxfe';
+        	var url = host + '/api/1.0/data/details?client_id=EZj54KGFo3rzIvnLczrElvAitEyU28DGw9R73tif&page_id=cygxxfe';
             var data = {
                 "Header":[],
                 "Stub":[],
@@ -1359,31 +1379,57 @@ var Infrastructure;
             return $.post(url, data);
         };
 
-        Application.prototype.getRegionsData = function () {
-        	var url = 'http://knoema.com/api/1.0/data/details?client_id=EZj54KGFo3rzIvnLczrElvAitEyU28DGw9R73tif&page_id=SNDED2016';
-        	var data = {
-        		"Header": [],
-        		"Stub": [],
-        		"Filter": [{
-        			"DimensionId": "location",
-        			"Members": [],
-        			"DimensionName": "Location",
-        			"DatasetId": "SNDED2016"
-        		},
-        		{
-        			"DimensionId": "indicator",
-        			"Members": ['1000010', '1000020', '1000030', '1000040', '1000050', '1000070', '1000080', '1000090', '1000100' ],
-        			"DimensionName": "Indicator",
-        			"DatasetId": "SNDED2016"
-        		}],
-        		"Frequencies": [],
-        		"Dataset": "SNDED2016",
-        		"Segments": null,
-        		"MeasureAggregations": null
-        	};
+        //Application.prototype.getRegionsData = function () {
+        //	var url = 'http://knoema.com/api/1.0/data/details?client_id=EZj54KGFo3rzIvnLczrElvAitEyU28DGw9R73tif&page_id=SNDED2016';
+        //	var data = {
+        //		"Header": [],
+        //		"Stub": [],
+        //		"Filter": [{
+        //			"DimensionId": "location",
+        //			"Members": [],
+        //			"DimensionName": "Location",
+        //			"DatasetId": "SNDED2016"
+        //		},
+        //		{
+        //			"DimensionId": "indicator",
+        //			"Members": ['1000010', '1000020', '1000030', '1000040', '1000050', '1000070', '1000080', '1000090', '1000100' ],
+        //			"DimensionName": "Indicator",
+        //			"DatasetId": "SNDED2016"
+        //		}],
+        //		"Frequencies": [],
+        //		"Dataset": "SNDED2016",
+        //		"Segments": null,
+        //		"MeasureAggregations": null
+        //	};
 
-        	return $.post(url, data);
-        };
+        //	return $.post(url, data);
+    	//};
+
+    	Application.prototype.getRegionsData = function () {
+    		var url = host + 'api/1.0/data/details?client_id=EZj54KGFo3rzIvnLczrElvAitEyU28DGw9R73tif&page_id=PSEBD2016';
+    		var data = {
+    			"Header": [],
+    			"Stub": [],
+    			"Filter": [{
+    				"DimensionId": "projet-et-réforme",
+    				"Members": ['1000000', '1000010', '1000020'],
+    				"DimensionName": "Projet et Réforme",
+    				"DatasetId": "PSEBD2016"
+    			},
+    			{
+    				"DimensionId": "indicateur",
+    				"Members": ['1000000', '1000010', '1000020'],
+    				"DimensionName": "Indicateur",
+    				"DatasetId": "PSEBD2016"
+    			}],
+    			"Frequencies": [],
+    			"Dataset": "PSEBD2016",
+    			"Segments": null,
+    			"MeasureAggregations": null
+    		};
+
+    		return $.post(url, data);
+    	};
 
         Application.prototype.getRegionData = function (regionId, callback) {
 

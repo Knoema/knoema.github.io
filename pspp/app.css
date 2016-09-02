@@ -113,7 +113,7 @@ body.landing
 	top: 0;
 	right: 0;
 	bottom: 0;
-	background: rgba(0, 0, 0, 0.65) url(Images/ajax-loader.gif) center center no-repeat;
+	background: rgba(0, 0, 0, 0.65) url(./img/ajax-loader.gif) center center no-repeat;
 	z-index: 100500;
 }
 body.loading > .ajax-loader {
@@ -297,6 +297,8 @@ h2.left-menu
 	padding: 6px 12px;
 	font-size: 11pt;
 	text-transform: uppercase;
+	display: block;
+	margin-top: 10px;
 }
 .ppp-item
 {
@@ -306,13 +308,13 @@ h2.left-menu
 	padding: 10px;
 	height: 130px;
 	width: 180px;
-	background: url(./Images/bg_normal.png);
+	background: url(./img/bg_normal.png);
 	vertical-align: top;
 	cursor: pointer;
 }
 .ppp-item.active
 {
-	background: url(./Images/bg_selected.png);
+	background: url(./img/bg_selected.png);
 }
 
 .ppp-item .checkbox
@@ -321,17 +323,17 @@ h2.left-menu
 	margin: 10px 7px 0 0;
 	height: 12px;
 	width: 12px;
-	background: url(./Images/checkbox_icons.png) -12px 0 no-repeat;
+	background: url(./img/checkbox_icons.png) -12px 0 no-repeat;
 }
 .ppp-item.active .checkbox
 {
-	background: url(./Images/checkbox_icons.png) 0 0 no-repeat;
+	background: url(./img/checkbox_icons.png) 0 0 no-repeat;
 }
 .pp-btn
 {
 	text-transform: uppercase;
 	color: #fff;
-	background-color: #49B02D;
+	background-color: #472001;
 	padding: 5px 10px;
 	width: 110px;
 	text-align:center;
@@ -341,7 +343,7 @@ h2.left-menu
 }
 .pp-name
 {
-	background: url(./Images/line.png) no-repeat;
+	background: url(./img/line.png) no-repeat;
 	margin-top: 15px;
     font-size: 9pt;
     padding-top: 10px;
@@ -356,115 +358,115 @@ h2.left-menu
 }
 .ppp-item .pp-icon.i00
 {
-	background: url(./Images/00.png);
+	background: url(./img/00.png);
 }
 .ppp-item .pp-icon.i01
 {
-	background: url(./Images/01.png);
+	background: url(./img/01.png);
 }
 .ppp-item .pp-icon.i02
 {
-	background: url(./Images/02.png);
+	background: url(./img/02.png);
 }
 .ppp-item .pp-icon.i03
 {
-	background: url(./Images/03.png);
+	background: url(./img/03.png);
 }
 .ppp-item .pp-icon.i04
 {
-	background: url(./Images/04.png);
+	background: url(./img/04.png);
 }
 .ppp-item .pp-icon.i05
 {
-	background: url(./Images/05.png);
+	background: url(./img/05.png);
 }
 .ppp-item .pp-icon.i06
 {
-	background: url(./Images/06.png);
+	background: url(./img/06.png);
 }
 .ppp-item .pp-icon.i07
 {
-	background: url(./Images/07.png);
+	background: url(./img/07.png);
 }
 .ppp-item .pp-icon.i08
 {
-	background: url(./Images/08.png);
+	background: url(./img/08.png);
 }
 .ppp-item .pp-icon.i09
 {
-	background: url(./Images/09.png);
+	background: url(./img/09.png);
 }
 .ppp-item .pp-icon.i10
 {
-	background: url(./Images/10.png);
+	background: url(./img/10.png);
 }
 .ppp-item .pp-icon.i11
 {
-	background: url(./Images/11.png);
+	background: url(./img/11.png);
 }
 .ppp-item .pp-icon.i12
 {
-	background: url(./Images/12.png);
+	background: url(./img/12.png);
 }
 .ppp-item .pp-icon.i13
 {
-	background: url(./Images/13.png);
+	background: url(./img/13.png);
 }
 .ppp-item .pp-icon.i14
 {
-	background: url(./Images/14.png);
+	background: url(./img/14.png);
 }
 .ppp-item .pp-icon.i15
 {
-	background: url(./Images/15.png);
+	background: url(./img/15.png);
 }
 .ppp-item .pp-icon.i16
 {
-	background: url(./Images/16.png);
+	background: url(./img/16.png);
 }
 .ppp-item .pp-icon.i17
 {
-	background: url(./Images/17.png);
+	background: url(./img/17.png);
 }
 .ppp-item .pp-icon.i18
 {
-	background: url(./Images/18.png);
+	background: url(./img/18.png);
 }
 .ppp-item .pp-icon.i19
 {
-	background: url(./Images/19.png);
+	background: url(./img/19.png);
 }
 .ppp-item .pp-icon.i20
 {
-	background: url(./Images/20.png);
+	background: url(./img/20.png);
 }
 .ppp-item .pp-icon.i21
 {
-	background: url(./Images/21.png);
+	background: url(./img/21.png);
 }
 .ppp-item .pp-icon.i22
 {
-	background: url(./Images/22.png);
+	background: url(./img/22.png);
 }
 .ppp-item .pp-icon.i23
 {
-	background: url(./Images/23.png);
+	background: url(./img/23.png);
 }
 .ppp-item .pp-icon.i24
 {
-	background: url(./Images/24.png);
+	background: url(./img/24.png);
 }
 .ppp-item .pp-icon.i25
 {
-	background: url(./Images/25.png);
+	background: url(./img/25.png);
 }
 .ppp-item .pp-icon.i26
 {
-	background: url(./Images/26.png);
+	background: url(./img/26.png);
 }
 .ppp-item .pp-icon.i27
 {
-	background: url(./Images/27.png);
+	background: url(./img/27.png);
 }
 
 .budget-input
@@ -739,7 +741,7 @@ div#legend_high
 	top: 50px;
 	bottom: 40px;
 	padding: 20px;
-	background-color: #EBFAFF;
+	background-color: #f4ece1;
 	overflow: auto;
 }
 .passport__buttons
@@ -749,7 +751,7 @@ div#legend_high
 	right: 10px;
 	bottom: 10px;
 	padding: 20px;
-	background-color: #EBFAFF;
+	background-color: #f4ece1;
 	overflow: auto;
 }
 .passport__title
@@ -759,7 +761,7 @@ div#legend_high
 	left: 10px;
 	right: 10px;
 	padding: 20px;
-	background-color: #EBFAFF;
+	background-color: #f4ece1;
 	overflow: auto;
 }
 .passport__content hr {
@@ -772,14 +774,14 @@ div#legend_high
     top: 30px;
     width: 40px;
     height: 40px;
-    background: #fff url(./Images/icon_close.png) no-repeat center center;
+    background: #fff url(./img/icon_close.png) no-repeat center center;
     cursor: pointer;
     z-index: 1;
     border-radius: 50%;
     box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.15);
 }
 .passport__close:hover {
-	background-image: url(./Images/icon_close_hover.png);
+	background-image: url(./img/icon_close_hover.png);
 }
 .passport__map {
 	width: 240px;

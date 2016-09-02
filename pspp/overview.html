@@ -24,33 +24,33 @@
     			</a>
     		</li>
     		<li class="active">
-				<a href="overview.html" class="s2" data-toggle="tab">
+				<a href="overview.html" class="s2" data-toggle="tab" title="Aperçu Global du Pays">
 					<img src="./img/icons-banner-02.png" />
 					Aperçu Global du Pays
 				</a>
 			</li>
 			<li>
-				<a href="overview.html" class="s3" data-toggle="tab">
-					<img src="./img/icons-banner-03.png" />
-					Traqueur des Réformes Nationales
+				<a href="overview.html" class="s1" data-toggle="tab" title="Traqueur des Réformes Nationales" >
+					<img src="./img/icons-banner-03.png"/>
+					<!--Traqueur des Réformes Nationales-->
 				</a>
 			</li>
 			<li>
-				<a href="sectorMonitor.html" class="s3"  data-toggle="tab">
+				<a href="sectorMonitor.html" class="s1" data-toggle="tab" title="Principaux Indicateurs de Suivi">
 					<img src="./img/icons-banner-04.png" />
-					Principaux Indicateurs de Suivi
+					<!--Principaux Indicateurs de Suivi-->
 				</a>
 			</li>
 			<li>
-				<a href="globalStanding.html" class="s2"  data-toggle="tab">
+				<a href="globalStanding.html" class="s1" data-toggle="tab" title="Notoriété Internationale">
 					<img src="./img/icons-banner-05.png" />
-					Notoriété Internationale
+					<!--Notoriété Internationale-->
 				</a>
 			</li>
 			<li>
-				<a href="sdg.html" class="s4"  data-toggle="tab">
+				<a href="sdg.html" class="s1"  data-toggle="tab" title="Suivi des Objectifs de Développent Durable">
 					<img src="./img/icons-banner-06.png" />
-					Suivi des Objectifs de Développent Durable
+					<!--Suivi des Objectifs de Développent Durable-->
 				</a>
 			</li>
 		</ul>
@@ -60,12 +60,12 @@
 		<!-- COUNTRY OVERVIEW -->
     	<div id="overview" class="tab-pane active">
 			<form id="overviewFilter" class="filter-form">
-				<h2 class="left-menu" style="">Axis:</h2>
-				<label><input type="checkbox" name="axis" value="1"/>Axis 1</label>
-				<label><input type="checkbox" name="axis" value="2"/>Axis 2</label>
-				<label><input type="checkbox" name="axis" value="3"/>Axis 3</label>
+				<h2 class="left-menu" style="">Axe:</h2>
+				<label><input type="checkbox" name="axis" value="1"/>Axe 1</label>
+				<label><input type="checkbox" name="axis" value="2"/>Axe 2</label>
+				<label><input type="checkbox" name="axis" value="3"/>Axe 3</label>
 
-				<h2 class="left-menu">The 27 Flagship Projects of the PSE:</h2>
+				<h2 class="left-menu">LES PHARES 27 PROJETS DU PSPP:</h2>
 				<select class="form-control input-sm ppp-projects-container" id="ppp-projects" multiple>
 					<option value="Undefined">Undefined</option>
 					<option value="100-150 aggregation projects focused on livestock and high value added agriculture sectors">PP1&nbsp;&nbsp;&nbsp;&nbsp;100-150 aggregation projects focused on livestock and high value added agriculture sectors</option>
@@ -96,11 +96,11 @@
 					<option value="Hydrocarbon supply">PP26&nbsp;&nbsp;Hydrocarbon supply</option>
 					<option value="Electrified Villages">PP27&nbsp;&nbsp;Universal energy service</option>
 				</select>
-				<button id="ppp-select-button">Select</button>
+				<button id="ppp-select-button">Choisir</button>
 
-				<h2 class="left-menu">Ptip "Three year investment plan":</h2>
-				<label><input type="radio" name="plan" value="TRUE" checked/>Yes</label>
-				<label><input type="radio" name="plan" value="FALSE"/>No</label>
+				<h2 class="left-menu">Ptip "PLAN D'INVESTISSEMENT DE TROIS ANS":</h2>
+				<label><input type="radio" name="plan" value="TRUE" checked/>Oui</label>
+				<label><input type="radio" name="plan" value="FALSE"/>Non</label>
 
 				<h2 class="left-menu">Budget de depenses</h2>
 				<input type="text" name="budget-min" id="budget-min" class="budget-input" value="0" />
@@ -108,11 +108,11 @@
 				<div id="slider-range"></div>
 
 				<h2 class="left-menu">Ecart de depenses</h2>
-				<label><input type="checkbox" name="ecart" value="10"/><img src="./img/bullet-circle-green.png"/>10% or less of total</label>
-				<label><input type="checkbox" name="ecart" value="25"/><img src="./img/bullet-circle-yellow.png"/>25% to 11%</label>
-				<label><input type="checkbox" name="ecart" value="100"/><img src="./img/bullet-circle-red.png"/>exceeds 25%</label>
+				<label><input type="checkbox" name="ecart" value="10"/><img src="./img/bullet-circle-green.png"/>10% ou moins du total</label>
+				<label><input type="checkbox" name="ecart" value="25"/><img src="./img/bullet-circle-yellow.png"/>25% à 11%</label>
+				<label><input type="checkbox" name="ecart" value="100"/><img src="./img/bullet-circle-red.png"/>dépasse 25%</label>
 
-				<h2 class="left-menu">Status</h2>
+				<h2 class="left-menu">STATUT</h2>
 				<label><input type="checkbox" name="status" value="10"/>Annonce</label>
 				<label><input type="checkbox" name="status" value="10"/>En cours</label>
 				<label><input type="checkbox" name="status" value="10"/>Complete</label>
@@ -231,7 +231,7 @@
 				</div>
 
 				<div class="input-group" style="background-color: transparent;">
-					<button class="region-profile-button">Show region profile</button>
+					<button class="region-profile-button">Voir le profil régional</button>
 				</div>
 			</div>
 
@@ -247,7 +247,7 @@
 
 			<div id="ppp-frame-popup" class="passport2-popup">
 				<div class="inner-content">
-				<div class="passport__title" style="text-transform: uppercase;">The 27 flagship projects of the PSE</div>
+				<div class="passport__title" style="text-transform: uppercase;">LES PHARES 27 PROJETS DU PSPP</div>
 				<div class="passport__close"></div>
     			<div class="passport2__content">
 					<div class="ppp-item" data-value="Undefined">
@@ -400,10 +400,10 @@
     					<a href="#" class="passport__image_mini text-center"><div style="margin-top: 13px;">View<br>more</div></a-->
     				</div>
     				<div class="passport__chart_left">
-						<img src="./Images/passport_chart1.png">
+						<img src="./img/passport_chart1.png">
     				</div>
     				<div class="passport__chart_right">
-    					<img src="./Images/passport_chart2.png">
+    					<img src="./img/passport_chart2.png">
     				</div>
     			</div>
     		</div>
@@ -592,6 +592,7 @@
 	<script src="http://code.jquery.com/ui/1.11.4/jquery-ui.min.js" type="text/javascript"></script>
 	<script src="http://code.highcharts.com/highcharts.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.9.4/js/bootstrap-select.min.js"></script>
+	<script src="http://pspp.knoema.com//app-script?version=2.0" type="text/javascript" ></script>
 	<script src="Scripts/marketwithlabel.js"></script>
 	<script src="Scripts/doT.min.js"></script>
 	<script src="Scripts/app.js"></script>
