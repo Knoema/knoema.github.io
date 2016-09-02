@@ -120,11 +120,11 @@ header {
 
 #search-panel {
     background-color: #c2d6e9;
-    width: 70%;
+    width: 80%;
     position: absolute;
     top: 10px;
     z-index: 1000;
-    left: 15%;
+    left: 10%;
     padding-top: 8px;
 }
 
@@ -132,11 +132,8 @@ header {
     text-transform: uppercase;
     color: #1b3768;
     font-size: 12px;
+    white-space: nowrap;
 }
-
-/*#search-input::-ms-clear {*/
-    /*display: none;*/
-/*}*/
 
 .notice {
     background-image: url('img/ico-notice.png');
@@ -161,10 +158,6 @@ only screen and (                min-resolution: 2dppx) {
     .logo_knoema {
         background-image: url('img/logo_knoema-x2.png');
     }
-    /*#search-input {*/
-        /*background-image: url('img/btn-search-x2.png');*/
-        /*background-size: 20px;*/
-    /*}*/
     .notice {
         background-image: url('img/ico-notice-x2.png');
     }
