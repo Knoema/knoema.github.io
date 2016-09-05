@@ -255,6 +255,35 @@ var Infrastructure;
             	showRegion();
             });
 
+            $('.new-passport-temp-btn').on('click', function () {
+            	var template = doT.template($('#new-object-passport').html());
+            	var template_b = doT.template($('#new-object-budgetting').html());
+
+            	$('#new-project-passport .passport__content__new').empty().html(template({}));
+            	$('#new-project-passport .passport__content__new__b').empty().html(template_b({}));
+            	$('#new-project-passport').show();
+
+            	$('.passport-tab').on('click', function () {
+            		var name = $(this).data('name');
+            		$('.passport-tab').removeClass('active');
+            		$(this).addClass('active');
+
+            		if (name == 'passport') {
+            			$('.passport__content__new').show();
+            			$('.passport__content__new__b').hide();
+            		}
+            		else if (name == 'budgetting') {
+            			$('.passport__content__new').hide();
+            			$('.passport__content__new__b').show();
+            		}
+            	});
+
+            	$('.passport__close__new').on('click', function () {
+            		$('#new-project-passport').hide();
+
+            	});
+            });
+
             $('.region-profile-button').on('click', function () {
 
             	var regionId = $('#regions').val();
