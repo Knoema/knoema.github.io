@@ -1,19 +1,6 @@
 ﻿/// <reference path="typings/jquery.d.ts"/>
 /// <reference path="typings/google.maps.d.ts"/>
 
-var access_token = "";
-
-$(function () {
-	/* Authentication via access token  */
-	var params = Knoema.Helpers.parseHashParams();
-	if (params == null)
-		Knoema.Helpers.getAccessToken('Ysyd9Tw', window.location, false, 'read_resources');
-	else {
-		if (params["access_token"] != undefined)
-			access_token = params["access_token"];
-	}
-});
-
 var Infrastructure;
 (function (Infrastructure) {
 	var host = 'http://pspp.knoema.com/';

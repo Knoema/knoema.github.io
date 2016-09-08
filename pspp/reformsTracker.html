@@ -1,0 +1,142 @@
+﻿<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>Plateforme De Suivi Des Politiques Publiques</title>
+    <link rel='stylesheet' type='text/css' href='https://fonts.googleapis.com/css?family=Roboto:100,400,700'>
+    <link rel='stylesheet' type='text/css' href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,700'>
+	<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.7.3/css/bootstrap-select.min.css"/>
+	<link rel="stylesheet" type="text/css" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+	<link rel="stylesheet" type="text/css" href="app.css"/>	
+</head>
+<body class="loading">
+	<div class="main-menu">
+		<a href="index.html"><div class="logo">Plateforme de suivi des politiques publiques</div></a>
+		<ul class="items nav nav-tabs" role="tablist">
+    		<li>
+    			<a href="index.html" class="s1" data-toggle="tab">
+					<img src="./img/icons-banner-01.png" />
+    			</a>
+    		</li>
+    		<li>
+				<a href="overview.html" class="s1" data-toggle="tab" title="Aperçu Global du Pays">
+					<img src="./img/icons-banner-02.png" />
+					<!--Aperçu Global du Pays-->
+				</a>
+			</li>
+			<li class="active">
+				<a href="reformsTracker.html" class="s3" data-toggle="tab" title="Traqueur des Réformes Nationales">
+					<img src="./img/icons-banner-03.png" />
+					Traqueur des Réformes Nationales
+				</a>
+			</li>
+			<li>
+				<a href="sectorMonitor.html" class="s1"  data-toggle="tab" title="Principaux Indicateurs de Suivi">
+					<img src="./img/icons-banner-04.png" />
+					<!--Principaux Indicateurs de Suivi-->
+				</a>
+			</li>
+			<li>
+				<a href="globalStanding.html" class="s1"  data-toggle="tab" title="Notoriété Internationale">
+					<img src="./img/icons-banner-05.png" />
+					<!--Notoriété Internationale-->
+				</a>
+			</li>
+			<li>
+				<a href="sdg.html" class="s1"  data-toggle="tab" title="Suivi des Objectifs de Développent Durable">
+					<img src="./img/icons-banner-06.png" />
+					<!--Suivi des Objectifs de Développent Durable-->
+				</a>
+			</li>
+		</ul>
+	</div>
+
+	<div class="tab-content reforms">
+		<div class="reforms-container">
+			<ul>
+				<li class="active"><img src="./img/icons-nr-total.png" /><h2>Total:</h2><span id="count-total">53</span></li>
+				<li><img src="./img/icons-nr-delayed.png" /><h2>Delayed:</h2><span id="count-delayed">12</span></li>
+				<li><img src="./img/icons-nr-ongoing.png" /><h2>Ongoing:</h2><span id="count-ongoing">14</span></li>
+				<li><img src="./img/icons-nr-completed.png" /><h2>Completed:</h2><span id="count-completed">27</span></li>
+			</ul>
+
+			<div class="reforms-table">
+				<div class="left-part">
+					<table>
+						<thead>
+							<tr>
+								<th style="width: 60%">Titre</th>
+								<th style="width: 40%">Deadline</th>
+							</tr>
+						</thead>
+						<tbody>
+						</tbody>
+					</table>
+				</div>
+
+				<div class="right-part">
+					<div class="title">Adoption de la loi d'orientation sur les zes</div>
+
+					<table class="general-info">
+						<tbody>
+							<tr>
+								<td style="width: 15%" class="caption">Titre:</td>
+								<td></td>
+							</tr>
+							<tr>
+								<td class="caption">Deadline:</td>
+								<td></td>
+							</tr>
+							<tr>
+								<td class="caption">Categorie des reformes:</td>
+								<td></td>
+							</tr>
+							<tr>
+								<td class="caption">Type:</td>
+								<td></td>
+							</tr>
+						</tbody>
+					</table>
+
+					<table class="table">
+						<thead>
+							<tr>
+								<th style="width: 40%;">Periode d'Execution:</th>
+								<th style="width: 20%;">Preparation</th>
+								<th style="width: 20%;">Technical</th>
+								<th style="width: 20%;">Political</th>
+							</tr>
+						</thead>
+					</table>
+				</div>
+			</div>
+		</div>
+    </div>
+
+	<div id="footer">
+		<div><a href="http://www.presidence.sn" target="_blank">Le Bureau du President</a></div>
+	</div>
+
+	<script id="reforms-table" type="text/x-handlebars-template">
+
+	</script>
+
+	<script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
+	<!--<script src="http://pspp.knoema.com/app-script?version=2.0" type="text/javascript" ></script>
+	<script src="Scripts/auth.js"></script>-->
+	<script src="Scripts/reforms.js"></script>
+	<script>
+		(function () {
+			$('.more-item').on('click', function (e) {
+
+				$('.more-menu-items').toggleClass('show');
+
+				e.stopPropagation();
+				return false;
+			});
+		})()
+	</script>
+</body>
+</html>

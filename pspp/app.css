@@ -1671,6 +1671,115 @@ ul.subtopic-content li a
 }
 /*end: sector monitor*/
 
+/*reforms: start*/
+.tab-content.reforms
+{
+	background-color: #e5d9b8;
+}
+.reforms-container
+{
+	font-family: 'Roboto', serif;
+	width: 1212px;
+	margin: 0 auto;
+}
+.reforms-container ul
+{
+	margin: 0;
+	padding: 0;
+}
+.reforms-container ul li
+{
+	text-transform: uppercase;
+	list-style-type: none;
+	display: inline-block;
+	margin: 10px 10px;
+	padding: 10px 20px;
+	border: 1px solid #9b7c4f;
+	width: 280px;
+	background-color: #f4ece1;
+	cursor: pointer;
+}
+.reforms-container ul li img
+{
+	float: left;
+	margin-right: 10px;
+}
+.reforms-container ul li h2
+{
+	margin-top: 15px;
+	display: inline-block;
+	font-size: 14pt;
+	color: #472001;
+}
+.reforms-container ul li span
+{
+	float: right;
+	margin-top: -10px;
+	font-size: 34pt;
+	color: #472001;
+}
+.reforms-container ul li.active
+{
+	border-bottom: none;
+	padding-bottom: 35px;
+}
+
+.reforms-table
+{
+	margin: -11px 10px 0px 10px;
+	padding: 20px;
+	border: 1px solid #9b7c4f;
+	background-color: #f2ebe0;
+}
+.reforms-table .left-part
+{
+	display:inline-block;
+	width: 49%;
+}
+.reforms-table .right-part
+{
+	display:inline-block;
+	width: 48%;
+	margin-left: 20px;
+	vertical-align: top;
+}
+.reforms-table .left-part table
+{
+	width: 100%;
+	background-color: #f9f7f3;
+	font-size: 14pt;
+}
+.reforms-table .left-part table thead
+{
+	background-color: #472001;
+	color: #f4ece1;
+	text-transform: uppercase;
+}
+.reforms-table .left-part table thead th
+{
+	padding: 3px 10px;
+	font-weight: normal;
+}
+
+.reforms-table .right-part .title
+{
+	background-color: #472001;
+	color: #f4ece1;
+	text-transform: uppercase;
+	font-size: 14pt;
+	padding: 3px 10px;
+
+}
+.reforms-table .right-part table
+{
+	width: 100%;
+}
+.reforms-table .right-part table.general-info td.caption
+{
+	color: #9b7c4f;
+}
+/*reforms: end*/
+
 /*sdg: start*/
 #sdg #tile-page .tiles .tile,
 #sdg-editor #tile-page .tiles .tile {

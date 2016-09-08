@@ -1,3 +1,5 @@
+/// <reference path="typings/jquery.d.ts"/>
+
 $(function () {
 	var host = 'http://senegal.opendataforafrica.org';
 
