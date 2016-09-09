@@ -1407,14 +1407,13 @@ p.value
 
 .map-tooltip .data-block label
 {
-	color: #000;
+	color: #9b7c4f;
 	margin: 0;
 	float: left;
 }
 .map-tooltip .data-block div
 {
 	padding: 3px 10px 3px 15px;
-	text-align: right;
 }
 
 .map-tooltip .data-block .red
@@ -1425,6 +1424,20 @@ p.value
 .map-tooltip .data-block .odd
 {
 	background-color: #F8F8F8;
+}
+
+.map-tooltip .opp-button
+{
+	background-color: #472001;
+	text-transform: uppercase;
+	font-weight: bold;
+	padding: 8px 14px;
+	text-decoration: none;
+	color: #f4ece1;
+	font-size: 11pt;
+	display: block;
+	margin-left: 140px;
+	width: 220px;
 }
 
 .map-tooltip .data-block h3
