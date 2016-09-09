@@ -3,7 +3,7 @@
 
 var Infrastructure;
 (function (Infrastructure) {
-	//var host = 'http://pspp.knoema.com/';
+	//var host = 'http://pspp.knoema.com';
 	var host = 'https://beta.knoema.org';
 
 	var projectsDataset = 'hoxuwvc';
@@ -20,6 +20,10 @@ var Infrastructure;
 	var databaseCodeIndex_O = -1;
 	var latIndex = -1;
 	var lngIndex = -1;
+	var regionIdIndex = -1;
+	var nameIndex = -1;
+	var ppIndex = -1;
+	var statusIndex = -1;
 
     var PPNameToObjectType = {
     	"100-150 aggregation projects focused on livestock and high value added agriculture sectors": ["Farms"],
@@ -179,14 +183,12 @@ var Infrastructure;
             	for (var i = 0; i < _this.projectColumns.length; i++) {
 
             		var name = _this.projectColumns[i].name;
-            		if (name == 'Projet/Reforme')
-            			_this.objectTypeIndex = i;
-
-            		if (name == 'Database Code')
-            			_this.databaseCodeIndex = i;
-
-            		if (name == 'Code de l\'axe stratégique de la vision 2035')
-            			_this.pseIndex = i;
+            		if (name == 'Projet/Reforme') _this.objectTypeIndex = i;
+            		if (name == 'Database Code') _this.databaseCodeIndex = i;
+            		if (name == 'Code de l\'axe stratégique de la vision 2035') _this.pseIndex = i;
+            		if (name == 'Nom Projet') _this.nameIndex = i;
+            		if (name == 'Numéro du projet phare / numéro de la réforme phare') _this.ppIndex = i;
+            		if (name == 'Statut') _this.statusIndex = i;
             	}
 
             	_this.objectData = objectData[0].data;
@@ -195,18 +197,16 @@ var Infrastructure;
             	for (var i = 0; i < _this.objectColumns.length; i++) {
 
             		var name = _this.objectColumns[i].name;
-            		if (name == 'Database Code')
-            			_this.databaseCodeIndex_O = i;
-
-            		if (name == 'Latitude')
-            			_this.latIndex = i;
-
-            		if (name == 'Longitude')
-            			_this.lngIndex = i;
+            		if (name == 'Database Code') _this.databaseCodeIndex_O = i;
+            		if (name == 'Latitude') _this.latIndex = i;
+            		if (name == 'Longitude') _this.lngIndex = i;
+            		if (name == 'RegionId') _this.regionIdIndex = i;
             	}
 
             	if ($(document.body).hasClass('loading'))
             		$(document.body).removeClass('loading');
+
+            	$('#overviewFilter').trigger('change');
             });
 
             $('a[data-toggle="tab"]').on('click', function () {
@@ -249,9 +249,10 @@ var Infrastructure;
             function showRegion() {
 
             	var regionId = $('#regions').val();
+            	var $rhp = $('#right-hand-panel');
 
-            	$('input[name="Layer"]').filter('[value="none"]').trigger('click');
-            	$("div#legend").hide();
+            	//$('input[name="Layer"]').filter('[value="none"]').trigger('click');
+            	//$("div#legend").hide();
 
             	if (regionId == -1) {
             		_this.hasGeoJson = false;
@@ -266,6 +267,8 @@ var Infrastructure;
 
             			return { visible: false };
             		});
+
+            		$rhp.hide();
 
             		return;
             	}
@@ -292,8 +295,61 @@ var Infrastructure;
             	});
             	_this.map.setCenter(RegionsCenters[regionId]);
             	_this.map.setZoom(RegionsZoom[regionId]);
+
+            	$rhp.find('.region-name').text($('#regions option[value=' + regionId + ']').text());
+
+            	var projects = getProjectByRegion(regionId);
+            	var $trs = [];
+            	if (projects.length > 0) {
+            		for (var i = 0; i < projects.length; i++) {
+            			$trs.push($('<tr>')
+							.append($('<td>', { text: projects[i].pp }))
+							.append($('<td>', { text: projects[i].name }))
+							.append($('<td>', { text: projects[i].status }))
+						);
+            		}
+
+            		$rhp.find('tbody').empty().append($trs)
+            	}
+
+            	$rhp.show();
             };
 
+            function getProjectByRegion(regionId) {
+
+            	var res = [];
+            	var dbCodes = [];
+            	for (var i = 0; i < _this.objectData.length / _this.objectColumns.length; i++) {
+
+            		var offset = i * _this.objectColumns.length;
+            		var dbcode = _this.objectData[offset + _this.databaseCodeIndex_O];
+
+					if($.inArray(dbcode, dbCodes) == -1)
+            			dbCodes.push(dbcode);
+            	}
+
+            	for (var i = 0; i < _this.projectData.length / _this.projectColumns.length; i++) {
+
+            		var offset = i * _this.projectColumns.length;
+            		var dbcode = _this.projectData[offset + _this.databaseCodeIndex];
+
+            		//only for projects
+            		if (_this.projectData[offset + _this.objectTypeIndex] != 'P')
+            			continue;
+
+            		if ($.inArray(dbcode, dbCodes) == -1)
+            			continue;
+
+            		res.push({
+            			pp: _this.projectData[offset + _this.ppIndex],
+            			name: _this.projectData[offset + _this.nameIndex],
+						status: _this.projectData[offset + _this.statusIndex]
+            		});
+            	}
+
+            	return res;
+            };
+            
             // Request dataset and show on the map
             var $overviewFilter = $('#overviewFilter').on('change', function (event) {
             	clearTimeout(_this.filterTimeout);
@@ -327,13 +383,20 @@ var Infrastructure;
             				case 'pse':
             					if ($.inArray(_this.projectData[offset + _this.pseIndex], params[j]) == -1)
             						addObject = false;
+            					break;
 
+            				case 'status':
+            					if ($.inArray(_this.projectData[offset + _this.statusIndex], params[j]) == -1)
+            						addObject = false;
             					break;
             			}
 
             			if (!addObject)
             				break;
             		}
+
+            		if (selectedPPName.length > 0 && $.inArray(_this.projectData[offset + _this.ppIndex], selectedPPName) == -1)
+            			addObject = false;
 
             		if (addObject) {
             			var tooltipData = {};
@@ -642,12 +705,13 @@ var Infrastructure;
         			'DimensionId': 'region',
         			'DimensionName': 'Region',
         			'DatasetId': objectsDataset,
-        			'Members': ['1000000', '1000010', '1000020', '1000030', '1000040', '1000050', '1000060', '1000070', '1000080', '1000090', '1000100', '1000110', '1000120', '1000130']
+        			'Members': ['1000000', '1000010', '1000020', '1000030', '1000040', '1000050', '1000060', '1000070', '1000080', '1000090', '1000100', '1000110', '1000120', '1000130', '1000140']
         		}],
         		'Frequencies': [],
         		'Dataset': objectsDataset,
         		'Segments': null,
-        		'MeasureAggregations': null
+        		'MeasureAggregations': null,
+        		'RegionIdsRequired': true
         	};
 
             return $.post(url, data);
@@ -663,7 +727,7 @@ var Infrastructure;
         			'DimensionId': 'measure',
         			'DimensionName': 'Measure',
         			'DatasetId': projectsDataset,
-        			'Members': ['5650810', '5650820', '5650830']
+        			'Members': ['5679690', '5679700', '5679710']
         		}],
         		'Frequencies': [],
         		'Dataset': projectsDataset,
