@@ -3,11 +3,11 @@
 
 var Infrastructure;
 (function (Infrastructure) {
-	//var host = 'http://pspp.knoema.com';
-	var host = 'https://beta.knoema.org';
+	var host = 'http://pspp.knoema.com';
+	//var host = 'https://beta.knoema.org';
 
-	var projectsDataset = 'hoxuwvc';
-	var objectsDataset = 'nzhflae';
+	var projectsDataset = 'sardyld';
+	var objectsDataset = 'hpenvhf';
 
 	var projectData = [];
 	var projectColumns = [];
@@ -24,6 +24,7 @@ var Infrastructure;
 	var nameIndex = -1;
 	var ppIndex = -1;
 	var statusIndex = -1;
+	var ptipIndex = -1;
 
     var PPNameToObjectType = {
     	"100-150 aggregation projects focused on livestock and high value added agriculture sectors": ["Farms"],
@@ -189,6 +190,7 @@ var Infrastructure;
             		if (name == 'Nom Projet') _this.nameIndex = i;
             		if (name == 'Numéro du projet phare / numéro de la réforme phare') _this.ppIndex = i;
             		if (name == 'Statut') _this.statusIndex = i;
+            		if (name == 'Code PTIP') _this.ptipIndex = i;
             	}
 
             	_this.objectData = objectData[0].data;
@@ -323,6 +325,9 @@ var Infrastructure;
 
             		var offset = i * _this.objectColumns.length;
             		var dbcode = _this.objectData[offset + _this.databaseCodeIndex_O];
+					
+            		if (regionId != _this.objectData[offset + _this.regionIdIndex])
+            			continue;
 
 					if($.inArray(dbcode, dbCodes) == -1)
             			dbCodes.push(dbcode);
@@ -389,6 +394,13 @@ var Infrastructure;
             					if ($.inArray(_this.projectData[offset + _this.statusIndex], params[j]) == -1)
             						addObject = false;
             					break;
+
+            				case 'plan':
+            					var ptipValue = _this.projectData[offset + _this.ptipIndex] == '' ? 'no' : 'yes';
+
+            					if (ptipValue != params[j])
+            						addObject = false;
+            					break;
             			}
 
             			if (!addObject)
@@ -401,10 +413,11 @@ var Infrastructure;
             		if (addObject) {
             			var tooltipData = {};
             			tooltipData[_this.projectColumns[2].name] = _this.projectData[offset + 2];
+            			tooltipData[_this.projectColumns[9].name] = _this.projectData[offset + 9];
+            			tooltipData[_this.projectColumns[10].name] = _this.projectData[offset + 10];
             			tooltipData[_this.projectColumns[3].name] = _this.projectData[offset + 3];
             			tooltipData[_this.projectColumns[14].name] = _this.projectData[offset + 14];
-            			tooltipData[_this.projectColumns[15].name] = _this.projectData[offset + 15];
-            			tooltipData[_this.projectColumns[16].name] = _this.projectData[offset + 16];
+            			tooltipData[_this.projectColumns[40].name] = _this.projectData[offset + 40];
 
             			filtredProjects[_this.projectData[offset + _this.databaseCodeIndex]] = tooltipData;
             		}
@@ -628,7 +641,7 @@ var Infrastructure;
 
         		html += '</div>';
 
-        		html += '<a href="#" data-data="' + JSON.stringify(tooltipData) + '" class="opp-button" >Open project passport</a>';
+        		html += '<a href="#" data-data="' + encodeURI(JSON.stringify(tooltipData)) + '" class="opp-button">Open project passport</a>';
 
         		html += '</div>';
 
@@ -636,10 +649,21 @@ var Infrastructure;
         		self.infoWindow.open(self.map);
 
         		$('.opp-button').on('click', function () {
+        			var objData = decodeURI($(this).data('data'));
+        			objData = JSON.parse(objData);
+        			var templateData = {
+        				name: objData["Nom Projet"],
+        				budget: objData["Budget Total Prévu: Dépenses réalisées"],
+        				axe: objData["Code de l'axe stratégique de la vision 2035"],
+        				sour: objData["Code du Sous-Secteur"],
+        				number: objData["Numéro du projet phare / numéro de la réforme phare"],
+        				status: objData["Statut"]
+        			};
+
         			var template = doT.template($('#new-object-passport').html());
         			var template_b = doT.template($('#new-object-budgetting').html());
 
-        			$('#new-project-passport .passport__content__new').empty().html(template({}));
+        			$('#new-project-passport .passport__content__new').empty().html(template(templateData));
         			$('#new-project-passport .passport__content__new__b').empty().html(template_b({}));
         			$('#new-project-passport').show();
 
@@ -663,7 +687,7 @@ var Infrastructure;
 
         			});
 
-        			self.infoWindow.hide();
+        			self.infoWindow.close();
 
         			return false;
         		});

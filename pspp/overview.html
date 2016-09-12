@@ -99,8 +99,8 @@
 				<button id="ppp-select-button">Choisir</button>
 
 				<h2 class="left-menu">Ptip "PLAN D'INVESTISSEMENT DE TROIS ANS":</h2>
-				<label><input type="radio" name="plan" value="TRUE" checked disabled />Oui</label>
-				<label><input type="radio" name="plan" value="FALSE" disabled />Non</label>
+				<label><input type="radio" name="plan" value="yes" />Oui</label>
+				<label><input type="radio" name="plan" value="no" checked />Non</label>
 
 				<h2 class="left-menu">Budget de depenses</h2>
 				<input type="text" name="budget-min" id="budget-min" class="budget-input" value="0" />
@@ -412,15 +412,15 @@
 			<table style="width: 100%">
 				<tbody>
 					<tr>
-						<td style="width: 20%"><p class="title">Nom Project</p><p class="value">Nom Project</p></td>
-						<td style="width: 20%"><p class="title">Status</p><p class="value">Status</p></td>
-						<td style="width: 30%"><p class="title">Code de l'axe strategegique de la Vision 2015</p><p class="value">Code de l'axe strategegique</p></td>
-						<td style="width: 30%"><p class="title">Plan Senegal Emergent (oui, non, titre project)</p><p class="value">Plan Senegal Emergent</p></td>
+						<td style="width: 20%"><p class="title">Nom Projet</p><p class="value">{{=it.name}}</p></td>
+						<td style="width: 20%"><p class="title">Statut</p><p class="value">{{=it.status}}</p></td>
+						<td style="width: 30%"><p class="title">Code de l'axe stratégique de la vision 2035</p><p class="value">{{=it.axe}}</p></td>
+						<td style="width: 30%"><p class="title">Numéro du projet phare / numéro de la réforme phare</p><p class="value">{{=it.number}}</p></td>
 					</tr>
 					<tr>
-						<td><p class="title">Localite</p><p class="value">Localite</p></td>
-						<td><p class="title">Budget total prevue</p><p class="value">Budget total prevue</p></td>
-						<td><p class="title">Sour secteur</p><p class="value">Sour secteur</p></td>
+						<td><p class="title">Budget Total Prévu: Dépenses réalisées</p><p class="value">{{=it.budget}}</p></td>
+						<td><p class="title">Code du Sous-Secteur</p><p class="value">{{=it.sour}}</p></td>
+						<td></td>
 						<td></td>
 					</tr>
 				</tbody>
@@ -573,10 +573,10 @@
 	<script src="http://code.jquery.com/ui/1.11.4/jquery-ui.min.js" type="text/javascript"></script>
 	<script src="http://code.highcharts.com/highcharts.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.9.4/js/bootstrap-select.min.js"></script>
-	<!--<script src="http://pspp.knoema.com/app-script?version=2.0" type="text/javascript" ></script>-->
+	<script src="http://pspp.knoema.com/app-script?version=2.0" type="text/javascript" ></script>
 	<script src="Scripts/marketwithlabel.js"></script>
 	<script src="Scripts/doT.min.js"></script>
-	<!--<script src="Scripts/auth.js"></script>-->
+	<script src="Scripts/auth.js"></script>
 	<script src="Scripts/app.js"></script>
 </body>
 </html>
