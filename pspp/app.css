@@ -2462,3 +2462,18 @@ ul.subtopic-content li a
 	color: #fff;
 }
 /*portfolio: end*/
+
+.tab-content.gstand
+{
+	overflow-y: scroll;
+}
+.tab-content.gstand h1
+{
+	display: block;
+	width: 910px;
+	margin: 10px auto 10px;
+	background-color: #9e7f53;
+	font-size: 16pt;
+	color: #fff;
+	padding: 10px 20px;
+}
