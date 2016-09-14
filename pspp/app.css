@@ -21,7 +21,7 @@ body.landing
 	left:0;
 	margin: 0 auto;
 	height: 800px;
-	width: 850px;
+	width: 1000px;
 	font-family: 'Roboto', serif;
 	color: #fff;
 	text-align:center;
@@ -2377,3 +2377,88 @@ ul.subtopic-content li a
 	background-color: #14496B;
 }
 /*sdg: end*/
+
+/*portfolio: start*/
+.tab-content.portfolio
+{
+	background-color: #f4ece1;
+}
+
+.tab-content.portfolio h1
+{
+	margin: 15px 25px;
+	font-size: 14pt;
+	color: #472001;
+	text-transform: uppercase;
+	background-color: #f4ece1;
+}
+
+.icon-contianer
+{
+	margin: 10px 20px;
+}
+
+.icon-contianer .icon-item
+{
+	color: #fff;
+	display: inline-block;
+	background-color: #9e7f53;
+	text-align: center;
+	padding: 15px 10px 0 10px;
+	margin: 5px;
+	cursor: pointer;
+}
+
+.icon-contianer .icon-item img
+{
+	display: block;
+	margin-top: 10px;
+}
+
+.icon-contianer .icon-item.active
+{
+	background-color: #472001;
+}
+
+.content-container
+{
+	border-top: 1px solid #e0d2bf;
+	margin: -19px 20px;
+	padding: 20px 5px;
+
+}
+.content-container .left-part
+{
+	display: inline-block;
+	width: 300px;
+}
+.content-container .right-part
+{
+	margin-left: 100px;
+	display: inline-block;
+	vertical-align: top;
+}
+.content-container h2
+{
+	font-size: 12pt;
+	font-weight: bold;
+	margin-top: 0px;
+}
+
+.content-container ul
+{
+	margin: 0;
+	padding: 0;
+}
+.content-container ul li
+{
+	list-style-type: none;
+	padding: 3px 10px;
+	color: #472001;
+}
+.content-container ul li.active
+{
+	background-color: #472001;
+	color: #fff;
+}
+/*portfolio: end*/
