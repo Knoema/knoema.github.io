@@ -1801,9 +1801,21 @@ ul.subtopic-content li a
 {
 	padding: 3px 10px;
 }
+.reforms-table .left-part table tbody tr
+{
+	cursor: pointer;
+}
+.reforms-table .left-part table tbody tr.active
+{
+	background-color: #f2ebe0 !important;
+}
+.reforms-table .left-part table tbody tr td img.arrow-icon
+{
+	display: none;
+}
 .reforms-table .left-part table tbody tr:nth-child(2n)
 {
-	background-color: #f5efe5;
+	background-color: #fbf6ed;
 }
 .reforms-table .right-part .title
 {
@@ -1817,6 +1829,11 @@ ul.subtopic-content li a
 .reforms-table .right-part table
 {
 	width: 100%;
+	margin-top: 20px;
+}
+.reforms-table .right-part table.general-info td
+{
+	padding: 3px 5px;
 }
 .reforms-table .right-part table.general-info td.caption
 {
@@ -2455,6 +2472,7 @@ ul.subtopic-content li a
 	list-style-type: none;
 	padding: 3px 10px;
 	color: #472001;
+	cursor: pointer;
 }
 .content-container ul li.active
 {
