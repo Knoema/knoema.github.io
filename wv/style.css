@@ -1,0 +1,237 @@
+body
+{
+	margin: 0;
+}
+
+.content
+{
+	width: 940px;
+	margin: 50px auto;
+	text-align: center;
+	font-family: Roboto;
+	color: #333;
+}
+
+.start-screen
+{
+}
+.start-button
+{
+	padding: 20px 50px;
+	text-transform: uppercase;
+	background-color: #54d658;
+	width: 150px;
+	margin: 50px auto;
+	font-size: 20pt;
+	font-weight: bold;
+	cursor: pointer;
+	color: #fff;
+}
+.main-screen
+{
+	display:none;
+}
+.finish-screen
+{
+	display: none;
+}
+
+h1
+{
+	margin: 50px 0;
+}
+
+ul.scale
+{
+	margin: 50px 0;
+	padding: 0;
+	/*position: relative;
+    top: 0;
+    left: 0;*/ 
+}
+
+ul.scale li
+{
+	/*position: relative;
+    top: 0;
+    left: 0;*/ 
+
+	display: inline-block;
+	margin: 10px 15px;
+	list-style-type: none;
+	text-align: center;
+	font-weight: bold;
+	font-size: 16pt;
+	cursor: pointer;
+}
+.circle
+{
+	display: block;
+	border-radius: 50%;
+
+	margin: 16px;
+	height: 80px;
+	width: 80px;
+	background-color: #d9d9d9;
+}
+.circle:hover
+{
+	margin: 14px;
+}
+
+.circle.family:hover
+{
+	border: 2px solid #e01e5a;
+}
+.circle.family.selected
+{
+	background-color: #e01e5a;
+}
+
+.circle.work:hover
+{
+	border: 2px solid #c06f32;
+}
+.circle.work.selected
+{
+	background-color: #c06f32;
+}
+
+.circle.friends:hover
+{
+	border: 2px solid #5329bd;
+}
+.circle.friends.selected
+{
+	background-color: #5329bd;
+}
+
+.circle.leisure:hover
+{
+	border: 2px solid #22b45a;
+}
+.circle.leisure.selected
+{
+	background-color: #22b45a;
+}
+
+.circle.religion:hover
+{
+	border: 2px solid #cbcb05;
+}
+.circle.religion.selected
+{
+	background-color: #cbcb05;
+}
+
+.circle.politics:hover
+{
+	border: 2px solid #2fa0d9;
+}
+.circle.politics.selected
+{
+	background-color: #2fa0d9;
+}
+
+.circle.selected.n0
+{
+	margin: 1px;
+	height: 110px;
+	width: 110px;
+}
+.circle.selected.n1
+{
+	margin: 6px;
+	height: 100px;
+	width: 100px;
+}
+.circle.selected.n2
+{
+	margin: 11px;
+	height: 90px;
+	width: 90px;
+}
+.circle.selected.n3
+{
+	margin: 16px;
+	height: 80px;
+	width: 80px;
+}
+.circle.selected.n4
+{
+	margin: 21px;
+	height: 70px;
+	width: 70px;
+}
+.circle.selected.n5
+{
+	margin: 26px;
+	height: 60px;
+	width: 60px;
+}
+.circle.selected.n0:hover, .circle.selected.n1:hover, .circle.selected.n2:hover, .circle.selected.n3:hover,.circle.selected.n4:hover, .circle.selected.n5:hover
+{
+	border: 0 !important;
+}
+
+.number
+{
+	font-weight: bold;
+}
+
+.percent
+{
+	height: 150px;
+	width: 250px;
+	margin: 20px auto;
+}
+
+
+ul.same-countries
+{
+	margin: 10px 0;
+	padding: 0;
+}
+
+ul.same-countries li
+{
+	display: inline-block;
+	margin: 10px 15px;
+	list-style-type: none;
+	text-align: center;
+}
+
+ul.same-countries li img
+{
+	height: 45px;
+	width: 70px;
+	border: 1px solid #f0f0f0;
+    opacity: 0.8;
+	display: block;
+}
+
+.share
+{
+	width: 450px;
+	margin: 20px auto;
+}
+.share .share-button
+{
+	padding: 10px;
+    border-radius: 2px;
+	color: #fff;
+	text-decoration: none;
+}
+
+.share-button.facebook
+{
+	background-color: #3c5999;
+}
+.share-button.twitter
+{
+	background-color: #00abec;
+}
+.share-button.gplus
+{
+	background-color: #dd4b39;
+}

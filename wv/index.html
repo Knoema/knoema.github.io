@@ -1,0 +1,80 @@
+<html>
+	<head>
+		<title>Which Countries Best Fit Your Values?</title>
+		<link rel='stylesheet' type='text/css' href='https://fonts.googleapis.com/css?family=Roboto'>
+		<link rel="stylesheet" type="text/css" href="style.css"/>
+	</head>
+	<body>
+		<div class="content">
+
+			<h1>Which Countries Best Fit Your Values?</h1>
+
+			<div class="start-screen">
+				<p>There are six core values of people around the world...</p>
+
+				<div class="scale-container">
+					<ul class="scale">
+						<li data-value="Family"><div class="circle family selected"></div>Family</li>
+						<li data-value="Work" ><div class="circle work selected"></div>Work</li>
+						<li data-value="Friends"><div class="circle friends selected"></div>Friends</li>
+						<li data-value="Leisure time"><div class="circle leisure selected"></div>Leisure</li>
+						<li data-value="Religion"><div class="circle religion selected"></div>Religion</li>
+						<li data-value="Politics"><div class="circle politics selected"></div>Politics</li>
+					</ul>
+				</div>
+
+				<p>The relative importance of those values vary from country to country...</p>
+				<p>Find out where in the world people do have similar values to yours. It takes just a minute!</p>
+
+				<div class="start-button">start</div>
+			</div>
+
+			<div class="main-screen">
+				<p>What is the most important thing in your life?</p>
+
+				<div class="scale-container">
+					<ul class="scale">
+						<li data-value="Family"><div class="circle family"></div>Family</li>
+						<li data-value="Work" ><div class="circle work"></div>Work</li>
+						<li data-value="Friends"><div class="circle friends"></div>Friends</li>
+						<li data-value="Leisure time"><div class="circle leisure"></div>Leisure</li>
+						<li data-value="Religion"><div class="circle religion"></div>Religion</li>
+						<li data-value="Politics"><div class="circle politics"></div>Politics</li>
+					</ul>
+				</div>
+			</div>
+
+			<div class="finish-screen">
+				<p>Here is your ranking of six values</p>
+
+				<div class="scale-container"></div>
+
+				<div class="population-part">
+					<p>Your values are similar to the values of <span class="number"></span> million people around the world</p>
+				
+					<div class="percent"></div>
+
+					<p>People in the following countries have the same values as you are</p>
+					<ul class="same-countries"></ul>
+				</div>
+
+				<p>Here is your values profile graphics</p>
+				<img src="./share-content.png"/>
+
+				<div class="share">
+					<p>Share it on Facebook, Twitter</p>
+				
+					<a class="share-button facebook" data-channel="facebook" data-url="https://knoema.com/cheatsheet/energy" href="#">Share on Facebook</a>
+					<a class="share-button twitter" data-channel="twitter" data-text="Key statistics on %23energy in the convenient cheat sheet from @knoema. Check it out!" data-url="https://knoema.com/cheatsheet/energy" href="#">Share on Twitter</a>
+					<a class="share-button gplus" data-channel="gplus" data-url="https://knoema.com/cheatsheet/energy" href="#">Share on Google+</a>
+				</div>
+			</div>
+
+			
+		</div>
+
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+		<script src="http://code.highcharts.com/highcharts.js"></script>
+		<script src="script.js"></script>
+	</body>
+</html>
