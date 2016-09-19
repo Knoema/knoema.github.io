@@ -1,8 +1,93 @@
-(function () {
+var app = (function () {
+
 	var numberOfClick = 0;
 	var values = '';
 
-	var handler = function (context) {
+	function app() {
+	};
+
+	app.prototype.run = function () {
+
+		var _this = this;
+		$.when(this.loadData(), this.loadPopulationData()).done(function (pivot, populationPivot) {
+
+			pivot = pivot[0];
+			populationPivot = populationPivot[0];
+
+			$('.start-button').on('click', function () {
+
+				$('.start-screen').hide();
+				$('.main-screen').show();
+
+				$('.main-screen ul.scale li').on('click', function () {
+
+					_this.handler(this);
+
+					if (numberOfClick == 6) {
+						numberOfClick = 0;
+
+						var sameCountries = _this.countriesByValues(pivot.data)[values.replace(' ', '')];
+						var people = _this.getPercentOfPopulation(sameCountries, populationPivot.data);
+
+						if (sameCountries) {
+							var lis = [];
+							for (var i = 0; i < sameCountries.length; i++) {
+								lis.push($('<li>', {
+									text: sameCountries[i].country
+								})
+									.prepend($('<img>', {
+										src: '//cdn.knoema.com/flags/normal/' + sameCountries[i].region.toLowerCase() + '.png'
+									}))
+								);
+							}
+
+							$('.same-countries').append(lis);
+							$('.number').text(people.sum.toFixed(2));
+							_this.pieChart($('.percent'), people.percent);
+
+
+							var node = $('.finish-screen')[0];
+
+							//domtoimage.toPng(node)
+							//	.then(function (dataUrl) {
+							//		var img = new Image();
+							//		img.src = dataUrl;
+							//		$('.share-content').append(img);
+							//	})
+							//	.catch(function (error) {
+							//		console.error('oops, something went wrong!', error);
+							//	});
+							//html2canvas(document.body, {
+							//	proxy: 'http://cdn.knoema.com/flags/normal/',
+							//	useCORS: true,
+							//	timeout: 500,
+							//	onrendered: function (canvas) {
+							//		$('.share-content').append(canvas);
+							//	}
+							//});
+						}
+						else {
+							$('.population-part').empty().append($('<p>', {
+								text: 'You are pretty unique person. Your system of values does not match 24 most popular ones. Let the world know!'
+							}));
+						}
+
+						$('.main-screen').hide();
+
+						var newUl = $('<ul>', { 'class': 'scale' });
+						for (var i = 0; i < 6; i++) {
+							var item = $('.main-screen .circle.n' + i).parent().wrap('<div>').parent().html();
+							newUl.append(item);
+						}
+						$('.finish-screen .scale-container').append($(newUl));
+						$('.finish-screen').show();
+					}
+				});
+			});
+		});
+	};
+
+	app.prototype.handler = function (context) {
 
 		var li = $(context);
 		var circle = li.find('.circle');
@@ -19,7 +104,7 @@
 		}
 	};
 
-	var loadData = function () {
+	app.prototype.loadData = function () {
 
 		var desc = {
 			'Header': [
@@ -93,7 +178,7 @@
 		return $.post('https://knoema.com/api/1.0/data/pivot', desc);
 	};
 
-	var loadPopulationData = function () {
+	app.prototype.loadPopulationData = function () {
 
 		var desc = {
 			'Header': [{
@@ -137,14 +222,14 @@
 		return $.post('https://knoema.com/api/1.0/data/pivot', desc);
 	};
 
-	var countriesByValues = function (pivotData) {
+	app.prototype.countriesByValues = function (pivotData) {
 
 		var tmp = {};
 		var regions = {};
 
 		for (var i = 0; i < pivotData.length; i++) {
 			var tuple = pivotData[i];
-			if(!tmp[tuple['country']])
+			if (!tmp[tuple['country']])
 				tmp[tuple['country']] = [];
 
 			tmp[tuple['country']].push({
@@ -158,17 +243,24 @@
 		var countriesVyValues = {};
 		for (var country in tmp) {
 
-			var countryValues = tmp[country].sort(function (a, b) {
-				var aint = parseInt(a.value, 10);
-				var bint = parseInt(b.value, 10);
+			tmp[country].sort(function (a, b) {
+				var afloat = parseFloat(a.value, 10);
+				var bfloat = parseFloat(b.value, 10);
 
-				return aint > bint ? -1 : 1;
+				if (afloat < bfloat) {
+					return 1;
+				}
+				if (afloat > bfloat) {
+					return -1;
+				}
+				return 0;
 			});
 
 			var values = '';
-			for (var i = 0; i < countryValues.length; i++) {
-				values += countryValues[i].variant;
+			for (var i = 0; i < tmp[country].length; i++) {
+				values += tmp[country][i].variant;
 			}
+			values = values.replace(' ', '');
 
 			if (!countriesVyValues[values])
 				countriesVyValues[values] = [];
@@ -182,7 +274,7 @@
 		return countriesVyValues;
 	};
 
-	var getPercentOfPopulation = function (countries, populationPivotData) {
+	app.prototype.getPercentOfPopulation = function (countries, populationPivotData) {
 
 		var worldPopulation = 0;
 		var summ = 0;
@@ -208,7 +300,7 @@
 		return { sum: 0, percent: 0 };
 	};
 
-	var pieChart = function (container, percent) {
+	app.prototype.pieChart = function (container, percent) {
 		container.highcharts({
 			chart: {
 				plotBackgroundColor: null,
@@ -251,59 +343,11 @@
 		});
 	};
 
-	$.when(loadData(), loadPopulationData()).done(function (pivot, populationPivot) {
+	return app;
+})();
 
-		pivot = pivot[0];
-		populationPivot = populationPivot[0];
 
-		$('.start-button').on('click', function () {
-
-			$('.start-screen').hide();
-			$('.main-screen').show();
-			
-			$('.main-screen ul.scale li').on('click', function () {
-
-				handler(this);
-
-				if (numberOfClick == 6) {
-					numberOfClick = 0;
-
-					var sameCountries = countriesByValues(pivot.data)[values];
-					var people = getPercentOfPopulation(sameCountries, populationPivot.data);
-
-					if (sameCountries) {
-						var lis = [];
-						for (var i = 0; i < sameCountries.length; i++) {
-							lis.push($('<li>', {
-									text: sameCountries[i].country
-								})
-								.prepend($('<img>', {
-									src: '//cdn.knoema.com/flags/normal/' + sameCountries[i].region.toLowerCase() + '.png'
-								}))
-							);
-						}
-
-						$('.same-countries').append(lis);
-						$('.number').text(people.sum.toFixed(2));
-						pieChart($('.percent'), people.percent);
-					}
-					else {
-						$('.population-part').empty().append($('<p>', {
-								text: 'You are pretty unique person. Your system of values does not match 24 most popular ones. Let the world know!'
-							}));
-					}
-
-					$('.main-screen').hide();
-
-					var newUl = $('<ul>', { 'class': 'scale' });
-					for (var i = 0; i < 6; i++) {
-						var item = $('.main-screen .circle.n' + i).parent().wrap('<div>').parent().html();
-						newUl.append(item);
-					}
-					$('.finish-screen .scale-container').append($(newUl));
-					$('.finish-screen').show();
-				}
-			});
-		});
-	});
-})()
+(function () {
+	var app1 = new app();
+	app1.run();
+})();

@@ -1,6 +1,8 @@
 body
 {
 	margin: 0;
+	background: url(bg.jpg) no-repeat;
+	background-size: 100%;
 }
 
 .content
@@ -9,7 +11,7 @@ body
 	margin: 50px auto;
 	text-align: center;
 	font-family: Roboto;
-	color: #333;
+	color: #fff;
 }
 
 .start-screen
@@ -22,7 +24,7 @@ body
 	background-color: #54d658;
 	width: 150px;
 	margin: 50px auto;
-	font-size: 20pt;
+	font-size: 22pt;
 	font-weight: bold;
 	cursor: pointer;
 	color: #fff;
@@ -39,6 +41,20 @@ body
 h1
 {
 	margin: 50px 0;
+	font-size: 36pt;
+}
+
+h2
+{
+	font-size: 17pt;
+	font-weight: normal;
+}
+
+h3
+{
+	font-size: 18pt;
+	font-weight: normal;
+	margin-top: 90px;
 }
 
 ul.scale
@@ -61,7 +77,7 @@ ul.scale li
 	list-style-type: none;
 	text-align: center;
 	font-weight: bold;
-	font-size: 16pt;
+	font-size: 14pt;
 	cursor: pointer;
 }
 .circle
@@ -73,61 +89,35 @@ ul.scale li
 	height: 80px;
 	width: 80px;
 	background-color: #d9d9d9;
-}
-.circle:hover
-{
-	margin: 14px;
+
+	border: 2px solid #fff;
 }
 
-.circle.family:hover
-{
-	border: 2px solid #e01e5a;
-}
 .circle.family.selected
 {
 	background-color: #e01e5a;
 }
 
-.circle.work:hover
-{
-	border: 2px solid #c06f32;
-}
 .circle.work.selected
 {
 	background-color: #c06f32;
 }
 
-.circle.friends:hover
-{
-	border: 2px solid #5329bd;
-}
 .circle.friends.selected
 {
 	background-color: #5329bd;
 }
 
-.circle.leisure:hover
-{
-	border: 2px solid #22b45a;
-}
 .circle.leisure.selected
 {
 	background-color: #22b45a;
 }
 
-.circle.religion:hover
-{
-	border: 2px solid #cbcb05;
-}
 .circle.religion.selected
 {
 	background-color: #cbcb05;
 }
 
-.circle.politics:hover
-{
-	border: 2px solid #2fa0d9;
-}
 .circle.politics.selected
 {
 	background-color: #2fa0d9;
@@ -168,10 +158,6 @@ ul.scale li
 	margin: 26px;
 	height: 60px;
 	width: 60px;
-}
-.circle.selected.n0:hover, .circle.selected.n1:hover, .circle.selected.n2:hover, .circle.selected.n3:hover,.circle.selected.n4:hover, .circle.selected.n5:hover
-{
-	border: 0 !important;
 }
 
 .number
