@@ -2292,10 +2292,7 @@ var Infrastructure;
 			var data = {
 				"Header": [],
 				"Stub": [],
-				"Filter": [{
-					"DimensionId": "measure",
-					"Members": ['4473720']
-				}],
+				"Filter": [],
 				"Frequencies": [],
 				"Dataset": "tybnkwd"
 			};
