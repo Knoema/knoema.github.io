@@ -42,7 +42,7 @@ var app = (function () {
 							}
 
 							$('.same-countries').append(lis);
-							$('.number').text(people.sum.toFixed(2));
+							$('.number').text(people.sum.toFixed(0));
 							_this.pieChart($('.percent'), people.percent);
 
 
@@ -67,8 +67,9 @@ var app = (function () {
 							//});
 						}
 						else {
-							$('.population-part').empty().append($('<p>', {
-								text: 'You are pretty unique person. Your system of values does not match 24 most popular ones. Let the world know!'
+							$('.population-part').empty().append($('<h2>', {
+								text: 'Your responses are unique. Your ranking of these global values does not match the 24 most common rankings.',
+								style: 'width: 600px; margin: 0 auto;'
 							}));
 						}
 
@@ -302,11 +303,13 @@ var app = (function () {
 
 	app.prototype.pieChart = function (container, percent) {
 		container.highcharts({
+			credits: { enabled: false },
 			chart: {
 				plotBackgroundColor: null,
 				plotBorderWidth: null,
 				plotShadow: false,
-				type: 'pie'
+				type: 'pie',
+				backgroundColor: 'rgba(0,0,0,0)'
 			},
 			title: {
 				text: null
@@ -323,7 +326,8 @@ var app = (function () {
 						format: '{point.percentage:.1f} %',
 						style: {
 							color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
-						}
+						},
+						backgroundColor: '#fff'
 					}
 				}
 			},

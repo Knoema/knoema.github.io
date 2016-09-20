@@ -2,7 +2,7 @@ body
 {
 	margin: 0;
 	background: url(bg.jpg) no-repeat;
-	background-size: 100%;
+	background-size: cover;
 }
 
 .content
@@ -28,6 +28,7 @@ body
 	font-weight: bold;
 	cursor: pointer;
 	color: #fff;
+	border-radius: 5px;
 }
 .main-screen
 {
@@ -46,7 +47,7 @@ h1
 
 h2
 {
-	font-size: 17pt;
+	font-size: 15pt;
 	font-weight: normal;
 }
 
@@ -163,6 +164,7 @@ ul.scale li
 .number
 {
 	font-weight: bold;
+	font-size: 17pt;
 }
 
 .percent
@@ -196,17 +198,13 @@ ul.same-countries li img
 	display: block;
 }
 
-.share
+.share-button
 {
-	width: 450px;
-	margin: 20px auto;
-}
-.share .share-button
-{
-	padding: 10px;
+	padding: 10px 20px;
     border-radius: 2px;
 	color: #fff;
 	text-decoration: none;
+	margin: 0 10px;
 }
 
 .share-button.facebook
@@ -220,4 +218,8 @@ ul.same-countries li img
 .share-button.gplus
 {
 	background-color: #dd4b39;
+}
+.share-caption
+{
+	margin: 40px 0 30px 0;
 }
