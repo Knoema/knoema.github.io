@@ -406,14 +406,14 @@ var Infrastructure;
 					this.showLegend('density');
 
 					if (window.AppMapData[indicator]) {
-						self.addObjectsToDataLayer(self.map, window.AppMapData[indicator], 1, 14);
+						self.addObjectsToDataLayer(self.map, window.AppMapData[indicator], 1, 12);
 					}
 					else {
 						$(document.body).addClass('loading');
 
 						this.getPopulationDensity().done(function (data) {
 
-							self.addObjectsToDataLayer(self.map, data, 1, 14);
+							self.addObjectsToDataLayer(self.map, data, 1, 12);
 
 							if ($(document.body).hasClass('loading'))
 								$(document.body).removeClass('loading');
@@ -687,16 +687,16 @@ var Infrastructure;
 						$('input[value=displaced-persons-all]').siblings('span.custom-checkbox').addClass('checked');
 					}
 
-					var displacedOptions = { valueIndex: 7, fillColor: '#3c80e6', strokeColor: '#000', norm: 0.4, displaced: true, displacedType: 'conflict' };
+					var displacedOptions = { valueIndex: 12, fillColor: '#3c80e6', strokeColor: '#000', norm: 0.4, displaced: true, displacedType: 'conflict' };
 
 					if (window.AppMapData[indicator]) {
-						self.addObjectsToMap(self.map, window.AppMapData[indicator], indicator, 25, 26, false, true, displacedOptions);
+						self.addObjectsToMap(self.map, window.AppMapData[indicator], indicator, 22, 23, false, true, displacedOptions);
 					}
 					else {
 						$(document.body).addClass('loading');
 
 						this.getDisplacedPersons().done(function (data) {
-							self.addObjectsToMap(self.map, data, indicator, 25, 26, false, true, displacedOptions);
+							self.addObjectsToMap(self.map, data, indicator, 22, 23, false, true, displacedOptions);
 
 							if ($(document.body).hasClass('loading'))
 								$(document.body).removeClass('loading');
@@ -711,16 +711,16 @@ var Infrastructure;
 						$('input[value=displaced-persons-all]').siblings('span.custom-checkbox').addClass('checked');
 					}
 
-					var displacedOptions = { valueIndex: 7, fillColor: '#3c80e6', strokeColor: '#000', norm: 0.4, displaced: true, displacedType: 'natural' };
+					var displacedOptions = { valueIndex: 12, fillColor: '#3c80e6', strokeColor: '#000', norm: 0.4, displaced: true, displacedType: 'natural' };
 
 					if (window.AppMapData[indicator]) {
-						self.addObjectsToMap(self.map, window.AppMapData[indicator], indicator, 25, 26, false, true, displacedOptions);
+						self.addObjectsToMap(self.map, window.AppMapData[indicator], indicator, 22, 23, false, true, displacedOptions);
 					}
 					else {
 						$(document.body).addClass('loading');
 
 						this.getDisplacedPersons().done(function (data) {
-							self.addObjectsToMap(self.map, data, indicator, 25, 26, false, true, displacedOptions);
+							self.addObjectsToMap(self.map, data, indicator, 22, 23, false, true, displacedOptions);
 
 							if ($(document.body).hasClass('loading'))
 								$(document.body).removeClass('loading');
@@ -1768,14 +1768,14 @@ var Infrastructure;
 						case 'all':
 							break;
 						case 'conflict':
-							if (data.data[rowOffset + 13] == 'Yes' || data.data[rowOffset + 16] == 'Yes') {
+							if (data.data[rowOffset + 13] == 'Yes' || data.data[rowOffset + 11] == 'Yes') {
 							}
 							else {
 								continue;
 							}
 							break;
 						case 'natural':
-							if (data.data[rowOffset + 19] == 'No') {
+							if (data.data[rowOffset + 16] == 'No') {
 								continue;
 							}
 							else {
