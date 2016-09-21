@@ -215,6 +215,7 @@ ul.same-countries li img
 	display: none;
 	width: 600px;
 	align-content: center;
+	margin-top: 500px;
 }
 .result-screen img.background
 {
@@ -230,17 +231,140 @@ ul.same-countries li img
 }
 .result-screen .result p.title
 {
-	font-size: 16pt;
+	font-size: 23pt;
 	font-weight: bold;
+	margin: 15px 0;
 }
 .result-screen .result .flags
 {
-	background-color: #cecece;
+	color: #000;
+	background-color: #ececec;
+	width: 500px;
+	margin: 0 auto;
+}
+.result-screen .result .flags .caption
+{
+	margin: 10px 0 0 0;
 }
 .result-screen .result .title2
 {
-	font-size: 18pt;
+	font-size: 25pt;
 	font-weight: bold;
+	margin: 15px 0;
+}
+.result-screen .result ul.same-countries
+{
+	margin: 0px;
+}
+.result-screen .result ul.same-countries li img
+{
+	height: 26px;
+	width: 40px;
+	border: 1px solid #f0f0f0;
+    opacity: 0.8;
+	display: block;
+	font-size: 9pt;
+}
+.result-screen .result .start-button
+{
+	padding: 5px 10px;
+	text-transform: uppercase;
+	background-color: #54d658;
+	width: 200px;
+	margin: 20px auto;
+	font-size: 17pt;
+	font-weight: normal;
+	cursor: pointer;
+	color: #fff;
+	border-radius: 3px;
+}
+
+ul.scale-result
+{
+	margin: 0;
+	padding: 0;
+}
+ul.scale-result li
+{
+	display: inline-block;
+	margin: 5px 7px;
+	list-style-type: none;
+	text-align: center;
+	font-weight: bold;
+	font-size: 10pt;
+	cursor: pointer;
+}
+ul.scale-result li .circle
+{
+	display: block;
+	border-radius: 50%;
+
+	margin: 7px;
+	height: 48px;
+	width: 48px;
+	background-color: #d9d9d9;
+
+	border: 1px solid #fff;
+}
+ul.scale-result li .circle.family.selected
+{
+	background-color: #e01e5a;
+}
+ul.scale-result li .circle.work.selected
+{
+	background-color: #c06f32;
+}
+ul.scale-result li .circle.friends.selected
+{
+	background-color: #5329bd;
+}
+ul.scale-result li .circle.leisure.selected
+{
+	background-color: #22b45a;
+}
+ul.scale-result li .circle.religion.selected
+{
+	background-color: #cbcb05;
+}
+ul.scale-result li .circle.politics.selected
+{
+	background-color: #2fa0d9;
+}
+ul.scale-result li .circle.selected.n0
+{
+	margin: 1px;
+	height: 60px;
+	width: 60px;
+}
+ul.scale-result li .circle.selected.n1
+{
+	margin: 3px;
+	height: 56px;
+	width: 56px;
+}
+ul.scale-result li .circle.selected.n2
+{
+	margin: 5px;
+	height: 52px;
+	width: 52px;
+}
+ul.scale-result li .circle.selected.n3
+{
+	margin: 7px;
+	height: 48px;
+	width: 48px;
+}
+ul.scale-result li .circle.selected.n4
+{
+	margin: 9px;
+	height: 44px;
+	width: 44px;
+}
+ul.scale-result li .circle.selected.n5
+{
+	margin: 11px;
+	height: 40px;
+	width: 40px;
 }
 
 img.result

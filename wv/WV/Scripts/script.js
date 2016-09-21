@@ -48,17 +48,19 @@ var app = (function () {
 						);
 					}
 
-					$('.same-countries').append(lis);
+					$('.finish-screen .same-countries').append(lis);
 					$('.number').text(people.sum.toFixed(0));
 					_this.pieChart($('.percent'), people.percent);
 
-					domtoimage.toBlob($('.finish-screen')[0])
+					_this.prepareResultLayout();
+					$('.result-screen').show();
+					domtoimage.toBlob($('.result-screen')[0])
 						.then(function (blob) {
 
+							$('.result-screen').hide();
 							var id = _this.makeId();
 
 							_this.uploadToServer(id, blob);
-							//_this.prepareResultLayout();
 							_this.resultId = id;
 						})
 						.catch(function (error) {
@@ -93,13 +95,12 @@ var app = (function () {
 
 	app.prototype.prepareResultLayout = function () {
 
-		var values = $('.finish-screen .scale-container ul').html();
-		$('.result-screen .result ul.scale').append(values);
+		var values = $('.main-screen .scale-container ul').clone();
+		values.find('.circle').removeAttr('style');
+		$('.result-screen .result ul.scale-result').append(values.html());
 
 		var flags = $('.finish-screen .same-countries').html();
 		$('.result-screen .result ul.same-countries').append(flags);
-
-		$('.result-screen').show();
 	};
 
 	app.prototype.makeId = function() {
@@ -141,16 +142,6 @@ var app = (function () {
 	app.prototype.uploadToServer = function (fileName, image) {
 
 		var xhr = new XMLHttpRequest();
-		xhr.onreadystatechange = function (response) {
-
-			if (xhr.readyState != 4)
-				return;
-
-			if (xhr.status == 200) {
-				
-			}
-		};
-
 		xhr.open('POST', '/upload');
 		xhr.setRequestHeader('X-File-Name', fileName + '.png');
 		xhr.setRequestHeader('Content-Type', 'application/octet-stream');
