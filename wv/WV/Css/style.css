@@ -1,7 +1,7 @@
 body
 {
 	margin: 0;
-	background: url(bg.jpg) no-repeat;
+	background: url(../Images/bg.jpg) no-repeat;
 	background-size: cover;
 }
 
@@ -62,17 +62,9 @@ ul.scale
 {
 	margin: 50px 0;
 	padding: 0;
-	/*position: relative;
-    top: 0;
-    left: 0;*/ 
 }
-
 ul.scale li
 {
-	/*position: relative;
-    top: 0;
-    left: 0;*/ 
-
 	display: inline-block;
 	margin: 10px 15px;
 	list-style-type: none;
@@ -81,7 +73,7 @@ ul.scale li
 	font-size: 14pt;
 	cursor: pointer;
 }
-.circle
+ul.scale li .circle
 {
 	display: block;
 	border-radius: 50%;
@@ -93,68 +85,61 @@ ul.scale li
 
 	border: 2px solid #fff;
 }
-
-.circle.family.selected
+ul.scale li .circle.family.selected
 {
 	background-color: #e01e5a;
 }
-
-.circle.work.selected
+ul.scale li .circle.work.selected
 {
 	background-color: #c06f32;
 }
-
-.circle.friends.selected
+ul.scale li .circle.friends.selected
 {
 	background-color: #5329bd;
 }
-
-.circle.leisure.selected
+ul.scale li .circle.leisure.selected
 {
 	background-color: #22b45a;
 }
-
-.circle.religion.selected
+ul.scale li .circle.religion.selected
 {
 	background-color: #cbcb05;
 }
-
-.circle.politics.selected
+ul.scale li .circle.politics.selected
 {
 	background-color: #2fa0d9;
 }
-
-.circle.selected.n0
+ul.scale li .circle.selected.n0
 {
 	margin: 1px;
 	height: 110px;
 	width: 110px;
 }
-.circle.selected.n1
+ul.scale li .circle.selected.n1
 {
 	margin: 6px;
 	height: 100px;
 	width: 100px;
 }
-.circle.selected.n2
+ul.scale li .circle.selected.n2
 {
 	margin: 11px;
 	height: 90px;
 	width: 90px;
 }
-.circle.selected.n3
+ul.scale li .circle.selected.n3
 {
 	margin: 16px;
 	height: 80px;
 	width: 80px;
 }
-.circle.selected.n4
+ul.scale li .circle.selected.n4
 {
 	margin: 21px;
 	height: 70px;
 	width: 70px;
 }
-.circle.selected.n5
+ul.scale li .circle.selected.n5
 {
 	margin: 26px;
 	height: 60px;
@@ -222,4 +207,45 @@ ul.same-countries li img
 .share-caption
 {
 	margin: 40px 0 30px 0;
+}
+
+.result-screen
+{
+	position: relative;
+	display: none;
+	width: 600px;
+	align-content: center;
+}
+.result-screen img.background
+{
+	width: 600px;
+}
+.result-screen .result
+{
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+}
+.result-screen .result p.title
+{
+	font-size: 16pt;
+	font-weight: bold;
+}
+.result-screen .result .flags
+{
+	background-color: #cecece;
+}
+.result-screen .result .title2
+{
+	font-size: 18pt;
+	font-weight: bold;
+}
+
+img.result
+{
+	display:block;
+	width: 600px;
+	margin: 0 auto;
 }

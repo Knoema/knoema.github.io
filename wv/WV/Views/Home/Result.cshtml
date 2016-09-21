@@ -1,0 +1,19 @@
+﻿@section SharingTags
+{
+	<meta name="description" content="Discover where in the world people share your values in this 20 second survey!" />
+
+	<meta name="twitter:card"			content="summary">
+	<meta name="twitter:site"			content="@ViewBag.Host">
+	<meta name="twitter:title"			content="Which Countries Best Fit Your Values?">
+	<meta name="twitter:description"	content="Discover where in the world people share your values in this 20 second survey!">
+	<meta name="twitter:creator"		content="Knoema.com">
+	<meta name="twitter:image"			content="@(ViewBag.Host)/images/upload/@(ViewBag.Param).png">
+
+	<meta property="og:url"					content="@ViewBag.Host" />
+	<meta property="og:title"				content="Which Countries Best Fit Your Values?" />
+	<meta property="og:type"				content="website" />
+	<meta property="og:description"			content="Discover where in the world people share your values in this 20 second survey!" />
+	<meta property="og:image"				content="@(ViewBag.Host)/images/upload/@(ViewBag.Param).png" />
+}
+
+<img class="result" src="../Images/upload/@(ViewBag.Param).png" />

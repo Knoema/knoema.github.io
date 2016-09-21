@@ -2,6 +2,10 @@ var app = (function () {
 
 	var numberOfClick = 0;
 	var values = '';
+	var resultId = '';
+
+	var pivot;
+	var populationPivot;
 
 	function app() {
 	};
@@ -11,81 +15,146 @@ var app = (function () {
 		var _this = this;
 		$.when(this.loadData(), this.loadPopulationData()).done(function (pivot, populationPivot) {
 
-			pivot = pivot[0];
-			populationPivot = populationPivot[0];
+			_this.pivot = pivot[0];
+			_this.populationPivot = populationPivot[0];
+		});
 
-			$('.start-button').on('click', function () {
+		$('.start-button').on('click', function () {
 
-				$('.start-screen').hide();
-				$('.main-screen').show();
+			$('.start-screen').hide();
+			$('.main-screen').show();
 
-				$('.main-screen ul.scale li').on('click', function () {
+			$('.main-screen ul.scale li').on('click', function () {
 
-					_this.handler(this);
+				_this.handler(this);
 
-					if (numberOfClick == 6) {
-						numberOfClick = 0;
+				if (numberOfClick != 6)
+					return false;
 
-						var sameCountries = _this.countriesByValues(pivot.data)[values.replace(' ', '')];
-						var people = _this.getPercentOfPopulation(sameCountries, populationPivot.data);
+				numberOfClick = 0;
 
-						if (sameCountries) {
-							var lis = [];
-							for (var i = 0; i < sameCountries.length; i++) {
-								lis.push($('<li>', {
-									text: sameCountries[i].country
-								})
-									.prepend($('<img>', {
-										src: '//cdn.knoema.com/flags/normal/' + sameCountries[i].region.toLowerCase() + '.png'
-									}))
-								);
-							}
+				var sameCountries = _this.countriesByValues(_this.pivot.data)[values];
+				var people = _this.getPercentOfPopulation(sameCountries, _this.populationPivot.data);
 
-							$('.same-countries').append(lis);
-							$('.number').text(people.sum.toFixed(0));
-							_this.pieChart($('.percent'), people.percent);
-
-
-							var node = $('.finish-screen')[0];
-
-							//domtoimage.toPng(node)
-							//	.then(function (dataUrl) {
-							//		var img = new Image();
-							//		img.src = dataUrl;
-							//		$('.share-content').append(img);
-							//	})
-							//	.catch(function (error) {
-							//		console.error('oops, something went wrong!', error);
-							//	});
-							//html2canvas(document.body, {
-							//	proxy: 'http://cdn.knoema.com/flags/normal/',
-							//	useCORS: true,
-							//	timeout: 500,
-							//	onrendered: function (canvas) {
-							//		$('.share-content').append(canvas);
-							//	}
-							//});
-						}
-						else {
-							$('.population-part').empty().append($('<h2>', {
-								text: 'Your responses are unique. Your ranking of these global values does not match the 24 most common rankings.',
-								style: 'width: 600px; margin: 0 auto;'
-							}));
-						}
-
-						$('.main-screen').hide();
-
-						var newUl = $('<ul>', { 'class': 'scale' });
-						for (var i = 0; i < 6; i++) {
-							var item = $('.main-screen .circle.n' + i).parent().wrap('<div>').parent().html();
-							newUl.append(item);
-						}
-						$('.finish-screen .scale-container').append($(newUl));
-						$('.finish-screen').show();
+				if (sameCountries) {
+					var lis = [];
+					for (var i = 0; i < sameCountries.length; i++) {
+						lis.push($('<li>', {
+								text: sameCountries[i].country
+							})
+							.prepend($('<img>', {
+								src: '/Images/' + sameCountries[i].region.toLowerCase() + '.png'
+							}))
+						);
 					}
+
+					$('.same-countries').append(lis);
+					$('.number').text(people.sum.toFixed(0));
+					_this.pieChart($('.percent'), people.percent);
+
+					domtoimage.toBlob($('.finish-screen')[0])
+						.then(function (blob) {
+
+							var id = _this.makeId();
+
+							_this.uploadToServer(id, blob);
+							//_this.prepareResultLayout();
+							_this.resultId = id;
+						})
+						.catch(function (error) {
+							console.error('oops, something went wrong!', error);
+						});
+				}
+				else {
+					$('.population-part').empty().append($('<h2>', {
+						text: 'Your responses are unique. Your ranking of these global values does not match the 24 most common rankings.',
+						style: 'width: 600px; margin: 0 auto;'
+					}));
+				}
+
+				$('.main-screen').hide();
+
+				var newUl = $('<ul>', { 'class': 'scale' });
+				for (var i = 0; i < 6; i++) {
+					var item = $('.main-screen .circle.n' + i).parent().wrap('<div>').parent().html();
+					newUl.append(item);
+				}
+				$('.finish-screen .scale-container').append($(newUl));
+				$('.finish-screen').show();
+
+				$('.share-button').on('click', function () {
+
+					_this.share($(this).data('channel'), _this.resultId);
+					return false;
 				});
 			});
 		});
+	};
+
+	app.prototype.prepareResultLayout = function () {
+
+		var values = $('.finish-screen .scale-container ul').html();
+		$('.result-screen .result ul.scale').append(values);
+
+		var flags = $('.finish-screen .same-countries').html();
+		$('.result-screen .result ul.same-countries').append(flags);
+
+		$('.result-screen').show();
+	};
+
+	app.prototype.makeId = function() {
+		var text = "";
+		var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+		for (var i = 0; i < 8; i++)
+			text += possible.charAt(Math.floor(Math.random() * possible.length));
+
+		return text;
+	}
+
+	app.prototype.share = function (channel, resultId) {
+
+		var windowSize = {
+			twitter: { w: 475, h: 550 },
+			facebook: { w: 575, h: 405 },
+			gplus: { w: 500, h: 600 }
+		};
+
+		var url = '';
+		var resultPageUrl = location.protocol + '//' + location.hostname + '/result/' + resultId;
+
+		switch (channel) {
+			case 'twitter':
+				url = 'https://twitter.com/intent/tweet?&text=' + 'Select each value in order of importance to you.' + '&url=' + resultPageUrl;
+				break;
+			case 'facebook':
+				url = 'https://www.facebook.com/sharer/sharer.php?u=' + resultPageUrl;
+				break;
+			case 'gplus':
+				url = 'https://plus.google.com/share?url=' + resultPageUrl;
+				break;
+		}
+
+		window.open(url, 'Share' + Math.random(), 'width=' + windowSize[channel].w + ', height=' + windowSize[channel].h + ', top=' + (screen.height / 2 - 180) + ', left=' + (screen.width / 2 - 220));
+	};
+
+	app.prototype.uploadToServer = function (fileName, image) {
+
+		var xhr = new XMLHttpRequest();
+		xhr.onreadystatechange = function (response) {
+
+			if (xhr.readyState != 4)
+				return;
+
+			if (xhr.status == 200) {
+				
+			}
+		};
+
+		xhr.open('POST', '/upload');
+		xhr.setRequestHeader('X-File-Name', fileName + '.png');
+		xhr.setRequestHeader('Content-Type', 'application/octet-stream');
+		xhr.send(image);
 	};
 
 	app.prototype.handler = function (context) {
@@ -95,6 +164,17 @@ var app = (function () {
 
 		values += li.data('value');
 		if (!circle.hasClass('selected')) {
+
+			var margin = 1;
+			var height = 110;
+			switch (numberOfClick) {
+				case 0: margin = 1; height = 110; break;
+				case 1: margin = 6; height = 100; break;
+				case 2: margin = 11; height = 90; break;
+			}
+
+			if(numberOfClick < 3)
+				circle.animate({ margin: margin + 'px', height: height + 'px', width: height + 'px' });
 
 			circle.addClass('selected ' + 'n' + numberOfClick);
 			numberOfClick++;
@@ -261,7 +341,6 @@ var app = (function () {
 			for (var i = 0; i < tmp[country].length; i++) {
 				values += tmp[country][i].variant;
 			}
-			values = values.replace(' ', '');
 
 			if (!countriesVyValues[values])
 				countriesVyValues[values] = [];
@@ -350,8 +429,8 @@ var app = (function () {
 	return app;
 })();
 
-
 (function () {
+
 	var app1 = new app();
 	app1.run();
 })();
