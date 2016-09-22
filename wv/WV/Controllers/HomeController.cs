@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using WV.Code;
 
 namespace WV.Controllers
 {
@@ -20,9 +22,17 @@ namespace WV.Controllers
 				RedirectToAction("Index");
 
 			ViewBag.Param = param;
-			ViewBag.Host = "http://www.site.com";
+			ViewBag.Host = Request.Url.Scheme + "//" + Request.Url.Host;
 
 			return View();
+		}
+
+		[HttpPost]
+		public ActionResult Save(List<string> priority)
+		{
+			VisitHistory.Save(Request.UserHostAddress, priority.ToArray());
+
+			return new HttpStatusCodeResult(200, "Ok");
 		}
 
 		[HttpPost]

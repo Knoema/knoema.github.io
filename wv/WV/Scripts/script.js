@@ -19,6 +19,10 @@ var app = (function () {
 			_this.populationPivot = populationPivot[0];
 		});
 
+		$('.retake-button').on('click', function () {
+			location.href = '/';
+		});
+
 		$('.start-button').on('click', function () {
 
 			$('.start-screen').hide();
@@ -51,21 +55,6 @@ var app = (function () {
 					$('.finish-screen .same-countries').append(lis);
 					$('.number').text(people.sum.toFixed(0));
 					_this.pieChart($('.percent'), people.percent);
-
-					_this.prepareResultLayout();
-					$('.result-screen').show();
-					domtoimage.toBlob($('.result-screen')[0])
-						.then(function (blob) {
-
-							$('.result-screen').hide();
-							var id = _this.makeId();
-
-							_this.uploadToServer(id, blob);
-							_this.resultId = id;
-						})
-						.catch(function (error) {
-							console.error('oops, something went wrong!', error);
-						});
 				}
 				else {
 					$('.population-part').empty().append($('<h2>', {
@@ -73,6 +62,23 @@ var app = (function () {
 						style: 'width: 600px; margin: 0 auto;'
 					}));
 				}
+
+				_this.prepareResultLayout(sameCountries);
+				$('.result-screen').show();
+				domtoimage.toBlob($('.result-screen')[0])
+					.then(function (blob) {
+
+						$('.result-screen').hide();
+						var id = _this.makeId();
+
+						_this.uploadToServer(id, blob);
+						_this.saveResults();
+						_this.resultId = id;
+					})
+					.catch(function (error) {
+						console.error('oops, something went wrong!', error);
+					});
+
 
 				$('.main-screen').hide();
 
@@ -93,14 +99,26 @@ var app = (function () {
 		});
 	};
 
-	app.prototype.prepareResultLayout = function () {
+	app.prototype.prepareResultLayout = function (isSameCountries) {
 
 		var values = $('.main-screen .scale-container ul').clone();
 		values.find('.circle').removeAttr('style');
-		$('.result-screen .result ul.scale-result').append(values.html());
+		var orderedLi = [];
+		for (var i = 0; i < 6; i++) {
+			var item = values.find('.circle.n' + i).parent().wrap('<div>').parent().html();
+			orderedLi.push(item);
+		}
 
-		var flags = $('.finish-screen .same-countries').html();
-		$('.result-screen .result ul.same-countries').append(flags);
+		$('.result-screen .result ul.scale-result').append(orderedLi);
+
+		if (isSameCountries) {
+			var flags = $('.finish-screen .same-countries li').clone().slice(0, 5);
+			$('.result-screen .result ul.same-countries').append(flags);
+			$('.result-screen .result .uniq').hide();
+		}
+		else {
+			$('.result-screen .result .flags').hide();
+		}
 	};
 
 	app.prototype.makeId = function() {
@@ -146,6 +164,25 @@ var app = (function () {
 		xhr.setRequestHeader('X-File-Name', fileName + '.png');
 		xhr.setRequestHeader('Content-Type', 'application/octet-stream');
 		xhr.send(image);
+	};
+
+	app.prototype.saveResults = function () {
+
+		var res = [];
+		for (var i = 0; i < 6; i++)
+			res.push($('.main-screen .circle.n' + i).parent().data('value'));
+
+		$.ajax(
+		{
+			url: 'save/',
+			type: 'POST',
+			data: JSON.stringify({ 'priority': res }),
+			dataType: 'json',
+			contentType: 'application/json',
+			success: function (data) {
+				console.log(data);
+			}
+		});
 	};
 
 	app.prototype.handler = function (context) {

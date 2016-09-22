@@ -30,6 +30,19 @@ body
 	color: #fff;
 	border-radius: 5px;
 }
+.retake-button
+{
+	padding: 20px 50px;
+	text-transform: uppercase;
+	background-color: #54d658;
+	width: 150px;
+	margin: 50px auto;
+	font-size: 22pt;
+	font-weight: bold;
+	cursor: pointer;
+	color: #fff;
+	border-radius: 5px;
+}
 .main-screen
 {
 	display:none;
@@ -233,12 +246,10 @@ ul.same-countries li img
 {
 	font-size: 23pt;
 	font-weight: bold;
-	margin: 15px 0;
+	margin: 10px 0;
 }
 .result-screen .result .flags
 {
-	color: #000;
-	background-color: #ececec;
 	width: 500px;
 	margin: 0 auto;
 }
@@ -250,7 +261,7 @@ ul.same-countries li img
 {
 	font-size: 25pt;
 	font-weight: bold;
-	margin: 15px 0;
+	margin: 7px 0 -5px 0;
 }
 .result-screen .result ul.same-countries
 {
@@ -264,6 +275,7 @@ ul.same-countries li img
     opacity: 0.8;
 	display: block;
 	font-size: 9pt;
+	margin: 0 auto;
 }
 .result-screen .result .start-button
 {
@@ -271,7 +283,7 @@ ul.same-countries li img
 	text-transform: uppercase;
 	background-color: #54d658;
 	width: 200px;
-	margin: 20px auto;
+	margin: 20px auto 0;
 	font-size: 17pt;
 	font-weight: normal;
 	cursor: pointer;
@@ -291,7 +303,7 @@ ul.scale-result li
 	list-style-type: none;
 	text-align: center;
 	font-weight: bold;
-	font-size: 10pt;
+	font-size: 12pt;
 	cursor: pointer;
 }
 ul.scale-result li .circle
@@ -300,8 +312,8 @@ ul.scale-result li .circle
 	border-radius: 50%;
 
 	margin: 7px;
-	height: 48px;
-	width: 48px;
+	height: 66px;
+	width: 66px;
 	background-color: #d9d9d9;
 
 	border: 1px solid #fff;
@@ -333,38 +345,38 @@ ul.scale-result li .circle.politics.selected
 ul.scale-result li .circle.selected.n0
 {
 	margin: 1px;
-	height: 60px;
-	width: 60px;
+	height: 78px;
+	width: 78px;
 }
 ul.scale-result li .circle.selected.n1
 {
 	margin: 3px;
-	height: 56px;
-	width: 56px;
+	height: 74px;
+	width: 74px;
 }
 ul.scale-result li .circle.selected.n2
 {
 	margin: 5px;
-	height: 52px;
-	width: 52px;
+	height: 70px;
+	width: 70px;
 }
 ul.scale-result li .circle.selected.n3
 {
 	margin: 7px;
-	height: 48px;
-	width: 48px;
+	height: 66px;
+	width: 66px;
 }
 ul.scale-result li .circle.selected.n4
 {
 	margin: 9px;
-	height: 44px;
-	width: 44px;
+	height: 62px;
+	width: 62px;
 }
 ul.scale-result li .circle.selected.n5
 {
-	margin: 11px;
-	height: 40px;
-	width: 40px;
+	margin: 12px;
+	height: 56px;
+	width: 56px;
 }
 
 img.result

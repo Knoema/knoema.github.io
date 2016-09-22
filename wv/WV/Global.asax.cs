@@ -21,6 +21,7 @@ namespace WV
 
 			RouteTable.Routes.MapRoute("result", "result/{param}", new { controller = "Home", action = "Result" });
 			RouteTable.Routes.MapRoute("upload", "upload", new { controller = "Home", action = "Upload" });
+			RouteTable.Routes.MapRoute("save", "save", new { controller = "Home", action = "Save" });
 			RouteTable.Routes.MapRoute(
 				name: "Default",
 				url: "{controller}/{action}/{id}",
