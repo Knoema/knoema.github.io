@@ -651,12 +651,16 @@ var Infrastructure;
         		$('.opp-button').on('click', function () {
         			var objData = decodeURI($(this).data('data'));
         			objData = JSON.parse(objData);
+
+        			var ppNumber = objData["Numéro du projet phare / numéro de la réforme phare"];
+        			var ppName = $('#ppp-projects').find('option[value=' + ppNumber + ']').text();
+
         			var templateData = {
         				name: objData["Nom Projet"],
         				budget: objData["Budget Total Prévu: Dépenses réalisées"],
         				axe: objData["Code de l'axe stratégique de la vision 2035"],
         				sour: objData["Code du Sous-Secteur"],
-        				number: objData["Numéro du projet phare / numéro de la réforme phare"],
+        				number: ppName,
         				status: objData["Statut"]
         			};
 

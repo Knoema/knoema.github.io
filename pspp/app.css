@@ -1281,12 +1281,13 @@ p.value
 
 #right-hand-panel table thead tr th
 {
-	padding: 2px 10px;
+	padding: 2px 5px;
 	font-size: 10pt;
 }
 #right-hand-panel table tbody tr td
 {
-	padding: 2px 5px;
+	padding: 7px 5px;
+	vertical-align: top;
 }
 #right-hand-panel table tbody tr:nth-child(2n)
 {
@@ -1295,7 +1296,7 @@ p.value
 
 #right-hand-panel h2
 {
-	font-size: 10pt;
+	font-size: 15pt;
 	font-weight: bold;
 }
 
@@ -2399,6 +2400,7 @@ ul.subtopic-content li a
 .tab-content.portfolio
 {
 	background-color: #f4ece1;
+	overflow-y: scroll;
 }
 
 .tab-content.portfolio h1
@@ -2451,7 +2453,7 @@ ul.subtopic-content li a
 }
 .content-container .right-part
 {
-	margin-left: 100px;
+	margin-left: 90px;
 	display: inline-block;
 	vertical-align: top;
 }
