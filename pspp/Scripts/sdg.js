@@ -1,11 +1,133 @@
 /// <reference path="typings/jquery.d.ts"/>
 
 $(function () {
+	/*modify this start*/
 	var host = 'http://senegal.opendataforafrica.org';
+	var structureCustomDsId = 'synbgfg';
+	var structureLightDsId = 'iwmcymc';
+	/*modify this end*/
+
+
+	var datasetName = 'SDG Structure FR';
+	var goalDimId = 'goal-name';
+	var goalOrderField = 'goal-order-goal-name';
+	var targetDimId = 'target-name';
+	var targetOrderField = 'target-order-target-name';
+
+	var indexOfGoalName = 0;
+	//var indexOfGoalNameFr = 0;
+	var indexOfGoalOrderColumn = 1;
+
+	var indexOfTargetCode = 2;
+	var indexOfTargetName = 3;
+	var indexOfTargetNameFr = 17;
+	var indexOfTargetOrder = 4;
+	var indexOfTargetLevel = 5;
+	var indexOfTargetSource = 9;
+
+	var indexOfBrowseDataUrlEnabled = 10;
+	var indexOfMetadataUrlEnabled = 11;
+	var indexOfSdmxUrlEnabled = 12;
+	var indexOfBrowseDataUrlLink = 13;
+	var indexOfMetadataUrlLink = 14;
+	var indexOfSdmxUrlLink = 15;
+
+
+	var indexesInitialized = false;
+
+
+	function updateIndexesByDetailsColumns(columns) {
+
+		if (indexesInitialized)
+			return;
+
+		for (var i = 0; i < columns.length; i++) {
+			var col = columns[i];
+
+			switch (col.name) {
+				case 'Goal - Name':
+					indexOfGoalName = i;
+					break;
+
+				case 'goal-order-goal-name':
+				case 'Goal - Order':
+					indexOfGoalOrderColumn = i;
+					break;
+
+				case 'target-code-target-name':
+				case 'Target - Code':
+					indexOfTargetCode = i;
+					break;
+
+				case 'Target - Name':
+					indexOfTargetName = i;
+					break;
+
+				case 'Target - FR Name':
+					indexOfTargetNameFr = i;
+					break;
+
+				case 'target-order-target-name':
+				case 'Target - Order':
+					indexOfTargetOrder = i;
+					break;
+				case 'Target - Level':
+				case 'target-level-target-name':
+					indexOfTargetLevel = i;
+					break;
+				case 'Target - Source':
+				case 'target-source-target-name':
+					indexOfTargetSource = i;
+					break;
+
+				case 'BrowseDataURL_Enabled':
+					indexOfBrowseDataUrlEnabled = i;
+					break;
+				case 'MetadataURL_Enabled':
+					indexOfMetadataUrlEnabled = i;
+					break;
+				case 'SDMXURL_Enabled':
+					indexOfSdmxUrlEnabled = i;
+					break;
+				case 'BrowseDataURL_Link':
+					indexOfBrowseDataUrlLink = i;
+					break;
+				case 'MetadataURL_Link':
+					indexOfMetadataUrlLink = i;
+					break;
+				case 'SDMXURL_Link':
+					indexOfSdmxUrlLink = i;
+					break;
+			}
+		}
+
+		indexesInitialized = true;
+	}
+
+	var editText = "Edit";
+	var browseText = "Browse Data";
+	var metadataText = "Metadata";
+	var sdmxText = "SDMXURL";
+	var collapseAllText = "Collapse All";
+	var expandAllText = "Expand All";
+
+	var editPageTextInFrench = "Modifier la page"; //en - edit page
+	var backTextInFrench = "Retour"; //en - back
+
+	function isFrenchLocale() {
+		return $('.community-v2').hasClass('fr-FR');
+	}
+
+	if (isFrenchLocale()) {
+		//change text of wiki buttons is better than making french page
+		$('#sdg .back').text(backTextInFrench);
+		$('#edit-wiki-button').text(editPageTextInFrench);
+	}
+
 
 	function populateTarget(items, goal, isEditor) {
 		items = items.sort(function (a, b) {
-			return a[4] - b[4];
+			return a[indexOfTargetOrder] - b[indexOfTargetOrder];
 		});
 		goalItemsToEdit = items;
 		for (var i in items) {
@@ -16,32 +138,32 @@ $(function () {
 
 	function addTarget(item, goal, rowNumber, isEditor) {
 		var $target = $('#detail-page .target-content');
-		var level = item[5];
-		var name = item[3];
+		var level = item[indexOfTargetLevel];
+		var name = item[isFrenchLocale() ? indexOfTargetNameFr : indexOfTargetName];
 		if (level == 1) {
 			$target.append('<div class="header"><a class="expand" href="#"></a><div class="title">' + name + '</div></div>');
 			$target.append('<div class="items"></div>');
 		}
 		else {
 			var $item = $('<div class="item"><div class="table-column desc"><span class="name">' + name + '</span></div></div>');
-			var source = item[9];
+			var source = item[indexOfTargetSource];
 			if (isEditor)
-				$item.append('<div class="table-column edit"><a href="#" class="edit-data">Edit</a></div>');
+				$item.append('<div class="table-column edit"><a href="#" class="edit-data">' + editText + '</a></div>');
 			$item.append('<div class="table-column"><a class="country-data">' + source + '</a></div>');
-			if (item[10] == "1")
-				$item.append('<div class="table-column"><a class="browse-data" target="_blank" href="' + item[13] + '">Browse Data</a></div>');
+			if (item[indexOfBrowseDataUrlEnabled] == "1")
+				$item.append('<div class="table-column"><a class="browse-data" target="_blank" href="' + item[indexOfBrowseDataUrlLink] + '">' + browseText + '</a></div>');
 			else
-				$item.append('<div class="table-column"><a class="browse-data" style="visibility: hidden;" target="_blank" href="' + item[13] + '">Browse Data</a></div>');
+				$item.append('<div class="table-column"><a class="browse-data" style="visibility: hidden;" target="_blank" href="' + item[indexOfBrowseDataUrlLink] + '">' + browseText + '</a></div>');
 
-			if (item[11] == "1")
-				$item.append('<div class="table-column"><a target="blank" class="meta-data" href="' + item[14] + '">Metadata</a></div>');
+			if (item[indexOfMetadataUrlEnabled] == "1")
+				$item.append('<div class="table-column"><a target="blank" class="meta-data" href="' + item[indexOfMetadataUrlLink] + '">' + metadataText + '</a></div>');
 			else
-				$item.append('<div class="table-column"><a class="meta-data" style="visibility: hidden;" target="_blank" href="' + item[14] + '">Metadata</a></div>');
+				$item.append('<div class="table-column"><a class="meta-data" style="visibility: hidden;" target="_blank" href="' + item[indexOfMetadataUrlLink] + '">' + metadataText + '</a></div>');
 
-			if (item[12] == "1")
-				$item.append('<div class="table-column"><a class="sdmx" href="' + item[15] + '">SDMXURL</a></div>');
+			if (item[indexOfSdmxUrlEnabled] == "1")
+				$item.append('<div class="table-column"><a class="sdmx" href="' + item[indexOfSdmxUrlLink] + '">' + sdmxText + '</a></div>');
 			else
-				$item.append('<div class="table-column"><a class="sdmx" style="visibility: hidden;" target="_blank" href="' + item[15] + '">SDMXURL</a></div>');
+				$item.append('<div class="table-column"><a class="sdmx" style="visibility: hidden;" target="_blank" href="' + item[indexOfSdmxUrlLink] + '">' + sdmxText + '</a></div>');
 
 			$item.addClass('level-' + level);
 			$item.data('item', item);
@@ -52,16 +174,17 @@ $(function () {
 
 	if ($('#sdg').length) {
 		$('#edit-wiki-button').hide();
-
-		$.get(host + '/api/1.0/meta/dataset/ofgwvlf/dimension/goal-name').then(function (response) {
+		$.get(host + '/api/1.0/meta/dataset/' + structureCustomDsId + '/dimension/' + goalDimId, function(response){
 			if (response) {
 				$('#sdg .tile').each(function (idx, ele) {
 					var $ele = $(ele);
 					var goalNo = idx + 1;
-					var goal;
+					var goal = response.items[idx];
 					for (var i in response.items) {
 						goal = response.items[i];
-						if (goal.fields && goal.fields['goal-order'] == goalNo)
+						if (goal.fields
+							&& goal.fields[goalOrderField]
+							&& goal.fields[goalOrderField] == goalNo)
 							break;
 					}
 
@@ -100,13 +223,7 @@ $(function () {
 			$('#detail-page .target-content').empty();
 
 			$('#detail-page .goal-header .text').text(goal.name);
-			$('#detail-page .goal-header a').removeClass('collapse').addClass('expand').find('span.img-txt').text("Expand All");
-
-			var dimRequest = [{ DimensionId: "goal-name", DimensionName: "Goal - Name", Position: "Filter", Members: [goal.key], IsGeo: false },
-				{ DimensionId: "browsedataurl-enabled", DimensionName: "BrowseDataURL_Enabled", Position: "Filter", Members: [], IsGeo: false },
-				{ DimensionId: "metadataurl-enabled", DimensionName: "MetadataURL_Enabled", Position: "Filter", Members: [], IsGeo: false },
-				{ DimensionId: "sdmxurl-enabled", DimensionName: "SDMXURL_Enabled", Position: "Filter", Members: [], IsGeo: false }
-			];
+			$('#detail-page .goal-header a').removeClass('collapse').addClass('expand').find('span.img-txt').text(expandAllText);
 
 			populateData($('#sdg'));
 		});
@@ -131,12 +248,12 @@ $(function () {
 		var $this = $(this);
 		if ($this.hasClass('expand')) {
 			$('#detail-page .items').show();
-			$this.removeClass('expand').addClass('collapse').find('span.img-txt').text("Collapse All");
+			$this.removeClass('expand').addClass('collapse').find('span.img-txt').text(collapseAllText);
 			$('#detail-page .target-content .header a').removeClass('expand').addClass('collapse');
 		}
 		else {
 			$('#detail-page .items').hide();
-			$this.removeClass('collapse').addClass('expand').find('span.img-txt').text("Expand All");
+			$this.removeClass('collapse').addClass('expand').find('span.img-txt').text(expandAllText);
 			$('#detail-page .target-content .header a').removeClass('collapse').addClass('expand');
 		}
 		return false;
@@ -148,7 +265,7 @@ $(function () {
 			$this.removeClass('expand').addClass('collapse');
 			$this.parent().next('.items').show();
 			if ($('#detail-page .goal-header a').hasClass('expand'))
-				$('#detail-page .goal-header a').removeClass('expand').addClass('collapse').find('span.img-txt').text("Collapse All");
+				$('#detail-page .goal-header a').removeClass('expand').addClass('collapse').find('span.img-txt').text(collapseAllText);
 		}
 		else {
 			$this.removeClass('collapse').addClass('expand');
@@ -156,7 +273,7 @@ $(function () {
 
 			if ($('#detail-page .target-content .header a').length == $('#detail-page .target-content .header a.expand').length)
 				if ($('#detail-page .goal-header a').hasClass('collapse'))
-					$('#detail-page .goal-header a').removeClass('collapse').addClass('expand').find('span.img-txt').text("Expand All");
+					$('#detail-page .goal-header a').removeClass('collapse').addClass('expand').find('span.img-txt').text(expandAllText);
 		}
 		return false;
 	});
@@ -170,7 +287,7 @@ $(function () {
 	var groupByGoal;
 	function populateData($div, isEditor) {
 		var detailDesc = {
-			Dataset: 'ofgwvlf',
+			Dataset: structureLightDsId,
 			Frequencies: [],
 			Header: [],
 			MeasureAggregations: null,
@@ -178,8 +295,8 @@ $(function () {
 			Stub: [],
 			Filter: [
 			{
-				DatasetId: 'ofgwvlf',
-				DimensionId: "goal-name",
+				DatasetId: structureLightDsId,
+				DimensionId: goalDimId,
 				DimensionName: "Goal - Name",
 				Members: []
 			}]
@@ -187,13 +304,14 @@ $(function () {
 
 		$.post(host + '/api/1.0/data/details', detailDesc, function (data) {
 			if (data) {
+				updateIndexesByDetailsColumns(data.columns);
 				detailsData = data;
 				var lists = _.groupBy(data.data, function (element, index) {
 					return Math.floor(index / data.columns.length);
 				});
 
 				groupByGoal = _.groupBy(lists, function (element, index) {
-					return element[1];
+					return element[indexOfGoalOrderColumn];
 				});
 				populateTarget(groupByGoal[goal.no], goal, isEditor);
 			}
@@ -226,24 +344,24 @@ $(function () {
 			var item = goalItemsToEdit[rowNumber];
 
 			var $editor = $('<div style="height: 400px; width: 680px;" title="Edit Details" class="row-editor"></div>');
-			$editor.attr('title', 'Edit Details: ' + item[3]);
+			$editor.attr('title', 'Edit Details: ' + item[indexOfTargetName]);
 			$editor.appendTo('body');
 			$editor.append('<br/>');
 			$editor.append('<label>Data Browse Link:</label>');
 			$editor.append('<textarea class="dsbrowser-link" style="margin-left: 30px; width: 440px; height: 80px;" ></textarea>');
-			$editor.find('.dsbrowser-link').val(item[13]);
+			$editor.find('.dsbrowser-link').val(item[indexOfBrowseDataUrlLink]);
 			$editor.append('<a target="_blank" style="margin-left: 20px;" href="#" class="check-link">Check Link</a>');
 			$editor.append('<br/>');
 			$editor.append('<br/>');
 			$editor.append('<label>Metadata Link:</label>');
 			$editor.append('<textarea style="margin-left: 49px; width: 440px; height: 80px;" class="dsbb-link" ></textarea>')
-			$editor.find('.dsbb-link').val(item[14]);
+			$editor.find('.dsbb-link').val(item[indexOfMetadataUrlLink]);
 			$editor.append('<a style="margin-left: 20px;" target="_blank" href="#" class="check-link">Check Link</a>');
 			$editor.append('<br/>');
 			$editor.append('<br/>');
 			$editor.append('<label>SDMX Link:</label>');
 			$editor.append('<textarea style="margin-left: 65px; width: 440px; height: 80px;" class="sdmx-link" ></textarea>')
-			$editor.find('.sdmx-link').val(item[15]);
+			$editor.find('.sdmx-link').val(item[indexOfSdmxUrlLink]);
 			$editor.append('<a style="margin-left: 20px;" target="_blank" href="#" class="check-link">Check Link</a>');
 
 			var $thisEdit = $(this);
@@ -264,64 +382,63 @@ $(function () {
 						{
 							"text": "Ok",
 							"click": function () {
-								if (item[13] == $editor.find('.dsbrowser-link').val() && item[14] == $editor.find('.dsbb-link').val() && item[15] == $editor.find('.sdmx-link').val()) {//
+								if (item[indexOfBrowseDataUrlLink] == $editor.find('.dsbrowser-link').val()
+									&& item[indexOfMetadataUrlLink] == $editor.find('.dsbb-link').val()
+									&& item[indexOfSdmxUrlLink] == $editor.find('.sdmx-link').val()) {//
 									$(this).dialog("close");
 									$editor.remove();
 									return;
 								}
 
 								if ($editor.find('.dsbrowser-link').val().trim() == "") {
-									item[10] = 0;
-									item[13] = $editor.find('.dsbrowser-link').val().trim();
+									item[indexOfBrowseDataUrlEnabled] = 0;
+									item[indexOfBrowseDataUrlLink] = $editor.find('.dsbrowser-link').val().trim();
 								}
 								else {
-									item[10] = 1;
-									item[13] = checkLink($editor.find('.dsbrowser-link').val().trim());
+									item[indexOfBrowseDataUrlEnabled] = 1;
+									item[indexOfBrowseDataUrlLink] = checkLink($editor.find('.dsbrowser-link').val().trim());
 								}
 
 
 								if ($editor.find('.sdmx-link').val().trim() == "") {
-									item[12] = 0;
-									item[15] = $editor.find('.sdmx-link').val().trim();
+									item[indexOfSdmxUrlEnabled] = 0;
+									item[indexOfSdmxUrlLink] = $editor.find('.sdmx-link').val().trim();
 								}
 								else {
-									item[12] = 1;
-									item[15] = checkLink($editor.find('.sdmx-link').val().trim());
+									item[indexOfSdmxUrlEnabled] = 1;
+									item[indexOfSdmxUrlLink] = checkLink($editor.find('.sdmx-link').val().trim());
 								}
 
 
 								if ($editor.find('.dsbb-link').val().trim() == "") {
-									item[11] = 0;
-									item[14] = $editor.find('.dsbb-link').val().trim();
+									item[indexOfMetadataUrlEnabled] = 0;
+									item[indexOfMetadataUrlLink] = $editor.find('.dsbb-link').val().trim();
 								}
 								else {
-									item[11] = 1;
-									item[14] = checkLink($editor.find('.dsbb-link').val().trim());
+									item[indexOfMetadataUrlEnabled] = 1;
+									item[indexOfMetadataUrlLink] = checkLink($editor.find('.dsbb-link').val().trim());
 								}
 
 								$tr.empty();
 
-								$('<div class="table-column desc"><span class="name">' + item[3] + '</span><span title="Pending changes" style="color: red; padding-left: 10px; font-size: 18px;" class="pending-submit">*</span></div>').appendTo($tr);
+								$('<div class="table-column desc"><span class="name">' + item[indexOfTargetName] + '</span><span title="Pending changes" style="color: red; padding-left: 10px; font-size: 18px;" class="pending-submit">*</span></div>').appendTo($tr);
 								$('<a href="#" class="edit-data">Edit</a>').appendTo($tr);
-								$('<div class="table-column"><a class="country-data">' + item[9] + '</a></div>').appendTo($tr);
-								if (item[10] == "1")
-									$('<div class="table-column"><a class="browse-data" target="_blank" href="' + item[13] + '">Browse Data</a></div>').appendTo($tr);
+								$('<div class="table-column"><a class="country-data">' + item[indexOfTargetSource] + '</a></div>').appendTo($tr);
+								if (item[indexOfBrowseDataUrlEnabled] == "1")
+									$('<div class="table-column"><a class="browse-data" target="_blank" href="' + item[indexOfBrowseDataUrlLink] + '">' + browseText + '</a></div>').appendTo($tr);
 								else
-									$('<div class="table-column"><a class="browse-data" style="visibility: hidden;" target="_blank" href="' + item[13] + '">Browse Data</a></div>').appendTo($tr);
+									$('<div class="table-column"><a class="browse-data" style="visibility: hidden;" target="_blank" href="' + item[indexOfBrowseDataUrlLink] + '">' + browseText + '</a></div>').appendTo($tr);
 
-								if (item[11] == "1")
-									$('<div class="table-column"><a target="blank" class="meta-data" href="' + item[14] + '">Metadata</a></div>').appendTo($tr);
+								if (item[indexOfMetadataUrlEnabled] == "1")
+									$('<div class="table-column"><a target="blank" class="meta-data" href="' + item[indexOfMetadataUrlLink] + '">' + metadataText + '</a></div>').appendTo($tr);
 								else
-									$('<div class="table-column"><a class="meta-data" style="visibility: hidden;" target="_blank" href="' + item[14] + '">Metadata</a></div>').appendTo($tr);
+									$('<div class="table-column"><a class="meta-data" style="visibility: hidden;" target="_blank" href="' + item[indexOfMetadataUrlLink] + '">' + metadataText + '</a></div>').appendTo($tr);
 
 
-								if (item[12] == "1")
-									$('<div class="table-column"><a class="sdmx" href="' + item[15] + '">SDMXURL</a></div>').appendTo($tr);
+								if (item[indexOfSdmxUrlEnabled] == "1")
+									$('<div class="table-column"><a class="sdmx" href="' + item[indexOfSdmxUrlLink] + '">' + sdmxText + '</a></div>').appendTo($tr);
 								else
-									$('<div class="table-column"><a class="sdmx" style="visibility: hidden;" target="_blank" href="' + item[15] + '">SDMXURL</a></div>').appendTo($tr);
-
-
-
+									$('<div class="table-column"><a class="sdmx" style="visibility: hidden;" target="_blank" href="' + item[indexOfSdmxUrlLink] + '">' + sdmxText + '</a></div>').appendTo($tr);
 
 								if (!$('#sdg-editor').find('.pending-submit').length)
 									$('.nsdp-page-submit').css('cursor', 'default').addClass('disable');
@@ -363,7 +480,7 @@ $(function () {
 			if ($(this).hasClass('disable'))
 				return false;
 
-			var $warningDlg = $('<div>', { 'class': 'warning-dlg', title: 'Confirm' });
+			var $warningDlg = $(Knoema.Utils.buildHTML('div', { 'class': 'warning-dlg', 'title': "Confirm" }));
 			$warningDlg.css({ 'margin-top': '15px', 'font-size': '14px' });
 			$warningDlg.text("All pending changes you have entered will be published on the live SDG page. Please confirm.");
 			$warningDlg.knDialog({
@@ -396,8 +513,7 @@ $(function () {
 			});
 		});
 
-		var datasetId = 'ofgwvlf';
-		var datasetName = 'SDG Structure';
+		var datasetId = structureDsId;
 
 		function createCSV() {
 			var row = "";
@@ -509,7 +625,7 @@ $(function () {
 			if ($('.nsdp-page-submit').hasClass('disable'))
 				return false;
 
-			var $warningDlg = $('<div>', { 'class': 'warning-dlg', title: 'Confirm' });
+			var $warningDlg = $(Knoema.Utils.buildHTML('div', { 'class': 'warning-dlg', 'title': "Confirm" }));
 			$warningDlg.css({ 'margin-top': '15px', 'font-size': '14px' });
 			$warningDlg.text("All pending changes you have entered will be cancelled and the live SDG page will remain unchanged. Please confirm.");
 			$warningDlg.knDialog({

@@ -1843,6 +1843,172 @@ ul.subtopic-content li a
 /*reforms: end*/
 
 /*sdg: start*/
+#sdg {
+  width: 910px;
+  margin: 0 auto;
+  padding-bottom: 20px;
+}
+#sdg #tile-page .tiles,
+#sdg-editor #tile-page .tiles {
+  margin-top: 2px;
+}
+#sdg #tile-page .tiles:first-child,
+#sdg-editor #tile-page .tiles:first-child {
+  margin-top: 30px;
+}
+#sdg #tile-page .tiles #tile-00,
+#sdg-editor #tile-page .tiles #tile-00 {
+  background-image: url("./img/sdg/en/00.png");
+  background-size: 100%;
+  width: 149px;
+  height: 149px;
+  float: left;
+  margin-left: 0;
+}
+#sdg #tile-page .tiles #tile-01 .image,
+#sdg-editor #tile-page .tiles #tile-01 .image {
+  background-image: url("./img/sdg/en/01.png");
+}
+#sdg #tile-page .tiles #tile-01 .hover-text,
+#sdg-editor #tile-page .tiles #tile-01 .hover-text {
+  background-color: #e5233d;
+}
+#sdg #tile-page .tiles #tile-02 .image,
+#sdg-editor #tile-page .tiles #tile-02 .image {
+  background-image: url("./img/sdg/en/02.png");
+}
+#sdg #tile-page .tiles #tile-02 .hover-text,
+#sdg-editor #tile-page .tiles #tile-02 .hover-text {
+  background-color: #dda73a;
+}
+#sdg #tile-page .tiles #tile-03 .image,
+#sdg-editor #tile-page .tiles #tile-03 .image {
+  background-image: url("./img/sdg/en/03.png");
+}
+#sdg #tile-page .tiles #tile-03 .hover-text,
+#sdg-editor #tile-page .tiles #tile-03 .hover-text {
+  background-color: #4ca146;
+}
+#sdg #tile-page .tiles #tile-04 .image,
+#sdg-editor #tile-page .tiles #tile-04 .image {
+  background-image: url("./img/sdg/en/04.png");
+}
+#sdg #tile-page .tiles #tile-04 .hover-text,
+#sdg-editor #tile-page .tiles #tile-04 .hover-text {
+  background-color: #c7212f;
+}
+#sdg #tile-page .tiles #tile-05 .image,
+#sdg-editor #tile-page .tiles #tile-05 .image {
+  background-image: url("./img/sdg/en/05.png");
+}
+#sdg #tile-page .tiles #tile-05 .hover-text,
+#sdg-editor #tile-page .tiles #tile-05 .hover-text {
+  background-color: #ee402d;
+}
+#sdg #tile-page .tiles #tile-06,
+#sdg-editor #tile-page .tiles #tile-06 {
+  margin-left: 0;
+}
+#sdg #tile-page .tiles #tile-06 .image,
+#sdg-editor #tile-page .tiles #tile-06 .image {
+  background-image: url("./img/sdg/en/06.png");
+}
+#sdg #tile-page .tiles #tile-06 .hover-text,
+#sdg-editor #tile-page .tiles #tile-06 .hover-text {
+  background-color: #28bfe6;
+}
+#sdg #tile-page .tiles #tile-07 .image,
+#sdg-editor #tile-page .tiles #tile-07 .image {
+  background-image: url("./img/sdg/en/07.png");
+}
+#sdg #tile-page .tiles #tile-07 .hover-text,
+#sdg-editor #tile-page .tiles #tile-07 .hover-text {
+  background-color: #fbc412;
+}
+#sdg #tile-page .tiles #tile-08 .image,
+#sdg-editor #tile-page .tiles #tile-08 .image {
+  background-image: url("./img/sdg/en/08.png");
+}
+#sdg #tile-page .tiles #tile-08 .hover-text,
+#sdg-editor #tile-page .tiles #tile-08 .hover-text {
+  background-color: #a31d44;
+}
+#sdg #tile-page .tiles #tile-09 .image,
+#sdg-editor #tile-page .tiles #tile-09 .image {
+  background-image: url("./img/sdg/en/09.png");
+}
+#sdg #tile-page .tiles #tile-09 .hover-text,
+#sdg-editor #tile-page .tiles #tile-09 .hover-text {
+  background-color: #f26a2e;
+}
+#sdg #tile-page .tiles #tile-10 .image,
+#sdg-editor #tile-page .tiles #tile-10 .image {
+  background-image: url("./img/sdg/en/10.png");
+}
+#sdg #tile-page .tiles #tile-10 .hover-text,
+#sdg-editor #tile-page .tiles #tile-10 .hover-text {
+  background-color: #de1768;
+}
+#sdg #tile-page .tiles #tile-11 .image,
+#sdg-editor #tile-page .tiles #tile-11 .image {
+  background-image: url("./img/sdg/en/11.png");
+}
+#sdg #tile-page .tiles #tile-11 .hover-text,
+#sdg-editor #tile-page .tiles #tile-11 .hover-text {
+  background-color: #f89d2a;
+}
+#sdg #tile-page .tiles #tile-12,
+#sdg-editor #tile-page .tiles #tile-12 {
+  margin-left: 0;
+}
+#sdg #tile-page .tiles #tile-12 .image,
+#sdg-editor #tile-page .tiles #tile-12 .image {
+  background-image: url("./img/sdg/en/12.png");
+}
+#sdg #tile-page .tiles #tile-12 .hover-text,
+#sdg-editor #tile-page .tiles #tile-12 .hover-text {
+  background-color: #bf8d2c;
+}
+#sdg #tile-page .tiles #tile-13 .image,
+#sdg-editor #tile-page .tiles #tile-13 .image {
+  background-image: url("./img/sdg/en/13.png");
+}
+#sdg #tile-page .tiles #tile-13 .hover-text,
+#sdg-editor #tile-page .tiles #tile-13 .hover-text {
+  background-color: #407f46;
+}
+#sdg #tile-page .tiles #tile-14 .image,
+#sdg-editor #tile-page .tiles #tile-14 .image {
+  background-image: url("./img/sdg/en/14.png");
+}
+#sdg #tile-page .tiles #tile-14 .hover-text,
+#sdg-editor #tile-page .tiles #tile-14 .hover-text {
+  background-color: #1f97d4;
+}
+#sdg #tile-page .tiles #tile-15 .image,
+#sdg-editor #tile-page .tiles #tile-15 .image {
+  background-image: url("./img/sdg/en/15.png");
+}
+#sdg #tile-page .tiles #tile-15 .hover-text,
+#sdg-editor #tile-page .tiles #tile-15 .hover-text {
+  background-color: #59ba47;
+}
+#sdg #tile-page .tiles #tile-16 .image,
+#sdg-editor #tile-page .tiles #tile-16 .image {
+  background-image: url("./img/sdg/en/16.png");
+}
+#sdg #tile-page .tiles #tile-16 .hover-text,
+#sdg-editor #tile-page .tiles #tile-16 .hover-text {
+  background-color: #136a9f;
+}
+#sdg #tile-page .tiles #tile-17 .image,
+#sdg-editor #tile-page .tiles #tile-17 .image {
+  background-image: url("./img/sdg/en/17.png");
+}
+#sdg #tile-page .tiles #tile-17 .hover-text,
+#sdg-editor #tile-page .tiles #tile-17 .hover-text {
+  background-color: #14496b;
+}
 #sdg #tile-page .tiles .tile,
 #sdg-editor #tile-page .tiles .tile {
   width: 149px;
@@ -1885,12 +2051,20 @@ ul.subtopic-content li a
 #sdg-editor .back {
   background-color: #0077ca;
   cursor: pointer;
-  font: bold 12pt 'PT Serif', Calibri, Gill Sans, Calibri Light, Tahoma;
+  font: bold 12pt 'PT Serif', Gill Sans, Calibri, Calibri Light, Tahoma;
   float: left;
   color: #fff;
   padding: 5px 10px;
   border-radius: 3px;
   display: none;
+}
+#sdg > .header,
+#sdg-editor > .header {
+  background-image: url("./img/sdg/en/logo-en.png");
+  background-size: 100%;
+  width: 520px;
+  height: 68px;
+  margin: 0 auto;
 }
 #sdg #detail-page,
 #sdg-editor #detail-page {
@@ -1916,7 +2090,7 @@ ul.subtopic-content li a
 #sdg #detail-page .goal-header .text,
 #sdg-editor #detail-page .goal-header .text {
   display: inline-block;
-  font: bold 12pt 'PT Serif', Calibri, Gill Sans, Calibri Light, Tahoma;
+  font: bold 12pt 'PT Serif', Gill Sans, Calibri, Calibri Light, Tahoma;
   position: relative;
   top: 28px;
   left: -65px;
@@ -1989,7 +2163,7 @@ ul.subtopic-content li a
 }
 #sdg #detail-page .target-content .header .title,
 #sdg-editor #detail-page .target-content .header .title {
-  font: bold 10.5pt 'PT Serif', Calibri, Gill Sans, Calibri Light, Tahoma;
+  font: bold 10.5pt 'PT Serif', Gill Sans, Calibri, Calibri Light, Tahoma;
   margin-left: 45px;
 }
 #sdg #detail-page .target-content .items,
@@ -2015,7 +2189,7 @@ ul.subtopic-content li a
 }
 #sdg #detail-page .target-content .items .item .country-data,
 #sdg-editor #detail-page .target-content .items .item .country-data {
-  font: bold 9pt 'PT Serif', Calibri, Gill Sans, Calibri Light, Tahoma;
+  font: bold 9pt 'PT Serif', Gill Sans, Calibri, Calibri Light, Tahoma;
   text-decoration: none;
   color: #000;
   display: inline-block;
@@ -2040,7 +2214,7 @@ ul.subtopic-content li a
 #sdg #detail-page .target-content .items .item .browse-data,
 #sdg-editor #detail-page .target-content .items .item .browse-data {
   color: #fff;
-  font: bold 9pt 'PT Serif', Calibri, Gill Sans, Calibri Light, Tahoma;
+  font: bold 9pt 'PT Serif', Gill Sans, Calibri, Calibri Light, Tahoma;
   background-color: #478bca;
   padding: 5px 15px;
   text-decoration: none;
@@ -2049,7 +2223,7 @@ ul.subtopic-content li a
 #sdg #detail-page .target-content .items .item .meta-data,
 #sdg-editor #detail-page .target-content .items .item .meta-data {
   color: #fff;
-  font: bold 9pt 'PT Serif', Calibri, Gill Sans, Calibri Light, Tahoma;
+  font: bold 9pt 'PT Serif', Gill Sans, Calibri, Calibri Light, Tahoma;
   background-color: #47cac5;
   padding: 5px 15px;
   text-decoration: none;
@@ -2058,7 +2232,7 @@ ul.subtopic-content li a
 #sdg #detail-page .target-content .items .item .sdmx,
 #sdg-editor #detail-page .target-content .items .item .sdmx {
   color: #fff;
-  font: bold 9pt 'PT Serif', Calibri, Gill Sans, Calibri Light, Tahoma;
+  font: bold 9pt 'PT Serif', Gill Sans, Calibri, Calibri Light, Tahoma;
   background-color: #47cac5;
   padding: 5px 15px;
   text-decoration: none;
@@ -2102,7 +2276,7 @@ ul.subtopic-content li a
 }
 #sdg #detail-page.goal-1 .goal-header .img,
 #sdg-editor #detail-page.goal-1 .goal-header .img {
-  background-image: url('//th.knoema.com/production/images/1007550/5rznj2ye.png');
+  background-image: url("./img/sdg/en/01.png");
 }
 #sdg #detail-page.goal-1 .target-content .header,
 #sdg-editor #detail-page.goal-1 .target-content .header {
@@ -2119,7 +2293,7 @@ ul.subtopic-content li a
 }
 #sdg #detail-page.goal-2 .goal-header .img,
 #sdg-editor #detail-page.goal-2 .goal-header .img {
-  background-image: url('//th.knoema.com/production/images/1007550/hatkcc2c.png');
+  background-image: url("./img/sdg/en/02.png");
 }
 #sdg #detail-page.goal-2 .target-content .header,
 #sdg-editor #detail-page.goal-2 .target-content .header {
@@ -2136,7 +2310,7 @@ ul.subtopic-content li a
 }
 #sdg #detail-page.goal-3 .goal-header .img,
 #sdg-editor #detail-page.goal-3 .goal-header .img {
-  background-image: url('//th.knoema.com/production/images/1007550/u5sxyz50.png');
+  background-image: url("./img/sdg/en/03.png");
 }
 #sdg #detail-page.goal-3 .target-content .header,
 #sdg-editor #detail-page.goal-3 .target-content .header {
@@ -2153,7 +2327,7 @@ ul.subtopic-content li a
 }
 #sdg #detail-page.goal-4 .goal-header .img,
 #sdg-editor #detail-page.goal-4 .goal-header .img {
-  background-image: url('//th.knoema.com/production/images/1007550/p4jujbim.png');
+  background-image: url("./img/sdg/en/04.png");
 }
 #sdg #detail-page.goal-4 .target-content .header,
 #sdg-editor #detail-page.goal-4 .target-content .header {
@@ -2170,7 +2344,7 @@ ul.subtopic-content li a
 }
 #sdg #detail-page.goal-5 .goal-header .img,
 #sdg-editor #detail-page.goal-5 .goal-header .img {
-  background-image: url('//th.knoema.com/production/images/1007550/zehgoql5.png');
+  background-image: url("./img/sdg/en/05.png");
 }
 #sdg #detail-page.goal-5 .target-content .header,
 #sdg-editor #detail-page.goal-5 .target-content .header {
@@ -2187,7 +2361,7 @@ ul.subtopic-content li a
 }
 #sdg #detail-page.goal-6 .goal-header .img,
 #sdg-editor #detail-page.goal-6 .goal-header .img {
-  background-image: url('//th.knoema.com/production/images/1007550/gl210ujw.png');
+  background-image: url("./img/sdg/en/06.png");
 }
 #sdg #detail-page.goal-6 .target-content .header,
 #sdg-editor #detail-page.goal-6 .target-content .header {
@@ -2204,7 +2378,7 @@ ul.subtopic-content li a
 }
 #sdg #detail-page.goal-7 .goal-header .img,
 #sdg-editor #detail-page.goal-7 .goal-header .img {
-  background-image: url('//th.knoema.com/production/images/1007550/n0a3qrqq.png');
+  background-image: url("./img/sdg/en/07.png");
 }
 #sdg #detail-page.goal-7 .target-content .header,
 #sdg-editor #detail-page.goal-7 .target-content .header {
@@ -2221,7 +2395,7 @@ ul.subtopic-content li a
 }
 #sdg #detail-page.goal-8 .goal-header .img,
 #sdg-editor #detail-page.goal-8 .goal-header .img {
-  background-image: url('//th.knoema.com/production/images/1007550/wvrter33.png');
+  background-image: url("./img/sdg/en/08.png");
 }
 #sdg #detail-page.goal-8 .target-content .header,
 #sdg-editor #detail-page.goal-8 .target-content .header {
@@ -2238,7 +2412,7 @@ ul.subtopic-content li a
 }
 #sdg #detail-page.goal-9 .goal-header .img,
 #sdg-editor #detail-page.goal-9 .goal-header .img {
-  background-image: url('//th.knoema.com/production/images/1007550/bdq1aech.png');
+  background-image: url("./img/sdg/en/09.png");
 }
 #sdg #detail-page.goal-9 .target-content .header,
 #sdg-editor #detail-page.goal-9 .target-content .header {
@@ -2255,7 +2429,7 @@ ul.subtopic-content li a
 }
 #sdg #detail-page.goal-10 .goal-header .img,
 #sdg-editor #detail-page.goal-10 .goal-header .img {
-  background-image: url('//th.knoema.com/production/images/1007550/i1fjdq4h.png');
+  background-image: url("./img/sdg/en/10.png");
 }
 #sdg #detail-page.goal-10 .target-content .header,
 #sdg-editor #detail-page.goal-10 .target-content .header {
@@ -2272,7 +2446,7 @@ ul.subtopic-content li a
 }
 #sdg #detail-page.goal-11 .goal-header .img,
 #sdg-editor #detail-page.goal-11 .goal-header .img {
-  background-image: url('//th.knoema.com/production/images/1007550/el4mmfxe.png');
+  background-image: url("./img/sdg/en/11.png");
 }
 #sdg #detail-page.goal-11 .target-content .header,
 #sdg-editor #detail-page.goal-11 .target-content .header {
@@ -2289,7 +2463,7 @@ ul.subtopic-content li a
 }
 #sdg #detail-page.goal-12 .goal-header .img,
 #sdg-editor #detail-page.goal-12 .goal-header .img {
-  background-image: url('//th.knoema.com/production/images/1007550/v5bjyqb3.png');
+  background-image: url("./img/sdg/en/12.png");
 }
 #sdg #detail-page.goal-12 .target-content .header,
 #sdg-editor #detail-page.goal-12 .target-content .header {
@@ -2306,7 +2480,7 @@ ul.subtopic-content li a
 }
 #sdg #detail-page.goal-13 .goal-header .img,
 #sdg-editor #detail-page.goal-13 .goal-header .img {
-  background-image: url('//th.knoema.com/production/images/1007550/h3whojiv.png');
+  background-image: url("./img/sdg/en/13.png");
 }
 #sdg #detail-page.goal-13 .target-content .header,
 #sdg-editor #detail-page.goal-13 .target-content .header {
@@ -2323,7 +2497,7 @@ ul.subtopic-content li a
 }
 #sdg #detail-page.goal-14 .goal-header .img,
 #sdg-editor #detail-page.goal-14 .goal-header .img {
-  background-image: url('//th.knoema.com/production/images/1007550/lbbe2lx3.png');
+  background-image: url("./img/sdg/en/14.png");
 }
 #sdg #detail-page.goal-14 .target-content .header,
 #sdg-editor #detail-page.goal-14 .target-content .header {
@@ -2340,7 +2514,7 @@ ul.subtopic-content li a
 }
 #sdg #detail-page.goal-15 .goal-header .img,
 #sdg-editor #detail-page.goal-15 .goal-header .img {
-  background-image: url('//th.knoema.com/production/images/1007550/ny1uhisq.png');
+  background-image: url("./img/sdg/en/15.png");
 }
 #sdg #detail-page.goal-15 .goal-header .text,
 #sdg-editor #detail-page.goal-15 .goal-header .text {
@@ -2361,7 +2535,7 @@ ul.subtopic-content li a
 }
 #sdg #detail-page.goal-16 .goal-header .img,
 #sdg-editor #detail-page.goal-16 .goal-header .img {
-  background-image: url('//th.knoema.com/production/images/1007550/xgb3adnc.png');
+  background-image: url("./img/sdg/en/16.png");
 }
 #sdg #detail-page.goal-16 .goal-header .text,
 #sdg-editor #detail-page.goal-16 .goal-header .text {
@@ -2382,18 +2556,126 @@ ul.subtopic-content li a
 }
 #sdg #detail-page.goal-17 .goal-header .img,
 #sdg-editor #detail-page.goal-17 .goal-header .img {
-  background-image: url('//th.knoema.com/production/images/1007550/o3wxenkz.png');
+  background-image: url("./img/sdg/en/17.png");
 }
 #sdg #detail-page.goal-17 .target-content .header,
 #sdg-editor #detail-page.goal-17 .target-content .header {
   border-bottom: 2px solid #14496B;
 }
 #sdg #detail-page.goal-17 .target-content .header a,
-#sdg-editor #detail-page.goal-17 .target-content .header a
-{
-	display: inline-block;
-	background-color: #14496B;
+#sdg-editor #detail-page.goal-17 .target-content .header a {
+  display: inline-block;
+  background-color: #14496B;
 }
+html[lang="fr-FR"] #sdg #tile-page .tiles #tile-00 {
+  background-image: url("./img/sdg/fr/00.png");
+}
+html[lang="fr-FR"] #sdg #tile-page .tiles #tile-01 .image {
+  background-image: url("./img/sdg/fr/01.png");
+}
+html[lang="fr-FR"] #sdg #tile-page .tiles #tile-02 .image {
+  background-image: url("./img/sdg/fr/02.png");
+}
+html[lang="fr-FR"] #sdg #tile-page .tiles #tile-03 .image {
+  background-image: url("./img/sdg/fr/03.png");
+}
+html[lang="fr-FR"] #sdg #tile-page .tiles #tile-04 .image {
+  background-image: url("./img/sdg/fr/04.png");
+}
+html[lang="fr-FR"] #sdg #tile-page .tiles #tile-05 .image {
+  background-image: url("./img/sdg/fr/05.png");
+}
+html[lang="fr-FR"] #sdg #tile-page .tiles #tile-06 .image {
+  background-image: url("./img/sdg/fr/06.png");
+}
+html[lang="fr-FR"] #sdg #tile-page .tiles #tile-07 .image {
+  background-image: url("./img/sdg/fr/07.png");
+}
+html[lang="fr-FR"] #sdg #tile-page .tiles #tile-08 .image {
+  background-image: url("./img/sdg/fr/08.png");
+}
+html[lang="fr-FR"] #sdg #tile-page .tiles #tile-09 .image {
+  background-image: url("./img/sdg/fr/09.png");
+}
+html[lang="fr-FR"] #sdg #tile-page .tiles #tile-10 .image {
+  background-image: url("./img/sdg/fr/10.png");
+}
+html[lang="fr-FR"] #sdg #tile-page .tiles #tile-11 .image {
+  background-image: url("./img/sdg/fr/11.png");
+}
+html[lang="fr-FR"] #sdg #tile-page .tiles #tile-12 .image {
+  background-image: url("./img/sdg/fr/12.png");
+}
+html[lang="fr-FR"] #sdg #tile-page .tiles #tile-13 .image {
+  background-image: url("./img/sdg/fr/13.png");
+}
+html[lang="fr-FR"] #sdg #tile-page .tiles #tile-14 .image {
+  background-image: url("./img/sdg/fr/14.png");
+}
+html[lang="fr-FR"] #sdg #tile-page .tiles #tile-15 .image {
+  background-image: url("./img/sdg/fr/15.png");
+}
+html[lang="fr-FR"] #sdg #tile-page .tiles #tile-16 .image {
+  background-image: url("./img/sdg/fr/16.png");
+}
+html[lang="fr-FR"] #sdg #tile-page .tiles #tile-17 .image {
+  background-image: url("./img/sdg/fr/17.png");
+}
+html[lang="fr-FR"] #sdg > .header {
+  background-image: url("./img/sdg/fr/logo-fr.png");
+}
+html[lang="fr-FR"] #sdg #detail-page.goal-1 .goal-header .img {
+  background-image: url("./img/sdg/fr/01.png");
+}
+html[lang="fr-FR"] #sdg #detail-page.goal-2 .goal-header .img {
+  background-image: url("./img/sdg/fr/02.png");
+}
+html[lang="fr-FR"] #sdg #detail-page.goal-3 .goal-header .img {
+  background-image: url("./img/sdg/fr/03.png");
+}
+html[lang="fr-FR"] #sdg #detail-page.goal-4 .goal-header .img {
+  background-image: url("./img/sdg/fr/04.png");
+}
+html[lang="fr-FR"] #sdg #detail-page.goal-5 .goal-header .img {
+  background-image: url("./img/sdg/fr/05.png");
+}
+html[lang="fr-FR"] #sdg #detail-page.goal-6 .goal-header .img {
+  background-image: url("./img/sdg/fr/06.png");
+}
+html[lang="fr-FR"] #sdg #detail-page.goal-7 .goal-header .img {
+  background-image: url("./img/sdg/fr/07.png");
+}
+html[lang="fr-FR"] #sdg #detail-page.goal-8 .goal-header .img {
+  background-image: url("./img/sdg/fr/08.png");
+}
+html[lang="fr-FR"] #sdg #detail-page.goal-9 .goal-header .img {
+  background-image: url("./img/sdg/fr/09.png");
+}
+html[lang="fr-FR"] #sdg #detail-page.goal-10 .goal-header .img {
+  background-image: url("./img/sdg/fr/10.png");
+}
+html[lang="fr-FR"] #sdg #detail-page.goal-11 .goal-header .img {
+  background-image: url("./img/sdg/fr/11.png");
+}
+html[lang="fr-FR"] #sdg #detail-page.goal-12 .goal-header .img {
+  background-image: url("./img/sdg/fr/12.png");
+}
+html[lang="fr-FR"] #sdg #detail-page.goal-13 .goal-header .img {
+  background-image: url("./img/sdg/fr/13.png");
+}
+html[lang="fr-FR"] #sdg #detail-page.goal-14 .goal-header .img {
+  background-image: url("./img/sdg/fr/14.png");
+}
+html[lang="fr-FR"] #sdg #detail-page.goal-15 .goal-header .img {
+  background-image: url("./img/sdg/fr/15.png");
+}
+html[lang="fr-FR"] #sdg #detail-page.goal-16 .goal-header .img {
+  background-image: url("./img/sdg/fr/16.png");
+}
+html[lang="fr-FR"] #sdg #detail-page.goal-17 .goal-header .img {
+  background-image: url("./img/sdg/fr/17.png");
+}
+
 /*sdg: end*/
 
 /*portfolio: start*/
