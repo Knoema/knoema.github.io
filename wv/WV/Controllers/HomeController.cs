@@ -21,6 +21,13 @@ namespace WV.Controllers
 			if (string.IsNullOrEmpty(param))
 				RedirectToAction("Index");
 
+			var isFB = Request.UserAgent.Contains("facebookexternalhit/") || Request.UserAgent.Contains("Facebot");
+			var isTwitter = Request.UserAgent.Contains("Twitterbot");
+			var isGPlus = Request.UserAgent.Contains("Google (+https://developers.google.com/+/web/snippet/)");
+
+			if (isFB || isTwitter || isGPlus)
+				RedirectToAction("Index");
+
 			ViewBag.Param = param;
 			ViewBag.Host = Request.Url.Scheme + "//" + Request.Url.Host;
 
