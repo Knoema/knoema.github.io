@@ -6,7 +6,7 @@ var Infrastructure;
 	var host = 'http://pspp.knoema.com';
 	//var host = 'https://beta.knoema.org';
 
-	var projectsDataset = 'sardyld';
+	var projectsDataset = 'tyunxic';
 	var objectsDataset = 'hpenvhf';
 
 	var projectData = [];
@@ -25,6 +25,49 @@ var Infrastructure;
 	var ppIndex = -1;
 	var statusIndex = -1;
 	var ptipIndex = -1;
+	var sectorIndex = -1;
+	var budgetIndex = -1;
+
+	var axes = {
+		'1': 'Transformation structurelle de l’économie et croissance',
+		'2': 'Capital humain, Protection sociale et Développement durable',
+		'3': 'Gouvernance, Institutions, Paix et Sécurité'
+	};
+
+	var sectors = {
+		'100': 'Agriculture et Sécurité alimentaire',
+		'101': 'Artisanat',
+		'102': 'Commerce',
+		'103': 'Communication, Infrastructures et Services de télécommunication',
+		'104': 'Coopération Internationale, Intégration régionale et SE',
+		'105': 'Culture',
+		'106': 'Elevage',
+		'107': 'Industrie et Transformation agroalimentaire',
+		'108': 'Infrastructure financière et Services financiers',
+		'109': 'Transport',
+		'110': 'Infrastructures et services énergétiques',
+		'111': 'Mines et carrières',
+		'112': 'Pêche et aquaculture',
+		'113': 'Secteur privé et PME',
+		'114': 'Sports',
+		'115': 'Tourisme',
+		'200': 'Eau Potable et Assainissement (EPA)',
+		'201': 'Education Nationale',
+		'202': 'Emploi, jeunesse, Population et développement',
+		'203': 'Enseignement Supérieur et Recherche',
+		'204': 'Environnement et Développement Durable',
+		'205': 'Formation professionnelle et technique',
+		'206': 'Gestion des Risques et Catastrophes',
+		'207': 'Habitat et Cadre de vie',
+		'208': 'Protection sociale',
+		'209': 'Santé et Nutrition',
+		'300': 'Administration publique et Réforme de l’Etat',
+		'301': 'Aménagement du territoire, Développement local et Territorialisation',
+		'302': 'Equité et Egalité de Genre',
+		'303': 'Gouvernance stratégique, économique et financière',
+		'304': 'Justice, Droits Humains et Etat de droit',
+		'305': 'Paix et sécurité'
+	};
 
     var PPNameToObjectType = {
     	"100-150 aggregation projects focused on livestock and high value added agriculture sectors": ["Farms"],
@@ -89,6 +132,9 @@ var Infrastructure;
             this.regionAverageData = {};
             this.senegalData = {};
 
+            this.axes = axes;
+            this.sectors = sectors;
+
             $('#slider-range').slider({
             	range: true,
             	min: 0,
@@ -111,44 +157,6 @@ var Infrastructure;
             $('#regions').on('change', function () {
 
             	showRegion();
-            });
-
-            $('.region-profile-button').on('click', function () {
-
-            	var regionId = $('#regions').val();
-            	
-            	if (regionId == -1) {
-            		_this.getSenegalData(function () {
-
-            			var template = doT.template($('#senegal-profile').html());
-            			$('#senegal-frame-popup .passport__content').html(template({
-            				indicatorData: _this.senegalData
-            			}));
-            			$('#senegal-frame-popup').show();
-            		});
-            	}
-            	else {
-            		var regionName = $('#regions option[value=' + regionId + ']').text();
-
-            		_this.getRegionData(regionId, function (data) {
-            			
-            			var avg = {};
-            			for (var i in data) {
-            				avg[i] = data[i] < _this.regionAverageData[i] ? "red" : "other";
-            			}
-
-            			var template = doT.template($('#region-profile').html());
-            			_this.infoWindow.setContent(template({
-            				regionName: regionName,
-            				indicatorData: data,
-							averageData: avg
-            			}));
-
-            			_this.infoWindow.setPosition(RegionsCenters[regionId]);
-            			_this.infoWindow.open(_this.map);
-            			_this.map.setCenter(RegionsCenters[regionId]);
-            		});
-            	}
             });
 
             $('#ppp-select-button').on('click', function () {
@@ -188,9 +196,10 @@ var Infrastructure;
             		if (name == 'Database Code') _this.databaseCodeIndex = i;
             		if (name == 'Code de l\'axe stratégique de la vision 2035') _this.pseIndex = i;
             		if (name == 'Nom Projet') _this.nameIndex = i;
-            		if (name == 'Numéro du projet phare / numéro de la réforme phare') _this.ppIndex = i;
-            		if (name == 'Statut') _this.statusIndex = i;
+            		if (name == 'Numéro du projet phare / numéro de la réforme phare. (PP# / RP#)') _this.ppIndex = i;
+            		if (name == 'Statut Projets: Annoncé, En cours, Complété, opérationel Programmes/reformes: En') _this.statusIndex = i;
             		if (name == 'Code PTIP') _this.ptipIndex = i;
+            		if (name == 'Code du Sous-Secteur (voir feuille Read me pour avoir les codes)') _this.sectorIndex = i;
             	}
 
             	_this.objectData = objectData[0].data;
@@ -253,9 +262,6 @@ var Infrastructure;
             	var regionId = $('#regions').val();
             	var $rhp = $('#right-hand-panel');
 
-            	//$('input[name="Layer"]').filter('[value="none"]').trigger('click');
-            	//$("div#legend").hide();
-
             	if (regionId == -1) {
             		_this.hasGeoJson = false;
 
@@ -302,19 +308,36 @@ var Infrastructure;
 
             	var projects = getProjectByRegion(regionId);
             	var $trs = [];
+            	$rhp.find('tbody').empty();
             	if (projects.length > 0) {
             		for (var i = 0; i < projects.length; i++) {
+
+            			var ppNumber = '00';
+            			if (projects[i].pp.length == 4)
+            				ppNumber = projects[i].pp.substr(2, 3);
+            			else if (projects[i].pp.length == 3)
+            				ppNumber = '0' + projects[i].pp.substr(2, 3);
+
             			$trs.push($('<tr>')
+							.append($('<td>').append($('<img>', {src: './img/right-panel/icons-' + ppNumber + '.png', 'class': 'pp-image-small'})))
 							.append($('<td>', { text: projects[i].pp }))
 							.append($('<td>', { text: projects[i].name }))
 							.append($('<td>', { text: projects[i].status }))
 						);
             		}
 
-            		$rhp.find('tbody').empty().append($trs)
+            		$rhp.find('tbody').append($trs)
             	}
 
             	$rhp.show();
+
+            	_this.getRegionData(regionId, function (data) {
+
+            		var regionData = doT.template($('#region-profile').html());
+            		$('#region-data').empty().append(regionData({
+            			indicatorData: data
+            		}));
+            	});
             };
 
             function getProjectByRegion(regionId) {
@@ -398,7 +421,7 @@ var Infrastructure;
             				case 'plan':
             					var ptipValue = _this.projectData[offset + _this.ptipIndex] == '' ? 'no' : 'yes';
 
-            					if (ptipValue != params[j])
+            					if($.inArray(ptipValue, params[j]) == -1)
             						addObject = false;
             					break;
             			}
@@ -412,12 +435,13 @@ var Infrastructure;
 
             		if (addObject) {
             			var tooltipData = {};
-            			tooltipData[_this.projectColumns[2].name] = _this.projectData[offset + 2];
-            			tooltipData[_this.projectColumns[9].name] = _this.projectData[offset + 9];
-            			tooltipData[_this.projectColumns[10].name] = _this.projectData[offset + 10];
-            			tooltipData[_this.projectColumns[3].name] = _this.projectData[offset + 3];
-            			tooltipData[_this.projectColumns[14].name] = _this.projectData[offset + 14];
-            			tooltipData[_this.projectColumns[40].name] = _this.projectData[offset + 40];
+            			tooltipData[_this.projectColumns[_this.nameIndex].name] = _this.projectData[offset + _this.nameIndex];
+            			tooltipData[_this.projectColumns[_this.pseIndex].name] = _this.projectData[offset + _this.pseIndex] + ' - ' + _this.axes[_this.projectData[offset + _this.pseIndex]];
+            			tooltipData[_this.projectColumns[_this.sectorIndex].name] = _this.projectData[offset + _this.sectorIndex] + ' - ' + _this.sectors[_this.projectData[offset + _this.sectorIndex]];
+            			tooltipData[_this.projectColumns[_this.statusIndex].name] = _this.projectData[offset + _this.statusIndex];
+            			tooltipData[_this.projectColumns[_this.ppIndex].name] = _this.projectData[offset + _this.ppIndex];
+            			tooltipData[_this.projectColumns[_this.ptipIndex].name] = _this.projectData[offset + _this.ptipIndex];
+            			tooltipData['Budget Total Prévu: Dépenses réalisées'] = '0';
 
             			filtredProjects[_this.projectData[offset + _this.databaseCodeIndex]] = tooltipData;
             		}
@@ -446,7 +470,6 @@ var Infrastructure;
             		_this.clearMarkers();
             	}
             });
-            //$overviewFilter.trigger('change');
 
             $(document).on('click', '.passport__close', function(event) {
             	$(event.target).closest('.passport-popup').hide();
@@ -641,7 +664,7 @@ var Infrastructure;
 
         		html += '</div>';
 
-        		html += '<a href="#" data-data="' + encodeURI(JSON.stringify(tooltipData)) + '" class="opp-button">Open project passport</a>';
+        		html += '<a href="#" data-data="' + encodeURI(JSON.stringify(tooltipData)) + '" class="opp-button">Passeport projet ouvert</a>';
 
         		html += '</div>';
 
@@ -652,16 +675,17 @@ var Infrastructure;
         			var objData = decodeURI($(this).data('data'));
         			objData = JSON.parse(objData);
 
-        			var ppNumber = objData["Numéro du projet phare / numéro de la réforme phare"];
+        			var ppNumber = objData["Numéro du projet phare / numéro de la réforme phare. (PP# / RP#)"];
         			var ppName = $('#ppp-projects').find('option[value=' + ppNumber + ']').text();
 
         			var templateData = {
         				name: objData["Nom Projet"],
         				budget: objData["Budget Total Prévu: Dépenses réalisées"],
         				axe: objData["Code de l'axe stratégique de la vision 2035"],
-        				sour: objData["Code du Sous-Secteur"],
+        				sour: objData["Code du Sous-Secteur (voir feuille Read me pour avoir les codes)"],
         				number: ppName,
-        				status: objData["Statut"]
+        				status: objData["Statut Projets: Annoncé, En cours, Complété, opérationel Programmes/reformes: En"],
+        				ptip: objData["Code PTIP"]
         			};
 
         			var template = doT.template($('#new-object-passport').html());
@@ -721,6 +745,72 @@ var Infrastructure;
         	}
 
             this.markers = markers;
+        };
+
+        Application.prototype.getRegionData = function (regionId, callback) {
+
+        	var self = this;
+        	var filterByRegion = function (regionId) {
+        		var res = {};
+        		for (var i = 0; i < self.regionData.length; i++)
+        			if (self.regionData[i].regionId == regionId)
+        				res[self.regionData[i].indicator] = self.regionData[i].value;
+
+        		return res;
+        	};
+
+        	if (self.regionData.length == 0) {
+        		self.getRegionsData().done(function (data) {
+
+        			var rowCount = Math.floor(data.data.length / data.columns.length);
+        			for (var rowIndex = 0; rowIndex < rowCount; rowIndex++) {
+        				var rowOffset = rowIndex * data.columns.length;
+
+        				var ind = data.data[rowOffset + 3];
+        				if (self.regionAverageData[ind])
+        					self.regionAverageData[ind] += data.data[rowOffset + 6] * 1 / 14;
+        				else
+        					self.regionAverageData[ind] = data.data[rowOffset + 6] * 1 / 14;
+
+        				self.regionData.push({
+        					regionId: data.data[rowOffset + 1],
+        					indicator: data.data[rowOffset + 3],
+        					value: data.data[rowOffset + 6] * 1
+        				});
+        			}
+
+        			callback(filterByRegion(regionId));
+        		});
+        	}
+        	else {
+        		callback(filterByRegion(regionId));
+        	}
+        };
+
+        Application.prototype.getRegionsData = function () {
+        	var url = 'http://knoema.com/api/1.0/data/details?client_id=EZj54KGFo3rzIvnLczrElvAitEyU28DGw9R73tif&page_id=SNDED2016';
+        	var data = {
+        		"Header": [],
+        		"Stub": [],
+        		"Filter": [{
+        			"DimensionId": "location",
+        			"Members": [],
+        			"DimensionName": "Location",
+        			"DatasetId": "SNDED2016"
+        		},
+        		{
+        			"DimensionId": "indicator",
+        			"Members": ['1000010', '1000020', '1000030', '1000040', '1000050', '1000070', '1000080', '1000090', '1000100'],
+        			"DimensionName": "Indicator",
+        			"DatasetId": "SNDED2016"
+        		}],
+        		"Frequencies": [],
+        		"Dataset": "SNDED2016",
+        		"Segments": null,
+        		"MeasureAggregations": null
+        	};
+
+        	return $.post(url, data);
         };
 
         Application.prototype.getObjects = function () {

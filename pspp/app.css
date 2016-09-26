@@ -333,7 +333,7 @@ h2.left-menu
 	color: #fff;
 	background-color: #472001;
 	padding: 5px 10px;
-	width: 110px;
+	width: 180px;
 	text-align:center;
 	margin-right: 5px;
 	border: 0px;
@@ -1262,13 +1262,24 @@ p.value
 	position: absolute;
 	right: 0;
 	top: 0;
-	bottom: 0;
-	width: 300px;
+	bottom: 45px;
+	width: 350px;
 	background-color: #f4ece1;
 	padding: 5px 10px;
 	font-family: 'Roboto', sans-serif;
 	font-size: 12px;
 	display: none;
+	overflow-y: auto;
+}
+
+#right-hand-panel .panel-title img
+{
+	float: right;
+	margin-top: 15px;
+}
+#right-hand-panel .panel-title .region-name
+{
+	display: inline-block;
 }
 
 #right-hand-panel table
@@ -1289,6 +1300,11 @@ p.value
 	padding: 7px 5px;
 	vertical-align: top;
 }
+#right-hand-panel table tbody tr td img.pp-image-small
+{
+	height: 30px;
+	margin-top: -7px;
+}
 #right-hand-panel table tbody tr:nth-child(2n)
 {
 	background-color: #f3f0ec;
@@ -1303,7 +1319,6 @@ p.value
 #right-hand-panel .panel-title
 {
 	border-bottom: 1px solid #9b7c4f;
-	text-align: center;
 }
 
 #footer div a
@@ -1462,7 +1477,7 @@ p.value
 	font-size: 11pt;
 	display: block;
 	margin-left: 140px;
-	width: 220px;
+	width: 230px;
 }
 
 .map-tooltip .data-block h3

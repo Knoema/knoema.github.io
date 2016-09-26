@@ -67,9 +67,9 @@
     	<div id="overview" class="tab-pane active">
 			<form id="overviewFilter" class="filter-form">
 				<h2 class="left-menu" style="">PSE:</h2>
-				<label><input type="checkbox" name="pse" value="1"/>Axe 1</label>
-				<label><input type="checkbox" name="pse" value="2"/>Axe 2</label>
-				<label><input type="checkbox" name="pse" value="3"/>Axe 3</label>
+				<label><input type="checkbox" name="pse" value="1"/>Transformation structurelle de l’économie et croissance</label>
+				<label><input type="checkbox" name="pse" value="2"/>Capital humain, Protection sociale et Développement durable</label>
+				<label><input type="checkbox" name="pse" value="3"/>Gouvernance, Institutions, Paix et Sécurité</label>
 
 				<h2 class="left-menu">Les Phares 27 Projects Du PSPP:</h2>
 				<select class="form-control input-sm ppp-projects-container" id="ppp-projects" multiple>
@@ -105,8 +105,8 @@
 				<button id="ppp-select-button">Choisir</button>
 
 				<h2 class="left-menu">Ptip "PLAN D'INVESTISSEMENT DE TROIS ANS":</h2>
-				<label><input type="radio" name="plan" value="yes" />Oui</label>
-				<label><input type="radio" name="plan" value="no" checked />Non</label>
+				<label><input type="checkbox" name="plan" value="yes" />Oui</label>
+				<label><input type="checkbox" name="plan" value="no" />Non</label>
 
 				<h2 class="left-menu">Budget de depenses</h2>
 				<input type="text" name="budget-min" id="budget-min" class="budget-input" value="0" />
@@ -299,10 +299,10 @@
 					</div>
     			</div>
 				<div class="passport__buttons">
-					<button class="pp-btn" id="pp-select-all">Select all</button>
-					<button class="pp-btn" id="pp-deselect-all">Deselect all</button>
-					<button class="pp-btn" id="pp-ok">Ok</button>
-					<button class="pp-btn" id="pp-cancel">Cancel</button>
+					<button class="pp-btn" id="pp-select-all">Sélectionner Tout</button>
+					<button class="pp-btn" id="pp-deselect-all">Tout Déselectionner</button>
+					<button class="pp-btn" id="pp-ok">D'accord</button>
+					<button class="pp-btn" id="pp-cancel">Annuler</button>
 				</div>
 				</div>
 			</div>
@@ -345,13 +345,16 @@
 
 			<div id="right-hand-panel">
 				<div class="panel-title">
-					<h2 class="region-name"></h2>
+					<h2 class="region-name"></h2><img src="./img/right-panel/icon-pdf.png"/>
 				</div>
+
+				<div id="region-data"></div>
+
 				<div class="table-container">
 					<table>
 						<thead>
 							<tr>
-								<th colspan="2">Projet</th>
+								<th colspan="3">Projet</th>
 								<th>Statut</th>
 							</tr>
 						</thead>
@@ -419,14 +422,14 @@
 				<tbody>
 					<tr>
 						<td style="width: 20%"><p class="title">Nom Projet</p><p class="value">{{=it.name}}</p></td>
-						<td style="width: 20%"><p class="title">Statut</p><p class="value">{{=it.status}}</p></td>
+						<td style="width: 20%"><p class="title">Statut Projets: Annoncé, En cours, Complété, opérationel Programmes/reformes: En</p><p class="value">{{=it.status}}</p></td>
 						<td style="width: 30%"><p class="title">Code de l'axe stratégique de la vision 2035</p><p class="value">{{=it.axe}}</p></td>
 						<td style="width: 30%"><p class="title">Numéro du projet phare / numéro de la réforme phare</p><p class="value">{{=it.number}}</p></td>
 					</tr>
 					<tr>
 						<td><p class="title">Budget Total Prévu: Dépenses réalisées</p><p class="value">{{=it.budget}}</p></td>
-						<td><p class="title">Code du Sous-Secteur</p><p class="value">{{=it.sour}}</p></td>
-						<td></td>
+						<td><p class="title">Code PTIP</p><p class="value">{{=it.ptip}}</p></td>
+						<td><p class="title">Code du Sous-Secteur (voir feuille Read me pour avoir les codes)</p><p class="value">{{=it.sour}}</p></td>
 						<td></td>
 					</tr>
 				</tbody>
@@ -449,33 +452,65 @@
 	</script>
 
 	<script id="region-profile" type="text/x-handlebars-template">
-		<div class="map-tooltip">
 
-			<p class="tooltip-header">{{=it.regionName}}</p>
+		<table>
+			<thead>
+				<tr>
+					<th colspan="3">Economic Development</th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>GDP per capita</td>
+					<td>{{=it.indicatorData["GDP per capita"]}}</td>
+				</tr>
+				<tr>
+					<td>Non-farm economy, weight</td>
+					<td>{{=it.indicatorData["Non-farm economy, weight"]}}</td>
+				</tr>
+				<tr>
+					<td>GDP growth (2005-2011)</td>
+					<td>{{=it.indicatorData["GDP growth (2005-2011)"]}}</td>
+				</tr>
+				<tr>
+					<td>Share in GDP Growth (2005-2011)</td>
+					<td>{{=it.indicatorData["Share in GDP Growth (2005-2011)"]}}</td>
+				</tr>
+				<tr>
+					<td>Deviation from average of economic development</td>
+					<td>{{=it.indicatorData["Deviation from average of economic development"]}}</td>
+				</tr>
+			</tbody>
+		</table>
 
-			<div class="data-block-r">
+		<table>
+			<thead>
+				<tr>
+					<th colspan="3">Human Development</th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>Literacy</td>
+					<td>{{=it.indicatorData["Literacy"]}}</td>
+				</tr>
+				<tr>
+					<td>Life expectancy</td>
+					<td>{{=it.indicatorData["Life expectancy"]}}</td>
+				</tr>
+				<tr>
+					<td>Population above the poverty line</td>
+					<td>{{=it.indicatorData["Population above the poverty line"]}}</td>
+				</tr>
+				<tr>
+					<td>Deviation from average of human development</td>
+					<td>{{=it.indicatorData["Deviation from average of human development"]}}</td>
+				</tr>
+			</tbody>
+		</table>
 
-				<div><h3>Economic Development</h3></div>
-				<div class="{{=it.averageData["GDP per capita"]}}"><label>GDP per capita:&nbsp;</label>{{=it.indicatorData["GDP per capita"]}}</div>
-				<div class="odd {{=it.averageData["Non-farm economy, weight"]}}"><label>Non-farm economy, weight:&nbsp;</label>{{=it.indicatorData["Non-farm economy, weight"]}}</div>
-				<div class="{{=it.averageData["GDP growth (2005-2011)"]}}"><label>GDP growth (2005-2011):&nbsp;</label>{{=it.indicatorData["GDP growth (2005-2011)"]}}</div>
-				<div class="odd {{=it.averageData["Share in GDP Growth (2005-2011)"]}}"><label>Share in GDP Growth (2005-2011):&nbsp;</label>{{=it.indicatorData["Share in GDP Growth (2005-2011)"]}}</div>
-				<div class="{{=it.averageData["Deviation from average of economic development"]}}"><label>Deviation from average of economic development:&nbsp;</label>{{=it.indicatorData["Deviation from average of economic development"]}}</div>
-
-			</div>
-			<div class="data-block-r">
-
-				<div><h3>Human Development</h3></div>
-				<div class="{{=it.averageData["Literacy"]}}"><label>Literacy:&nbsp;</label>{{=it.indicatorData["Literacy"]}}</div>
-				<div class="odd {{=it.averageData["Life expectancy"]}}"><label>Life expectancy:&nbsp;</label>{{=it.indicatorData["Life expectancy"]}}</div>
-				<div class="{{=it.averageData["Population above the poverty line"]}}"><label>Population above the poverty line:&nbsp;</label>{{=it.indicatorData["Population above the poverty line"]}}</div>
-				<div class="odd {{=it.averageData["Deviation from average of human development"]}}"><label>Deviation from average of human development:&nbsp;</label>{{=it.indicatorData["Deviation from average of human development"]}}</div>
-
-			</div>
-			<div class="data-block-r">
-				<p>Note: Performance on a development indicator in red was less than half that of the highest scoring region</p>
-			</div>
-		</div>
 	</script>
 
 	<script id="senegal-profile" type="text/x-handlebars-template">
