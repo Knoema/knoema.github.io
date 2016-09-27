@@ -4,7 +4,6 @@
 var Infrastructure;
 (function (Infrastructure) {
 	var host = 'http://pspp.knoema.com';
-	//var host = 'https://beta.knoema.org';
 
 	var projectsDataset = 'tyunxic';
 	var objectsDataset = 'hpenvhf';
