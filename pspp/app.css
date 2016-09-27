@@ -2820,3 +2820,146 @@ html[lang="fr-FR"] #sdg #detail-page.goal-17 .goal-header .img {
 	color: #fff;
 	padding: 10px 20px;
 }
+
+/*global standing: start*/
+div#main-content {
+  margin-top: -20px;
+  margin-bottom: 20px;
+}
+div#main-content div.outer {
+  margin-top: 20px;
+  height: 276px;
+  background: url('./img/blockbg.png') no-repeat;
+}
+div#main-content div.outer .header {
+  font-size: 14px;
+  text-align: left;
+  color: #fff;
+  margin-top: 5px;
+  width: auto;
+  height: 50px;
+  text-transform: uppercase;
+  line-height: 50px;
+  padding-left: 20px;
+  position: relative;
+  top: 20px;
+  left: -22px;
+}
+div#main-content div.outer .header div {
+  background-color: #a18357;
+  display: inline-block;
+  position: relative;
+  top: -25px;
+  left: -3px;
+  width: 905px;
+  padding-left: 20px;
+  height: 40px;
+  line-height: 40px;
+}
+div#main-content div.outer .header span.left-img {
+  height: 50px;
+  width: 10px;
+  display: inline-block;
+  background: url('./img/title_left.png') no-repeat;
+}
+div#main-content div.outer .header span.hover-icon {
+  display: inline-block;
+  background: url('./img/icon_info.png') no-repeat;
+  height: 24px;
+  width: 24px;
+  vertical-align: sub;
+  margin-left: 10px;
+  cursor: pointer;
+  position: relative;
+  top: 5px;
+}
+div#main-content div.outer .inner-block a {
+  display: inline-block;
+  cursor: pointer;
+  color: #000;
+  text-align: center;
+  text-decoration: none;
+  outline: none;
+}
+div#main-content div.outer .inner-block a span.text {
+  display: inherit;
+  margin-top: 40px;
+  font-size: 14px;
+}
+div#main-content div.outer .inner-block a span.number {
+  display: block;
+  margin-top: 45px;
+  font-weight: bold;
+  font-size: 40px;
+}
+div#main-content div.outer .inner-block a span.number .super {
+  vertical-align: super;
+  font-size: 24px;
+}
+div#main-content div.outer .inner-block a.first {
+  width: 120px;
+  height: 120px;
+  background: url('./Img/indicator_big_bg.png') top left no-repeat;
+  vertical-align: top;
+  margin-top: 32px;
+}
+div#main-content div.outer .inner-block a.second,
+div#main-content div.outer .inner-block a.third,
+div#main-content div.outer .inner-block a.fourth {
+  width: 90px;
+  height: 90px;
+  background: url('./Img/indicator_small_bg.png') top left no-repeat;
+  vertical-align: top;
+  margin-top: 33px;
+  margin-left: 10px;
+}
+div#main-content div.outer .inner-block a.second span.number,
+div#main-content div.outer .inner-block a.third span.number,
+div#main-content div.outer .inner-block a.fourth span.number {
+  margin-top: 25px;
+}
+div#main-content div.outer .inner-block a.second span.text,
+div#main-content div.outer .inner-block a.third span.text,
+div#main-content div.outer .inner-block a.fourth span.text {
+  margin-top: 30px;
+}
+div#main-content div.outer .inner-block .gadget-embed {
+  display: inline-block;
+  margin-left: 15px;
+  margin-top: 15px;
+  overflow: hidden;
+  height: 202px;
+}
+div#main-content div.outer .inner-block .gadget-embed iframe {
+  height: 235px;
+  width: 425px;
+}
+div#bubble-container {
+	font-family: Roboto,Arial;
+  font-size: 8pt;
+  height: 200px;
+  width: 300px;
+  padding: 20px;
+  position: absolute;
+  background-color: white;
+  text-align: justify;
+  box-shadow: 0 0 10px 1px #ccc;
+}
+div#bubble-container.global-happy,
+div#bubble-container.e-gov,
+div#bubble-container.human-dev {
+  height: 380px;
+}
+div#bubble-container.eco-ind {
+  height: 430px;
+}
+div#bubble-container.log-per,
+div#bubble-container.doing-bus {
+  height: 160px;
+}
+div.inner {
+  width: 940px;
+  margin: 0 auto;
+  text-align: center;
+}
+/*global standing: finish*/
