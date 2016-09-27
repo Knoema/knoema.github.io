@@ -2899,7 +2899,7 @@ div#main-content div.outer .inner-block a span.number .super {
 div#main-content div.outer .inner-block a.first {
   width: 120px;
   height: 120px;
-  background: url('./Img/indicator_big_bg.png') top left no-repeat;
+  background: url('./img/indicator_big_bg.png') top left no-repeat;
   vertical-align: top;
   margin-top: 32px;
 }
@@ -2908,7 +2908,7 @@ div#main-content div.outer .inner-block a.third,
 div#main-content div.outer .inner-block a.fourth {
   width: 90px;
   height: 90px;
-  background: url('./Img/indicator_small_bg.png') top left no-repeat;
+  background: url('./img/indicator_small_bg.png') top left no-repeat;
   vertical-align: top;
   margin-top: 33px;
   margin-left: 10px;
