@@ -17,83 +17,83 @@ var app = (function () {
 
 			_this.pivot = pivot[0];
 			_this.populationPivot = populationPivot[0];
-		});
 
-		$('.retake-button').on('click', function () {
-			location.href = '/';
-		});
+			$('.retake-button').on('click', function () {
+				location.href = '/';
+			});
 
-		$('.start-button').on('click', function () {
+			$('.start-button').on('click', function () {
 
-			$('.start-screen').hide();
-			$('.main-screen').show();
+				$('.start-screen').hide();
+				$('.main-screen').show();
 
-			$('.main-screen ul.scale li').on('click', function () {
+				$('.main-screen ul.scale li').on('click', function () {
 
-				_this.handler(this);
+					_this.handler(this);
 
-				if (numberOfClick != 6)
-					return false;
+					if (numberOfClick != 6)
+						return false;
 
-				numberOfClick = 0;
+					numberOfClick = 0;
 
-				var sameCountries = _this.countriesByValues(_this.pivot.data)[values];
-				var people = _this.getPercentOfPopulation(sameCountries, _this.populationPivot.data);
+					var sameCountries = _this.countriesByValues(_this.pivot.data)[values];
+					var people = _this.getPercentOfPopulation(sameCountries, _this.populationPivot.data);
 
-				if (sameCountries) {
-					var lis = [];
-					for (var i = 0; i < sameCountries.length; i++) {
-						lis.push($('<li>', {
+					if (sameCountries) {
+						var lis = [];
+						for (var i = 0; i < sameCountries.length; i++) {
+							lis.push($('<li>', {
 								text: sameCountries[i].country
 							})
-							.prepend($('<img>', {
-								src: '/Images/' + sameCountries[i].region.toLowerCase() + '.png'
-							}))
-						);
+								.prepend($('<img>', {
+									src: '/Images/' + sameCountries[i].region.toLowerCase() + '.png'
+								}))
+							);
+						}
+
+						$('.finish-screen .same-countries').append(lis);
+						$('.number').text(people.sum.toFixed(0));
+						_this.pieChart($('.percent'), people.percent);
+					}
+					else {
+						$('.population-part').empty().append($('<h2>', {
+							text: 'Your responses are unique. Your ranking of these global values does not match the 24 most common rankings.',
+							style: 'width: 600px; margin: 0 auto;'
+						}));
 					}
 
-					$('.finish-screen .same-countries').append(lis);
-					$('.number').text(people.sum.toFixed(0));
-					_this.pieChart($('.percent'), people.percent);
-				}
-				else {
-					$('.population-part').empty().append($('<h2>', {
-						text: 'Your responses are unique. Your ranking of these global values does not match the 24 most common rankings.',
-						style: 'width: 600px; margin: 0 auto;'
-					}));
-				}
+					_this.prepareResultLayout(sameCountries);
+					$('.result-screen').show();
+					domtoimage.toBlob($('.result-screen')[0])
+						.then(function (blob) {
 
-				_this.prepareResultLayout(sameCountries);
-				$('.result-screen').show();
-				domtoimage.toBlob($('.result-screen')[0])
-					.then(function (blob) {
+							$('.result-screen').hide();
+							var id = _this.makeId();
 
-						$('.result-screen').hide();
-						var id = _this.makeId();
+							_this.uploadToServer(id, blob);
+							_this.saveResults();
+							_this.resultId = id;
+						})
+						.catch(function (error) {
+							console.error('oops, something went wrong!', error);
+						});
 
-						_this.uploadToServer(id, blob);
-						_this.saveResults();
-						_this.resultId = id;
-					})
-					.catch(function (error) {
-						console.error('oops, something went wrong!', error);
+
+					$('.main-screen').hide();
+
+					var newUl = $('<ul>', { 'class': 'scale' });
+					for (var i = 0; i < 6; i++) {
+						var item = $('.main-screen .circle.n' + i).parent().wrap('<div>').parent().html();
+						newUl.append(item);
+					}
+					$('.finish-screen .scale-container').append($(newUl));
+					$('.finish-screen').show();
+
+					$('.share-button').on('click', function () {
+
+						_this.share($(this).data('channel'), _this.resultId);
+						return false;
 					});
-
-
-				$('.main-screen').hide();
-
-				var newUl = $('<ul>', { 'class': 'scale' });
-				for (var i = 0; i < 6; i++) {
-					var item = $('.main-screen .circle.n' + i).parent().wrap('<div>').parent().html();
-					newUl.append(item);
-				}
-				$('.finish-screen .scale-container').append($(newUl));
-				$('.finish-screen').show();
-
-				$('.share-button').on('click', function () {
-
-					_this.share($(this).data('channel'), _this.resultId);
-					return false;
 				});
 			});
 		});
@@ -121,7 +121,7 @@ var app = (function () {
 		}
 	};
 
-	app.prototype.makeId = function() {
+	app.prototype.makeId = function () {
 		var text = "";
 		var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
@@ -201,7 +201,7 @@ var app = (function () {
 				case 2: margin = 11; height = 90; break;
 			}
 
-			if(numberOfClick < 3)
+			if (numberOfClick < 3)
 				circle.animate({ margin: margin + 'px', height: height + 'px', width: height + 'px' });
 
 			circle.addClass('selected ' + 'n' + numberOfClick);
@@ -431,10 +431,10 @@ var app = (function () {
 					dataLabels: {
 						enabled: true,
 						format: '{point.percentage:.1f} %',
+						color: '#fff',
 						style: {
-							color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
-						},
-						backgroundColor: '#fff'
+							fontWeight: 'bold'
+						}
 					}
 				}
 			},
