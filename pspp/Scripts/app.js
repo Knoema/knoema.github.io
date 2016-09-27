@@ -29,9 +29,9 @@ var Infrastructure;
 	var budgetIndex = -1;
 
 	var axes = {
-		'1': 'Transformation structurelle de l’économie et croissance',
-		'2': 'Capital humain, Protection sociale et Développement durable',
-		'3': 'Gouvernance, Institutions, Paix et Sécurité'
+		'1': 'Axe 1. Transformation structurelle de l’économie et croissance',
+		'2': 'Axe 2. Capital humain, Protection sociale et Développement durable',
+		'3': 'Axe 3. Gouvernance, Institutions, Paix et Sécurité'
 	};
 
 	var sectors = {
@@ -213,6 +213,8 @@ var Infrastructure;
             		if (name == 'Longitude') _this.lngIndex = i;
             		if (name == 'RegionId') _this.regionIdIndex = i;
             	}
+
+            	_this.hideNonPresentedProjectsButtons(_this.projectData);
 
             	if ($(document.body).hasClass('loading'))
             		$(document.body).removeClass('loading');
@@ -439,7 +441,7 @@ var Infrastructure;
             			tooltipData[_this.projectColumns[_this.pseIndex].name] = _this.projectData[offset + _this.pseIndex] + ' - ' + _this.axes[_this.projectData[offset + _this.pseIndex]];
             			tooltipData[_this.projectColumns[_this.sectorIndex].name] = _this.projectData[offset + _this.sectorIndex] + ' - ' + _this.sectors[_this.projectData[offset + _this.sectorIndex]];
             			tooltipData[_this.projectColumns[_this.statusIndex].name] = _this.projectData[offset + _this.statusIndex];
-            			tooltipData[_this.projectColumns[_this.ppIndex].name] = _this.projectData[offset + _this.ppIndex];
+            			tooltipData[_this.projectColumns[_this.ppIndex].name] = $('#ppp-projects').find('option[value=' + _this.projectData[offset + _this.ppIndex] + ']').text();;
             			tooltipData[_this.projectColumns[_this.ptipIndex].name] = _this.projectData[offset + _this.ptipIndex];
             			tooltipData['Budget Total Prévu: Dépenses réalisées'] = '0';
 
@@ -478,6 +480,9 @@ var Infrastructure;
             });
 
             $('.ppp-item').on('click', function () {
+
+            	if ($(this).find('.cap').length > 0)
+            		return false;
 
             	$(this).toggleClass('active');
             });
@@ -607,6 +612,35 @@ var Infrastructure;
 			});
         };
 
+        Application.prototype.hideNonPresentedProjectsButtons = function () {
+
+        	var presented = [];
+        	for (var i = 0; i < this.projectData.length / this.projectColumns.length; i++) {
+
+        		var offset = i * this.projectColumns.length;
+
+        		var pp = this.projectData[offset + this.ppIndex];
+
+        		if ($.inArray(pp, presented) == -1)
+        			presented.push(pp);
+        	}
+
+        	$('#ppp-projects option').each(function (index, item) {
+        		var pp = $(this).val();
+
+        		if ($.inArray(pp, presented) == -1)
+        			$(this).prop('disabled', true);
+        	});
+        	$('#ppp-projects').selectpicker('refresh');
+
+        	$('#ppp-frame-popup .ppp-item').each(function (index, item) {
+        		var pp = $(this).data('value');
+
+        		if ($.inArray(pp, presented) == -1)
+        			$(this).prepend($('<div>', { 'class': 'cap' }));
+        	});
+        };
+
         Application.prototype.buildModelingChart = function(type, elementSelector, title, subtitle, colors, legend, yMin, yMax, tickInterval) {
             var categories = [2016, 2017, 2018, 2019, 2020];
             var series = [];
@@ -675,15 +709,12 @@ var Infrastructure;
         			var objData = decodeURI($(this).data('data'));
         			objData = JSON.parse(objData);
 
-        			var ppNumber = objData["Numéro du projet phare / numéro de la réforme phare. (PP# / RP#)"];
-        			var ppName = $('#ppp-projects').find('option[value=' + ppNumber + ']').text();
-
         			var templateData = {
         				name: objData["Nom Projet"],
         				budget: objData["Budget Total Prévu: Dépenses réalisées"],
         				axe: objData["Code de l'axe stratégique de la vision 2035"],
         				sour: objData["Code du Sous-Secteur (voir feuille Read me pour avoir les codes)"],
-        				number: ppName,
+        				number: objData["Numéro du projet phare / numéro de la réforme phare. (PP# / RP#)"],
         				status: objData["Statut Projets: Annoncé, En cours, Complété, opérationel Programmes/reformes: En"],
         				ptip: objData["Code PTIP"]
         			};

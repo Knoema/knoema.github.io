@@ -309,6 +309,18 @@ h2.left-menu
 	background: url(./img/bg_normal.png);
 	vertical-align: top;
 	cursor: pointer;
+	position: relative;
+}
+.ppp-item .cap
+{
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	right: 0;
+	left: 0;
+	z-index: 1;
+	background-color: rgba(255,255,255,0.5);
+	cursor: auto;
 }
 .ppp-item.active
 {
@@ -2723,6 +2735,18 @@ html[lang="fr-FR"] #sdg #detail-page.goal-17 .goal-header .img {
 	padding: 15px 10px 0 10px;
 	margin: 5px;
 	cursor: pointer;
+	position: relative;
+}
+.icon-contianer .icon-item .cap
+{
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	right: 0;
+	left: 0;
+	z-index: 1;
+	background-color: rgba(255,255,255,0.5);
+	cursor: auto;
 }
 
 .icon-contianer .icon-item img
@@ -2750,6 +2774,8 @@ html[lang="fr-FR"] #sdg #detail-page.goal-17 .goal-header .img {
 }
 .content-container .right-part
 {
+	width: 910px;
+	height: 630px;
 	margin-left: 90px;
 	display: inline-block;
 	vertical-align: top;

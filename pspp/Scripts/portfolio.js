@@ -3,7 +3,8 @@
 (function () {
 	var host = 'http://pspp.knoema.com';
 
-	var projectsDataset = 'sardyld';
+	var projectsDataset = 'tyunxic';
+	var dashboardUrl = 'http://pspp.knoema.com/resource/embed/cwxobyf?projects=';
 
 	var projectData = [];
 	var projectColumns = [];
@@ -32,14 +33,19 @@
 
 					if (name == 'Projet/Reforme') _this.objectTypeIndex = i;
 					if (name == 'Nom Projet') _this.nameIndex = i;
-					if (name == 'Numéro du projet phare / numéro de la réforme phare') _this.ppIndex = i;
+					if (name == 'Numéro du projet phare / numéro de la réforme phare. (PP# / RP#)') _this.ppIndex = i;
 					if (name == 'Database Code') _this.codeIndex = i;
 				}
+
+				_this.hideNonPresentedProjectsButtons(_this.projectData);
 
 				$($('.icon-item').get(0)).trigger('click');
 			});
 
 			$('.icon-item').on('click', function () {
+
+				if ($(this).find('.cap').length > 0)
+					return false;
 
 				$('.icon-item').removeClass('active');
 				$(this).addClass('active');
@@ -57,13 +63,41 @@
 				}
 
 				$('.left-part ul').empty().append($ils);
-
 				$('.left-part ul li').on('click', function () {
+
+					_this.loadDashboard($(this).text());
 
 					$('.left-part ul li').removeClass('active');
 					$(this).addClass('active');
 				});
+				$($('.left-part ul li').get(0)).trigger('click');
 			})
+		};
+
+		portfolio.prototype.hideNonPresentedProjectsButtons = function () {
+
+			var presented = [];
+			for (var i = 0; i < this.projectData.length / this.projectColumns.length; i++) {
+
+				var offset = i * this.projectColumns.length;
+
+				var pp = this.projectData[offset + this.ppIndex];
+
+				if ($.inArray(pp, presented) == -1)
+					presented.push(pp);
+			}
+
+			$('.icon-contianer .icon-item').each(function (index, item) {
+				var pp = $(this).data('p');
+
+				if ($.inArray(pp, presented) == -1)
+					$(this).prepend($('<div>', { 'class': 'cap' }));
+			});
+		};
+
+		portfolio.prototype.loadDashboard = function (projectName) {
+
+			$('.right-part iframe').attr('src', dashboardUrl + projectName);
 		};
 
 		portfolio.prototype.getProgectsByPP = function (pp) {
