@@ -16,22 +16,24 @@ namespace WV.Controllers
 			return View();
 		}
 
-		public ActionResult Result(string param)
+		public ActionResult Result(string id)
 		{
-			if (string.IsNullOrEmpty(param))
-				RedirectToAction("Index");
+			if (string.IsNullOrEmpty(id))
+				return RedirectToAction("Index");
 
 			var isFB = Request.UserAgent.Contains("facebookexternalhit/") || Request.UserAgent.Contains("Facebot");
 			var isTwitter = Request.UserAgent.Contains("Twitterbot");
 			var isGPlus = Request.UserAgent.Contains("Google (+https://developers.google.com/+/web/snippet/)");
 
-			if (isFB || isTwitter || isGPlus)
-				RedirectToAction("Index");
+			if (!isFB && !isTwitter && !isGPlus)
+				return RedirectToAction("Index");
 
-			ViewBag.Param = param;
-			ViewBag.Host = Request.Url.Scheme + "//" + Request.Url.Host;
+			var model = id;
 
-			return View();
+			if (!System.IO.File.Exists(Server.MapPath("~/Images/upload/" + id + ".png")))
+				model = "default";
+
+			return View("result", model: model);
 		}
 
 		[HttpPost]
@@ -45,6 +47,9 @@ namespace WV.Controllers
 		[HttpPost]
 		public ActionResult Upload()
 		{
+			if (Request.Browser.Browser != "Chrome" && Request.Browser.Browser != "Firefox")
+				return new HttpStatusCodeResult(200, "Ok");
+
 			if (Request.InputStream != null)
 			{
 				var fileName = Request.Headers["X-File-Name"];

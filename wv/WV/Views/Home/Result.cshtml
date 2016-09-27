@@ -1,19 +1,24 @@
-﻿@section SharingTags
+﻿@model string
+
+@section SharingTags
 {
 	<meta name="description" content="Discover where in the world people share your values in this 20 second survey!" />
 
-	<meta name="twitter:card"			content="summary">
-	<meta name="twitter:site"			content="@ViewBag.Host">
+	<meta name="twitter:card"			content="summary_large_image">
+	<meta name="twitter:site"			content="@Request.Url">
 	<meta name="twitter:title"			content="Which Countries Best Fit Your Values?">
 	<meta name="twitter:description"	content="Discover where in the world people share your values in this 20 second survey!">
 	<meta name="twitter:creator"		content="Knoema.com">
-	<meta name="twitter:image"			content="@(ViewBag.Host)/images/upload/@(ViewBag.Param).png">
+	<meta name="twitter:image"			content="http://@Request.Url.Host/images/upload/@(Model).png">
 
-	<meta property="og:url"					content="@ViewBag.Host" />
+	<meta property="og:url"					content="@Request.Url" />
 	<meta property="og:title"				content="Which Countries Best Fit Your Values?" />
 	<meta property="og:type"				content="website" />
 	<meta property="og:description"			content="Discover where in the world people share your values in this 20 second survey!" />
-	<meta property="og:image"				content="@(ViewBag.Host)/images/upload/@(ViewBag.Param).png" />
+	<meta property="og:image"				content="http://@Request.Url.Host/images/upload/@(Model).png" />
+	<meta property="og:image:type" content="image/png" />
+	<meta property="og:image:width" content="600" />
+	<meta property="og:image:height" content="375" />
 }
 
-<img class="result" src="../Images/upload/@(ViewBag.Param).png" />
+<img class="result" src="../Images/upload/@(Model).png" />

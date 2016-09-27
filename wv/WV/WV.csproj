@@ -20,6 +20,7 @@
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -45,6 +46,215 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Content Include="Images\ad.png" />
+    <Content Include="Images\ae.png" />
+    <Content Include="Images\af.png" />
+    <Content Include="Images\ag.png" />
+    <Content Include="Images\al.png" />
+    <Content Include="Images\am.png" />
+    <Content Include="Images\ao.png" />
+    <Content Include="Images\ar.png" />
+    <Content Include="Images\at.png" />
+    <Content Include="Images\au.png" />
+    <Content Include="Images\az.png" />
+    <Content Include="Images\ba.png" />
+    <Content Include="Images\bb.png" />
+    <Content Include="Images\bd.png" />
+    <Content Include="Images\be.png" />
+    <Content Include="Images\bf.png" />
+    <Content Include="Images\bg.png" />
+    <Content Include="Images\bh.png" />
+    <Content Include="Images\bi.png" />
+    <Content Include="Images\bj.png" />
+    <Content Include="Images\bm.png" />
+    <Content Include="Images\bn.png" />
+    <Content Include="Images\bo.png" />
+    <Content Include="Images\br.png" />
+    <Content Include="Images\bs.png" />
+    <Content Include="Images\bt.png" />
+    <Content Include="Images\bw.png" />
+    <Content Include="Images\by.png" />
+    <Content Include="Images\bz.png" />
+    <Content Include="Images\ca.png" />
+    <Content Include="Images\cd.png" />
+    <Content Include="Images\cf.png" />
+    <Content Include="Images\cg.png" />
+    <Content Include="Images\ch.png" />
+    <Content Include="Images\ci.png" />
+    <Content Include="Images\cl.png" />
+    <Content Include="Images\cm.png" />
+    <Content Include="Images\cn.png" />
+    <Content Include="Images\co.png" />
+    <Content Include="Images\cr.png" />
+    <Content Include="Images\cu.png" />
+    <Content Include="Images\cv.png" />
+    <Content Include="Images\cy.png" />
+    <Content Include="Images\cz.png" />
+    <Content Include="Images\de.png" />
+    <Content Include="Images\dj.png" />
+    <Content Include="Images\dk.png" />
+    <Content Include="Images\dm.png" />
+    <Content Include="Images\do.png" />
+    <Content Include="Images\dz.png" />
+    <Content Include="Images\ec.png" />
+    <Content Include="Images\ee.png" />
+    <Content Include="Images\eg.png" />
+    <Content Include="Images\eh.png" />
+    <Content Include="Images\er.png" />
+    <Content Include="Images\es.png" />
+    <Content Include="Images\et.png" />
+    <Content Include="Images\fi.png" />
+    <Content Include="Images\fj.png" />
+    <Content Include="Images\fk.png" />
+    <Content Include="Images\fm.png" />
+    <Content Include="Images\fr.png" />
+    <Content Include="Images\ga.png" />
+    <Content Include="Images\gb.png" />
+    <Content Include="Images\gd.png" />
+    <Content Include="Images\ge.png" />
+    <Content Include="Images\gh.png" />
+    <Content Include="Images\gl.png" />
+    <Content Include="Images\gm.png" />
+    <Content Include="Images\gn.png" />
+    <Content Include="Images\gq.png" />
+    <Content Include="Images\gr.png" />
+    <Content Include="Images\gt.png" />
+    <Content Include="Images\gw.png" />
+    <Content Include="Images\gy.png" />
+    <Content Include="Images\hk.png" />
+    <Content Include="Images\hn.png" />
+    <Content Include="Images\hr.png" />
+    <Content Include="Images\ht.png" />
+    <Content Include="Images\hu.png" />
+    <Content Include="Images\id.png" />
+    <Content Include="Images\ie.png" />
+    <Content Include="Images\il.png" />
+    <Content Include="Images\in.png" />
+    <Content Include="Images\iq.png" />
+    <Content Include="Images\ir.png" />
+    <Content Include="Images\is.png" />
+    <Content Include="Images\it.png" />
+    <Content Include="Images\jm.png" />
+    <Content Include="Images\jo.png" />
+    <Content Include="Images\jp.png" />
+    <Content Include="Images\ke.png" />
+    <Content Include="Images\kg.png" />
+    <Content Include="Images\kh.png" />
+    <Content Include="Images\ki.png" />
+    <Content Include="Images\km.png" />
+    <Content Include="Images\kn.png" />
+    <Content Include="Images\kp.png" />
+    <Content Include="Images\kr.png" />
+    <Content Include="Images\kw.png" />
+    <Content Include="Images\kz.png" />
+    <Content Include="Images\la.png" />
+    <Content Include="Images\lb.png" />
+    <Content Include="Images\lc.png" />
+    <Content Include="Images\li.png" />
+    <Content Include="Images\lk.png" />
+    <Content Include="Images\logo.png" />
+    <Content Include="Images\lr.png" />
+    <Content Include="Images\ls.png" />
+    <Content Include="Images\lt.png" />
+    <Content Include="Images\lu.png" />
+    <Content Include="Images\lv.png" />
+    <Content Include="Images\ly.png" />
+    <Content Include="Images\ma.png" />
+    <Content Include="Images\mc.png" />
+    <Content Include="Images\md.png" />
+    <Content Include="Images\me.png" />
+    <Content Include="Images\mg.png" />
+    <Content Include="Images\mh.png" />
+    <Content Include="Images\mk.png" />
+    <Content Include="Images\ml.png" />
+    <Content Include="Images\mm.png" />
+    <Content Include="Images\mn.png" />
+    <Content Include="Images\mo.png" />
+    <Content Include="Images\mr.png" />
+    <Content Include="Images\mt.png" />
+    <Content Include="Images\mu.png" />
+    <Content Include="Images\mv.png" />
+    <Content Include="Images\mw.png" />
+    <Content Include="Images\mx.png" />
+    <Content Include="Images\my.png" />
+    <Content Include="Images\mz.png" />
+    <Content Include="Images\na.png" />
+    <Content Include="Images\nc.png" />
+    <Content Include="Images\ne.png" />
+    <Content Include="Images\ng.png" />
+    <Content Include="Images\ni.png" />
+    <Content Include="Images\nl.png" />
+    <Content Include="Images\no.png" />
+    <Content Include="Images\np.png" />
+    <Content Include="Images\nr.png" />
+    <Content Include="Images\nz.png" />
+    <Content Include="Images\om.png" />
+    <Content Include="Images\pa.png" />
+    <Content Include="Images\pe.png" />
+    <Content Include="Images\pg.png" />
+    <Content Include="Images\ph.png" />
+    <Content Include="Images\pk.png" />
+    <Content Include="Images\pl.png" />
+    <Content Include="Images\ps.png" />
+    <Content Include="Images\pt.png" />
+    <Content Include="Images\pw.png" />
+    <Content Include="Images\py.png" />
+    <Content Include="Images\qa.png" />
+    <Content Include="Images\refresh.png" />
+    <Content Include="Images\ro.png" />
+    <Content Include="Images\rs.png" />
+    <Content Include="Images\ru.png" />
+    <Content Include="Images\rw.png" />
+    <Content Include="Images\sa.png" />
+    <Content Include="Images\sb.png" />
+    <Content Include="Images\sc.png" />
+    <Content Include="Images\sd.png" />
+    <Content Include="Images\se.png" />
+    <Content Include="Images\sg.png" />
+    <Content Include="Images\share_fb2.jpg" />
+    <Content Include="Images\si.png" />
+    <Content Include="Images\sk.png" />
+    <Content Include="Images\sl.png" />
+    <Content Include="Images\sm.png" />
+    <Content Include="Images\sn.png" />
+    <Content Include="Images\so.png" />
+    <Content Include="Images\sr.png" />
+    <Content Include="Images\ss.png" />
+    <Content Include="Images\st.png" />
+    <Content Include="Images\sv.png" />
+    <Content Include="Images\sy.png" />
+    <Content Include="Images\sz.png" />
+    <Content Include="Images\td.png" />
+    <Content Include="Images\tg.png" />
+    <Content Include="Images\th.png" />
+    <Content Include="Images\tj.png" />
+    <Content Include="Images\tl.png" />
+    <Content Include="Images\tm.png" />
+    <Content Include="Images\tn.png" />
+    <Content Include="Images\to.png" />
+    <Content Include="Images\tr.png" />
+    <Content Include="Images\tt.png" />
+    <Content Include="Images\tv.png" />
+    <Content Include="Images\tw.png" />
+    <Content Include="Images\tz.png" />
+    <Content Include="Images\ua.png" />
+    <Content Include="Images\ug.png" />
+    <Content Include="Images\un.png" />
+    <Content Include="Images\upload\default.png" />
+    <Content Include="Images\us.png" />
+    <Content Include="Images\uy.png" />
+    <Content Include="Images\uz.png" />
+    <Content Include="Images\va.png" />
+    <Content Include="Images\vc.png" />
+    <Content Include="Images\ve.png" />
+    <Content Include="Images\viz-of-the-day.png" />
+    <Content Include="Images\vn.png" />
+    <Content Include="Images\vu.png" />
+    <Content Include="Images\ws.png" />
+    <Content Include="Images\ye.png" />
+    <Content Include="Images\za.png" />
+    <Content Include="Images\zm.png" />
+    <Content Include="Images\zw.png" />
     <Content Include="SQL\init.sql" />
   </ItemGroup>
   <ItemGroup>
@@ -66,9 +276,7 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Images\upload\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="Views\Home\Result.cshtml" />
   </ItemGroup>
@@ -116,6 +324,11 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Css\Roboto-Bold.ttf" />
+    <Content Include="Css\Roboto-Regular.ttf" />
+    <None Include="Properties\PublishProfiles\publisher.pubxml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

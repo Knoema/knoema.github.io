@@ -1,4 +1,23 @@
-﻿<div class="content">
+﻿
+@section SharingTags
+{
+	<meta name="description" content="Discover where in the world people share your values in this 20 second survey!" />
+
+	<meta name="twitter:card" content="summary_large_image">
+	<meta name="twitter:site" content="@Request.Url">
+	<meta name="twitter:title" content="Which Countries Best Fit Your Values?">
+	<meta name="twitter:description" content="Discover where in the world people share your values in this 20 second survey!">
+	<meta name="twitter:creator" content="knoema.com">
+	<meta name="twitter:image" content="@(Request.Url)images/share_fb2.jpg">
+
+	<meta property="og:url" content="@Request.Url" />
+	<meta property="og:title" content="Which Countries Best Fit Your Values?" />
+	<meta property="og:type" content="website" />
+	<meta property="og:description" content="Discover where in the world people share your values in this 20 second survey!" />
+	<meta property="og:image" content="@(Request.Url)images/share_fb2.jpg" />
+}
+
+<div class="content">
 
 	<h1>Which Countries Best Fit Your Values?</h1>
 
@@ -20,6 +39,9 @@
 		<h3>Discover where in the world people share your values in this 20 second survey.</h3>
 
 		<div class="start-button">start!</div>
+
+		<div class="logo"></div>
+		<div class="based-on">Inspired by <a href="http://www.worldvaluessurvey.org/wvs.jsp" target="_blank">World Values Survey</a></div>
 	</div>
 
 	<div class="main-screen">
@@ -51,14 +73,18 @@
 			<ul class="same-countries"></ul>
 		</div>
 
-		<div class="retake-button">retake</div>
-
 		<h2 class="share-caption">Share your results to view a responses of other users from around the world!</h2>
 				
 		<a class="share-button facebook" data-channel="facebook" href="#">Share on Facebook</a>
 		<a class="share-button twitter" data-channel="twitter" href="#">Share on Twitter</a>
 		<a class="share-button gplus" data-channel="gplus" href="#">Share on Google+</a>
-
+		<div class="retake-button" title="Retake"></div>		
+		<a target="_blank" href="https://knoema.com/infographics/hxpxvpg/world-values-family-work-friends-leisure-religion-and-politics">
+			<img class="viz-of-the-day" src="/images/viz-of-the-day.png" />
+		</a>
+		<a class="learn-more" target="_blank" href="https://knoema.com/infographics/hxpxvpg/world-values-family-work-friends-leisure-religion-and-politics">Learn more</a>
+		<div class="logo"></div>
+		<div class="based-on">Inspired by <a href="http://www.worldvaluessurvey.org/wvs.jsp" target="_blank">World Values Survey</a></div>
 	</div>
 
 	<div class="result-screen">
@@ -81,3 +107,5 @@
 		</div>
 	</div>
 </div>
+<!-- Go to www.addthis.com/dashboard to customize your tools -->
+<script type="text/javascript" async src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-57ea7d8834985403"></script>
