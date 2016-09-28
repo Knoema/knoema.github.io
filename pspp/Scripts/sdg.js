@@ -163,12 +163,12 @@ $(function () {
 			else
 				$item.append('<div class="table-column"><a class="meta-data" style="visibility: hidden;" target="_blank" href="' + item[indexOfMetadataUrlLink] + '">' + metadataText + '</a></div>');
 
+			$item.append('<div class="table-column">Tier: ' + item[indexOfTier] + '</div>');
+
 			if (item[indexOfSdmxUrlEnabled] == "1")
 				$item.append('<div class="table-column"><a class="sdmx" href="' + item[indexOfSdmxUrlLink] + '">' + sdmxText + '</a></div>');
 			else
 				$item.append('<div class="table-column"><a class="sdmx" style="visibility: hidden;" target="_blank" href="' + item[indexOfSdmxUrlLink] + '">' + sdmxText + '</a></div>');
-
-			$item.append('<div class="table-column">Tier: ' + item[indexOfTier] + '</div>');
 
 			$item.addClass('level-' + level);
 			$item.data('item', item);
