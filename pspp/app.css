@@ -1850,7 +1850,7 @@ ul.subtopic-content li a
 	background-color: #472001;
 	color: #f4ece1;
 	text-transform: uppercase;
-	font-size: 14pt;
+	font-size: 12pt;
 	padding: 3px 10px;
 
 }
@@ -2665,8 +2665,8 @@ ul.subtopic-content li a
 }
 .content-container .right-part
 {
-	width: 910px;
-	height: 630px;
+	width: 940px;
+	height: 570px;
 	margin-left: 90px;
 	display: inline-block;
 	vertical-align: top;

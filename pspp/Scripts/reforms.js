@@ -36,12 +36,21 @@
 					if (name == "Période d'adoption: Politique Duree critiques") _this.pPolDurCri = i;
 					if (name == "Période d'adoption: Politique Jour de démarrage") _this.pPolJouDem = i;
 					if (name == "Période d'adoption: Politique Jour de finalisation") _this.pPolJouFin = i;
+					if (name == "Période d'adoption: Politique Complétement exécuté? oui-1, non-0") _this.pPolOuiNon = i;
+					if (name == "Période d'adoption: Politique Livrables") _this.pPolLiv = i;
+
 					if (name == "Période d'exécution: validation Technique Duree critiques") _this.pTecDurCri = i;
 					if (name == "Période d'exécution: validation Technique Jour de démarrage") _this.pTecJouDem = i;
 					if (name == "Période d'exécution: validation Technique Jour de finalisation") _this.pTecJourFin = i;
+					if (name == "Période d'exécution: validation Technique Complétement exécuté? oui-1, non-0") _this.pTecOuiNon = i;
+					if (name == "Période d'exécution: validation Technique Livrables") _this.pTecLiv = i;
+
 					if (name == "Période d'Exécution: Preparation et formulation: Duree critiques") _this.pForDurCri = i;
 					if (name == "Période d'Exécution: Preparation et formulation: Jour de démarrage") _this.pForJouDem = i;
 					if (name == "Période d'Exécution: Preparation et formulation: Jour de finalisation") _this.pForJouFin = i;
+					if (name == "Période d'Exécution: Preparation et formulation Complétement exécuté? oui-1, non") _this.pForOuiNon = i;
+					if (name == "Période d'Exécution: Preparation et formulation: Livrables") _this.pForLiv = i;
+					
 				}
 
 				_this.fillTable('total');
@@ -55,6 +64,23 @@
 			});
 
 			reforms.prototype.fillTable = function (status) {
+
+				var getDate = function (strDate) {
+					var partsOfDate = strDate.split('/');
+
+					if (partsOfDate.length != 3)
+						return null;
+
+					return new Date(partsOfDate[2] + '-' + partsOfDate[1] + '-' + partsOfDate[0]);
+				};
+
+				var diffBetweenDates = function (date1, date2) {
+
+					if (!date1 || !date2)
+						return Infinity;
+
+					return Math.abs((date1.getTime() - date2.getTime()) / (1000 * 3600 * 24 * 30));
+				};
 				
 				var totalTrs = [];
 				var delayedTrs = [];
@@ -79,9 +105,9 @@
 					);
 
 					//delaued
-					var first = _this.projectData[offset + _this.pPolDurCri] > (_this.projectData[offset + _this.pPolJouDem] - _this.projectData[offset + _this.pPolJouFin]);
-					var secont = _this.projectData[offset + _this.pTecDurCri] > (_this.projectData[offset + _this.pTecJouDem] - _this.projectData[offset + _this.pTecJourFin]);
-					var third = _this.projectData[offset + _this.pForDurCri] > (_this.projectData[offset + _this.pForJouDem] - _this.projectData[offset + _this.pForJouFin]);
+					var first = parseInt(_this.projectData[offset + _this.pPolDurCri]) > diffBetweenDates(getDate(_this.projectData[offset + _this.pPolJouDem]), getDate(_this.projectData[offset + _this.pPolJouFin]));
+					var secont = parseInt(_this.projectData[offset + _this.pTecDurCri]) > diffBetweenDates(getDate(_this.projectData[offset + _this.pTecJouDem]), getDate(_this.projectData[offset + _this.pTecJourFin]));
+					var third = parseInt(_this.projectData[offset + _this.pForDurCri]) > diffBetweenDates(getDate(_this.projectData[offset + _this.pForJouDem]), getDate(_this.projectData[offset + _this.pForJouFin]));
 					if (first || secont || third)
 						delayedTrs.push($('<tr>', { 'data-code': code })
 							.append($('<td>', { text: _this.projectData[offset + _this.nameIndex] }))
@@ -156,6 +182,51 @@
 						_this.projectData[offset + _this.typeIndex] + '. ' + _this.projectData[offset + _this.categoryIndex],
 					];
 
+					var periodData = [
+						"Période d'Exécution",
+						"Preparation",
+						"Technique",
+						"Politique",
+
+						"Complétement exécuté?",
+						(_this.projectData[offset + _this.pForOuiNon] == '1' ? 'Oui' : (_this.projectData[offset + _this.pForOuiNon] == '0' ? 'Non' : '')),
+						(_this.projectData[offset + _this.pTecOuiNon] == '1' ? 'Oui' : (_this.projectData[offset + _this.pTecOuiNon] == '0' ? 'Non' : '')),
+						(_this.projectData[offset + _this.pPolOuiNon] == '1' ? 'Oui' : (_this.projectData[offset + _this.pPolOuiNon] == '0' ? 'Non' : '')),
+
+						"Jour de démarrage",
+						_this.projectData[offset + _this.pForJouDem],
+						_this.projectData[offset + _this.pTecJouDem],
+						_this.projectData[offset + _this.pPolJouDem],
+
+						"Jour de finalisation",
+						_this.projectData[offset + _this.pForJouFin],
+						_this.projectData[offset + _this.pTecJourFin],
+						_this.projectData[offset + _this.pPolJouFin],
+
+						"Duree critiques",
+						_this.projectData[offset + _this.pForDurCri],
+						_this.projectData[offset + _this.pTecDurCri],
+						_this.projectData[offset + _this.pPolDurCri]
+					];
+
+					var thead = $('<thead>');
+					var headTr = $('<tr>');
+					for (var j = 0; j < 4; j++) {
+						headTr.append($('<th>', { text: periodData[j] }));
+					}
+					thead.append(headTr);
+					$('table.period').append(thead);
+
+					for (var k = 1; k < 5; k++) {
+						var tr = $('<tr>');
+
+						for (var j = 0; j < 4; j++) {
+							tr.append($('<td>', { text: periodData[4 * k + j] }));
+						}
+
+						$('table.period').append(tr);
+					}
+
 					$('.right-part .general-info tr').each(function (index, item) {
 
 						$($(item).find('td')[1]).text(data[index]);
@@ -164,6 +235,8 @@
 			};
 
 			reforms.prototype.clearReformData = function () {
+
+				$('.right-part .period').empty();
 
 				$('.right-part .general-info tr').each(function (index, item) {
 
