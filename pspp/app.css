@@ -2202,7 +2202,7 @@ ul.subtopic-content li a
   background-color: #f5f5f5;
   padding: 10px 20px;
   display: table;
-  width: 92%;
+  width: 100%;
   border-spacing: 5px;
 }
 #sdg #detail-page .target-content .items .item:nth-child(even),
@@ -2227,7 +2227,7 @@ ul.subtopic-content li a
   display: table-cell;
   text-align: center;
   vertical-align: middle;
-  width: 15%;
+  width: 13%;
 }
 #sdg #detail-page .target-content .items .item .table-column.desc,
 #sdg-editor #detail-page .target-content .items .item .table-column.desc {
@@ -2282,16 +2282,16 @@ ul.subtopic-content li a
 #sdg #detail-page .target-content .items .item.level-3,
 #sdg-editor #detail-page .target-content .items .item.level-3 {
   padding-left: 10%;
-  width: 87%;
+  width: 100%;
 }
 #sdg #detail-page .target-content .items .item.level-3 .table-column.desc,
 #sdg-editor #detail-page .target-content .items .item.level-3 .table-column.desc {
-  width: 24.5%;
+  width: 25%;
 }
 #sdg #detail-page .target-content .items .item.level-4,
 #sdg-editor #detail-page .target-content .items .item.level-4 {
   padding-left: 15%;
-  width: 82%;
+  width: 100%;
 }
 #sdg #detail-page .target-content .items .item.level-4 .table-column.desc,
 #sdg-editor #detail-page .target-content .items .item.level-4 .table-column.desc {

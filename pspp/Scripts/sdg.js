@@ -1,4 +1,4 @@
-/// <reference path="typings/jquery.d.ts"/>
+﻿/// <reference path="typings/jquery.d.ts"/>
 
 $(function () {
 	/*modify this start*/
@@ -108,11 +108,11 @@ $(function () {
 	}
 
 	var editText = "Edit";
-	var browseText = "Browse Data";
-	var metadataText = "Metadata";
+	var browseText = "Parcourir les données ";
+	var metadataText = "Métadonnées";
 	var sdmxText = "SDMXURL";
-	var collapseAllText = "Collapse All";
-	var expandAllText = "Expand All";
+	var collapseAllText = "Réduire Tout";
+	var expandAllText = "Développer Tout";
 
 	var editPageTextInFrench = "Modifier la page"; //en - edit page
 	var backTextInFrench = "Retour"; //en - back
@@ -168,7 +168,7 @@ $(function () {
 			else
 				$item.append('<div class="table-column"><a class="sdmx" style="visibility: hidden;" target="_blank" href="' + item[indexOfSdmxUrlLink] + '">' + sdmxText + '</a></div>');
 
-			$item.append('<div class="table-column">' + item[indexOfTier] + '</div>');
+			$item.append('<div class="table-column">Tier: ' + item[indexOfTier] + '</div>');
 
 			$item.addClass('level-' + level);
 			$item.data('item', item);
