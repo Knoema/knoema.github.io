@@ -469,7 +469,7 @@ img.result
 }
 
 
-@media only screen and (max-width: 940px)
+@media screen and (min-width: 321px) and (max-width: 940px)
 {
 	.content
 	{
@@ -480,18 +480,53 @@ img.result
 
 	h1
 	{
-		font-size: 26pt;
-		margin: 20px 0;
+		font-size: 24pt;
+	}
+
+	.finish-screen .population-part h2
+	{
+		width: 100%;
+	}
+
+	.retake-button
+	{
+		top: 0;
+		right: 5px;
+		height: 32px;
+		width: 32px;
+		background-size: contain;
+	}
+}
+
+@media screen and (max-width: 320px)
+{
+	.content
+	{
+		width: 100%;
+		padding: 10px;
+		margin: 0;
+	}
+
+	h1
+	{
+		font-size: 20pt;
+		margin: 10px 0;
+	}
+
+	h2
+	{
+		margin: 10px 0;
 	}
 
 	ul.scale
 	{
-		margin: 20px 0;
+		margin: 10px 0;
 	}
 
 		ul.scale li
 		{
 			margin: 0;
+			font-size: 12pt;
 		}
 
 	.finish-screen .population-part h2
@@ -506,5 +541,11 @@ img.result
 		height: 32px;
 		width: 32px;
 		background-size: contain;
+	}
+
+	ul.scale li .circle
+	{
+		width: 70px;
+		height: 70px;
 	}
 }

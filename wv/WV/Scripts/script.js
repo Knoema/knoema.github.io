@@ -38,23 +38,31 @@ var app = (function () {
 					numberOfClick = 0;
 
 					var sameCountries = _this.countriesByValues(_this.pivot.data, 6)[values];
+					var attempt = 0;
 
-					if (!sameCountries)
-						sameCountries = _this.countriesByValues(_this.pivot.data, 4)[shortValues]
+					if (!sameCountries) {
+						sameCountries = _this.countriesByValues(_this.pivot.data, 3)[shortValues];
+						attempt = sameCountries ? sameCountries.length : 0;
+					}
 
 					var people = _this.getPercentOfPopulation(sameCountries, _this.populationPivot.data);
 
 					if (sameCountries) {
+
 						var lis = [];
+
 						for (var i = 0; i < sameCountries.length; i++) {
 							lis.push($('<li>', {
 								text: sameCountries[i].country
 							})
 							.prepend($('<img>', {
 								src: '/Images/' + sameCountries[i].region.toLowerCase() + '.png'
-							}))
-							);
+							})));
 						}
+
+						if (attempt) {
+							$('.population-part h2:eq(0)').text('Your responses are unique. Your ranking of these global values does not match the 24 most common rankings. However, based on the most important things your values match ' + people.sum.toFixed(0) + ' million people around the world');
+						};
 
 						$('.finish-screen .same-countries').append(lis);
 						$('.number').text(people.sum.toFixed(0));
@@ -67,22 +75,27 @@ var app = (function () {
 					}
 
 					_this.prepareResultLayout(sameCountries);
-					$('.result-screen').show();
 
-					domtoimage.toBlob($('.result-screen')[0], { style: { opacity: 1 } })
-						.then(function (blob) {
+					var id = _this.makeId();
 
-							$('.result-screen').hide();
-							var id = _this.makeId();
+					_this.resultId = id;
+					_this.saveResults();
 
-							_this.uploadToServer(id, blob);
-							_this.saveResults();
-							_this.resultId = id;
-						})
-						.catch(function (error) {
-							$('.result-screen').hide();
-							console.error('oops, something went wrong!', error);
-						});
+					if (window.Promise) {
+
+						$('.result-screen').show();
+
+						domtoimage.toBlob($('.result-screen')[0], { style: { opacity: 1 } })
+							.then(function (blob) {
+
+								$('.result-screen').hide();
+								_this.uploadToServer(id, blob);
+							})
+							.catch(function (error) {
+								$('.result-screen').hide();
+								console.error('oops, something went wrong!', error);
+							});
+					}
 
 
 					$('.main-screen').hide();
@@ -92,8 +105,10 @@ var app = (function () {
 						var item = $('.main-screen .circle.n' + i).parent().wrap('<div>').parent().html();
 						newUl.append(item);
 					}
+
 					$('.finish-screen .scale-container').append($(newUl));
 					$('.finish-screen').show();
+					$('body').css('background-image', 'url(../Images/bg.jpg)');
 
 					$('.share-button').on('click', function () {
 
@@ -205,13 +220,18 @@ var app = (function () {
 
 		values += li.data('value');
 
-		if (numberOfClick < 4)
+		if (numberOfClick < 3)
 			shortValues += li.data('value');
 
 		if (!circle.hasClass('selected')) {
 
 			var margin = 1 + (15 / 2) * numberOfClick;
 			var height = 110 - 15 * numberOfClick;
+
+			if ($(window).width() < 325) {
+				margin = 1 +(15 / 2) * numberOfClick;
+				height = 100 - 15 * numberOfClick;
+			}
 
 			circle.animate({ margin: margin + 'px', height: height + 'px', width: height + 'px' });
 			circle.addClass('selected ' + 'n' + numberOfClick);
