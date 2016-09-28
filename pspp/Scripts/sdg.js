@@ -3,8 +3,8 @@
 $(function () {
 	/*modify this start*/
 	var host = 'http://senegal.opendataforafrica.org';
-	var structureCustomDsId = 'synbgfg';
-	var structureLightDsId = 'iwmcymc';
+	var structureCustomDsId = 'sxfafz';
+	var structureLightDsId = 'hxurvob';
 	/*modify this end*/
 
 
@@ -31,6 +31,7 @@ $(function () {
 	var indexOfBrowseDataUrlLink = 13;
 	var indexOfMetadataUrlLink = 14;
 	var indexOfSdmxUrlLink = 15;
+	var indexOfTier = 16;
 
 
 	var indexesInitialized = false;
@@ -98,6 +99,8 @@ $(function () {
 				case 'SDMXURL_Link':
 					indexOfSdmxUrlLink = i;
 					break;
+				case 'Tier':
+					indexOfTier = i;
 			}
 		}
 
@@ -115,7 +118,7 @@ $(function () {
 	var backTextInFrench = "Retour"; //en - back
 
 	function isFrenchLocale() {
-		return $('.community-v2').hasClass('fr-FR');
+		return true;
 	}
 
 	if (isFrenchLocale()) {
@@ -165,6 +168,8 @@ $(function () {
 			else
 				$item.append('<div class="table-column"><a class="sdmx" style="visibility: hidden;" target="_blank" href="' + item[indexOfSdmxUrlLink] + '">' + sdmxText + '</a></div>');
 
+			$item.append('<div class="table-column">' + item[indexOfTier] + '</div>');
+
 			$item.addClass('level-' + level);
 			$item.data('item', item);
 			$item.data('rowNumber', rowNumber);
@@ -182,16 +187,16 @@ $(function () {
 					var goal = response.items[idx];
 					for (var i in response.items) {
 						goal = response.items[i];
-						if (goal.fields
-							&& goal.fields[goalOrderField]
-							&& goal.fields[goalOrderField] == goalNo)
+						if (goal.fields && goal.fields[goalOrderField] && goal.fields[goalOrderField] == goalNo)
 							break;
 					}
 
+					var frName = goal.fields['goal-name-fr-goal-name'];
+
 					$ele.data('goal-key', goal.key);
-					$ele.data('goal-name', goal.name);
+					$ele.data('goal-name', frName);
 					$ele.data('goal-no', goalNo);
-					$ele.find('.hover-text').text(goal.name);
+					$ele.find('.hover-text').text(frName);
 				});
 
 				$('#sdg .tile .image').empty();
