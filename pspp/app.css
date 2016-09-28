@@ -273,6 +273,7 @@ h2.left-menu
 {
 	text-transform: uppercase;
 	margin-bottom: 5px;
+	font-weight: bold;
 }
 
 .inner-content
@@ -295,8 +296,9 @@ h2.left-menu
 	color: #fff;
 	border-radius: 3px;
 	padding: 6px 12px;
-	font-size: 11pt;
+	font-size: 10pt;
 	text-transform: uppercase;
+	margin-left: 5px;
 }
 .ppp-item
 {
