@@ -91,7 +91,6 @@
 
 				for (var i = 0; i < _this.projectData.length / _this.projectColumns.length; i++) {
 
-					var total = false;
 					var offset = i * _this.projectColumns.length;
 
 					//only for reforms
@@ -100,12 +99,26 @@
 
 					var code = _this.projectData[offset + _this.codeIndex];
 
+					var ongoing = true;
+					var completed = false;
+
+					//completed
+					if (_this.projectData[offset + _this.periodIndex] == '1') {
+						ongoing = false;
+						completed = true;
+						completedTrs.push($('<tr>', { 'data-code': code })
+							.append($('<td>', { text: _this.projectData[offset + _this.nameIndex] }))
+							.append($('<td>', { text: _this.projectData[offset + _this.deadlineIndex] }))
+							.append($('<td>').append($('<img>', { src: './img/icon-arrow.png', 'class': 'arrow-icon' })))
+						);
+					}
+
 					//delaued
 					var first = parseInt(_this.projectData[offset + _this.pPolDurCri]) > diffBetweenDates(getDate(_this.projectData[offset + _this.pPolJouDem]), getDate(_this.projectData[offset + _this.pPolJouFin]));
 					var secont = parseInt(_this.projectData[offset + _this.pTecDurCri]) > diffBetweenDates(getDate(_this.projectData[offset + _this.pTecJouDem]), getDate(_this.projectData[offset + _this.pTecJourFin]));
 					var third = parseInt(_this.projectData[offset + _this.pForDurCri]) > diffBetweenDates(getDate(_this.projectData[offset + _this.pForJouDem]), getDate(_this.projectData[offset + _this.pForJouFin]));
-					if (first || secont || third) {
-						total = true;
+					if ((first || secont || third) && !completed ) {
+						ongoing = false;
 						delayedTrs.push($('<tr>', { 'data-code': code })
 							.append($('<td>', { text: _this.projectData[offset + _this.nameIndex] }))
 							.append($('<td>', { text: _this.projectData[offset + _this.deadlineIndex] }))
@@ -114,8 +127,7 @@
 					}
 
 					//ongoing
-					if (_this.projectData[offset + _this.periodIndex] == '0') {
-						total = true;
+					if (ongoing) {
 						ongoingTrs.push($('<tr>', { 'data-code': code })
 							.append($('<td>', { text: _this.projectData[offset + _this.nameIndex] }))
 							.append($('<td>', { text: _this.projectData[offset + _this.deadlineIndex] }))
@@ -123,23 +135,12 @@
 						);
 					}
 
-					//completed
-					if (_this.projectData[offset + _this.periodIndex] == '1') {
-						total = true;
-						completedTrs.push($('<tr>', { 'data-code': code })
-							.append($('<td>', { text: _this.projectData[offset + _this.nameIndex] }))
-							.append($('<td>', { text: _this.projectData[offset + _this.deadlineIndex] }))
-							.append($('<td>').append($('<img>', { src: './img/icon-arrow.png', 'class': 'arrow-icon' })))
-						);
-					}
-
 					//total
-					if (total)
-						totalTrs.push($('<tr>', { 'data-code': code })
-							.append($('<td>', { text: _this.projectData[offset + _this.nameIndex] }))
-							.append($('<td>', { text: _this.projectData[offset + _this.deadlineIndex] }))
-							.append($('<td>').append($('<img>', { src: './img/icon-arrow.png', 'class': 'arrow-icon' })))
-						);
+					totalTrs.push($('<tr>', { 'data-code': code })
+						.append($('<td>', { text: _this.projectData[offset + _this.nameIndex] }))
+						.append($('<td>', { text: _this.projectData[offset + _this.deadlineIndex] }))
+						.append($('<td>').append($('<img>', { src: './img/icon-arrow.png', 'class': 'arrow-icon' })))
+					);
 				}
 
 
