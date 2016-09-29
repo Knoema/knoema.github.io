@@ -38,19 +38,21 @@
 					if (name == "Période d'adoption: Politique Jour de finalisation") _this.pPolJouFin = i;
 					if (name == "Période d'adoption: Politique Complétement exécuté? oui-1, non-0") _this.pPolOuiNon = i;
 					if (name == "Période d'adoption: Politique Livrables") _this.pPolLiv = i;
+					if (name == "Principal Responsible: Politique") _this.pPrincResPol = i;
 
 					if (name == "Période d'exécution: validation Technique Duree critiques") _this.pTecDurCri = i;
 					if (name == "Période d'exécution: validation Technique Jour de démarrage") _this.pTecJouDem = i;
 					if (name == "Période d'exécution: validation Technique Jour de finalisation") _this.pTecJourFin = i;
 					if (name == "Période d'exécution: validation Technique Complétement exécuté? oui-1, non-0") _this.pTecOuiNon = i;
 					if (name == "Période d'exécution: validation Technique Livrables") _this.pTecLiv = i;
+					if (name == "Principal Responsible: Technique") _this.pPrincResTec = i;
 
 					if (name == "Période d'Exécution: Preparation et formulation: Duree critiques") _this.pForDurCri = i;
 					if (name == "Période d'Exécution: Preparation et formulation: Jour de démarrage") _this.pForJouDem = i;
 					if (name == "Période d'Exécution: Preparation et formulation: Jour de finalisation") _this.pForJouFin = i;
 					if (name == "Période d'Exécution: Preparation et formulation Complétement exécuté? oui-1, non") _this.pForOuiNon = i;
 					if (name == "Période d'Exécution: Preparation et formulation: Livrables") _this.pForLiv = i;
-					
+					if (name == "Principal Responsible: Préparation") _this.pPrincResPre = i;
 				}
 
 				_this.fillTable('total');
@@ -89,6 +91,7 @@
 
 				for (var i = 0; i < _this.projectData.length / _this.projectColumns.length; i++) {
 
+					var total = false;
 					var offset = i * _this.projectColumns.length;
 
 					//only for reforms
@@ -97,35 +100,42 @@
 
 					var code = _this.projectData[offset + _this.codeIndex];
 
-					//total
-					totalTrs.push($('<tr>', { 'data-code': code })
-						.append($('<td>', { text: _this.projectData[offset + _this.nameIndex] }))
-						.append($('<td>', { text: _this.projectData[offset + _this.deadlineIndex] }))
-						.append($('<td>').append($('<img>', { src: './img/icon-arrow.png', 'class': 'arrow-icon' })))
-					);
-
 					//delaued
 					var first = parseInt(_this.projectData[offset + _this.pPolDurCri]) > diffBetweenDates(getDate(_this.projectData[offset + _this.pPolJouDem]), getDate(_this.projectData[offset + _this.pPolJouFin]));
 					var secont = parseInt(_this.projectData[offset + _this.pTecDurCri]) > diffBetweenDates(getDate(_this.projectData[offset + _this.pTecJouDem]), getDate(_this.projectData[offset + _this.pTecJourFin]));
 					var third = parseInt(_this.projectData[offset + _this.pForDurCri]) > diffBetweenDates(getDate(_this.projectData[offset + _this.pForJouDem]), getDate(_this.projectData[offset + _this.pForJouFin]));
-					if (first || secont || third)
+					if (first || secont || third) {
+						total = true;
 						delayedTrs.push($('<tr>', { 'data-code': code })
 							.append($('<td>', { text: _this.projectData[offset + _this.nameIndex] }))
 							.append($('<td>', { text: _this.projectData[offset + _this.deadlineIndex] }))
 							.append($('<td>').append($('<img>', { src: './img/icon-arrow.png', 'class': 'arrow-icon' })))
 						);
+					}
 
 					//ongoing
-					if (_this.projectData[offset + _this.periodIndex] == '0')
+					if (_this.projectData[offset + _this.periodIndex] == '0') {
+						total = true;
 						ongoingTrs.push($('<tr>', { 'data-code': code })
 							.append($('<td>', { text: _this.projectData[offset + _this.nameIndex] }))
 							.append($('<td>', { text: _this.projectData[offset + _this.deadlineIndex] }))
 							.append($('<td>').append($('<img>', { src: './img/icon-arrow.png', 'class': 'arrow-icon' })))
 						);
+					}
 
 					//completed
-					if (_this.projectData[offset + _this.periodIndex] == '1')
+					if (_this.projectData[offset + _this.periodIndex] == '1') {
+						total = true;
 						completedTrs.push($('<tr>', { 'data-code': code })
+							.append($('<td>', { text: _this.projectData[offset + _this.nameIndex] }))
+							.append($('<td>', { text: _this.projectData[offset + _this.deadlineIndex] }))
+							.append($('<td>').append($('<img>', { src: './img/icon-arrow.png', 'class': 'arrow-icon' })))
+						);
+					}
+
+					//total
+					if (total)
+						totalTrs.push($('<tr>', { 'data-code': code })
 							.append($('<td>', { text: _this.projectData[offset + _this.nameIndex] }))
 							.append($('<td>', { text: _this.projectData[offset + _this.deadlineIndex] }))
 							.append($('<td>').append($('<img>', { src: './img/icon-arrow.png', 'class': 'arrow-icon' })))
@@ -176,12 +186,17 @@
 					if (_this.projectData[offset + _this.codeIndex] != code)
 						continue;
 
+					var reformName = _this.projectData[offset + _this.nameIndex];
+					var specialReform = reformName == 'Procédure fusionnée taxe sociale';
 					var data = [
-						_this.projectData[offset + _this.nameIndex],
+						reformName,
 						_this.projectData[offset + _this.deadlineIndex],
 						_this.projectData[offset + _this.typeIndex] + '. ' + _this.projectData[offset + _this.categoryIndex],
 					];
 
+					var pre = (_this.projectData[offset + _this.pForOuiNon] == '1' ? true : (_this.projectData[offset + _this.pForOuiNon] == '0' ? false : null));
+					var tec = (_this.projectData[offset + _this.pTecOuiNon] == '1' ? true : (_this.projectData[offset + _this.pTecOuiNon] == '0' ? false : null));
+					var pol = (_this.projectData[offset + _this.pPolOuiNon] == '1' ? true : (_this.projectData[offset + _this.pPolOuiNon] == '0' ? false : null));
 					var periodData = [
 						"Période d'Exécution",
 						"Preparation",
@@ -206,7 +221,17 @@
 						"Duree critiques",
 						_this.projectData[offset + _this.pForDurCri],
 						_this.projectData[offset + _this.pTecDurCri],
-						_this.projectData[offset + _this.pPolDurCri]
+						_this.projectData[offset + _this.pPolDurCri],
+
+						"Livrables",
+						_this.projectData[offset + _this.pForLiv],
+						_this.projectData[offset + _this.pTecLiv],
+						_this.projectData[offset + _this.pPolLiv],
+
+						"Principal Responsable",
+						_this.projectData[offset + _this.pPrincResPre],
+						_this.projectData[offset + _this.pPrincResTec],
+						_this.projectData[offset + _this.pPrincResPol],
 					];
 
 					var hintText = [
@@ -217,20 +242,36 @@
 
 					var thead = $('<thead>');
 					var headTr = $('<tr>');
-					for (var j = 0; j < 4; j++) {
-						if(j == 0)
-							headTr.append($('<th>', { text: periodData[j] }));
-						else
-							headTr.append($('<th>', { text: periodData[j] }).append($('<img>', { src: './img/icon_info.png', 'class': 'hint', 'data-hint': hintText[j-1] })));
-					}
+					headTr.append($('<th>', { text: periodData[0] }));
+					headTr.append($('<th>', { text: periodData[1], 'class': (pre ? 'uoi' : (pre === false ? 'non' : '')) }).append($('<img>', { src: './img/icon_info.png', 'class': 'hint', 'data-hint': hintText[j - 1] })));
+					headTr.append($('<th>', { text: periodData[2], 'class': (tec ? 'uoi' : (tec === false ? 'non' : '')) }).append($('<img>', { src: './img/icon_info.png', 'class': 'hint', 'data-hint': hintText[j - 1] })));
+					headTr.append($('<th>', { text: periodData[3], 'class': (pol ? 'uoi' : (pol === false ? 'non' : '')) }).append($('<img>', { src: './img/icon_info.png', 'class': 'hint', 'data-hint': hintText[j - 1] })));
 					thead.append(headTr);
 					$('table.period').append(thead);
 
-					for (var k = 1; k < 5; k++) {
+					for (var k = 1; k < 7; k++) {
 						var tr = $('<tr>');
 
-						for (var j = 0; j < 4; j++) {
-							tr.append($('<td>', { text: periodData[4 * k + j] }));
+						if (k == 6 && specialReform) {
+							tr.append($('<td>', { text: periodData[4 * k + 0], 'class': strClass }));
+							tr.append($('<td>', { text: periodData[4 * k + 1], 'class': strClass }));
+							tr.append($('<td>', { text: periodData[4 * k + 2], 'class': strClass }));
+							tr.append($('<td>', { text: periodData[4 * k + 3], 'class': strClass }));
+						}
+						else {
+							for (var j = 0; j < 4; j++) {
+
+								var strClass = '';
+								switch (j) {
+									case 1: strClass = (pre ? 'uoi' : (pre === false ? 'non' : ''));
+										break;
+									case 2: strClass = (tec ? 'uoi' : (tec === false ? 'non' : ''));
+										break;
+									case 3: strClass = (pol ? 'uoi' : (pol === false ? 'non' : ''));
+										break;
+								}
+								tr.append($('<td>', { text: periodData[4 * k + j], 'class': strClass }));
+							}
 						}
 
 						$('table.period').append(tr);

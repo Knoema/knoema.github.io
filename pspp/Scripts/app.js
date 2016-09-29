@@ -68,6 +68,16 @@ var Infrastructure;
 		'305': 'Paix et sécurité'
 	};
 
+	var statusIcons = {
+		'1': '01-Envisage',
+		'2': '02-Annonce',
+		'3': '03-Entame',
+		'En cours': '04-En-cours',
+		'Opérationnel': '05-Operationel',
+		'6': '06-Complete',
+		'7': '07-Finalise'
+	};
+
     var PPNameToObjectType = {
     	"100-150 aggregation projects focused on livestock and high value added agriculture sectors": ["Farms"],
     	"3-4 grain development corridors": ["Agriculture"],
@@ -199,6 +209,7 @@ var Infrastructure;
             		if (name == 'Statut Projets: Annoncé, En cours, Complété, opérationel Programmes/reformes: En') _this.statusIndex = i;
             		if (name == 'Code PTIP') _this.ptipIndex = i;
             		if (name == 'Code du Sous-Secteur (voir feuille Read me pour avoir les codes)') _this.sectorIndex = i;
+            		if (name == 'Region, Département (Localité) (sinon mettre 0)') _this.localeIndex = i;
             	}
 
             	_this.objectData = objectData[0].data;
@@ -442,6 +453,7 @@ var Infrastructure;
             			tooltipData[_this.projectColumns[_this.statusIndex].name] = _this.projectData[offset + _this.statusIndex];
             			tooltipData[_this.projectColumns[_this.ppIndex].name] = $('#ppp-projects').find('option[value=' + _this.projectData[offset + _this.ppIndex] + ']').text();;
             			tooltipData[_this.projectColumns[_this.ptipIndex].name] = _this.projectData[offset + _this.ptipIndex];
+            			tooltipData[_this.projectColumns[_this.localeIndex].name] = _this.projectData[offset + _this.localeIndex];
             			tooltipData['Budget Total Prévu: Dépenses réalisées'] = '0';
 
             			filtredProjects[_this.projectData[offset + _this.databaseCodeIndex]] = tooltipData;
@@ -522,94 +534,94 @@ var Infrastructure;
             });
         };
 
-        var ChartColors = {
-            Red: '#b00e0e',
-            Blue: '#00bff3',
-            Green: '#3cb00e',
-            Pink: '#c724c9',
-            Orange: '#f4950c',
-            Turquoise: '#43c8ba'
-        };
+        //var ChartColors = {
+        //    Red: '#b00e0e',
+        //    Blue: '#00bff3',
+        //    Green: '#3cb00e',
+        //    Pink: '#c724c9',
+        //    Orange: '#f4950c',
+        //    Turquoise: '#43c8ba'
+        //};
 
-        Application.prototype.initAreaProfile = function () {
-        	var $radiusButton = $('#radius-button');
-        	if ($radiusButton.length != 1) return;
+        //Application.prototype.initAreaProfile = function () {
+        //	var $radiusButton = $('#radius-button');
+        //	if ($radiusButton.length != 1) return;
 
-        	// SIX-9
-        	var drawingManager = new google.maps.drawing.DrawingManager({
-        		map: this.map,
-        		drawingMode: null,
-        		drawingControl: false,
-        		circleOptions: {
-        			fillColor: 'black',
-        			fillOpacity: 0.2,
-        			strokeWeight: 4,
-        			strokeColor: 'orange',
-        			clickable: false,
-        			editable: true,
-        			zIndex: 1
-        		}
-        	});
+        //	// SIX-9
+        //	var drawingManager = new google.maps.drawing.DrawingManager({
+        //		map: this.map,
+        //		drawingMode: null,
+        //		drawingControl: false,
+        //		circleOptions: {
+        //			fillColor: 'black',
+        //			fillOpacity: 0.2,
+        //			strokeWeight: 4,
+        //			strokeColor: 'orange',
+        //			clickable: false,
+        //			editable: true,
+        //			zIndex: 1
+        //		}
+        //	});
 
-        	var self = this;
+        //	var self = this;
 
-        	if (!this.radiusToolWindow) {
-        		this.radiusToolWindow = new google.maps.InfoWindow();
-        		var template = doT.template($('#area-profile-template').html());
-        		this.radiusToolWindow.setContent(template({
-        			region: "Thies",
-        			village: "Sine Moussa Abdou",
-        			population: 900,
-        			incidence: "43 percent<br>(compared to 48% for Thies)",
-        			access: "70 percent of population",
-        			consumption: "3 kWh/day",
-        			cost: "CFA 840/kWh (US$ 1.4/kWh)",
-        			grid: "no",
-        			source: "micro grid with hybrid power plant<br>(solar 5 kW, wind 5 kW, and diesel 10 kW)",
-        			hospital: "Poste de sante de Ngakham",
-        			schools: 3,
-        			investmentProject: {
-        				name: "Construct Transmission Lines",
-        				location: "Thies",
-						endDate: "Jan 1, 2017"
-        			},
-        			investor: "Export-Import Bank of China, Government Agency;<br>China Machinery Engineering Corporation (CMEC)"
-        		}));
-        	}
+        //	if (!this.radiusToolWindow) {
+        //		this.radiusToolWindow = new google.maps.InfoWindow();
+        //		var template = doT.template($('#area-profile-template').html());
+        //		this.radiusToolWindow.setContent(template({
+        //			region: "Thies",
+        //			village: "Sine Moussa Abdou",
+        //			population: 900,
+        //			incidence: "43 percent<br>(compared to 48% for Thies)",
+        //			access: "70 percent of population",
+        //			consumption: "3 kWh/day",
+        //			cost: "CFA 840/kWh (US$ 1.4/kWh)",
+        //			grid: "no",
+        //			source: "micro grid with hybrid power plant<br>(solar 5 kW, wind 5 kW, and diesel 10 kW)",
+        //			hospital: "Poste de sante de Ngakham",
+        //			schools: 3,
+        //			investmentProject: {
+        //				name: "Construct Transmission Lines",
+        //				location: "Thies",
+		//				endDate: "Jan 1, 2017"
+        //			},
+        //			investor: "Export-Import Bank of China, Government Agency;<br>China Machinery Engineering Corporation (CMEC)"
+        //		}));
+        //	}
 
-        	google.maps.event.addListener(drawingManager, 'circlecomplete', function(circle) {
-        		drawingManager.setDrawingMode(null);
-        		self.radiusToolCircle = circle;
-        		// refresh popup
+        //	google.maps.event.addListener(drawingManager, 'circlecomplete', function(circle) {
+        //		drawingManager.setDrawingMode(null);
+        //		self.radiusToolCircle = circle;
+        //		// refresh popup
 
-        		self.radiusToolWindow.setPosition(circle.getCenter());
-        		self.radiusToolWindow.open(this.map);
+        //		self.radiusToolWindow.setPosition(circle.getCenter());
+        //		self.radiusToolWindow.open(this.map);
 				
-        		google.maps.event.addListener(circle, 'center_changed', function () {
-					// refresh popup
-        			self.radiusToolWindow.setPosition(circle.getCenter());
-        		});
+        //		google.maps.event.addListener(circle, 'center_changed', function () {
+		//			// refresh popup
+        //			self.radiusToolWindow.setPosition(circle.getCenter());
+        //		});
 
-    			google.maps.event.addListener(circle, 'radius_changed', function() {
-    				// refresh popup
-				});
-			});
+    	//		google.maps.event.addListener(circle, 'radius_changed', function() {
+    	//			// refresh popup
+		//		});
+		//	});
 			
-			$radiusButton.on('click', function() {
-				$radiusButton.toggleClass('active');
-				if ($radiusButton.hasClass('active')) {
-					drawingManager.setDrawingMode(google.maps.drawing.OverlayType.CIRCLE);
-				} else {
-					drawingManager.setDrawingMode(null);
-					if (self.radiusToolCircle) {
-						self.radiusToolCircle.setMap(null);
-						self.radiusToolCircle = null;
-						self.radiusToolWindow.close();
-						// refresh popup
-					}
-				}
-			});
-        };
+		//	$radiusButton.on('click', function() {
+		//		$radiusButton.toggleClass('active');
+		//		if ($radiusButton.hasClass('active')) {
+		//			drawingManager.setDrawingMode(google.maps.drawing.OverlayType.CIRCLE);
+		//		} else {
+		//			drawingManager.setDrawingMode(null);
+		//			if (self.radiusToolCircle) {
+		//				self.radiusToolCircle.setMap(null);
+		//				self.radiusToolCircle = null;
+		//				self.radiusToolWindow.close();
+		//				// refresh popup
+		//			}
+		//		}
+		//	});
+        //};
 
         Application.prototype.hideNonPresentedProjectsButtons = function () {
 
@@ -684,11 +696,13 @@ var Infrastructure;
         		self.infoWindow.setPosition(event.latLng);
 
         		var tooltipData = this.get('tooltip');
+        		var status = tooltipData["Statut Projets: Annoncé, En cours, Complété, opérationel Programmes/reformes: En"];
         		var html = '';
         		html += '<div class="map-tooltip">';
 
         		html += '<div class="img-block">';
         		html += '<img src="./img/nophoto.png" />';
+        		html += '<div class="data-block s"><img src="./img/status/' + statusIcons[status] + '.png"/><div><label>Statut:</label><br />' + (status == null ? '' : status) + '</div></div>';
         		html += '</div>';
 
         		html += '<div class="data-block">';
@@ -699,17 +713,19 @@ var Infrastructure;
 
         		html += '<div class="data-block col1">';
 
+        		html += '<div><label>Localité:</label><br />' + (tooltipData['Region, Département (Localité) (sinon mettre 0)'] == null ? '' : tooltipData['Region, Département (Localité) (sinon mettre 0)']) + '</div>';
+        		html += '<div><label>Budget Total Prévu:</label><br />' + (tooltipData['Budget Total Prévu: Dépenses réalisées'] == null ? '0' : tooltipData['Budget Total Prévu: Dépenses réalisées']) + '</div>';
         		html += "<div><label>Code de l'axe stratégique de la vision 2035:</label><br />" + (tooltipData["Code de l'axe stratégique de la vision 2035"] == null ? '' : tooltipData["Code de l'axe stratégique de la vision 2035"]) + '</div>';
-        		html += '<div><label>Code du Sous-Secteur (voir feuille Read me pour avoir les codes):</label><br />' + (tooltipData['Code du Sous-Secteur (voir feuille Read me pour avoir les codes)'] == null ? '' : tooltipData['Code du Sous-Secteur (voir feuille Read me pour avoir les codes)']) + '</div>';
-        		html += '<div><label>Statut Projets: Annoncé, En cours, Complété, opérationel Programmes/reformes: En:</label><br />' + (tooltipData['Statut Projets: Annoncé, En cours, Complété, opérationel Programmes/reformes: En'] == null ? '' : tooltipData['Statut Projets: Annoncé, En cours, Complété, opérationel Programmes/reformes: En']) + '</div>';
 
         		html += '</div>';
 
         		html += '<div class="data-block col2">';
 
-        		html += '<div><label>Numéro du projet phare / numéro de la réforme phare. (PP# / RP#):</label><br />' + (tooltipData['Numéro du projet phare / numéro de la réforme phare. (PP# / RP#)'] == null ? '' : tooltipData['Numéro du projet phare / numéro de la réforme phare. (PP# / RP#)']) + '</div>';
+        		html += '<div><label>Sous Secteur:</label><br />' + (tooltipData['Code du Sous-Secteur (voir feuille Read me pour avoir les codes)'] == null ? '' : tooltipData['Code du Sous-Secteur (voir feuille Read me pour avoir les codes)']) + '</div>';
+        		html += '<div><label>Plan Senegal Emergent project:</label><br />' + (tooltipData['Numéro du projet phare / numéro de la réforme phare. (PP# / RP#)'] == null ? '' : tooltipData['Numéro du projet phare / numéro de la réforme phare. (PP# / RP#)']) + '</div>';
         		html += '<div><label>Code PTIP:</label><br />' + (tooltipData['Code PTIP'] == null ? '' : tooltipData['Code PTIP']) + '</div>';
-        		html += '<div><label>Budget Total Prévu: Dépenses réalisées:</label><br />' + (tooltipData['Budget Total Prévu: Dépenses réalisées:'] == null ? '0' : tooltipData['Budget Total Prévu: Dépenses réalisées:']) + '</div>';
+        		html += '<div><label>Dépenses réalisées:</label><br />' + (tooltipData['Budget Total Prévu: Dépenses réalisées'] == null ? '0' : tooltipData['Budget Total Prévu: Dépenses réalisées']) + '</div>';
+        		
 
         		html += '</div>';
 
@@ -732,8 +748,10 @@ var Infrastructure;
         				axe: objData["Code de l'axe stratégique de la vision 2035"],
         				sour: objData["Code du Sous-Secteur (voir feuille Read me pour avoir les codes)"],
         				number: objData["Numéro du projet phare / numéro de la réforme phare. (PP# / RP#)"],
-        				status: objData["Statut Projets: Annoncé, En cours, Complété, opérationel Programmes/reformes: En"],
-        				ptip: objData["Code PTIP"]
+        				statusIcon: statusIcons[status],
+        				status: status,
+        				ptip: objData["Code PTIP"],
+        				locale: objData["Region, Département (Localité) (sinon mettre 0)"]
         			};
 
         			var template = doT.template($('#new-object-passport').html());

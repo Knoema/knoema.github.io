@@ -422,14 +422,16 @@
 				<tbody>
 					<tr>
 						<td style="width: 20%"><p class="title">Nom Projet</p><p class="value">{{=it.name}}</p></td>
-						<td style="width: 20%"><p class="title">Statut Projets: Annoncé, En cours, Complété, opérationel Programmes/reformes: En</p><p class="value">{{=it.status}}</p></td>
+						<td style="width: 20%"><p class="title">Localité</p><p class="value">{{=it.locale}}</p></td>
 						<td style="width: 30%"><p class="title">Code de l'axe stratégique de la vision 2035</p><p class="value">{{=it.axe}}</p></td>
-						<td style="width: 30%"><p class="title">Numéro du projet phare / numéro de la réforme phare</p><p class="value">{{=it.number}}</p></td>
+						<td style="width: 30%"><p class="title">Plan Senegal Emergent project</p><p class="value">{{=it.number}}</p></td>
 					</tr>
 					<tr>
-						<td><p class="title">Budget Total Prévu: Dépenses réalisées</p><p class="value">{{=it.budget}}</p></td>
+						<td class="status"><img src="./img/status/{{=it.statusIcon}}-x2.png"/><div><p class="title">Statut</p><p class="value">{{=it.status}}</p></div></td>
+						<td><p class="title">Budget Total Prévu</p><p class="value">{{=it.budget}}</p></td>
+						<td><p class="title">Sous Secteur</p><p class="value">{{=it.sour}}</p></td>
 						<td><p class="title">Code PTIP</p><p class="value">{{=it.ptip}}</p></td>
-						<td><p class="title">Code du Sous-Secteur (voir feuille Read me pour avoir les codes)</p><p class="value">{{=it.sour}}</p></td>
+						
 						<td></td>
 					</tr>
 				</tbody>
