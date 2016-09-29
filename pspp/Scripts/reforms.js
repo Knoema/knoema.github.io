@@ -209,10 +209,19 @@
 						_this.projectData[offset + _this.pPolDurCri]
 					];
 
+					var hintText = [
+						'TDR ou comité pour préparer la réforme<br />Echange avec les parties prenantes (livrable: rapport ou compte-rendu)<br />Ebauche(s) du projet de texte<br />Projet de texte transmis au SG du Gouvernement',
+						'Comité interne primature (évaluation conformité)<br />Circularisation du projet de texte aux différentes entités administratives concernées ou impactées<br />Observations et avis sur le projet de texte (retour des entités administratives)<br />Projet de texte intégrant les observations<br />Comité interne (suivi prise en compte des observations)<br />Comité technique (validation technique de fond)<br />Projet de texte transmis avis Cour suprême si applicable<br />Comité interne (suivi prise en compte avis comité technique et/ou Cour suprême)<br />Projet de texte inscrit pour examen en Conseil des ministres',
+						'Projet de texte Conseil des ministres (rejet, adoption avec réserves , adoption définitive)<br />Comité de suivi pour intégration réserves Conseil des ministres<br />Decret saisine assemblée si projet de loi<br />Adoption Assemblée nationale (commission technique, commission de loi, plénière)<br />Decret de promulgation de la loi<br />Numérotation du texte<br />Signature du texte par le PM et le PR <br />Publication au Journal officiel du texte<br />'
+					];
+
 					var thead = $('<thead>');
 					var headTr = $('<tr>');
 					for (var j = 0; j < 4; j++) {
-						headTr.append($('<th>', { text: periodData[j] }));
+						if(j == 0)
+							headTr.append($('<th>', { text: periodData[j] }));
+						else
+							headTr.append($('<th>', { text: periodData[j] }).append($('<img>', { src: './img/icon_info.png', 'class': 'hint', 'data-hint': hintText[j-1] })));
 					}
 					thead.append(headTr);
 					$('table.period').append(thead);
@@ -226,6 +235,20 @@
 
 						$('table.period').append(tr);
 					}
+
+					var $bubbleContainer = $('<div>', { style: "display:none;", id: "bubble-container" });
+					$bubbleContainer.appendTo($('body'));
+					$('img.hint').on('mouseover', function (e) {
+
+						$bubbleContainer
+							.empty()
+							.append($(this).data('hint'))
+							.css({ left: e.pageX + 10, top: e.pageY + 10, bottom: 'auto', right: 'auto' })
+							.show();
+					});
+					$('img.hint').on('mouseleave', function () {
+						$bubbleContainer.hide();
+					});
 
 					$('.right-part .general-info tr').each(function (index, item) {
 

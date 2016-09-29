@@ -692,8 +692,26 @@ var Infrastructure;
         		html += '</div>';
 
         		html += '<div class="data-block">';
-        		for (var i in tooltipData)
-        			html += '<div style="max-width: 300px;"><label>' + i + ':&nbsp;</label>' + (tooltipData[i] == null ? '' : tooltipData[i]) + '</div>';
+
+        		html += '<div class="title-block">';
+        		html += '<div style="max-width: 300px;"><label>Nom Projet:</label><br />' + (tooltipData['Nom Projet'] == null ? '' : tooltipData['Nom Projet']) + '</div>';
+        		html += '</div>';
+
+        		html += '<div class="data-block col1">';
+
+        		html += "<div><label>Code de l'axe stratégique de la vision 2035:</label><br />" + (tooltipData["Code de l'axe stratégique de la vision 2035"] == null ? '' : tooltipData["Code de l'axe stratégique de la vision 2035"]) + '</div>';
+        		html += '<div><label>Code du Sous-Secteur (voir feuille Read me pour avoir les codes):</label><br />' + (tooltipData['Code du Sous-Secteur (voir feuille Read me pour avoir les codes)'] == null ? '' : tooltipData['Code du Sous-Secteur (voir feuille Read me pour avoir les codes)']) + '</div>';
+        		html += '<div><label>Statut Projets: Annoncé, En cours, Complété, opérationel Programmes/reformes: En:</label><br />' + (tooltipData['Statut Projets: Annoncé, En cours, Complété, opérationel Programmes/reformes: En'] == null ? '' : tooltipData['Statut Projets: Annoncé, En cours, Complété, opérationel Programmes/reformes: En']) + '</div>';
+
+        		html += '</div>';
+
+        		html += '<div class="data-block col2">';
+
+        		html += '<div><label>Numéro du projet phare / numéro de la réforme phare. (PP# / RP#):</label><br />' + (tooltipData['Numéro du projet phare / numéro de la réforme phare. (PP# / RP#)'] == null ? '' : tooltipData['Numéro du projet phare / numéro de la réforme phare. (PP# / RP#)']) + '</div>';
+        		html += '<div><label>Code PTIP:</label><br />' + (tooltipData['Code PTIP'] == null ? '' : tooltipData['Code PTIP']) + '</div>';
+        		html += '<div><label>Budget Total Prévu: Dépenses réalisées:</label><br />' + (tooltipData['Budget Total Prévu: Dépenses réalisées:'] == null ? '0' : tooltipData['Budget Total Prévu: Dépenses réalisées:']) + '</div>';
+
+        		html += '</div>';
 
         		html += '</div>';
 

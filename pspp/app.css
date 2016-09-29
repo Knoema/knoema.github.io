@@ -949,6 +949,7 @@ div#legend_high
 .top-panel table tr td
 {
 	padding: 3px 10px;
+	vertical-align: top;
 }
 p.title
 {
@@ -1457,6 +1458,7 @@ p.value
 {
 	margin: 0 0 15px 0;
 	display: inline-block;
+	color: #472001;
 }
 
 .map-tooltip .data-block label
@@ -1467,17 +1469,18 @@ p.value
 }
 .map-tooltip .data-block div
 {
-	padding: 3px 10px 3px 15px;
+	padding: 3px 15px 3px 0px;
 }
 
-.map-tooltip .data-block .red
+.map-tooltip .data-block .title-block
 {
-	color: red;
+	border-bottom: 1px solid #472001;
 }
 
-.map-tooltip .data-block .odd
+.map-tooltip .data-block.col1, .map-tooltip .data-block.col2
 {
-	background-color: #F8F8F8;
+	width: 200px;
+	vertical-align: top;
 }
 
 .map-tooltip .opp-button
@@ -1868,6 +1871,12 @@ ul.subtopic-content li a
 .reforms-table .right-part table.general-info td.caption
 {
 	color: #9b7c4f;
+}
+.reforms-table .right-part table.period thead th img
+{
+	width: 15px;
+	margin-left: 5px;
+	cursor: pointer;
 }
 /*reforms: end*/
 
@@ -2830,25 +2839,12 @@ div#main-content div.outer .inner-block .gadget-embed iframe {
 div#bubble-container {
 	font-family: Roboto,Arial;
   font-size: 8pt;
-  height: 200px;
   width: 300px;
   padding: 20px;
   position: absolute;
   background-color: white;
   text-align: justify;
   box-shadow: 0 0 10px 1px #ccc;
-}
-div#bubble-container.global-happy,
-div#bubble-container.e-gov,
-div#bubble-container.human-dev {
-  height: 380px;
-}
-div#bubble-container.eco-ind {
-  height: 430px;
-}
-div#bubble-container.log-per,
-div#bubble-container.doing-bus {
-  height: 160px;
 }
 div.inner {
   width: 940px;
