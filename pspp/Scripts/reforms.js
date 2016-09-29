@@ -223,15 +223,15 @@
 						_this.projectData[offset + _this.pTecDurCri],
 						_this.projectData[offset + _this.pPolDurCri],
 
-						"Livrables",
-						_this.projectData[offset + _this.pForLiv],
-						_this.projectData[offset + _this.pTecLiv],
-						_this.projectData[offset + _this.pPolLiv],
-
 						"Principal Responsable",
 						_this.projectData[offset + _this.pPrincResPre],
 						_this.projectData[offset + _this.pPrincResTec],
 						_this.projectData[offset + _this.pPrincResPol],
+
+						"Livrables",
+						_this.projectData[offset + _this.pForLiv],
+						_this.projectData[offset + _this.pTecLiv],
+						_this.projectData[offset + _this.pPolLiv],
 					];
 
 					var hintText = [
@@ -243,9 +243,9 @@
 					var thead = $('<thead>');
 					var headTr = $('<tr>');
 					headTr.append($('<th>', { text: periodData[0] }));
-					headTr.append($('<th>', { text: periodData[1], 'class': (pre ? 'uoi' : (pre === false ? 'non' : '')) }).append($('<img>', { src: './img/icon_info.png', 'class': 'hint', 'data-hint': hintText[j - 1] })));
-					headTr.append($('<th>', { text: periodData[2], 'class': (tec ? 'uoi' : (tec === false ? 'non' : '')) }).append($('<img>', { src: './img/icon_info.png', 'class': 'hint', 'data-hint': hintText[j - 1] })));
-					headTr.append($('<th>', { text: periodData[3], 'class': (pol ? 'uoi' : (pol === false ? 'non' : '')) }).append($('<img>', { src: './img/icon_info.png', 'class': 'hint', 'data-hint': hintText[j - 1] })));
+					headTr.append($('<th>', { text: periodData[1], 'class': (pre ? 'uoi' : (pre === false ? 'non' : '')) }).append($('<img>', { src: './img/icon_info.png', 'class': 'hint', 'data-hint': hintText[0] })));
+					headTr.append($('<th>', { text: periodData[2], 'class': (tec ? 'uoi' : (tec === false ? 'non' : '')) }).append($('<img>', { src: './img/icon_info.png', 'class': 'hint', 'data-hint': hintText[1] })));
+					headTr.append($('<th>', { text: periodData[3], 'class': (pol ? 'uoi' : (pol === false ? 'non' : '')) }).append($('<img>', { src: './img/icon_info.png', 'class': 'hint', 'data-hint': hintText[2] })));
 					thead.append(headTr);
 					$('table.period').append(thead);
 
