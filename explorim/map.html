@@ -1,0 +1,72 @@
+﻿<html>
+	<head>
+		<title>Explorim</title>
+		<link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+		<link rel='stylesheet' type='text/css' href='https://knoema.com/geoplayground/2.0/sdk.css' />
+		<link rel="stylesheet" type="text/css" href="./style.css" />
+	</head>
+	<body>
+		<div id="filters">
+			<div class="logo-container">
+				<img src="./img/logo-x2.png"/>
+			</div>
+
+			<div class="title">
+				<h2>Filters</h2>
+				<a href="#" class="clear-filters">Effacer tous les filters</a>
+			</div>
+
+			<ul>
+				<li class="active">
+					<div class="item-title">
+						<img src="./img/icon-01-x2.png" />
+						<h3>Infrastructures</h3>
+						<div class="expand-collapse-icon"></div>
+					</div>
+					<ul class="item-content">
+						<li><label><input type="checkbox" value="aa75fc8e-bc7d-9660-3432-c33541add704" />Cabinet Dentaire</label></li>
+						<li><label><input type="checkbox" value="935291c9-ae13-a5e9-63e4-3249f851c780" />Cabinet Médical</label></li>
+						<li><label><input type="checkbox" value="82c51b45-a48c-1d14-7d94-ec173d8bb828" />Centres de Santé</label></li>
+						<li><label><input type="checkbox" value="bfb41c9e-686b-5c6c-236a-37d782583ef1" />Clinique</label></li>
+						<li><label><input type="checkbox" value="21864560-49b5-29f4-9246-59c3e710c13e" />Dépôt Pharmaceutique</label></li>
+						<li><label><input type="checkbox" value="fdae9acb-c6c0-9314-6ae7-0b561ca3871f" />Ecoles de santé</label></li>
+						<li><label><input type="checkbox" value="57258bdc-ec84-40e9-998f-9d3c6238f0ec" />Hopitaux</label></li>
+						<li><label><input type="checkbox" value="2b1d8737-643c-7e89-d8c6-a17a8eb2c4b2" />Hopitaux Spécialisés</label></li>
+						<li><label><input type="checkbox" value="5d852c71-ef1c-37bd-91a2-b83029a02d15" />Labarotoire D'analyse</label></li>
+						<li><label><input type="checkbox" value="8e01b5a1-20da-c7f3-aa7e-2d7c5ed4cb78" />Pharmacie</label></li>
+						<li><label><input type="checkbox" value="95b48797-5ead-4c61-8259-879cd37984ca" />Polyclinique</label></li>
+						<li><label><input type="checkbox" value="5b9f6f4c-54a3-1d4a-8fdc-40fdd07c222c" />Postes de Santé</label></li>
+						<li><label><input type="checkbox" value="dc263938-1c63-91fb-fbc1-d9a25381acf6" />Tradipraticien</label></li>
+						<li><label><input type="checkbox" value="19117d51-3d83-dd8a-aa4b-420b000a1e83" />Demography</label></li>
+					</ul>
+				</li>
+				<li>
+					<div class="item-title">
+						<img src="./img/icon-02-x2.png" style="margin-top: 10px;" />
+						<h3>La&nbsp;pluie&nbsp;et la&nbsp;végétation</h3>
+						<div class="expand-collapse-icon" style="margin-top: 10px;"></div>
+					</div>
+					<ul class="item-content">
+					</ul>
+				</li>
+				<li>
+					<div class="item-title">
+						<img src="./img/icon-03-x2.png" />
+						<h3>Élections</h3>
+						<div class="expand-collapse-icon"></div>
+					</div>
+					<ul class="item-content">
+					</ul>
+				</li>
+			</ul>
+		</div>
+		<div id="map-container"></div>
+
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+		<script src="http://ajax.microsoft.com/ajax/jquery.templates/beta1/jquery.tmpl.min.js"></script>
+		<script src="http://code.jquery.com/ui/1.11.4/jquery-ui.min.js" type="text/javascript"></script>
+		<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDW5mB0UdDWi7EdcoH3eE-IunlT7nISRuA&v=3&libraries=drawing,geometry"></script>
+		<script src="http://explorim.knoema.com/geoplayground/2.0/sdk.js"></script>
+		<script src="./scripts/map.js"></script>
+	</body>
+</html>
