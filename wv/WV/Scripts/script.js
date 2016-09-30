@@ -24,6 +24,8 @@ var app = (function () {
 
 		$('.start-button').on('click', function () {
 
+			_this.trackEvent('Start');
+
 			$('.start-screen').hide();
 			$('.main-screen').show();
 
@@ -106,6 +108,8 @@ var app = (function () {
 						newUl.append(item);
 					}
 
+					_this.trackEvent('Finish');
+
 					$('.finish-screen .scale-container').append($(newUl));
 					$('.finish-screen').show();
 					$('body').css('background-image', 'url(../Images/bg.jpg)');
@@ -118,6 +122,11 @@ var app = (function () {
 				}, 500);
 			});
 		});
+	};
+
+	app.prototype.trackEvent = function (event, action, label) {
+		if (typeof ga == 'function')
+			ga('send', 'event', event, action, label);
 	};
 
 	app.prototype.prepareResultLayout = function (isSameCountries) {
@@ -153,6 +162,8 @@ var app = (function () {
 	}
 
 	app.prototype.share = function (channel, resultId) {
+
+		this.trackEvent('Share', channel, resultId);
 
 		var windowSize = {
 			twitter: { w: 475, h: 550 },

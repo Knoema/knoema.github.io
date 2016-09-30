@@ -39,7 +39,12 @@ namespace WV.Controllers
 		[HttpPost]
 		public ActionResult Save(List<string> priority)
 		{
-			VisitHistory.Save(Request.UserHostAddress, priority.ToArray());
+			var ip = Request.UserHostAddress;
+
+			if ( Request.ServerVariables != null)
+				ip = Request.ServerVariables["HTTP_X_FORWARDED_FOR"] ?? Request.ServerVariables["REMOTE_ADDR"];
+
+			VisitHistory.Save(ip, priority.ToArray());
 
 			return new HttpStatusCodeResult(200, "Ok");
 		}
