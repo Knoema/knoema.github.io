@@ -32,6 +32,7 @@
 					if (name == 'Catégorie des réformes') _this.categoryIndex = i;
 					if (name == 'Type') _this.typeIndex = i;
 					if (name == "Période d'adoption: Politique Complétement exécuté? oui-1, non-0") _this.periodIndex = i;
+					if (name == "Source réforme : Element Déclencheur") _this.sourceIndex = i;
 
 					if (name == "Période d'adoption: Politique Duree critiques") _this.pPolDurCri = i;
 					if (name == "Période d'adoption: Politique Jour de démarrage") _this.pPolJouDem = i;
@@ -193,6 +194,7 @@
 						reformName,
 						_this.projectData[offset + _this.deadlineIndex],
 						_this.projectData[offset + _this.typeIndex] + '. ' + _this.projectData[offset + _this.categoryIndex],
+						_this.projectData[offset + _this.sourceIndex]
 					];
 
 					var pre = (_this.projectData[offset + _this.pForOuiNon] == '1' ? true : (_this.projectData[offset + _this.pForOuiNon] == '0' ? false : null));
@@ -219,7 +221,7 @@
 						_this.projectData[offset + _this.pTecJourFin],
 						_this.projectData[offset + _this.pPolJouFin],
 
-						"Duree critiques",
+						"Duree critiques (mois)",
 						_this.projectData[offset + _this.pForDurCri],
 						_this.projectData[offset + _this.pTecDurCri],
 						_this.projectData[offset + _this.pPolDurCri],
@@ -236,9 +238,9 @@
 					];
 
 					var hintText = [
-						'TDR ou comité pour préparer la réforme<br />Echange avec les parties prenantes (livrable: rapport ou compte-rendu)<br />Ebauche(s) du projet de texte<br />Projet de texte transmis au SG du Gouvernement',
-						'Comité interne primature (évaluation conformité)<br />Circularisation du projet de texte aux différentes entités administratives concernées ou impactées<br />Observations et avis sur le projet de texte (retour des entités administratives)<br />Projet de texte intégrant les observations<br />Comité interne (suivi prise en compte des observations)<br />Comité technique (validation technique de fond)<br />Projet de texte transmis avis Cour suprême si applicable<br />Comité interne (suivi prise en compte avis comité technique et/ou Cour suprême)<br />Projet de texte inscrit pour examen en Conseil des ministres',
-						'Projet de texte Conseil des ministres (rejet, adoption avec réserves , adoption définitive)<br />Comité de suivi pour intégration réserves Conseil des ministres<br />Decret saisine assemblée si projet de loi<br />Adoption Assemblée nationale (commission technique, commission de loi, plénière)<br />Decret de promulgation de la loi<br />Numérotation du texte<br />Signature du texte par le PM et le PR <br />Publication au Journal officiel du texte<br />'
+						'<ul><li>TDR ou comité pour préparer la réforme</li><li>Echange avec les parties prenantes (livrable: rapport ou compte-rendu)</li><li>Ebauche(s) du projet de texte</li><li>Projet de texte transmis au SG du Gouvernement</li></ul>',
+						'<ul><li>Comité interne primature (évaluation conformité)</li><li>Circularisation du projet de texte aux différentes entités administratives concernées ou impactées</li><li>Observations et avis sur le projet de texte (retour des entités administratives)</li><li>Projet de texte intégrant les observations</li><li>Comité interne (suivi prise en compte des observations)</li><li>Comité technique (validation technique de fond)</li><li>Projet de texte transmis avis Cour suprême si applicable</li><li>Comité interne (suivi prise en compte avis comité technique et/ou Cour suprême)</li><li>Projet de texte inscrit pour examen en Conseil des ministres</li></ul>',
+						'<ul><li>Projet de texte Conseil des ministres (rejet, adoption avec réserves , adoption définitive)</li><li>Comité de suivi pour intégration réserves Conseil des ministres</li><li>Decret saisine assemblée si projet de loi</li><li>Adoption Assemblée nationale (commission technique, commission de loi, plénière)</li><li>Decret de promulgation de la loi</li><li>Numérotation du texte</li><li>Signature du texte par le PM et le PR </li><li>Publication au Journal officiel du texte</li></ul>'
 					];
 
 					var thead = $('<thead>');

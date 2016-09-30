@@ -966,6 +966,7 @@ p.title
 	font-family: 'Roboto', sans-serif;
 	font-size: 12pt;
 	color: #9b7c4f;
+	font-weight: bold;
 }
 p.value
 {
@@ -1444,7 +1445,7 @@ p.value
 .map-tooltip
 {
 	color: #000;
-	font-weight: bold;
+	/*font-weight: bold;*/
 }
 
 .map-tooltip.pdf-frame
@@ -1476,6 +1477,7 @@ p.value
 	color: #9b7c4f;
 	margin: 0;
 	float: left;
+	font-weight: bold;
 }
 .map-tooltip .data-block div
 {
