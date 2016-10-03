@@ -567,17 +567,21 @@ h2.left-menu
 	background: url(./img/checkbox_icons.png) 0 0 no-repeat;
 }
 
-div#legend
+#legend
 {
 	margin: 5px 0 16px 0;
 }
+#legend img
+{
+	margin-left: 5px;
+}
 
-div#legend_low
+#legend_low
 {
 	float: left;
 }
 
-div#legend_high
+#legend_high
 {
 	float: right;
 }
@@ -1283,7 +1287,7 @@ p.value
 	padding: 12px;
 }
 
-#right-hand-panel
+#right-hand-panel, #senegal-right-hand-panel
 {
 	position: absolute;
 	right: 0;
@@ -1298,14 +1302,29 @@ p.value
 	overflow-y: auto;
 }
 
-#right-hand-panel .panel-title img
+.panel-title img.export
 {
-	float: right;
-	margin-top: 15px;
+	margin: 0 0 5px 10px;
 }
-#right-hand-panel .panel-title .region-name
+.panel-title .region-name
 {
 	display: inline-block;
+}
+.panel-title .close-button
+{
+	color: #472001;
+	margin: 20px 10px 0 0;
+	float: right;
+	cursor: pointer;
+}
+.panel-title .close-button img
+{
+	margin-right: 5px;
+	vertical-align: baseline;
+}
+.panel-title
+{
+	border-bottom: 1px solid #9b7c4f;
 }
 
 #right-hand-panel table
@@ -1340,11 +1359,6 @@ p.value
 {
 	font-size: 15pt;
 	font-weight: bold;
-}
-
-#right-hand-panel .panel-title
-{
-	border-bottom: 1px solid #9b7c4f;
 }
 
 #footer div a

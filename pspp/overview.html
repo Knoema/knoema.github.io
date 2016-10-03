@@ -123,6 +123,19 @@
 				<label><input type="checkbox" name="status" value="En cours"/>En cours</label>
 				<label><input type="checkbox" name="status" value="Complete"/>Complete</label>
 				<label><input type="checkbox" name="status" value="Opérationnel"/>Opérationnel</label>
+
+				<h2 class="left-menu">Goals</h2>
+				<label><input type="radio" name="layer" value="none" checked> None</label>
+				<label><input type="radio" name="layer" value="population" /> Population, Total (2013)</label>
+				<label><input type="radio" name="layer" value="urbanization" /> Taux d'urbanisation (2011)</label>
+				<label><input type="radio" name="layer" value="school" /> Taux net de fréquentation scolaire, primaire (2011)</label>
+				<label><input type="radio" name="layer" value="poverty" /> Incidence de la pauvreté (2002)</label>
+
+				<div id="legend" style="display: none;">
+					<img src="img/legend.png">
+					<div id="legend_low">Low</div>
+					<div id="legend_high">High</div>
+                </div>
 			</form>
     		<div id="map-canvas" class="filtered-content"></div>
 
@@ -130,7 +143,8 @@
 				<div class="input-group">
 					<span class="input-group-addon">Les régions:</span>
 					<select id="regions">
-						<option value="-1">Sénégal</option>
+						<option value="-1">pas de choix</option>
+						<option value="SN">Sénégal</option>
 						<option value="SN-DK">Dakar</option>
 						<option value="SN-DB">Diourbel</option>
 						<option value="SN-FK">Fatick</option>
@@ -345,7 +359,9 @@
 
 			<div id="right-hand-panel">
 				<div class="panel-title">
-					<h2 class="region-name"></h2><img src="./img/right-panel/icon-pdf.png"/>
+					<h2 class="region-name"></h2>
+					<img src="./img/right-panel/icon-pdf.png" class="export"/>
+					<div class="close-button"><img src="./img_passport/icon-close.png"/>Close</div>
 				</div>
 
 				<div id="region-data"></div>
@@ -362,6 +378,32 @@
 					</table>
 				</div>
 			</div>
+
+			<div id="senegal-right-hand-panel">
+				<div class="panel-title">
+					<h2 class="region-name">Senegal - Indicateurs Globaux</h2>
+					<img src="./img/right-panel/icon-pdf.png" class="export"/>
+					<div class="close-button"><img src="./img_passport/icon-close.png"/>Close</div>
+				</div>
+
+				<table class="global-indicators">
+					<tbody></tbody>
+				</table>
+
+				<table class="realisation-indicators">
+					<thead>
+						<tr>
+							<th colspan="3">Réalisation 2015</th>
+						</tr>
+						<tr>
+							<th>Indicateur Name</th>
+							<th>Valeur en 2015</th>
+							<th>Variation en Pourcentage</th>
+						</tr>
+					</thead>
+					<tbody></tbody>
+				</table>
+			</div>
     	</div>
     </div>
 
@@ -371,45 +413,6 @@
 			<p class="month">2016</p>
 		</div>
 		<div class="v-arrow left"></div>
-<!--		<div class="calendar-content">
-			<div class="item" data-date="2014.01" data-month="1">
-				<p class="month">Jan</p>
-			</div>
-			<div class="item active" data-date="2014.02" data-month="2">
-				<p class="month">Feb</p>
-			</div>
-			<div class="item" data-date="2014.03" data-month="3">
-				<p class="month">Mar</p>
-			</div>
-			<div class="item" data-date="2014.04" data-month="4">
-				<p class="month">Apr</p>
-			</div>
-			<div class="item" data-date="2014.05" data-month="5">
-				<p class="month">May</p>
-			</div>
-			<div class="item" data-date="2014.06" data-month="6">
-				<p class="month">Jun</p>
-			</div>
-			<div class="item" data-date="2014.07" data-month="7">
-				<p class="month">Jul</p>
-			</div>
-			<div class="item" data-date="2014.08" data-month="8">
-				<p class="month">Aug</p>
-			</div>
-			<div class="item" data-date="2014.09" data-month="9">
-				<p class="month">Sep</p>
-			</div>
-			<div class="item" data-date="2014.10" data-month="10">
-				<p class="month">Oct</p>
-			</div>
-			<div class="item" data-date="2014.11" data-month="11">
-				<p class="month">Nov</p>
-			</div>
-			<div class="item" data-date="2014.12" data-month="12">
-				<p class="month">Dec</p>
-			</div>
-		</div>
-		<div class="v-arrow right"></div>-->
 	</div>
 
 	<div id="footer">
@@ -453,118 +456,32 @@
 		<img src="./img_passport/budgeting.png"/>
 	</script>
 
-	<script id="region-profile" type="text/x-handlebars-template">
-
-		<table>
-			<thead>
-				<tr>
-					<th colspan="3">Economic Development</th>
-					<th></th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<td>GDP per capita</td>
-					<td>{{=it.indicatorData["GDP per capita"]}}</td>
-				</tr>
-				<tr>
-					<td>Non-farm economy, weight</td>
-					<td>{{=it.indicatorData["Non-farm economy, weight"]}}</td>
-				</tr>
-				<tr>
-					<td>GDP growth (2005-2011)</td>
-					<td>{{=it.indicatorData["GDP growth (2005-2011)"]}}</td>
-				</tr>
-				<tr>
-					<td>Share in GDP Growth (2005-2011)</td>
-					<td>{{=it.indicatorData["Share in GDP Growth (2005-2011)"]}}</td>
-				</tr>
-				<tr>
-					<td>Deviation from average of economic development</td>
-					<td>{{=it.indicatorData["Deviation from average of economic development"]}}</td>
-				</tr>
-			</tbody>
-		</table>
-
-		<table>
-			<thead>
-				<tr>
-					<th colspan="3">Human Development</th>
-					<th></th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<td>Literacy</td>
-					<td>{{=it.indicatorData["Literacy"]}}</td>
-				</tr>
-				<tr>
-					<td>Life expectancy</td>
-					<td>{{=it.indicatorData["Life expectancy"]}}</td>
-				</tr>
-				<tr>
-					<td>Population above the poverty line</td>
-					<td>{{=it.indicatorData["Population above the poverty line"]}}</td>
-				</tr>
-				<tr>
-					<td>Deviation from average of human development</td>
-					<td>{{=it.indicatorData["Deviation from average of human development"]}}</td>
-				</tr>
-			</tbody>
-		</table>
-
-	</script>
-
 	<script id="senegal-profile" type="text/x-handlebars-template">
-		<div class="map-tooltip">
-
-			<p class="tooltip-header">Senegal profile</p>
-
-			<div class="data-block-r">
-
-				<div><h3>Macroeconomic Framework</h3></div>
-				<div><label>Real Gdp Growth Rate:&nbsp;</label>{{=it.indicatorData["Real Gdp Growth Rate"]}}<label class="right">&nbsp;%</label></div>
-				<div><label>Investment Rate (Gfcf):&nbsp;</label>{{=it.indicatorData["Investment Rate (Gfcf)"]}}<label class="right">&nbsp;%</label></div>
-				<div><label>Inflation Rate (Hicp):&nbsp;</label>{{=it.indicatorData["Inflation Rate (Hicp)"]}}<label class="right">&nbsp;%</label></div>
-				<div><label>Budget Deficit As% Of Gdp:&nbsp;</label>{{=it.indicatorData["Budget Deficit As% Of Gdp"]}}<label class="right">&nbsp;%</label></div>
-				<div><label>Current Account Deficit As% Of Gdp:&nbsp;</label>{{=it.indicatorData["Current Account Deficit As% Of Gdp"]}}<label class="right">&nbsp;%</label></div>
-				<div><label>Percentage Of Population Living Below The Absolute Poverty Line:&nbsp;</label>{{=it.indicatorData["Percentage Of Population Living Below The Absolute Poverty Line (%)"]}}<label class="right">&nbsp;%</label></div>
-
-			</div>
-			<div class="data-block-r">
-
-				<div><h3>Trade</h3></div>
-				<div><label>Growth In Export Values:&nbsp;</label>{{=it.indicatorData["Growth In Export Values"]}}<label class="right">&nbsp;%</label></div>
-				<div><label>Import Growth Rate Of Goods And Services:&nbsp;</label>{{=it.indicatorData["Import Growth Rate Of Goods And Services"]}}<label class="right">&nbsp;%</label></div>
-				<div><label>Of Coverage Of Imports By Exports:&nbsp;</label>{{=it.indicatorData["Of Coverage Of Imports By Exports"]}}<label class="right">&nbsp;%</label></div>
-
-			</div>
-			<div class="data-block-r">
-
-				<div><h3>Energy</h3></div>
-				<div><label>Average Production Cost Per Kwh (Fcfa):&nbsp;</label>{{=it.indicatorData["Average Production Cost Per Kwh (Fcfa)"]}}<label class="right">&nbsp;KWH</label></div>
-				<div><label>Number Of Megawatts Into Service (Installed Power):&nbsp;</label>{{=it.indicatorData["Number Of Megawatts Into Service (Installed Power)"]}}<label class="right">&nbsp;number</label></div>
-				<div><label>Energy Not Distributed To Customers (Gwh):&nbsp;</label>{{=it.indicatorData["Energy Not Distributed To Customers (Gwh)"]}}<label class="right">&nbsp;GWH</label></div>
-				<div><label>Rural Electrification Rate:&nbsp;</label>{{=it.indicatorData["Rural Electrification Rate"]}}<label class="right">&nbsp;%</label></div>
-
-			</div>
-			<div class="data-block-r">
-
-				<div><h3>National Education</h3></div>
-				<div><label>Gross Intake Rate At Ci (Tba):&nbsp;</label>{{=it.indicatorData["Gross Intake Rate At Ci (Tba)"]}}<label class="right">&nbsp;%</label></div>
-				<div><label>Gross Enrollment Rate In Elementary (Tbs):&nbsp;</label>{{=it.indicatorData["Gross Enrollment Rate In Elementary (Tbs)"]}}<label class="right">&nbsp;%</label></div>
-				<div><label>Completion Rates At Primary (Tap):&nbsp;</label>{{=it.indicatorData["Completion Rates At Primary (Tap)"]}}<label class="right">&nbsp;%</label></div>
-
-			</div>
-			<div class="data-block-r">
-				<div><h3>Health And Nutrition</h3></div>
-				<div><label>Rate Of Births Attended By Trained Personnel:&nbsp;</label>{{=it.indicatorData["Rate Of Births Attended By Trained Personnel"]}}<label class="right">&nbsp;%</label></div>
-				<div><label>Contraceptive Prevalence Rate:&nbsp;</label>{{=it.indicatorData["Contraceptive Prevalence Rate"]}}<label class="right">&nbsp;%</label></div>
-				<div><label>Completion Rate (Adequate Coverage) In Eic:&nbsp;</label>{{=it.indicatorData["Completion Rate (Adequate Coverage) In Eic"]}}<label class="right">&nbsp;%</label></div>
-				<div><label>Child Mortality Rate:&nbsp;</label>{{=it.indicatorData["Child Mortality Rate"]}}<label class="right">&nbsp;%</label></div>
-				
-			</div>
-		</div>
+		<tr><td colspan="3">Macroeconomic Framework</td></tr>
+		<tr><td>Real Gdp Growth Rate</td><td>{{=it["Real Gdp Growth Rate"]}}</td><td>%</td></tr>
+		<tr><td>Investment Rate (Gfcf)</td><td>{{=it["Investment Rate (Gfcf)"]}}</td><td>%</td></tr>
+		<tr><td>Inflation Rate (Hicp)</td><td>{{=it["Inflation Rate (Hicp)"]}}</td><td>%</td></tr>
+		<tr><td>Budget Deficit As% Of Gdp</td><td>{{=it["Budget Deficit As% Of Gdp"]}}</td><td>%</td></tr>
+		<tr><td>Current Account Deficit As% Of Gdp</td><td>{{=it["Current Account Deficit As% Of Gdp"]}}</td><td>%</td></tr>
+		<tr><td>Percentage Of Population Living Below The Absolute Poverty Line</td><td>{{=it["Percentage Of Population Living Below The Absolute Poverty Line (%)"]}}</td><td>%</td></tr>
+		<tr><td colspan="3">Trade</td></tr>
+		<tr><td>Growth In Export Values</td><td>{{=it["Growth In Export Values"]}}</td><td>%</td></tr>
+		<tr><td>Import Growth Rate Of Goods And Services</td><td>{{=it["Import Growth Rate Of Goods And Services"]}}</td><td>%</td></tr>
+		<tr><td>Of Coverage Of Imports By Exports</td><td>{{=it["Of Coverage Of Imports By Exports"]}}</td><td>%</td></tr></tr>
+		<tr><td colspan="3">Energy</td></tr>
+		<tr><td>Average Production Cost Per Kwh (Fcfa)</td><td>{{=it["Average Production Cost Per Kwh (Fcfa)"]}}</td><td>KWH</td></tr>
+		<tr><td>Number Of Megawatts Into Service (Installed Power)</td><td>{{=it["Number Of Megawatts Into Service (Installed Power)"]}}</td><td>number</td></tr>
+		<tr><td>Energy Not Distributed To Customers (Gwh)</td><td>{{=it["Energy Not Distributed To Customers (Gwh)"]}}</td><td>GWH</td></tr>
+		<tr><td>Rural Electrification Rate</td><td>{{=it["Rural Electrification Rate"]}}</td><td>%</td></tr></tr>
+		<tr><td colspan="3">National Education</td></tr>
+		<tr><td>Gross Intake Rate At Ci (Tba)</td><td>{{=it["Gross Intake Rate At Ci (Tba)"]}}</td><td>%</td></tr>
+		<tr><td>Gross Enrollment Rate In Elementary (Tbs)</td><td>{{=it["Gross Enrollment Rate In Elementary (Tbs)"]}}</td><td>%</td></tr>
+		<tr><td>Completion Rates At Primary (Tap)</td><td>{{=it["Completion Rates At Primary (Tap)"]}}</td><td>%</td></tr></tr>
+		<tr><td colspan="3">Health And Nutrition</td></tr>
+		<tr><td>Rate Of Births Attended By Trained Personnel</td><td>{{=it["Rate Of Births Attended By Trained Personnel"]}}</td><td>%</td></tr>
+		<tr><td>Contraceptive Prevalence Rate</td><td>{{=it["Contraceptive Prevalence Rate"]}}</td><td>%</td></tr>
+		<tr><td>Completion Rate (Adequate Coverage) In Eic</td><td>{{=it["Completion Rate (Adequate Coverage) In Eic"]}}</td><td>%</td></tr>
+		<tr><td>Child Mortality Rate</td><td>{{=it["Child Mortality Rate"]}}</td><td>%</td></tr>
 	</script>
 
 	<script id="senegal-region-profile" type="text/x-handlebars-template">

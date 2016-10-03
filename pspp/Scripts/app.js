@@ -140,6 +140,9 @@ var Infrastructure;
             this.regionData = [];
             this.regionAverageData = {};
             this.senegalData = {};
+            this.layerData = {};
+            this.globalData = {};
+            this.realizeData = {};
 
             this.axes = axes;
             this.sectors = sectors;
@@ -180,6 +183,11 @@ var Infrastructure;
             	$('#ppp-projects').selectpicker('hide');
 
             	return false;
+            });
+
+            $('.close-button').on('click', function () {
+
+            	$('#right-hand-panel').hide();
             });
 
             // Country overview map
@@ -273,8 +281,9 @@ var Infrastructure;
 
             	var regionId = $('#regions').val();
             	var $rhp = $('#right-hand-panel');
+            	var $srhp = $('#senegal-right-hand-panel');
 
-            	if (regionId == -1) {
+            	if (regionId == 'SN' || regionId == -1) {
             		_this.hasGeoJson = false;
 
             		_this.map.setCenter({ lat: 14.5067, lng: -14.4167 });
@@ -288,11 +297,22 @@ var Infrastructure;
             			return { visible: false };
             		});
 
+            		if (regionId == 'SN') {
+            			_this.showSenegalPanel();
+            			$srhp.show();
+            		}
+            		else {
+            			$srhp.hide();
+            		}
+
             		$rhp.hide();
 
             		return;
             	}
 
+            	$srhp.hide();
+
+            	$('input[name=layer]').filter('[value=none]').prop('checked', true);
             	if (!_this.hasGeoJson) {
             		_this.hasGeoJson = true;
             		_this.map.data.loadGeoJson('senegal.json');
@@ -436,6 +456,54 @@ var Infrastructure;
             					if($.inArray(ptipValue, params[j]) == -1)
             						addObject = false;
             					break;
+
+            				case 'layer':
+
+            					if (params[j][0] == 'none') {
+            						if (!_this.hasGeoJson) {
+            							_this.hasGeoJson = true;
+            							_this.map.data.loadGeoJson('senegal.json');
+            						}
+            						_this.map.data.revertStyle();
+            						_this.map.data.setStyle(function (feature) {
+            							return { visible: false };
+            						});
+            						$("#legend").hide();
+
+            						break;
+            					}
+
+            					$("#legend").show();
+
+            					var dataLoader = null;
+            					var layerName = params[j][0];
+            					switch (layerName) {
+            						case 'population':
+            							dataLoader = _this.getDataLayerPopulation();
+            							break;
+            						case 'urbanization':
+            							dataLoader = _this.getDataLayerUrbanization();
+            							break;
+            						case 'school':
+            							dataLoader = _this.getDataLayerSchool();
+            							break;
+            						case 'poverty':
+            							dataLoader = _this.getDataLayerPoverty();
+            							break;
+            					}
+
+            					if (_this.layerData[layerName]) {
+            						_this.displayLayerData(_this.layerData[layerName], layerName == 'population');
+            					}
+            					else {
+            						dataLoader.done(function (data) {
+
+            							_this.layerData[layerName] = data;
+            							_this.displayLayerData(data, layerName == 'population');
+            						});
+            					}
+
+            					break;
             			}
 
             			if (!addObject)
@@ -533,95 +601,6 @@ var Infrastructure;
             	return false;
             });
         };
-
-        //var ChartColors = {
-        //    Red: '#b00e0e',
-        //    Blue: '#00bff3',
-        //    Green: '#3cb00e',
-        //    Pink: '#c724c9',
-        //    Orange: '#f4950c',
-        //    Turquoise: '#43c8ba'
-        //};
-
-        //Application.prototype.initAreaProfile = function () {
-        //	var $radiusButton = $('#radius-button');
-        //	if ($radiusButton.length != 1) return;
-
-        //	// SIX-9
-        //	var drawingManager = new google.maps.drawing.DrawingManager({
-        //		map: this.map,
-        //		drawingMode: null,
-        //		drawingControl: false,
-        //		circleOptions: {
-        //			fillColor: 'black',
-        //			fillOpacity: 0.2,
-        //			strokeWeight: 4,
-        //			strokeColor: 'orange',
-        //			clickable: false,
-        //			editable: true,
-        //			zIndex: 1
-        //		}
-        //	});
-
-        //	var self = this;
-
-        //	if (!this.radiusToolWindow) {
-        //		this.radiusToolWindow = new google.maps.InfoWindow();
-        //		var template = doT.template($('#area-profile-template').html());
-        //		this.radiusToolWindow.setContent(template({
-        //			region: "Thies",
-        //			village: "Sine Moussa Abdou",
-        //			population: 900,
-        //			incidence: "43 percent<br>(compared to 48% for Thies)",
-        //			access: "70 percent of population",
-        //			consumption: "3 kWh/day",
-        //			cost: "CFA 840/kWh (US$ 1.4/kWh)",
-        //			grid: "no",
-        //			source: "micro grid with hybrid power plant<br>(solar 5 kW, wind 5 kW, and diesel 10 kW)",
-        //			hospital: "Poste de sante de Ngakham",
-        //			schools: 3,
-        //			investmentProject: {
-        //				name: "Construct Transmission Lines",
-        //				location: "Thies",
-		//				endDate: "Jan 1, 2017"
-        //			},
-        //			investor: "Export-Import Bank of China, Government Agency;<br>China Machinery Engineering Corporation (CMEC)"
-        //		}));
-        //	}
-
-        //	google.maps.event.addListener(drawingManager, 'circlecomplete', function(circle) {
-        //		drawingManager.setDrawingMode(null);
-        //		self.radiusToolCircle = circle;
-        //		// refresh popup
-
-        //		self.radiusToolWindow.setPosition(circle.getCenter());
-        //		self.radiusToolWindow.open(this.map);
-				
-        //		google.maps.event.addListener(circle, 'center_changed', function () {
-		//			// refresh popup
-        //			self.radiusToolWindow.setPosition(circle.getCenter());
-        //		});
-
-    	//		google.maps.event.addListener(circle, 'radius_changed', function() {
-    	//			// refresh popup
-		//		});
-		//	});
-			
-		//	$radiusButton.on('click', function() {
-		//		$radiusButton.toggleClass('active');
-		//		if ($radiusButton.hasClass('active')) {
-		//			drawingManager.setDrawingMode(google.maps.drawing.OverlayType.CIRCLE);
-		//		} else {
-		//			drawingManager.setDrawingMode(null);
-		//			if (self.radiusToolCircle) {
-		//				self.radiusToolCircle.setMap(null);
-		//				self.radiusToolCircle = null;
-		//				self.radiusToolWindow.close();
-		//				// refresh popup
-		//			}
-		//		}
-		//	});
-        //};
 
         Application.prototype.hideNonPresentedProjectsButtons = function () {
 
@@ -920,6 +899,327 @@ var Infrastructure;
         	};
 
         	return $.post(url, data);
+        };
+		
+        Application.prototype.getDataLayerPopulation = function () {
+
+        	var url = 'https://knoema.com' + '/api/1.0/data/details?client_id=EZj54KGFo3rzIvnLczrElvAitEyU28DGw9R73tif&page_id=SERSSD2011';
+
+        	var descriptor = {
+        		"Header": [
+				   {
+				   	"DimensionId": "Time",
+				   	"Members": ["2013"],
+				   	"UiMode": "individualMembers"
+				   }
+        		],
+        		"Stub": [
+				   {
+				   	"DimensionId": "location",
+				   	"Members": ["1000010", "1000020", "1000030", "1000040", "1000050", "1000060", "1000070", "1000080", "1000090", "1000100", "1000110", "1000120", "1000130", "1000140"]
+				   }
+        		],
+        		"Filter": [
+				   {
+				   	"DimensionId": "variable",
+				   	"Members": ["1000040"]
+				   }
+        		],
+        		"Frequencies": ["A"],
+        		"Dataset": "SERSSD2011"
+        	};
+
+        	return $.post(url, descriptor);
+        };
+
+        Application.prototype.getDataLayerUrbanization = function () {
+
+        	var url = 'https://knoema.com' + '/api/1.0/data/details?client_id=EZj54KGFo3rzIvnLczrElvAitEyU28DGw9R73tif&page_id=SERSSD2011';
+
+        	var descriptor = {
+        		"Header": [{
+        			"DimensionId": "Time",
+        			"Members": ["2011"],
+					"UiMode": "individualMembers"
+        		}],
+				"Stub": [{
+					"DimensionId": "location",
+					"Members": []
+				}],
+				"Filter": [{
+					"DimensionId": "variable",
+					"Members": ["1000550"]
+				}, {
+					"DimensionId": "sex",
+					"Members": ["1000020"]
+				}],
+				"Frequencies": ["A"],
+				"Dataset": "SEPFS2011"
+        };
+
+        	return $.post(url, descriptor);
+        };
+
+        Application.prototype.getDataLayerSchool = function () {
+
+        	var url = 'https://knoema.com' + '/api/1.0/data/details?client_id=EZj54KGFo3rzIvnLczrElvAitEyU28DGw9R73tif&page_id=SEDHSMI2011';
+
+        	var description = {
+        		"Header": [{
+        			"DimensionId": "Time",
+        			"Members": ["2011"],
+        			"UiMode": "individualMembers"
+        		}],
+        		"Stub": [{
+        			"DimensionId": "location",
+        			"Members": []
+        		}],
+        		"Filter": [{
+        			"DimensionId": "variable",
+        			"Members": ["1002820"]
+        		}, {
+        			"DimensionId": "sex",
+        			"Members": ["1000020"]
+        		}],
+        		"Frequencies": ["A"],
+        		"Dataset": "SEDHSMI2011"
+        	};
+
+        	return $.post(url, description);
+        };
+
+        Application.prototype.getDataLayerPoverty = function () {
+
+        	var url = 'https://knoema.com' + '/api/1.0/data/details?client_id=EZj54KGFo3rzIvnLczrElvAitEyU28DGw9R73tif&page_id=SEIPC2006';
+
+        	var description = {
+        		"Header": [{
+        			"DimensionId": "Time",
+        			"Members": ["2002"],
+        			"UiMode": "individualMembers"
+        		}],
+        		"Stub": [{
+        			"DimensionId": "location",
+        			"Members": [],
+        		}],
+        		"Filter": [{
+        			"DimensionId": "variable",
+        			"Members": ["1000000"]
+        		}],
+        		"Frequencies": ["A"],
+        		"Dataset": "SEIPC2006",
+        	};
+
+        	return $.post(url, description);
+        };
+
+        Application.prototype.displayLayerData = function (data, needToNorm) {
+
+        	var regionIdIndex = -1;
+        	var valueIndex = -1;
+
+        	for (var i = 0; i < data.columns.length; i++) {
+        		if (data.columns[i].name == 'RegionId')
+        			regionIdIndex = i;
+
+        		if (data.columns[i].name == 'Value')
+        			valueIndex = i;
+        	}
+
+        	var rawData = {};
+        	var minValue = Number.POSITIVE_INFINITY;
+        	var maxValue = Number.NEGATIVE_INFINITY;
+
+        	var rowCount = Math.floor(data.data.length / data.columns.length);
+        	for (var rowIndex = 0; rowIndex < rowCount; rowIndex++) {
+        		var rowOffset = rowIndex * data.columns.length;
+        		var value = data.data[rowOffset + valueIndex];
+
+        		rawData[data.data[rowOffset + regionIdIndex]] = value;
+
+        		if (value < minValue)
+        			minValue = value;
+        		if (value > maxValue)
+        			maxValue = value;
+        	}
+
+        	var normData = {};
+        	if(needToNorm)
+        		for (var regionId in rawData)
+        			normData[regionId] = ((rawData[regionId] - minValue) / (maxValue - minValue)) * 100;
+        	else
+        		normData = rawData;
+
+        	var coloredData = {};
+        	for (var regionId in normData)
+        		coloredData[regionId] = this.percentToRGB(normData[regionId]);
+
+        	if (!this.hasGeoJson) {
+        		this.hasGeoJson = true;
+        		this.map.data.loadGeoJson('senegal.json');
+        	}
+        	this.map.data.revertStyle();
+
+        	this.map.data.setStyle(function (feature) {
+
+        		var color = coloredData[feature.getProperty('Id')];
+        		if (color)
+        			return {
+        				fillColor: color,
+        				fillOpacity: '0.3',
+        				strokeWeight: 1,
+        				strokeColor: '#000',
+        				visible: true
+        			};
+        		else
+        			return {
+        				visible: false
+        			};
+        	});
+        };
+
+        Application.prototype.percentToRGB = function (percent) {
+
+        	percent = 100 - percent;
+        	if (percent === 100) {
+        		percent = 99;
+        	}
+        	var r, g, b;
+        	if (percent < 50) {
+        		// green to yellow
+        		r = Math.floor(255 * (percent / 50));
+        		g = 255;
+        	}
+        	else {
+        		// yellow to red
+        		r = 255;
+        		g = Math.floor(255 * ((50 - percent % 50) / 50));
+        	}
+        	b = 0;
+        	return "rgb(" + r + "," + g + "," + b + ")";
+        };
+
+        Application.prototype.getDataSenedalGlobal = function () {
+
+        	var url = 'http://knoema.com/api/1.0/data/details?client_id=EZj54KGFo3rzIvnLczrElvAitEyU28DGw9R73tif&page_id=SECPI2016';
+        	var descriptor = {
+        		"Header": [{
+        			"DimensionId": "Time",
+        			"Members": ["2014"],
+        			"UiMode": "individualMembers"
+        		}],
+        		"Stub": [{
+        			"DimensionId": "indicator",
+        			"Members": ["1000020", "1000030", "1000040", "1000050", "1000060", "1000070", "1000360", "1000370", "1000380", "1000710", "1000720", "1000730", "1000740", "1000800", "1000810", "1000820", "1001100", "1001110", "1001120", "1001130"]
+        		}],
+        		"Filter": [{
+        			"DimensionId": "measure",
+        			"Members": ["1000000"]
+        		}],
+        		"Frequencies": ["A"],
+        		"Dataset": "SECPI2016"
+        	};
+
+        	return $.post(url, descriptor);
+        };
+
+        Application.prototype.getDataSenegalRealisation = function () {
+
+        	var url = 'http://knoema.com/api/1.0/data/details?client_id=EZj54KGFo3rzIvnLczrElvAitEyU28DGw9R73tif&page_id=PSEIDS2016V1';
+        	var description = {
+        		"Header": [{
+        			"DimensionId": "Time",
+        			"Members": ["2014", "2015"],
+        			"UiMode": "individualMembers"
+        		}],
+        		"Stub": [{
+        			"DimensionId": "indicateur",
+        			"Members": ["1000020", "1000030", "1000070", "1000080", "1000180", "1000200", "1000210", "1000220", "1000230", "1000240", "1000360", "1000370", "1000380", "1000420", "1000430", "1000440", "1000460", "1000470", "1000480", "1000490", "1000510", "1000620", "1000630", "1000640", "1000650", "1000660", "1000670", "1000680", "1000710", "1000720", "1000730", "1000740", "1000850", "1000860", "1000870", "1000880", "1000890", "1000900", "1000910", "1001000", "1001070", "1001080", "1001100", "1001160", "1001170", "1001190", "1001200", "1001210", "1001230", "1001240", "1001250", "1001260", "1001270", "1001280", "1001290", "1001310", "1001320", "1001330", "1001360", "1001390", "1001400", "1001410", "1001420", "1001430", "1001450", "1001460", "1001470", "1001480", "1001490", "1001500", "1001510", "1001520", "1001530", "1001540", "1001550", "1001560", "1001570", "1001580", "1001590", "1001600", "1001630", "1001650", "1001660", "1001670", "1001680", "1001690", "1001700", "1001710", "1001720", "1001730", "1001750", "1001760", "1001770", "1001780", "1001790", "1001800", "1001810", "1001820", "1001840", "1001850", "1001860", "1001870", "1001880", "1001890", "1002560", "1002530", "1002500", "1001900", "1001910", "1001920", "1001930", "1001950", "1002030", "1002080", "1002110", "1002120", "1002270", "1002280", "1002290", "1002300", "1002310", "1002320", "1002330", "1002340", "1002350", "1002360", "1002370", "1002380", "1002390", "1002400", "1002410", "1002420", "1002430", "1002440", "1002450", "1002460", "1002470", "1002480", "1002490", "1002500", "1002530", "1002540", "1002560", "1002570", "1002580", "1002590", "1002600", "1002610", "1002630", "1002670", "1002680", "1002690", "1002700", "1002710", "1002720", "1002730", "1002740", "1002750", "1002760", "1002770", "1002780", "1002790", "1002800", "1002810", "1002820", "1002830", "1002840"]
+        		}],
+        		"Filter": [{
+        			"DimensionId": "mesure",
+        			"Members": ["1000010"]
+        		}],
+        		"Frequencies": ["A"],
+        		"Dataset": "PSEIDS2016V1"
+        	};
+
+        	return $.post(url, description);
+        };
+
+        Application.prototype.showSenegalPanel = function () {
+
+        	var _this = this;
+        	$.when(this.getDataSenedalGlobal(), this.getDataSenegalRealisation()).done(function (globalPivot, realisationPivot) {
+
+        		_this.globalData = globalPivot[0];
+
+        		var nameIndex = -1;
+        		var valueIndex = -1;
+
+        		for (var i = 0; i < _this.globalData.columns.length; i++) {
+        			if (_this.globalData.columns[i].dimensionId == 'indicator' && _this.globalData.columns[i].name == 'EnglishName')
+        				nameIndex = i;
+
+        			if (_this.globalData.columns[i].name == 'Value')
+        				valueIndex = i;
+        		}
+
+        		var globalData = {};
+
+        		var rowCount = Math.floor(_this.globalData.data.length / _this.globalData.columns.length);
+        		for (var rowIndex = 0; rowIndex < rowCount; rowIndex++) {
+        			var rowOffset = rowIndex * _this.globalData.columns.length;
+
+        			globalData[_this.globalData.data[rowOffset + nameIndex]] = _this.globalData.data[rowOffset + valueIndex];
+        		}
+
+        		var globalT = doT.template($('#senegal-profile').html());
+        		$('#senegal-right-hand-panel .global-indicators tbody').html(globalT(globalData));
+
+
+        		_this.realizeData = realisationPivot[0];
+
+        		nameIndex = -1;
+        		valueIndex = -1;
+        		var dateIndex = -1;
+
+        		for (var i = 0; i < _this.realizeData.columns.length; i++) {
+        			if (_this.realizeData.columns[i].dimensionId == 'indicateur' && _this.realizeData.columns[i].name == 'Indicateur')
+        				nameIndex = i;
+
+        			if (_this.realizeData.columns[i].name == 'Value')
+        				valueIndex = i;
+
+        			if (_this.realizeData.columns[i].name == 'Date')
+        				dateIndex = i;
+        		}
+
+        		var realizeData = [];
+        		rowCount = Math.floor(_this.realizeData.data.length / _this.realizeData.columns.length);
+        		for (var rowIndex = 0; rowIndex < rowCount; rowIndex++) {
+        			var rowOffset = rowIndex * _this.realizeData.columns.length;
+
+        			if (!realizeData[_this.realizeData.data[rowOffset + nameIndex]])
+        				realizeData[_this.realizeData.data[rowOffset + nameIndex]] = {};
+
+        			var year = _this.realizeData.data[rowOffset + dateIndex].value.split('/')[2];
+
+        			realizeData[_this.realizeData.data[rowOffset + nameIndex]][year] = _this.realizeData.data[rowOffset + valueIndex];
+        		}
+
+        		var realizeTData = [];
+        		for (var indicator in realizeData) {
+        			var coeff = (((parseFloat(realizeData[indicator]['2015']) - parseFloat(realizeData[indicator]['2014'])) / parseFloat(realizeData[indicator]['2015'])) * 100).toFixed(2);
+
+        			realizeTData.push($('<tr>')
+						.append($('<td>', { text: indicator }))
+						.append($('<td>', { text: realizeData[indicator]['2015'] }))
+						.append($('<td>', { text: coeff }))
+        			);
+        		}
+        		$('#senegal-right-hand-panel .realisation-indicators tbody').append(realizeTData);
+        	});
         };
 
         return Application;
