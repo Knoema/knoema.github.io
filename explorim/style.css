@@ -6,6 +6,40 @@ body
 	font-size: 12pt;
 }
 
+/*index: start*/
+body.index
+{
+	background: url(./img/bg-x2.jpg) no-repeat;
+	background-size: cover;
+}
+
+.logo-container-main
+{
+	margin-top: 18%;
+	margin-left: 20%;
+	padding: 30px;
+}
+
+.logo-container-main img
+{
+	width: 250px;
+	display: block;
+	margin-bottom: 90px;
+}
+
+.logo-container-main a
+{
+	text-decoration: none;
+	text-transform: uppercase;
+	padding: 20px 70px;
+	border: 2px solid #006233;
+	font-size: 19pt;
+	font-weight: bold;
+	color: #006233;
+	border-radius: 10px;
+}
+/*index: end*/
+
 #filters
 {
 	position: absolute;
