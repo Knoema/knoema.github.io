@@ -1,0 +1,40 @@
+<div class="panel-group" id="filters-tree">
+    {{each(i, item) items}}
+        <div class="panel">
+            <div class="panel-heading" role="tab" id="headingOne">
+                <a class="item-title item-title-0 ${item.className}" data-toggle="collapse" data-parent="#filters-tree" href="#item-content-${i}">
+                    ${item.title}
+                </a>
+            </div>
+            <div class="item-content collapse item-content-level-0" id="item-content-${i}" style="height: 0;">
+                {{each(j, item2) item.children}}
+                    <a class="item-title item-title-1 collapsed" data-toggle="collapse" data-parent="#item-content-${i}" href="#item-content-${i}-${j}">
+                        ${item2.title}
+                    </a>
+                    <div class="item-content collapse item-content-level-1" id="item-content-${i}-${j}" style="height: 0;">
+                        {{each(k, item3) item2.children}}
+                            <a class="item-title item-title-2 collapsed" data-toggle="collapse" data-parent="#item-content-${i}-${j}" href="#item-content-${i}-${j}-${k}">
+                                ${item3.title}
+                            </a>
+                            <div class="item-content collapse item-content-level-2" id="item-content-${i}-${j}-${k}" style="height: 0;">
+                                {{if item3.children && item3.children.length}}
+                                    {{each(kk, item4) item3.children}}
+                                    <div>
+                                        <label>
+                                            <input type="checkbox" /> ${item4.name}
+                                        </label>
+                                    </div>
+                                    {{/each}}
+                                {{else}}
+                                    <div>
+                                        Content of ${item3.title}
+                                    </div>
+                                {{/if}}
+                            </div>
+                        {{/each}}
+                    </div>
+                {{/each}}
+            </div>
+        </div>
+    {{/each}}
+</div>
