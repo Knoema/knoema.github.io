@@ -14,8 +14,16 @@ $(function () {
 
 		$('.subtopic-content li').removeClass('active');
 		$(this).parent().parent().addClass('active');
-		var dashId = $(this).data('link');
-		$('.i-frame-content iframe').attr('src', 'http://knoema.com/resource/embed/' + dashId);
+		var param = $(this).html();
+		$('.i-frame-content iframe').attr('src', 'http://knoema.com/resource/embed/qlzwmqc?indicateur=' + param);
+
+		var objectsCode = $(this).parents('.root-objects').data('objects');
+		var a = $('.botton-wrapper a');
+		if (objectsCode) {
+			a.attr('href', 'overview.html?objects=' + objectsCode);
+		} else {
+			a.attr('href', '#');
+		}
 
 		return false;
 	});

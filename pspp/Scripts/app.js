@@ -145,6 +145,7 @@ var Infrastructure;
             this.realizeData = {};
             this.senegalTabIsLoaded = false;
             this.preloadedObject = this.getParameterByName('code') ? this.getParameterByName('code') : -1;
+            this.filterObjects = this.getParameterByName('objects');
 
             this.axes = axes;
             this.sectors = sectors;
@@ -225,6 +226,7 @@ var Infrastructure;
             		if (name == 'Region, Département (Localité) (sinon mettre 0)') _this.localeIndex = i;
             		if (name == 'Budget Total Prévu: Dépenses Prévues') _this.budgetIndex = i;
             		if (name == 'Catégorie des réformes') _this.reformIndex = i;
+            		if (name == 'Objectif Stratégique') _this.objectsIndex = i;
             	}
 
             	_this.objectData = objectData[0].data;
@@ -535,6 +537,11 @@ var Infrastructure;
             		if (selectedPPName.length > 0 && $.inArray(_this.projectData[offset + _this.ppIndex], selectedPPName) == -1)
             			addObject = false;
 
+            		if (_this.filterObjects) {
+            			if (_this.projectData[offset + _this.objectsIndex] != _this.filterObjects)
+            				addObject = false;
+            		}
+
             		if (addObject) {
             			var tooltipData = {};
             			tooltipData[_this.projectColumns[_this.nameIndex].name] = _this.projectData[offset + _this.nameIndex];
@@ -572,6 +579,11 @@ var Infrastructure;
             			if (_this.preloadedObject != -1) {
             				_this.showPreloadedObject();
             				_this.preloadedObject = -1;
+            			}
+
+            			if (_this.filterObjects) {
+            				_this.showRightPanelForObjectCode(_this.filterObjects);
+            				_this.filterObjects = null;
             			}
             		}, 500);
             	} else {
@@ -1382,6 +1394,79 @@ var Infrastructure;
         		if (code == _this.preloadedObject)
         			new google.maps.event.trigger(marker, 'click');
         	});
+        };
+
+        Application.prototype.showRightPanelForObjectCode = function(code) {
+
+        	var getProjectByObjectCode = function (code) {
+        		var res = [];
+        		var unicPP = [];
+
+        		for (var i = 0; i < _this.projectData.length / _this.projectColumns.length; i++) {
+
+        			var offset = i * _this.projectColumns.length;
+
+        			//only for projects
+        			if (_this.projectData[offset + _this.objectTypeIndex] != 'P')
+        				continue;
+
+        			if (_this.projectData[offset + _this.objectsIndex] != code)
+        				continue;
+
+        			if ($.inArray(_this.projectData[offset + _this.ppIndex], unicPP) != -1)
+        				continue;
+
+        			unicPP.push(_this.projectData[offset + _this.ppIndex]);
+
+        			res.push({
+        				pp: _this.projectData[offset + _this.ppIndex],
+        				name: _this.projectData[offset + _this.nameIndex],
+        				status: _this.projectData[offset + _this.statusIndex],
+        			});
+        		}
+
+        		return res;
+        	};
+
+        	var _this = this;
+        	var projects = getProjectByObjectCode(code);
+        	var $trs = [];
+        	var $rhp = $('#right-hand-panel');
+        	$rhp.find('tbody').empty();
+        	if (projects.length > 0) {
+        		for (var i = 0; i < projects.length; i++) {
+
+        			var ppNumber = '00';
+        			if (projects[i].pp.length == 4)
+        				ppNumber = projects[i].pp.substr(2, 3);
+        			else if (projects[i].pp.length == 3)
+        				ppNumber = '0' + projects[i].pp.substr(2, 3);
+
+        			$trs.push($('<tr>', { 'data-name': projects[i].name })
+						.append($('<td>').append($('<img>', { src: './img/right-panel/icons-' + ppNumber + '.png', 'class': 'pp-image-small' })))
+						.append($('<td>', { text: projects[i].pp }))
+						.append($('<td>', { text: projects[i].name }))
+						.append($('<td>', { text: projects[i].status }))
+					);
+        		}
+
+        		$rhp.find('tbody').append($trs);
+
+        		$rhp.find('tr').on('click', function () {
+        			var name = $(this).data('name');
+
+        			_this.markers.forEach(function (marker) {
+
+        				var tooltip = marker.get('tooltip');
+        				if (tooltip[_this.projectColumns[_this.nameIndex].name] == name)
+        					new google.maps.event.trigger(marker, 'click');
+        			});
+        		});
+        	}
+
+        	$rhp.show();
+        	$('#map-canvas').css({ right: '350px' });
+        	google.maps.event.trigger(_this.map, 'resize');
         };
 
         return Application;

@@ -1640,26 +1640,12 @@ p.value
 {
 	color: #646E82;
     font-size: 13pt;
-    height: 40px;
+    height: 60px;
     padding: 6px 5px 6px 15px;
     width: 410px;
     cursor: pointer;
 	text-transform: uppercase;
 	border-top: 1px solid #DEDEDE;
-}
-
-.sidebar-topic .arrow
-{
-	height: 8px;
-	width: 11px;
-	float: right;
-	margin: 9px 17px 0 0;
-	background: url(./Images/arrow_down.png);
-}
-
-.sidebar-topic.active .arrow
-{
-	background: url(./Images/arrow_up.png);
 }
 
 ul.topic-content
@@ -1693,12 +1679,16 @@ ul.subtopic-content li
 {
 	color: #B7B7B7;
 	padding: 3px 0px 3px 20px;
-	width: 410px;
+	list-style-type: none;
+}
+ul.subtopic-content li.tree
+{
+	padding-left: 5px;
 }
 
 ul.subtopic-content li div
 {
-	width: 370px;
+	width: 320px;
 }
 
 ul.subtopic-content li.active
@@ -1733,7 +1723,24 @@ ul.subtopic-content li a
     overflow-y: auto;
     overflow-x: hidden;
     top: 0;
+    bottom: 60px;
+}
+.botton-wrapper
+{
+	position: absolute;
+    left: 0;
     bottom: 0;
+	height: 60px;
+}
+
+.botton-wrapper a
+{
+	text-decoration: none;
+	padding: 10px 20px;
+	color: #f4ece1;
+	background-color: #472001;
+	display: block;
+	margin: 5px 110px;
 }
 /*end: sector monitor*/
 
