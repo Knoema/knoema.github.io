@@ -1310,6 +1310,10 @@ p.value
 {
 	display: inline-block;
 }
+#senegal-right-hand-panel .panel-title .region-name
+{
+	font-size: 15pt;
+}
 .panel-title .close-button
 {
 	color: #472001;
@@ -1327,20 +1331,20 @@ p.value
 	border-bottom: 1px solid #9b7c4f;
 }
 
-#right-hand-panel table
+#right-hand-panel table,
+#senegal-right-hand-panel table
 {
 	margin-top: 20px;
 }
-#right-hand-panel .table-container
-{
-}
 
-#right-hand-panel table thead tr th
+#right-hand-panel table thead tr th,
+#senegal-right-hand-panel table thead tr th
 {
 	padding: 2px 5px;
 	font-size: 10pt;
 }
-#right-hand-panel table tbody tr td
+#right-hand-panel table tbody tr td,
+#senegal-right-hand-panel table tbody tr td
 {
 	padding: 7px 5px;
 	vertical-align: top;
@@ -1350,14 +1354,27 @@ p.value
 	height: 30px;
 	margin-top: -7px;
 }
-#right-hand-panel table tbody tr:nth-child(2n)
+#right-hand-panel table tbody tr:nth-child(2n),
+#senegal-right-hand-panel table tbody tr:nth-child(2n)
 {
 	background-color: #f3f0ec;
+}
+
+#right-hand-panel table tbody tr,
+#senegal-right-hand-panel table tbody tr
+{
+	cursor: pointer;
 }
 
 #right-hand-panel h2
 {
 	font-size: 15pt;
+	font-weight: bold;
+}
+
+#senegal-right-hand-panel h3
+{
+	font-size: 10pt;
 	font-weight: bold;
 }
 
@@ -1905,6 +1922,11 @@ ul.subtopic-content li a
 .reforms-table .right-part table.period tbody tr:nth-child(2n)
 {
 	background-color: #fbf6ed;
+}
+
+.doc-image
+{
+	margin-right: 10px;
 }
 /*reforms: end*/
 

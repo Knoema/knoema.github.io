@@ -124,8 +124,8 @@
 				<label><input type="checkbox" name="status" value="Complete"/>Complete</label>
 				<label><input type="checkbox" name="status" value="Opérationnel"/>Opérationnel</label>
 
-				<h2 class="left-menu">Goals</h2>
-				<label><input type="radio" name="layer" value="none" checked> None</label>
+				<h2 class="left-menu">Indicateurs Globaux</h2>
+				<label><input type="radio" name="layer" value="none" checked> Indéfini</label>
 				<label><input type="radio" name="layer" value="population" /> Population, Total (2013)</label>
 				<label><input type="radio" name="layer" value="urbanization" /> Taux d'urbanisation (2011)</label>
 				<label><input type="radio" name="layer" value="school" /> Taux net de fréquentation scolaire, primaire (2011)</label>
@@ -143,7 +143,7 @@
 				<div class="input-group">
 					<span class="input-group-addon">Les régions:</span>
 					<select id="regions">
-						<option value="-1">pas de choix</option>
+						<option value="-1">Pas de choix</option>
 						<option value="SN">Sénégal</option>
 						<option value="SN-DK">Dakar</option>
 						<option value="SN-DB">Diourbel</option>
@@ -366,7 +366,7 @@
 
 				<div id="region-data"></div>
 
-				<div class="table-container">
+				<div class="table-container clicable">
 					<table>
 						<thead>
 							<tr>
@@ -381,9 +381,9 @@
 
 			<div id="senegal-right-hand-panel">
 				<div class="panel-title">
+					<div class="close-button"><img src="./img_passport/icon-close.png"/>Close</div>
 					<h2 class="region-name">Senegal - Indicateurs Globaux</h2>
 					<img src="./img/right-panel/icon-pdf.png" class="export"/>
-					<div class="close-button"><img src="./img_passport/icon-close.png"/>Close</div>
 				</div>
 
 				<table class="global-indicators">
@@ -400,6 +400,38 @@
 							<th>Valeur en 2015</th>
 							<th>Variation en Pourcentage</th>
 						</tr>
+					</thead>
+					<tbody></tbody>
+				</table>
+
+				<h3>Sélectionnez une région pour une liste détaillée des projets.</h3>
+
+				<table class="axe-summ">
+					<thead>
+						<tr>
+							<th colspan="2">Nombre de projets par Stratégique de la Vision 2035</th>
+						</tr>
+					</thead>
+					<tbody></tbody>
+				</table>
+
+				<table class="pp-summ">
+					<thead>
+						<tr></tr>
+					</thead>
+					<tbody></tbody>
+				</table>
+
+				<table class="pp-budget-summ">
+					<thead>
+						<tr></tr>
+					</thead>
+					<tbody></tbody>
+				</table>
+
+				<table class="reforms-groups">
+					<thead>
+						<tr></tr>
 					</thead>
 					<tbody></tbody>
 				</table>
@@ -454,6 +486,68 @@
 
 	<script id="new-object-budgetting" type="text/x-handlebars-template">
 		<img src="./img_passport/budgeting.png"/>
+	</script>
+
+	<script id="region-profile" type="text/x-handlebars-template">
+
+		<table>
+			<thead>
+				<tr>
+					<th colspan="3">Economic Development</th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>GDP per capita</td>
+					<td>{{=it.indicatorData["GDP per capita"]}}</td>
+				</tr>
+				<tr>
+					<td>Non-farm economy, weight</td>
+					<td>{{=it.indicatorData["Non-farm economy, weight"]}}</td>
+				</tr>
+				<tr>
+					<td>GDP growth (2005-2011)</td>
+					<td>{{=it.indicatorData["GDP growth (2005-2011)"]}}</td>
+				</tr>
+				<tr>
+					<td>Share in GDP Growth (2005-2011)</td>
+					<td>{{=it.indicatorData["Share in GDP Growth (2005-2011)"]}}</td>
+				</tr>
+				<tr>
+					<td>Deviation from average of economic development</td>
+					<td>{{=it.indicatorData["Deviation from average of economic development"]}}</td>
+				</tr>
+			</tbody>
+		</table>
+
+		<table>
+			<thead>
+				<tr>
+					<th colspan="3">Human Development</th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>Literacy</td>
+					<td>{{=it.indicatorData["Literacy"]}}</td>
+				</tr>
+				<tr>
+					<td>Life expectancy</td>
+					<td>{{=it.indicatorData["Life expectancy"]}}</td>
+				</tr>
+				<tr>
+					<td>Population above the poverty line</td>
+					<td>{{=it.indicatorData["Population above the poverty line"]}}</td>
+				</tr>
+				<tr>
+					<td>Deviation from average of human development</td>
+					<td>{{=it.indicatorData["Deviation from average of human development"]}}</td>
+				</tr>
+			</tbody>
+		</table>
+
 	</script>
 
 	<script id="senegal-profile" type="text/x-handlebars-template">

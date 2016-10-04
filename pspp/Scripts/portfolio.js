@@ -59,7 +59,7 @@
 					$ils.push($('<li>', {
 						text: project[i].name,
 						'data-code': project[i].code
-					}).prepend($('<img>', { src: './img/ico-map.png' })));
+					}).prepend($('<a>', { href: 'overview.html?code=' + project[i].code, target: '_blank' }).append($('<img>', { src: './img/ico-map.png' }))));
 				}
 
 				$('.left-part ul').empty().append($ils);

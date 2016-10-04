@@ -143,6 +143,8 @@ var Infrastructure;
             this.layerData = {};
             this.globalData = {};
             this.realizeData = {};
+            this.senegalTabIsLoaded = false;
+            this.preloadedObject = this.getParameterByName('code') ? this.getParameterByName('code') : -1;
 
             this.axes = axes;
             this.sectors = sectors;
@@ -188,6 +190,9 @@ var Infrastructure;
             $('.close-button').on('click', function () {
 
             	$('#right-hand-panel').hide();
+            	$('#senegal-right-hand-panel').hide();
+            	$('#map-canvas').css({ right: '0px' });
+            	google.maps.event.trigger(_this.map, 'resize');
             });
 
             // Country overview map
@@ -218,6 +223,8 @@ var Infrastructure;
             		if (name == 'Code PTIP') _this.ptipIndex = i;
             		if (name == 'Code du Sous-Secteur (voir feuille Read me pour avoir les codes)') _this.sectorIndex = i;
             		if (name == 'Region, Département (Localité) (sinon mettre 0)') _this.localeIndex = i;
+            		if (name == 'Budget Total Prévu: Dépenses Prévues') _this.budgetIndex = i;
+            		if (name == 'Catégorie des réformes') _this.reformIndex = i;
             	}
 
             	_this.objectData = objectData[0].data;
@@ -298,11 +305,14 @@ var Infrastructure;
             		});
 
             		if (regionId == 'SN') {
-            			_this.showSenegalPanel();
+            			if (!_this.senegalTabIsLoaded)
+            				_this.showSenegalPanel();
             			$srhp.show();
+            			$('#map-canvas').css({ right: '350px' });
             		}
             		else {
             			$srhp.hide();
+            			$('#map-canvas').css({ right: '0px' });
             		}
 
             		$rhp.hide();
@@ -350,18 +360,30 @@ var Infrastructure;
             			else if (projects[i].pp.length == 3)
             				ppNumber = '0' + projects[i].pp.substr(2, 3);
 
-            			$trs.push($('<tr>')
-							.append($('<td>').append($('<img>', {src: './img/right-panel/icons-' + ppNumber + '.png', 'class': 'pp-image-small'})))
+            			$trs.push($('<tr>', { 'data-name': projects[i].name })
+							.append($('<td>').append($('<img>', { src: './img/right-panel/icons-' + ppNumber + '.png', 'class': 'pp-image-small' })))
 							.append($('<td>', { text: projects[i].pp }))
 							.append($('<td>', { text: projects[i].name }))
 							.append($('<td>', { text: projects[i].status }))
 						);
             		}
 
-            		$rhp.find('tbody').append($trs)
+            		$rhp.find('tbody').append($trs);
+
+            		$rhp.find('tr').on('click', function () {
+            			var name = $(this).data('name');
+
+            			_this.markers.forEach(function (marker) {
+
+            				var tooltip = marker.get('tooltip');
+            				if (tooltip[_this.projectColumns[_this.nameIndex].name] == name)
+            					new google.maps.event.trigger(marker, 'click');
+            			});
+            		});
             	}
 
             	$rhp.show();
+            	$('#map-canvas').css({ right: '350px' });
 
             	_this.getRegionData(regionId, function (data) {
 
@@ -403,7 +425,7 @@ var Infrastructure;
             		res.push({
             			pp: _this.projectData[offset + _this.ppIndex],
             			name: _this.projectData[offset + _this.nameIndex],
-						status: _this.projectData[offset + _this.statusIndex]
+						status: _this.projectData[offset + _this.statusIndex],
             		});
             	}
 
@@ -536,7 +558,8 @@ var Infrastructure;
             			filtredObjects.push({
             				lat: _this.objectData[offset + _this.latIndex],
             				lng: _this.objectData[offset + _this.lngIndex],
-            				tooltip: filtredProjects[_this.objectData[offset + _this.databaseCodeIndex_O]]
+            				tooltip: filtredProjects[_this.objectData[offset + _this.databaseCodeIndex_O]],
+            				code: _this.objectData[offset + _this.databaseCodeIndex_O]
             			});
             	}
 
@@ -545,6 +568,11 @@ var Infrastructure;
             		_this.filterTimeout = setTimeout(function () {
 
             			_this.addObjectsToMap(_this.map, filtredObjects);
+
+            			if (_this.preloadedObject != -1) {
+            				_this.showPreloadedObject();
+            				_this.preloadedObject = -1;
+            			}
             		}, 500);
             	} else {
 
@@ -672,7 +700,7 @@ var Infrastructure;
         Application.prototype.addObjectsToMap = function (map, data) {
 
         	function markerClickHandler(event) {
-        		self.infoWindow.setPosition(event.latLng);
+        		self.infoWindow.setPosition(this.get('latlng'));
 
         		var tooltipData = this.get('tooltip');
         		var status = tooltipData["Statut Projets: Annoncé, En cours, Complété, opérationel Programmes/reformes: En"];
@@ -781,6 +809,8 @@ var Infrastructure;
         			map: map
         		});
 
+        		marker.set('code', data[i].code);
+        		marker.set('latlng', new google.maps.LatLng(data[i].lat, data[i].lng));
         		marker.set('tooltip', data[i].tooltip);
         		marker.addListener('click', markerClickHandler);
 
@@ -888,14 +918,10 @@ var Infrastructure;
         		'Stub': [],
         		'Filter': [{
         			'DimensionId': 'measure',
-        			'DimensionName': 'Measure',
-        			'DatasetId': projectsDataset,
-        			'Members': ['5679690', '5679700', '5679710']
+        			'Members': []
         		}],
         		'Frequencies': [],
-        		'Dataset': projectsDataset,
-        		'Segments': null,
-        		'MeasureAggregations': null
+        		'Dataset': projectsDataset
         	};
 
         	return $.post(url, data);
@@ -1134,7 +1160,7 @@ var Infrastructure;
         		}],
         		"Stub": [{
         			"DimensionId": "indicateur",
-        			"Members": ["1000020", "1000030", "1000070", "1000080", "1000180", "1000200", "1000210", "1000220", "1000230", "1000240", "1000360", "1000370", "1000380", "1000420", "1000430", "1000440", "1000460", "1000470", "1000480", "1000490", "1000510", "1000620", "1000630", "1000640", "1000650", "1000660", "1000670", "1000680", "1000710", "1000720", "1000730", "1000740", "1000850", "1000860", "1000870", "1000880", "1000890", "1000900", "1000910", "1001000", "1001070", "1001080", "1001100", "1001160", "1001170", "1001190", "1001200", "1001210", "1001230", "1001240", "1001250", "1001260", "1001270", "1001280", "1001290", "1001310", "1001320", "1001330", "1001360", "1001390", "1001400", "1001410", "1001420", "1001430", "1001450", "1001460", "1001470", "1001480", "1001490", "1001500", "1001510", "1001520", "1001530", "1001540", "1001550", "1001560", "1001570", "1001580", "1001590", "1001600", "1001630", "1001650", "1001660", "1001670", "1001680", "1001690", "1001700", "1001710", "1001720", "1001730", "1001750", "1001760", "1001770", "1001780", "1001790", "1001800", "1001810", "1001820", "1001840", "1001850", "1001860", "1001870", "1001880", "1001890", "1002560", "1002530", "1002500", "1001900", "1001910", "1001920", "1001930", "1001950", "1002030", "1002080", "1002110", "1002120", "1002270", "1002280", "1002290", "1002300", "1002310", "1002320", "1002330", "1002340", "1002350", "1002360", "1002370", "1002380", "1002390", "1002400", "1002410", "1002420", "1002430", "1002440", "1002450", "1002460", "1002470", "1002480", "1002490", "1002500", "1002530", "1002540", "1002560", "1002570", "1002580", "1002590", "1002600", "1002610", "1002630", "1002670", "1002680", "1002690", "1002700", "1002710", "1002720", "1002730", "1002740", "1002750", "1002760", "1002770", "1002780", "1002790", "1002800", "1002810", "1002820", "1002830", "1002840"]
+        			"Members": ["1002690", "1002730", "1002760", "1002800"]//"1000020", "1000030", "1000070", "1000080", "1000180", "1000200", "1000210", "1000220", "1000230", "1000240", "1000360", "1000370", "1000380", "1000420", "1000430", "1000440", "1000460", "1000470", "1000480", "1000490", "1000510", "1000620", "1000630", "1000640", "1000650", "1000660", "1000670", "1000680", "1000710", "1000720", "1000730", "1000740", "1000850", "1000860", "1000870", "1000880", "1000890", "1000900", "1000910", "1001000", "1001070", "1001080", "1001100", "1001160", "1001170", "1001190", "1001200", "1001210", "1001230", "1001240", "1001250", "1001260", "1001270", "1001280", "1001290", "1001310", "1001320", "1001330", "1001360", "1001390", "1001400", "1001410", "1001420", "1001430", "1001450", "1001460", "1001470", "1001480", "1001490", "1001500", "1001510", "1001520", "1001530", "1001540", "1001550", "1001560", "1001570", "1001580", "1001590", "1001600", "1001630", "1001650", "1001660", "1001670", "1001680", "1001690", "1001700", "1001710", "1001720", "1001730", "1001750", "1001760", "1001770", "1001780", "1001790", "1001800", "1001810", "1001820", "1001840", "1001850", "1001860", "1001870", "1001880", "1001890", "1002560", "1002530", "1002500", "1001900", "1001910", "1001920", "1001930", "1001950", "1002030", "1002080", "1002110", "1002120", "1002270", "1002280", "1002290", "1002300", "1002310", "1002320", "1002330", "1002340", "1002350", "1002360", "1002370", "1002380", "1002390", "1002400", "1002410", "1002420", "1002430", "1002440", "1002450", "1002460", "1002470", "1002480", "1002490", "1002500", "1002530", "1002540", "1002560", "1002570", "1002580", "1002590", "1002600", "1002610", "1002630", "1002670", "1002680", "1002690", "1002700", "1002710", "1002720", "1002730", "1002740", "1002750", "1002760", "1002770", "1002780", "1002790", "1002800", "1002810", "1002820", "1002830", "1002840"]
         		}],
         		"Filter": [{
         			"DimensionId": "mesure",
@@ -1152,30 +1178,30 @@ var Infrastructure;
         	var _this = this;
         	$.when(this.getDataSenedalGlobal(), this.getDataSenegalRealisation()).done(function (globalPivot, realisationPivot) {
 
-        		_this.globalData = globalPivot[0];
+        		//_this.globalData = globalPivot[0];
 
         		var nameIndex = -1;
         		var valueIndex = -1;
 
-        		for (var i = 0; i < _this.globalData.columns.length; i++) {
-        			if (_this.globalData.columns[i].dimensionId == 'indicator' && _this.globalData.columns[i].name == 'EnglishName')
-        				nameIndex = i;
+        		//for (var i = 0; i < _this.globalData.columns.length; i++) {
+        		//	if (_this.globalData.columns[i].dimensionId == 'indicator' && _this.globalData.columns[i].name == 'EnglishName')
+        		//		nameIndex = i;
 
-        			if (_this.globalData.columns[i].name == 'Value')
-        				valueIndex = i;
-        		}
+        		//	if (_this.globalData.columns[i].name == 'Value')
+        		//		valueIndex = i;
+        		//}
 
-        		var globalData = {};
+        		//var globalData = {};
 
-        		var rowCount = Math.floor(_this.globalData.data.length / _this.globalData.columns.length);
-        		for (var rowIndex = 0; rowIndex < rowCount; rowIndex++) {
-        			var rowOffset = rowIndex * _this.globalData.columns.length;
+        		//var rowCount = Math.floor(_this.globalData.data.length / _this.globalData.columns.length);
+        		//for (var rowIndex = 0; rowIndex < rowCount; rowIndex++) {
+        		//	var rowOffset = rowIndex * _this.globalData.columns.length;
 
-        			globalData[_this.globalData.data[rowOffset + nameIndex]] = _this.globalData.data[rowOffset + valueIndex];
-        		}
+        		//	globalData[_this.globalData.data[rowOffset + nameIndex]] = _this.globalData.data[rowOffset + valueIndex];
+        		//}
 
-        		var globalT = doT.template($('#senegal-profile').html());
-        		$('#senegal-right-hand-panel .global-indicators tbody').html(globalT(globalData));
+        		//var globalT = doT.template($('#senegal-profile').html());
+        		//$('#senegal-right-hand-panel .global-indicators tbody').html(globalT(globalData));
 
 
         		_this.realizeData = realisationPivot[0];
@@ -1219,6 +1245,142 @@ var Infrastructure;
         			);
         		}
         		$('#senegal-right-hand-panel .realisation-indicators tbody').append(realizeTData);
+
+
+        		var axeData = { '1': 0, '2': 0, '3': 0 };
+        		rowCount = Math.floor(_this.projectData.length / _this.projectColumns.length);
+        		for (var rowIndex = 0; rowIndex < rowCount; rowIndex++) {
+        			var rowOffset = rowIndex * _this.projectColumns.length;
+
+        			if (_this.projectData[rowOffset + _this.objectTypeIndex] == 'P')
+        				axeData[_this.projectData[rowOffset + _this.pseIndex]] += 1;
+        		}
+
+        		var axeTrs = [];
+        		axeTrs.push($('<tr>').append($('<td>', { text: axes['1'] })).append($('<td>', { text: axeData['1'] })));
+        		axeTrs.push($('<tr>').append($('<td>', { text: axes['2'] })).append($('<td>', { text: axeData['2'] })));
+        		axeTrs.push($('<tr>').append($('<td>', { text: axes['3'] })).append($('<td>', { text: axeData['3'] })));
+        		$('#senegal-right-hand-panel .axe-summ tbody').append(axeTrs);
+
+				
+        		var PPData = {};
+        		rowCount = Math.floor(_this.projectData.length / _this.projectColumns.length);
+        		for (var rowIndex = 0; rowIndex < rowCount; rowIndex++) {
+        			var rowOffset = rowIndex * _this.projectColumns.length;
+
+        			if (_this.projectData[rowOffset + _this.objectTypeIndex] != 'P')
+        				continue;
+
+        			if (!PPData[_this.projectData[rowOffset + _this.ppIndex]])
+        				PPData[_this.projectData[rowOffset + _this.ppIndex]] = 0;
+
+        			PPData[_this.projectData[rowOffset + _this.ppIndex]] += 1;
+        		}
+
+        		var PPSortedData = [];
+        		for (var i = 1; i <= 27; i++) {
+        			var pp = 'PP' + i;
+
+        			if (!PPData[pp])
+        				continue;
+
+        			PPSortedData.push([pp, PPData[pp]]);
+        		}
+
+        		var ppTrs = [];
+        		for (var i = 0; i < Math.ceil(PPSortedData.length / 2) ; i++) {
+        			var sIndex = Math.ceil(PPSortedData.length / 2) + i;
+        			ppTrs.push($('<tr>')
+						.append($('<td>', { text: PPSortedData[i][0] }))
+						.append($('<td>', { text: PPSortedData[i][1] }))
+						.append($('<td>', { text: PPSortedData[sIndex] ? PPSortedData[sIndex][0] : '' }))
+						.append($('<td>', { text: PPSortedData[sIndex] ? PPSortedData[sIndex][1] : '' }))
+					);
+        		}
+        		$('#senegal-right-hand-panel .pp-summ tbody').append(ppTrs);
+
+
+        		var budgetData = {};
+        		rowCount = Math.floor(_this.projectData.length / _this.projectColumns.length);
+        		for (var rowIndex = 0; rowIndex < rowCount; rowIndex++) {
+        			var rowOffset = rowIndex * _this.projectColumns.length;
+
+        			if (_this.projectData[rowOffset + _this.objectTypeIndex] != 'P')
+        				continue;
+
+        			if (!budgetData[_this.projectData[rowOffset + _this.ppIndex]])
+        				budgetData[_this.projectData[rowOffset + _this.ppIndex]] = 0;
+
+        			budgetData[_this.projectData[rowOffset + _this.ppIndex]] += parseFloat((_this.projectData[rowOffset + _this.budgetIndex] ? _this.projectData[rowOffset + _this.budgetIndex] : 0), 10);
+        		}
+
+        		var budgetSortedData = [];
+        		for (var pp in budgetData) {
+        			budgetSortedData.push([pp, budgetData[pp]]);
+        		}
+
+        		budgetSortedData.sort(function (n1, n2) {
+        			return n1 - n2;
+        		});
+
+        		var budgetTrs = [];
+        		for (var i = 0; i < budgetSortedData.length; i++) {
+        			budgetTrs.push($('<tr>').append($('<td>', { text: budgetSortedData[i][0] })).append($('<td>', { text: budgetSortedData[i][1] })));
+        		}
+        		$('#senegal-right-hand-panel .pp-budget-summ tbody').append(budgetTrs);
+
+
+        		var reformsData = {
+        			'Environnement des affaires et régulation': 0,
+        			'Infrastructures': 0,
+        			'Capital Humain': 0,
+        			'Economie numérique': 0,
+        			'Financement de l’économie': 0
+        		};
+        		rowCount = Math.floor(_this.projectData.length / _this.projectColumns.length);
+        		for (var rowIndex = 0; rowIndex < rowCount; rowIndex++) {
+        			var rowOffset = rowIndex * _this.projectColumns.length;
+
+        			if (_this.projectData[rowOffset + _this.objectTypeIndex] != 'R')
+        				continue;
+
+        			reformsData[_this.projectData[rowOffset + _this.reformIndex]] += 1;
+        		}
+
+        		var reformTrs = [];
+        		for (var ref in reformsData) {
+        			reformTrs.push($('<tr>').append($('<td>', { text: ref })).append($('<td>', { text: reformsData[ref] })));
+        		}
+        		$('#senegal-right-hand-panel .reforms-groups tbody').append(reformTrs);
+
+        		_this.senegalTabIsLoaded = true;
+        	});
+        };
+
+        Application.prototype.getParameterByName = function (name) {
+
+        	var url = window.location.href;
+        	name = name.replace(/[\[\]]/g, "\\$&");
+
+        	var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)");
+        	var results = regex.exec(url);
+
+        	if (!results)
+        		return null;
+        	if (!results[2])
+        		return '';
+
+        	return decodeURIComponent(results[2].replace(/\+/g, " "));
+        };
+
+        Application.prototype.showPreloadedObject = function () {
+
+        	var _this = this;
+        	this.markers.forEach(function (marker) {
+
+        		var code = marker.get('code');
+        		if (code == _this.preloadedObject)
+        			new google.maps.event.trigger(marker, 'click');
         	});
         };
 

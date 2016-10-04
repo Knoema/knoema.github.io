@@ -189,7 +189,7 @@
 						continue;
 
 					var reformName = _this.projectData[offset + _this.nameIndex];
-					var specialReform = reformName == 'Procédure fusionnée taxe sociale';
+					var specialReform = reformName == "Intégration de l'apprentissage et le stage dans le code du travail";
 					var data = [
 						reformName,
 						_this.projectData[offset + _this.deadlineIndex],
@@ -256,10 +256,16 @@
 						var tr = $('<tr>');
 
 						if (k == 6 && specialReform) {
-							tr.append($('<td>', { text: periodData[4 * k + 0], 'class': strClass }));
-							tr.append($('<td>', { text: periodData[4 * k + 1], 'class': strClass }));
-							tr.append($('<td>', { text: periodData[4 * k + 2], 'class': strClass }));
-							tr.append($('<td>', { text: periodData[4 * k + 3], 'class': strClass }));
+							tr.append($('<td>', { text: periodData[4 * 6], 'class': '' }));
+							tr.append($('<td>', { 'class': 'uoi' }));
+							tr.append($('<td>', { 'class': 'uoi' })
+								.append($('<a>', { href: "./documents/décret contrat d'apprentissage-technique.pdf", target: '_blank' }).append($('<img>', { src: './img/pdf.png',  'class': 'doc-image' })))
+								.append($('<a>', { href: './documents/réforme apprentissage et stage-technique.docx', target: '_blank' }).append($('<img>', { src: './img/doc.png', 'class': 'doc-image' })))
+							);
+							tr.append($('<td>', { 'class': 'uoi' })
+								.append($('<a>', { href: './documents/decret sur le stage version signée-politique.pdf', target: '_blank' }).append($('<img>', { src: './img/pdf.png', 'class': 'doc-image' })))
+								.append($('<a>', { href: './documents/loi 2015-04 sur le stage-politique.pdf', target: '_blank' }).append($('<img>', { src: './img/pdf.png', 'class': 'doc-image' })))
+							);
 						}
 						else {
 							for (var j = 0; j < 4; j++) {
