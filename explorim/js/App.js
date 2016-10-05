@@ -10,6 +10,15 @@ else {
 	}
 }
 
+$.fn.extend({
+    animateCss: function (animationName) {
+        var animationEnd = 'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend';
+        this.addClass('animated ' + animationName).one(animationEnd, function() {
+            $(this).removeClass('animated ' + animationName);
+        });
+    }
+});
+
 function App() {
 	this._map = null;
 	this.geoPlaygroundId = 'zabecdg';
@@ -28,6 +37,8 @@ function App() {
 		name: 'Communale',
 		className: 'communale'
 	}];
+	this._activeDate = null;
+	this.byTime = null;
 	this._activeRegionalDivision = null;
 	this._activeGroupCuid = null;
     this._activeAreaLayerId = null;
@@ -49,12 +60,6 @@ App.prototype.init = function () {
 
 		var $modal = $('#regional-division-modal-switcher');
 		$modal.find('.regional-division-buttons').empty().append($modalButtons);
-
-        //TODO Restore this
-        //TODO Init it in html somehow
-        $modal.modal({
-			open: true
-        });
 
 		//top buttons
 		$('#regional-division-map-switcher').empty().append($topButtons);
@@ -225,6 +230,12 @@ App.prototype.init = function () {
 
 					self.bindEvents();
 
+					//TODO Restore this
+					//TODO Init it in html somehow
+					$modal.modal({
+						open: true
+					});
+
 					$(window).trigger('resize');
 
 				});
@@ -238,13 +249,25 @@ App.prototype.init = function () {
 };
 
 App.prototype.onResize = function () {
+
 	var windowHeight = $(window).height();
 	var $sideBar = $('#side-bar');
 	$sideBar.height($(window).height());
 
+	$('#map-container').height(windowHeight - $('#timeline').height());
+
     var filtersHolderHeight = windowHeight - 180;
 
 	$sideBar.find('.filters-holder').height(filtersHolderHeight);
+
+    var mapAndTimelineWidth = $(window).width() - $sideBar.width();
+
+    $('.time-members-holder').width(mapAndTimelineWidth - 50); //50 width of slide-control
+
+	// $('#timeline').width(mapAndTimelineWidth);
+	// $('#timeline').css({
+	// 	'top': $('#map-container').height()
+	// });
 
     var panelHeadingHeight = $sideBar.find('.panel-heading').first().height();
     var topLevelSectionHeight = filtersHolderHeight - 3 * panelHeadingHeight - 26;//26 for margin/padding
@@ -270,6 +293,10 @@ App.prototype.switchDivision = function (division, reloadLayer) {
         enabledRegionTypes = _.map(existingLayers, 'name');
     }
 
+    if (division === 'Nationale') {
+        this._map.setZoom(Math.min(5, this._map.getZoom()));
+    }
+
     //TODO Remove enabled....
 	if (enabledRegionTypes) {
 		$switcher.find('a').each($.proxy(function(i, element) {
@@ -285,10 +312,12 @@ App.prototype.switchDivision = function (division, reloadLayer) {
     //TODO Find layerGroup by cuid, get proper layer id and load it
 	if (reloadLayer) {
         var $activeGroup = $('#' + this._activeGroupCuid);
-        var layer = _.find($activeGroup.data().layers, $.proxy(function(layer) {
-            return layer.name === division;
-        }, this));
-        this.loadLayer(layer.layerId, 'region');
+        if ($activeGroup.length) {
+            var layer = _.find($activeGroup.data().layers, $.proxy(function(layer) {
+                return layer.name === division;
+            }, this));
+            this.loadLayer(layer.layerId, 'region');
+        }
     }
 };
 
@@ -303,15 +332,15 @@ App.prototype.bindEvents = function () {
 		$('#regional-division-modal-switcher').modal('hide');
 	});
 
-	$('#side-bar').on('click', '.clear-filters', $.proxy(function() {
-		_.each(this._layers, function(layer) {
-			//TODO Consider clear region layer as well
-		    layer.clean();
-		});
+    $('#side-bar').on('click', '.clear-filters', $.proxy(function () {
+        _.each(this._layers, function (layer) {
+            //TODO Consider clear region layer as well
+            layer.clean();
+        });
         this._activeGroupCuid = null;
         this._activeAreaLayerId = null;
-		$('#side-bar').find('input').prop('checked', false);
-	}, this));
+        $('#side-bar').find('input').prop('checked', false);
+    }, this));
 
     $('#filters-tree').on('click', 'label', $.proxy(function(event) {
         if (event.target.tagName === 'INPUT') {
@@ -368,6 +397,49 @@ App.prototype.bindEvents = function () {
         });
     });
 
+	$('#timeline').on('click', '.time-member', $.proxy(function(e) {
+		var $timeMember = $(e.target);
+		$timeMember.siblings().removeClass('active');
+		$timeMember.addClass('active');
+		this._activeDate = $timeMember.data('timeMember');
+		console.log('%cTODO Reload layer in according to _activeDate', 'color:red;font-size:200%;');
+	}, this));
+
+    $('#timeline').on('click', '.slide-control', $.proxy(function(e) {
+        var $this = $(e.target);
+        var $timeMembers = $('#timeline').find('.time-members');
+        var pos = $timeMembers.position();
+
+        if ($this.hasClass('slide-control-left') || $this.parent().hasClass('slide-control-left')) {
+            // if (pos.left < 50) {
+            // }
+            //TODO Add check for width & count of cells
+
+            var mapAndTimelineWidth = $(window).width() - $('#side-bar').width();
+            var visibleTimeMembersWIdth = mapAndTimelineWidth - 100;
+
+            //TODO Allow move if one of members hidden (just count how much members can fit to given width)
+
+            if (visibleTimeMembersWIdth + pos.left > 200) {
+                $timeMembers.animate({
+                    left: pos.left - 100
+                });
+            } else {
+                //TODO Apply shake
+            }
+
+        } else if ($this.hasClass('slide-control-right') || $this.parent().hasClass('slide-control-right')) {
+            if (pos.left < 50) {
+				$timeMembers.animate({
+					left: pos.left + 100
+				});
+            } else {
+				//TODO Apply shake
+			}
+        }
+
+    }, this));
+
 	$(window).on('resize', $.proxy(this.onResize, this));
 };
 
@@ -403,7 +475,10 @@ App.prototype.loadLayer = function (layerId, layerType) {
 			if (layerData.layer.layerType === 'point') {
 				_.each(this._layers[layerData.layerId].layer.markerClusterer.markers_, function(marker) {
 					marker.addListener('click', function() {
-
+						console.log("----------- Marker's content -----------");
+						console.log(this);
+						console.log(this.content);
+						console.log("----------/ Marker's content -----------");
 						var content = _.chain(_.keys(this.content))
 							.map(function(key) {
 								return {
@@ -425,6 +500,15 @@ App.prototype.loadLayer = function (layerId, layerType) {
 					});
 				});
 			} else {
+
+				//layerData.layer.data is pivotResponse
+				this.byTime = _.groupBy(data, function(tuple) {
+					//TODO Format using Knoema.Utils & our custom frequencies
+					return tuple.Time.substring(0, 4);
+				});
+
+				debugger;
+
                 this._activeAreaLayerId = layerData.layerId;
 			}
 
