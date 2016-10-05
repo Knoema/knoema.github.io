@@ -15,8 +15,8 @@
                         {{each(k, item3) item2.children}}
                             {{if item3.children && item3.children.length && _.every(item3.children, function(layer) { return layer.layerType == 'region'; })}}
                                 <div>
-                                    <label style="color:red;">
-                                        <input data-item="${JSON.stringify(item3)}" type="checkbox" /> ${item3.title}
+                                    <label>
+                                        <input id="${cuid()}" data-layers="${JSON.stringify(item3.children)}" type="checkbox" /> ${item3.title}
                                     </label>
                                 </div>
                             {{else}}
@@ -28,7 +28,7 @@
                                         {{each(kk, item4) item3.children}}
                                             <div>
                                                 <label>
-                                                    <input data-layer-id="${item4.layerId}" data-layer-type="${item4.layerType}" data-layer="${JSON.stringify(item4)}" type="checkbox" /> ${item4.name}
+                                                    <input data-layer-id="${item4.layerId}" data-layer-type="${item4.layerType}" type="checkbox" /> ${item4.name}
                                                 </label>
                                             </div>
                                         {{/each}}

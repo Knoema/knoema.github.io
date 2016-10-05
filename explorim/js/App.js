@@ -29,7 +29,8 @@ function App() {
 		className: 'communale'
 	}];
 	this._activeRegionalDivision = null;
-	this._activeAreaLayerId = null;
+	this._activeGroupCuid = null;
+    this._activeAreaLayerId = null;
 };
 
 App.prototype.init = function () {
@@ -51,9 +52,9 @@ App.prototype.init = function () {
 
         //TODO Restore this
         //TODO Init it in html somehow
-		// $modal.modal({
-		// 	open: true
-		// });
+		$modal.modal({
+			open: true
+		});
 
 		//top buttons
 		$('#regional-division-map-switcher').empty().append($topButtons);
@@ -236,18 +237,6 @@ App.prototype.init = function () {
 
 };
 
-App.prototype.switchDivision = function (division) {
-	this._activeRegionalDivision = division;
-
-	var $regionalDivisionMapSwitcher = $('#regional-division-map-switcher');
-
-	$regionalDivisionMapSwitcher.find('.active').removeClass('active');
-	$regionalDivisionMapSwitcher.find('a[data-division="' + division + '"]').addClass('active');
-
-	//TODO Reload or something
-	console.log('%cTODO Reload map (or active layer):', 'font-size:200%;color:red;');
-};
-
 App.prototype.onResize = function () {
 	var windowHeight = $(window).height();
 	var $sideBar = $('#side-bar');
@@ -255,39 +244,101 @@ App.prototype.onResize = function () {
 	$sideBar.find('.filters-holder').height(windowHeight - 180);
 };
 
+App.prototype.switchDivision = function (division, reloadLayer) {
+	this._activeRegionalDivision = division;
+
+	var $switcher = $('#regional-division-map-switcher');
+
+	$switcher.find('.active').removeClass('active');
+	$switcher.find('a[data-division="' + division + '"]').addClass('active');
+
+    var enabledRegionTypes;
+    if (this._activeGroupCuid) {
+        var existingLayers = $('#' + this._activeGroupCuid).data('layers');
+        enabledRegionTypes = _.map(existingLayers, 'name');
+    }
+
+    //TODO Remove enabled....
+	if (enabledRegionTypes) {
+		$switcher.find('a').each($.proxy(function(i, element) {
+			var $a = $(element);
+			if (_.indexOf(enabledRegionTypes, $a.data('division')) < 0) {
+				$a.addClass('disabled');
+			}
+		}, this));
+	} else {
+		$switcher.find('a').removeClass('disabled');
+	}
+
+    //TODO Find layerGroup by cuid, get proper layer id and load it
+	if (reloadLayer) {
+        var $activeGroup = $('#' + this._activeGroupCuid);
+        var layer = _.find($activeGroup.data().layers, $.proxy(function(layer) {
+            return layer.name === division;
+        }, this));
+        this.loadLayer(layer.layerId, 'region');
+    }
+
+	//TODO Reload or something
+	console.log('%cTODO Reload map (or active layer):', 'font-size:200%;color:red;');
+};
+
 App.prototype.bindEvents = function () {
 	var self = this;
 	$('#regional-division-map-switcher').on('click', 'a', function(event) {
-		self.switchDivision($(event.target).data('division'));
+		self.switchDivision($(event.target).data('division'), true);
 	});
 
 	$('#regional-division-modal-switcher').on('click', '.regional-division-type', function() {
-		self.switchDivision($(event.target).data('division'));
+		self.switchDivision($(event.target).data('division'), false);
 		$('#regional-division-modal-switcher').modal('hide');
 	});
 
-    $('#filters-tree').on('click', 'label', function(event) {
+	$('#side-bar').on('click', '.clear-filters', $.proxy(function() {
+		_.each(this._layers, function(layer) {
+			//TODO Consider clear region layer as well
+		    layer.clean();
+		});
+        this._activeGroupCuid = null;
+        this._activeAreaLayerId = null;
+		$('#side-bar').find('input').prop('checked', false);
+	}, this));
+
+    $('#filters-tree').on('click', 'label', $.proxy(function(event) {
         if (event.target.tagName === 'INPUT') {
             var $target = $(event.target);
-            var layerId = null;
+            var layerId, activeRegionalDivision;
             var layerType = $target.data('layerType');
 
             if (layerType === 'point') {
                 layerId = $target.data('layerId');
                 $target.prop('disabled', true);
-                self.loadLayer(layerId);
+                this.loadLayer(layerId, 'point');
             } else {
-                //TODO Remove all other region layers from map
-                //TODO Detect actual layerId (depends of this._activeRegionalDivision)
-                console.log('===========================================');
-                console.log('===========================================');
-                console.log('data of region layer:', $target.data());
-                console.log('===========================================');
-                console.log('===========================================');
-                debugger;
+
+                if (this._activeGroupCuid) {
+                    $('#' + this._activeGroupCuid).prop('checked', false);
+                }
+
+                var layers = $target.data('layers');
+                var groupCuid = $target[0].id;
+                this._activeGroupCuid = groupCuid;
+
+				var layer = _.find(layers, function(layer) {
+					return layer.name === this._activeRegionalDivision;
+				}.bind(this));
+				if (!layer) {
+					layerId = layers[0].layerId;
+					activeRegionalDivision = layers[0].name;
+				} else {
+					layerId = layer.layerId;
+					activeRegionalDivision = this._activeRegionalDivision;
+				}
+				this.switchDivision(activeRegionalDivision, false);
+				this.loadLayer(layerId, 'region');
             }
         }
-    });
+    }, this));
 
 	$(window).on('resize', $.proxy(this.onResize, this));
 
@@ -297,10 +348,14 @@ App.prototype.bindEvents = function () {
 	// });
 };
 
-App.prototype.loadLayer = function (layerId) {
+App.prototype.loadLayer = function (layerId, layerType) {
 	var self = this;
+	//TODO What to do if selected "Communale" but only two layers exist
 	if (this._layers[layerId]) {
-        //TODO Add check if it is regional layer or not
+
+        if (layerType && layerType === 'region' && this._activeAreaLayerId != null) {
+            this._layers[this._activeAreaLayerId].clean();
+        }
 
         //layer.bounds == null means that layer is not displayed on the map
         if (this._layers[layerId].layer.bounds == null) {
@@ -311,38 +366,48 @@ App.prototype.loadLayer = function (layerId) {
         $('input[data-layer-id="' + layerId + '"]').prop('disabled', false);
 	}
 	else {
-		var infoWindow = new google.maps.InfoWindow();
+
+        if (layerType && layerType === 'region' && this._activeAreaLayerId != null) {
+            this._layers[this._activeAreaLayerId].clean();
+        }
+
 		var layer = new GeoPlayground.Layer({
 			map: self._map,
 			layerId: layerId,
 			geoPlaygroundId: self.geoPlaygroundId,
-			infoWindow: infoWindow
+			infoWindow: self.infoWindow
 		}, $.proxy(function (layerData) {
-            _.each(this._layers[layerData.layerId].layer.markerClusterer.markers_, function(marker) {
-                marker.addListener('click', function() {
+			if (layerData.layer.layerType === 'point') {
+				_.each(this._layers[layerData.layerId].layer.markerClusterer.markers_, function(marker) {
+					marker.addListener('click', function() {
 
-                    var content = _.chain(_.keys(this.content))
-                                            .map(function(key) {
-                                                return {
-                                                    key: key,
-                                                    value: this.content[key]
-                                                };
-                                            }.bind(this))
-                                            .value()
-                                            .filter(function(entry) {
-                                                return entry.value.toString() !== '';
-                                            });
+						var content = _.chain(_.keys(this.content))
+							.map(function(key) {
+								return {
+									key: key,
+									value: this.content[key]
+								};
+							}.bind(this))
+							.value()
+							.filter(function(entry) {
+								return entry.value.toString() !== '';
+							});
 
-                    var $infoWindowContent = $.tmpl('info-window.html', {
-                        hashMap: content
-                    });
-                    self.infoWindow.setContent($infoWindowContent[0].outerHTML);
-                    self.infoWindow.setPosition(this.position);
-                    self.infoWindow.open(self._map);
-                });
-            });
+						var $infoWindowContent = $.tmpl('info-window.html', {
+							hashMap: content
+						});
+						self.infoWindow.setContent($infoWindowContent[0].outerHTML);
+						self.infoWindow.setPosition(this.position);
+						self.infoWindow.open(self._map);
+					});
+				});
+			} else {
+                this._activeAreaLayerId = layerData.layerId;
+			}
+
             //TODO Add check if it is regional layer or not
             $('input[data-layer-id="' + layerData.layerId + '"]').prop('disabled', false);
+
         }, this));
 		layer.load();
 		this._layers[layerId] = layer;
