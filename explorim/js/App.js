@@ -52,9 +52,9 @@ App.prototype.init = function () {
 
         //TODO Restore this
         //TODO Init it in html somehow
-		$modal.modal({
+        $modal.modal({
 			open: true
-		});
+        });
 
 		//top buttons
 		$('#regional-division-map-switcher').empty().append($topButtons);
@@ -241,7 +241,19 @@ App.prototype.onResize = function () {
 	var windowHeight = $(window).height();
 	var $sideBar = $('#side-bar');
 	$sideBar.height($(window).height());
-	$sideBar.find('.filters-holder').height(windowHeight - 180);
+
+    var filtersHolderHeight = windowHeight - 180;
+
+	$sideBar.find('.filters-holder').height(filtersHolderHeight);
+
+    var panelHeadingHeight = $sideBar.find('.panel-heading').first().height();
+    var topLevelSectionHeight = filtersHolderHeight - 3 * panelHeadingHeight - 26;//26 for margin/padding
+
+    $sideBar.find('.panel-body').css({
+        'max-height': topLevelSectionHeight,
+        'height': topLevelSectionHeight
+    });
+
 };
 
 App.prototype.switchDivision = function (division, reloadLayer) {
@@ -278,9 +290,6 @@ App.prototype.switchDivision = function (division, reloadLayer) {
         }, this));
         this.loadLayer(layer.layerId, 'region');
     }
-
-	//TODO Reload or something
-	console.log('%cTODO Reload map (or active layer):', 'font-size:200%;color:red;');
 };
 
 App.prototype.bindEvents = function () {
@@ -340,12 +349,26 @@ App.prototype.bindEvents = function () {
         }
     }, this));
 
-	$(window).on('resize', $.proxy(this.onResize, this));
+    // show.bs.collapse	This event fires immediately when the show instance method is called.
+    // shown.bs.collapse	This event is fired when a collapse element has been made visible to the user (will wait for CSS transitions to complete).
+    // hide.bs.collapse	This event is fired immediately when the hide method has been called.
+    // hidden.bs.collapse	This event is fired when a collapse element has been hidden from the user (will wait for CSS transitions to complete).
 
-	//TODO Restore this:
-	// $('#side-bar').find('.filters-holder').mCustomScrollbar({
-	// 	theme: "dark"
-	// });
+    $('#filters-tree').find('.item-content').on('show.bs.collapse', function() {
+        $(this).closest('.item-content-level-0').find('.scroll-content').mCustomScrollbar('destroy');
+    });
+	//TODO Combine with previous somehow
+	$('#filters-tree').find('.item-content').on('hide.bs.collapse', function() {
+		$(this).closest('.item-content-level-0').find('.scroll-content').mCustomScrollbar('destroy');
+	});
+
+    $('#filters-tree').find('.item-content').on('shown.bs.collapse', function() {
+        $(this).closest('.item-content-level-0').find('.scroll-content').mCustomScrollbar({
+            theme: 'dark'
+        });
+    });
+
+	$(window).on('resize', $.proxy(this.onResize, this));
 };
 
 App.prototype.loadLayer = function (layerId, layerType) {

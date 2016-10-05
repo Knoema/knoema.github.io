@@ -228,6 +228,10 @@ body {
     border-bottom: 1px solid #cecece;
 }
 
+.panel-body {
+    overflow: hidden;
+}
+
 .infrastructures {
     background-image: url('../img/icon-01.png');
 }
