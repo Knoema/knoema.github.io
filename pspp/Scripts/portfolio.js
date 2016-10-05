@@ -105,6 +105,7 @@
 		portfolio.prototype.getProgectsByPP = function (pp) {
 
 			var res = [];
+			var unicNames = [];
 
 			for (var i = 0; i < this.projectData.length / this.projectColumns.length; i++) {
 
@@ -116,6 +117,11 @@
 
 				if (this.projectData[offset + this.ppIndex] != pp)
 					continue;
+
+				if ($.inArray(this.projectData[offset + this.nameIndex], unicNames) != -1)
+					continue;
+
+				unicNames.push(this.projectData[offset + this.nameIndex]);
 
 				res.push({
 					code: this.projectData[offset + this.codeIndex],

@@ -227,6 +227,7 @@ var Infrastructure;
             		if (name == 'Budget Total Prévu: Dépenses Prévues') _this.budgetIndex = i;
             		if (name == 'Catégorie des réformes') _this.reformIndex = i;
             		if (name == 'Objectif Stratégique') _this.objectsIndex = i;
+            		if (name == 'Year') _this.dateIndex = i;
             	}
 
             	_this.objectData = objectData[0].data;
@@ -412,6 +413,7 @@ var Infrastructure;
             			dbCodes.push(dbcode);
             	}
 
+            	var unicNames = [];
             	for (var i = 0; i < _this.projectData.length / _this.projectColumns.length; i++) {
 
             		var offset = i * _this.projectColumns.length;
@@ -423,6 +425,11 @@ var Infrastructure;
 
             		if ($.inArray(dbcode, dbCodes) == -1)
             			continue;
+
+            		if ($.inArray(_this.projectData[offset + _this.nameIndex], unicNames) != -1)
+            			continue;
+
+            		unicNames.push(_this.projectData[offset + _this.nameIndex]);
 
             		res.push({
             			pp: _this.projectData[offset + _this.ppIndex],
@@ -1261,8 +1268,14 @@ var Infrastructure;
 
         		var axeData = { '1': 0, '2': 0, '3': 0 };
         		rowCount = Math.floor(_this.projectData.length / _this.projectColumns.length);
+        		var unicNames = [];
         		for (var rowIndex = 0; rowIndex < rowCount; rowIndex++) {
         			var rowOffset = rowIndex * _this.projectColumns.length;
+
+        			if ($.inArray(_this.projectData[rowOffset + _this.nameIndex], unicNames) != -1)
+        				continue;
+
+        			unicNames.push(_this.projectData[rowOffset + _this.nameIndex]);
 
         			if (_this.projectData[rowOffset + _this.objectTypeIndex] == 'P')
         				axeData[_this.projectData[rowOffset + _this.pseIndex]] += 1;
@@ -1282,6 +1295,9 @@ var Infrastructure;
         			var rowOffset = rowIndex * _this.projectColumns.length;
 
         			if (_this.projectData[rowOffset + _this.objectTypeIndex] != 'P')
+        				continue;
+
+        			if (_this.projectData[rowOffset + _this.dateIndex].value.split('/')[2] != '2015')
         				continue;
 
         			if (!PPData[_this.projectData[rowOffset + _this.ppIndex]])
@@ -1315,7 +1331,7 @@ var Infrastructure;
 						.append($('<td>').append($('<img src="./img/right-panel/icons-' + PPSortedData[i][3] + '.png" class="pp-image-small">')))
 						.append($('<td>', { text: PPSortedData[i][0] }))
 						.append($('<td>', { text: PPSortedData[i][1] }))
-						.append($('<td>', { text: PPSortedData[i][2] }))
+						.append($('<td>', { text: PPSortedData[i][2].toString().replace(/(\d{1,3}(?=(\d{3})+(?:\.\d|\b)))/g,"\$1 ") }))
 					);
         		}
         		$('#senegal-right-hand-panel .pp-summ tbody').append(ppTrs);
