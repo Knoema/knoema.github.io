@@ -35,11 +35,16 @@ body {
 #side-bar .logo-container img {
     margin: 10px;
     width: 170px;
-
 }
-
-
-
+#side-bar .logo-container a {
+    background-image: url(../img/logo.png);
+    width: 170px;
+    height: 100px;
+    display: block;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center center;
+}
 
 .title-section {
     padding: 20px;
@@ -127,7 +132,10 @@ body {
     border-color: #245b13;
     background-color: white;
 }
-
+#regional-division-modal-switcher .regional-division-buttons a {
+    background-repeat: no-repeat;
+    background-size: contain;
+}
 #regional-division-modal-switcher .regional-division-buttons a.nationale {
     background-image: url("../img/01.png");
 }
@@ -148,7 +156,7 @@ body {
 }
 
 .item-content {
-    margin-bottom: 10px;
+    /*margin-bottom: 10px;*/
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
@@ -171,6 +179,7 @@ body {
 }
 
 .item-title {
+    background-size: 32px;
     background-repeat: no-repeat;
     background-position: left;
     color: #245b13;
@@ -196,6 +205,7 @@ body {
 .item-title-1, .item-title-2 {
     line-height: 1.6em;
     text-decoration: none!important;
+    margin-bottom: 15px;
 }
 
 .panel-group .panel+.panel {
@@ -256,5 +266,14 @@ body {
     .elections {
         background-image: url('../img/icon-03-x2.png');
     }
+    #side-bar .logo-container a {
+        background-image: url(../img/logo-x2.png);
+    }
 }
 /*===================================================================================*/
+
+.item-content.item-content-level-0 {
+    /*uncomment to see junk on collapse*/
+    /*TODO Try add proper markup (.panel)*/
+    /*background-color: grey;*/
+}

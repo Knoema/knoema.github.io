@@ -14,7 +14,7 @@ function App() {
 	this._map = null;
 	this.geoPlaygroundId = 'zabecdg';
 	this._layers = {};
-	this._currentLayer = null;
+    this.infoWindow = new google.maps.InfoWindow();
 	this._divisionTypes = [{
 		name: 'Nationale',
 		className: 'nationale'
@@ -28,7 +28,8 @@ function App() {
 		name: 'Communale',
 		className: 'communale'
 	}];
-	this._activeRegionalDivision = '';
+	this._activeRegionalDivision = null;
+	this._activeAreaLayerId = null;
 };
 
 App.prototype.init = function () {
@@ -48,9 +49,11 @@ App.prototype.init = function () {
 		var $modal = $('#regional-division-modal-switcher');
 		$modal.find('.regional-division-buttons').empty().append($modalButtons);
 
-		$modal.modal({
-			open: true
-		});
+        //TODO Restore this
+        //TODO Init it in html somehow
+		// $modal.modal({
+		// 	open: true
+		// });
 
 		//top buttons
 		$('#regional-division-map-switcher').empty().append($topButtons);
@@ -71,6 +74,10 @@ App.prototype.init = function () {
 
 			var idleTimeout = window.setTimeout(function () {
 				$.get('//knoema.com/api/1.0/frontend/resource/' + self.geoPlaygroundId + '/content', function(content) {
+
+				    _.each(content.layers, function(layer, layerId) {
+				        layer.layerId = layerId;
+                    });
 
 					var groupedLayers = _.groupBy(_.values(content.layers), function(f) { return f.groupping.groupName });
 
@@ -206,9 +213,14 @@ App.prototype.init = function () {
 						}
 					];
 
-					$('#side-bar').find('.filters-holder').append($.tmpl('filters-tree.html', {
+					var $filtersTree = $.tmpl('filters-tree.html', {
 						items: items
-					}));
+					});
+
+					//TODO Setup proper height in filters tree (and add handler in onResize)
+					//$filtersTree
+
+					$('#side-bar').find('.filters-holder').append($filtersTree);
 
 					self.bindEvents();
 
@@ -225,9 +237,15 @@ App.prototype.init = function () {
 };
 
 App.prototype.switchDivision = function (division) {
-	this._activeDivision = division;
-	console.log('Active regional division is:', division);
+	this._activeRegionalDivision = division;
+
+	var $regionalDivisionMapSwitcher = $('#regional-division-map-switcher');
+
+	$regionalDivisionMapSwitcher.find('.active').removeClass('active');
+	$regionalDivisionMapSwitcher.find('a[data-division="' + division + '"]').addClass('active');
+
 	//TODO Reload or something
+	console.log('%cTODO Reload map (or active layer):', 'font-size:200%;color:red;');
 };
 
 App.prototype.onResize = function () {
@@ -239,7 +257,7 @@ App.prototype.onResize = function () {
 
 App.prototype.bindEvents = function () {
 	var self = this;
-	$('#regional-division-map-switcher').on('click', 'button', function(event) {
+	$('#regional-division-map-switcher').on('click', 'a', function(event) {
 		self.switchDivision($(event.target).data('division'));
 	});
 
@@ -248,39 +266,49 @@ App.prototype.bindEvents = function () {
 		$('#regional-division-modal-switcher').modal('hide');
 	});
 
+    $('#filters-tree').on('click', 'label', function(event) {
+        if (event.target.tagName === 'INPUT') {
+            var $target = $(event.target);
+            var layerId = null;
+            var layerType = $target.data('layerType');
+
+            if (layerType === 'point') {
+                layerId = $target.data('layerId');
+                $target.prop('disabled', true);
+                self.loadLayer(layerId);
+            } else {
+                //TODO Remove all other region layers from map
+                //TODO Detect actual layerId (depends of this._activeRegionalDivision)
+                console.log('===========================================');
+                console.log('===========================================');
+                console.log('data of region layer:', $target.data());
+                console.log('===========================================');
+                console.log('===========================================');
+                debugger;
+            }
+        }
+    });
+
 	$(window).on('resize', $.proxy(this.onResize, this));
 
-	$('#side-bar').find('.filters-holder').mCustomScrollbar({
-		theme: "dark"
-	});
-
-	//TODO Refactor to use bootstrap's accordion
-	// $('#filters > ul li').on('click', function () {
-	// 	$('#filters>ul li').removeClass('active');
-	// 	$(this).addClass('active');
+	//TODO Restore this:
+	// $('#side-bar').find('.filters-holder').mCustomScrollbar({
+	// 	theme: "dark"
 	// });
-	// $('.item-content li').on('click', function () {
-	// 	var input = $(this).find('input');
-	// 	if (input.prop('checked')) {
-	// 		input.prop('checked', false);
-	// 	}
-	// 	else {
-	// 		$('.item-content li input').prop('checked', false);
-	// 		input.prop('checked', true);
-    //
-	// 		var layerId = input.val();
-	// 		self.loadLayer(layerId);
-	// 	}
-	// });
-
 };
 
 App.prototype.loadLayer = function (layerId) {
 	var self = this;
-	this.cleanLayer(this._currentLayer);
-
 	if (this._layers[layerId]) {
-		this._layers[layerId].load();
+        //TODO Add check if it is regional layer or not
+
+        //layer.bounds == null means that layer is not displayed on the map
+        if (this._layers[layerId].layer.bounds == null) {
+            this._layers[layerId].load();
+        } else {
+            this._layers[layerId].clean();
+        }
+        $('input[data-layer-id="' + layerId + '"]').prop('disabled', false);
 	}
 	else {
 		var infoWindow = new google.maps.InfoWindow();
@@ -289,33 +317,49 @@ App.prototype.loadLayer = function (layerId) {
 			layerId: layerId,
 			geoPlaygroundId: self.geoPlaygroundId,
 			infoWindow: infoWindow
-		}, function (layerData) {
-		});
+		}, $.proxy(function (layerData) {
+            _.each(this._layers[layerData.layerId].layer.markerClusterer.markers_, function(marker) {
+                marker.addListener('click', function() {
 
+                    var content = _.chain(_.keys(this.content))
+                                            .map(function(key) {
+                                                return {
+                                                    key: key,
+                                                    value: this.content[key]
+                                                };
+                                            }.bind(this))
+                                            .value()
+                                            .filter(function(entry) {
+                                                return entry.value.toString() !== '';
+                                            });
+
+                    var $infoWindowContent = $.tmpl('info-window.html', {
+                        hashMap: content
+                    });
+                    self.infoWindow.setContent($infoWindowContent[0].outerHTML);
+                    self.infoWindow.setPosition(this.position);
+                    self.infoWindow.open(self._map);
+                });
+            });
+            //TODO Add check if it is regional layer or not
+            $('input[data-layer-id="' + layerData.layerId + '"]').prop('disabled', false);
+        }, this));
 		layer.load();
 		this._layers[layerId] = layer;
 	}
-
-	this._currentLayer = layerId;
-};
-
-App.prototype.cleanLayer = function (layerId) {
-	if (!this._layers[layerId]) {
-		return;
-	}
-	this._layers[layerId].clean();
 };
 
 App.prototype.loadTemplates = function (callback) {
 	var self = this;
 	function compileTemplate(templateSrc) {
 		var templateId = this.url.replace('tmpl/', '');
-		templateId = templateId.substring(0, templateId.indexOf('?'))
+		templateId = templateId.substring(0, templateId.indexOf('?'));
 		$.template(templateId, templateSrc);
 	}
 	var templates = [
 		$.get('tmpl/regional-divisions.html?random=' + Math.random(), compileTemplate),
-		$.get('tmpl/filters-tree.html?random=' + Math.random(), compileTemplate)
+		$.get('tmpl/filters-tree.html?random=' + Math.random(), compileTemplate),
+        $.get('tmpl/info-window.html?random=' + Math.random(), compileTemplate)
 	];
 	$.when.apply(null, templates).done(function onTemplatesLoaded() {
 		if ($.isFunction(callback)) {
