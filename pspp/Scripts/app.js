@@ -5,7 +5,7 @@ var Infrastructure;
 (function (Infrastructure) {
 	var host = 'http://pspp.knoema.com';
 
-	var projectsDataset = 'tyunxic';
+	var projectsDataset = 'hmunucb';
 	var objectsDataset = 'hpenvhf';
 
 	var projectData = [];
@@ -551,7 +551,7 @@ var Infrastructure;
             			tooltipData[_this.projectColumns[_this.ppIndex].name] = $('#ppp-projects').find('option[value=' + _this.projectData[offset + _this.ppIndex] + ']').text();;
             			tooltipData[_this.projectColumns[_this.ptipIndex].name] = _this.projectData[offset + _this.ptipIndex];
             			tooltipData[_this.projectColumns[_this.localeIndex].name] = _this.projectData[offset + _this.localeIndex];
-            			tooltipData['Budget Total Prévu: Dépenses réalisées'] = '0';
+            			tooltipData[_this.projectColumns[_this.budgetIndex].name] = _this.projectData[offset + _this.budgetIndex];
 
             			filtredProjects[_this.projectData[offset + _this.databaseCodeIndex]] = tooltipData;
             		}
@@ -733,7 +733,7 @@ var Infrastructure;
         		html += '<div class="data-block col1">';
 
         		html += '<div><label>Localité:</label><br />' + (tooltipData['Region, Département (Localité) (sinon mettre 0)'] == null ? '' : tooltipData['Region, Département (Localité) (sinon mettre 0)']) + '</div>';
-        		html += '<div><label>Budget Total Prévu:</label><br />' + (tooltipData['Budget Total Prévu: Dépenses réalisées'] == null ? '0' : tooltipData['Budget Total Prévu: Dépenses réalisées']) + '</div>';
+        		html += '<div><label>Budget Total Prévu:</label><br />' + (tooltipData['Budget Total Prévu: Dépenses Prévues'] == null ? '0' : tooltipData['Budget Total Prévu: Dépenses Prévues']) + '</div>';
         		html += "<div><label>Code de l'axe stratégique de la vision 2035:</label><br />" + (tooltipData["Code de l'axe stratégique de la vision 2035"] == null ? '' : tooltipData["Code de l'axe stratégique de la vision 2035"]) + '</div>';
 
         		html += '</div>';
@@ -743,7 +743,7 @@ var Infrastructure;
         		html += '<div><label>Sous Secteur:</label><br />' + (tooltipData['Code du Sous-Secteur (voir feuille Read me pour avoir les codes)'] == null ? '' : tooltipData['Code du Sous-Secteur (voir feuille Read me pour avoir les codes)']) + '</div>';
         		html += '<div><label>Plan Senegal Emergent project:</label><br />' + (tooltipData['Numéro du projet phare / numéro de la réforme phare. (PP# / RP#)'] == null ? '' : tooltipData['Numéro du projet phare / numéro de la réforme phare. (PP# / RP#)']) + '</div>';
         		html += '<div><label>Code PTIP:</label><br />' + (tooltipData['Code PTIP'] == null ? '' : tooltipData['Code PTIP']) + '</div>';
-        		html += '<div><label>Dépenses réalisées:</label><br />' + (tooltipData['Budget Total Prévu: Dépenses réalisées'] == null ? '0' : tooltipData['Budget Total Prévu: Dépenses réalisées']) + '</div>';
+        		html += '<div><label>Dépenses réalisées:</label><br />' + (tooltipData['Budget Total Prévu: Dépenses Prévues'] == null ? '0' : tooltipData['Budget Total Prévu: Dépenses Prévues']) + '</div>';
         		
 
         		html += '</div>';
@@ -763,7 +763,7 @@ var Infrastructure;
 
         			var templateData = {
         				name: objData["Nom Projet"],
-        				budget: objData["Budget Total Prévu: Dépenses réalisées"],
+        				budget: (objData["Budget Total Prévu: Dépenses Prévues"] ? objData["Budget Total Prévu: Dépenses Prévues"] : 0),
         				axe: objData["Code de l'axe stratégique de la vision 2035"],
         				sour: objData["Code du Sous-Secteur (voir feuille Read me pour avoir les codes)"],
         				number: objData["Numéro du projet phare / numéro de la réforme phare. (PP# / RP#)"],
@@ -1276,6 +1276,7 @@ var Infrastructure;
 
 				
         		var PPData = {};
+        		var budgetData = {};
         		rowCount = Math.floor(_this.projectData.length / _this.projectColumns.length);
         		for (var rowIndex = 0; rowIndex < rowCount; rowIndex++) {
         			var rowOffset = rowIndex * _this.projectColumns.length;
@@ -1287,38 +1288,6 @@ var Infrastructure;
         				PPData[_this.projectData[rowOffset + _this.ppIndex]] = 0;
 
         			PPData[_this.projectData[rowOffset + _this.ppIndex]] += 1;
-        		}
-
-        		var PPSortedData = [];
-        		for (var i = 1; i <= 27; i++) {
-        			var pp = 'PP' + i;
-
-        			if (!PPData[pp])
-        				continue;
-
-        			PPSortedData.push([pp, PPData[pp]]);
-        		}
-
-        		var ppTrs = [];
-        		for (var i = 0; i < Math.ceil(PPSortedData.length / 2) ; i++) {
-        			var sIndex = Math.ceil(PPSortedData.length / 2) + i;
-        			ppTrs.push($('<tr>')
-						.append($('<td>', { text: PPSortedData[i][0] }))
-						.append($('<td>', { text: PPSortedData[i][1] }))
-						.append($('<td>', { text: PPSortedData[sIndex] ? PPSortedData[sIndex][0] : '' }))
-						.append($('<td>', { text: PPSortedData[sIndex] ? PPSortedData[sIndex][1] : '' }))
-					);
-        		}
-        		$('#senegal-right-hand-panel .pp-summ tbody').append(ppTrs);
-
-
-        		var budgetData = {};
-        		rowCount = Math.floor(_this.projectData.length / _this.projectColumns.length);
-        		for (var rowIndex = 0; rowIndex < rowCount; rowIndex++) {
-        			var rowOffset = rowIndex * _this.projectColumns.length;
-
-        			if (_this.projectData[rowOffset + _this.objectTypeIndex] != 'P')
-        				continue;
 
         			if (!budgetData[_this.projectData[rowOffset + _this.ppIndex]])
         				budgetData[_this.projectData[rowOffset + _this.ppIndex]] = 0;
@@ -1326,20 +1295,30 @@ var Infrastructure;
         			budgetData[_this.projectData[rowOffset + _this.ppIndex]] += parseFloat((_this.projectData[rowOffset + _this.budgetIndex] ? _this.projectData[rowOffset + _this.budgetIndex] : 0), 10);
         		}
 
-        		var budgetSortedData = [];
-        		for (var pp in budgetData) {
-        			budgetSortedData.push([pp, budgetData[pp]]);
+        		var PPSortedData = [];
+        		for (var i = 1; i <= 27; i++) {
+        			var pp = 'PP' + i;
+
+        			if (!PPData[pp] && !budgetData[pp])
+        				continue;
+
+        			PPSortedData.push([pp, PPData[pp], budgetData[pp], (i <10 ? '0' + i : i)]);
         		}
 
-        		budgetSortedData.sort(function (n1, n2) {
-        			return n1 - n2;
+        		PPSortedData.sort(function (n1, n2) {
+        			return n2[2] - n1[2];
         		});
 
-        		var budgetTrs = [];
-        		for (var i = 0; i < budgetSortedData.length; i++) {
-        			budgetTrs.push($('<tr>').append($('<td>', { text: budgetSortedData[i][0] })).append($('<td>', { text: budgetSortedData[i][1] })));
+        		var ppTrs = [];
+        		for (var i = 0; i < PPSortedData.length; i++) {
+        			ppTrs.push($('<tr>')
+						.append($('<td>').append($('<img src="./img/right-panel/icons-' + PPSortedData[i][3] + '.png" class="pp-image-small">')))
+						.append($('<td>', { text: PPSortedData[i][0] }))
+						.append($('<td>', { text: PPSortedData[i][1] }))
+						.append($('<td>', { text: PPSortedData[i][2] }))
+					);
         		}
-        		$('#senegal-right-hand-panel .pp-budget-summ tbody').append(budgetTrs);
+        		$('#senegal-right-hand-panel .pp-summ tbody').append(ppTrs);
 
 
         		var reformsData = {

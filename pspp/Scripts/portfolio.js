@@ -3,7 +3,7 @@
 (function () {
 	var host = 'http://pspp.knoema.com';
 
-	var projectsDataset = 'tyunxic';
+	var projectsDataset = 'hmunucb';
 	var dashboardUrl = 'http://pspp.knoema.com/resource/embed/cwxobyf?projects=';
 
 	var projectData = [];
@@ -59,7 +59,7 @@
 					$ils.push($('<li>', {
 						text: project[i].name,
 						'data-code': project[i].code
-					}).prepend($('<a>', { href: 'overview.html?code=' + project[i].code, target: '_blank' }).append($('<img>', { src: './img/ico-map.png' }))));
+					}).prepend($('<a>', { href: 'overview.html?code=' + project[i].code, target: '_blank' }).append($('<img>', { 'class': 'map', src: './img/ico-map.png' }))));
 				}
 
 				$('.left-part ul').empty().append($ils);
@@ -68,7 +68,9 @@
 					_this.loadDashboard($(this).text());
 
 					$('.left-part ul li').removeClass('active');
+					$('.left-part ul li').find('img.map').attr('src', './img/ico-map.png');
 					$(this).addClass('active');
+					$(this).find('img.map').attr('src', './img/ico-map-white.png');
 				});
 				$($('.left-part ul li').get(0)).trigger('click');
 			})

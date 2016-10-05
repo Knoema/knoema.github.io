@@ -19,12 +19,17 @@ $(function () {
 
 		var objectsCode = $(this).parents('.root-objects').data('objects');
 		var a = $('.botton-wrapper a');
-		if (objectsCode) {
-			a.attr('href', 'overview.html?objects=' + objectsCode);
-		} else {
-			a.attr('href', '#');
-		}
+		if (objectsCode)
+			a.removeClass('disabled').attr('href', 'overview.html?objects=' + objectsCode);
+		else
+			a.addClass('disabled').attr('href', '#');
 
 		return false;
+	});
+
+	$('.botton-wrapper a').on('click', function () {
+
+		if ($(this).hasClass('disabled'))
+			return false;
 	});
 });

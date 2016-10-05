@@ -1314,6 +1314,10 @@ p.value
 {
 	font-size: 15pt;
 }
+#senegal-right-hand-panel .panel-title img.export
+{
+	float: right;
+}
 .panel-title .close-button
 {
 	color: #472001;
@@ -1349,7 +1353,7 @@ p.value
 	padding: 7px 5px;
 	vertical-align: top;
 }
-#right-hand-panel table tbody tr td img.pp-image-small
+img.pp-image-small
 {
 	height: 30px;
 	margin-top: -7px;
@@ -1741,6 +1745,11 @@ ul.subtopic-content li a
 	background-color: #472001;
 	display: block;
 	margin: 5px 110px;
+}
+.botton-wrapper a.disabled
+{
+	background-color: #6f6f6f;
+	cursor: default;
 }
 /*end: sector monitor*/
 
