@@ -78,6 +78,18 @@ var Infrastructure;
 		'7': '07-Finalise'
 	};
 
+	var statusMapIcons = {
+		'1': '01-Envisage',
+		'2': '02-Annonce',
+		'3': '03-Entame',
+		'En cours': '04',
+		'Opérationnel': '05',
+		'6': '06-Complete',
+		'7': '07-Finalise'
+	};
+
+
+
     var PPNameToObjectType = {
     	"100-150 aggregation projects focused on livestock and high value added agriculture sectors": ["Farms"],
     	"3-4 grain development corridors": ["Agriculture"],
@@ -97,36 +109,36 @@ var Infrastructure;
     };
 
     var RegionsCenters = {
-    	'SN-DK': { lat: 14.745003, lng: -17.377625 },
-    	'SN-DB': { lat: 14.792808, lng: -16.257019 },
-    	'SN-FK': { lat: 14.225782, lng: -16.386108 },
-    	'SN-KE': { lat: 12.851302, lng: -12.214050 },
-    	'SN-KA': { lat: 14.308966, lng: -15.130920 },
-    	'SN-KL': { lat: 13.938066, lng: -15.847778 },
-    	'SN-KD': { lat: 13.070783, lng: -14.459070 },
-    	'SN-LG': { lat: 15.468240, lng: -15.485229 },
-    	'SN-MT': { lat: 15.182157, lng: -13.562622 },
-    	'SN-SE': { lat: 12.947683, lng: -15.608826 },
-    	'SN-SL': { lat: 16.311573, lng: -14.878235 },
-    	'SN-TC': { lat: 13.877413, lng: -13.224792 },
-    	'SN-TH': { lat: 14.824672, lng: -16.767883 },
-    	'SN-ZG': { lat: 12.797740, lng: -16.416321 }
+    	'SN-DK': { lat: 14.745003, lng: -17.237625 },
+    	'SN-DB': { lat: 14.792808, lng: -15.857019 },
+    	'SN-FK': { lat: 14.225782, lng: -15.806108 },
+    	'SN-KE': { lat: 12.851302, lng: -11.884050 },
+    	'SN-KA': { lat: 14.238966, lng: -15.000920 },
+    	'SN-KL': { lat: 13.938066, lng: -15.717778 },
+    	'SN-KD': { lat: 13.070783, lng: -13.829070 },
+    	'SN-LG': { lat: 15.468240, lng: -15.355229 },
+    	'SN-MT': { lat: 15.182157, lng: -13.332622 },
+    	'SN-SE': { lat: 12.907683, lng: -15.308826 },
+    	'SN-SL': { lat: 16.181573, lng: -14.748235 },
+    	'SN-TC': { lat: 13.877413, lng: -12.704792 },
+    	'SN-TH': { lat: 14.824672, lng: -16.237883 },
+    	'SN-ZG': { lat: 12.707740, lng: -16.086321 }
     };
 
     var RegionsZoom = {
     	'SN-DK': 11,
     	'SN-DB': 10,
-    	'SN-FK': 10,
-    	'SN-KE': 10,
+    	'SN-FK': 9,
+    	'SN-KE': 9,
     	'SN-KA': 10,
     	'SN-KL': 10,
-    	'SN-KD': 10,
+    	'SN-KD': 9,
     	'SN-LG': 9,
     	'SN-MT': 9,
     	'SN-SE': 10,
     	'SN-SL': 9,
-    	'SN-TC': 9,
-    	'SN-TH': 10,
+    	'SN-TC': 8,
+    	'SN-TH': 9,
     	'SN-ZG': 10
     };
 
@@ -146,6 +158,7 @@ var Infrastructure;
             this.senegalTabIsLoaded = false;
             this.preloadedObject = this.getParameterByName('code') ? this.getParameterByName('code') : -1;
             this.filterObjects = this.getParameterByName('objects');
+            this.hasGeoJson = false;
 
             this.axes = axes;
             this.sectors = sectors;
@@ -299,7 +312,6 @@ var Infrastructure;
             	var $srhp = $('#senegal-right-hand-panel');
 
             	if (regionId == 'SN' || regionId == -1) {
-            		_this.hasGeoJson = false;
 
             		_this.map.setCenter({ lat: 14.5067, lng: -14.4167 });
             		_this.map.setZoom(8);
@@ -334,10 +346,7 @@ var Infrastructure;
             	$srhp.hide();
 
             	$('input[name=layer]').filter('[value=none]').prop('checked', true);
-            	if (!_this.hasGeoJson) {
-            		_this.hasGeoJson = true;
-            		_this.map.data.loadGeoJson('senegal.json');
-            	}
+            	_this.loadGeoJSON();
             	_this.map.data.revertStyle();
             	_this.map.data.setStyle(function (feature) {
 
@@ -502,10 +511,7 @@ var Infrastructure;
             				case 'layer':
 
             					if (params[j][0] == 'none') {
-            						if (!_this.hasGeoJson) {
-            							_this.hasGeoJson = true;
-            							_this.map.data.loadGeoJson('senegal.json');
-            						}
+            						_this.loadGeoJSON();
             						_this.map.data.revertStyle();
             						_this.map.data.setStyle(function (feature) {
             							return { visible: false };
@@ -575,17 +581,33 @@ var Infrastructure;
             		}
             	}
 
+            	var locales = {};
             	for (var i = 0; i < _this.objectData.length / _this.objectColumns.length; i++) {
 
             		var offset = i * _this.objectColumns.length;
 
-            		if (filtredProjects[_this.objectData[offset + _this.databaseCodeIndex_O]])
+            		if (!locales[_this.objectData[offset + _this.databaseCodeIndex_O]])
+            			locales[_this.objectData[offset + _this.databaseCodeIndex_O]] = [];
+
+            		locales[_this.objectData[offset + _this.databaseCodeIndex_O]].push(_this.objectData[offset + _this.latIndex] + ', ' + _this.objectData[offset + _this.lngIndex]);
+            	}
+
+            	for (var i = 0; i < _this.objectData.length / _this.objectColumns.length; i++) {
+
+            		var offset = i * _this.objectColumns.length;
+
+            		var tooltip = filtredProjects[_this.objectData[offset + _this.databaseCodeIndex_O]];
+            		if (tooltip) {
+						
+            			tooltip['locales'] = locales[_this.objectData[offset + _this.databaseCodeIndex_O]].join('; ');
+
             			filtredObjects.push({
             				lat: _this.objectData[offset + _this.latIndex],
             				lng: _this.objectData[offset + _this.lngIndex],
-            				tooltip: filtredProjects[_this.objectData[offset + _this.databaseCodeIndex_O]],
+            				tooltip: tooltip,
             				code: _this.objectData[offset + _this.databaseCodeIndex_O]
             			});
+            		}
             	}
 
 
@@ -750,7 +772,7 @@ var Infrastructure;
 
         		html += '<div class="data-block col1">';
 
-        		html += '<div><label>Localité:</label><br />' + (tooltipData['Region, Département (Localité) (sinon mettre 0)'] == null ? '' : tooltipData['Region, Département (Localité) (sinon mettre 0)']) + '</div>';
+        		html += '<div><label>Localité:</label><br />' + tooltipData['locales'] + '</div>';
         		html += '<div><label>Budget Total Prévu:</label><br />' + (tooltipData['Budget Total Prévu: Dépenses Prévues'] == null ? '0' : tooltipData['Budget Total Prévu: Dépenses Prévues']) + '</div>';
         		html += "<div><label>Code de l'axe stratégique de la vision 2035:</label><br />" + (tooltipData["Code de l'axe stratégique de la vision 2035"] == null ? '' : tooltipData["Code de l'axe stratégique de la vision 2035"]) + '</div>';
 
@@ -788,14 +810,14 @@ var Infrastructure;
         				statusIcon: statusIcons[status],
         				status: status,
         				ptip: objData["Code PTIP"],
-        				locale: objData["Region, Département (Localité) (sinon mettre 0)"]
+        				locale: objData["locales"],
         			};
 
         			var template = doT.template($('#new-object-passport').html());
         			var template_b = doT.template($('#new-object-budgetting').html());
 
         			$('#new-project-passport .passport__content__new').empty().html(template(templateData));
-        			$('#new-project-passport .passport__content__new__b').empty().html(template_b({}));
+        			$('#new-project-passport .passport__content__new__b').empty().html(template_b({ name: objData["Nom Projet"] }));
         			$('#new-project-passport').show();
 
         			self.pushPassportContentToExportForm();
@@ -848,6 +870,7 @@ var Infrastructure;
         		marker.set('code', data[i].code);
         		marker.set('latlng', new google.maps.LatLng(data[i].lat, data[i].lng));
         		marker.set('tooltip', data[i].tooltip);
+        		marker.setIcon('img/status/' + statusMapIcons[data[i].tooltip['Statut Projets: Annoncé, En cours, Complété, opérationel Programmes/reformes: En']] + '.png');
         		marker.addListener('click', markerClickHandler);
 
         		//google.maps.event.addListener(marker, 'click', this.showPassport.bind(this, data.data[rowOffset + 3], data.data[rowOffset + 2]));
@@ -1116,10 +1139,7 @@ var Infrastructure;
         	for (var regionId in normData)
         		coloredData[regionId] = this.percentToRGB(normData[regionId]);
 
-        	if (!this.hasGeoJson) {
-        		this.hasGeoJson = true;
-        		this.map.data.loadGeoJson('senegal.json');
-        	}
+        	this.loadGeoJSON();
         	this.map.data.revertStyle();
 
         	this.map.data.setStyle(function (feature) {
@@ -1522,6 +1542,14 @@ var Infrastructure;
 
         	var exportForm = $('#export-form');
         	exportForm.submit();
+        };
+
+        Application.prototype.loadGeoJSON = function () {
+
+        	if (!this.hasGeoJson) {
+        		this.hasGeoJson = true;
+        		this.map.data.loadGeoJson('senegal.json');
+        	}
         };
 
         return Application;

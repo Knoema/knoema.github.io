@@ -248,6 +248,9 @@ body.loading > .ajax-loader {
 	margin: 8px 0 0 0;
 	color: #472001;
 }
+.filter-form > label.status {
+	margin-top: 4px;
+}
 .filter-form > label > input {
 	vertical-align: -2px;
 	margin: 0;
@@ -257,6 +260,11 @@ body.loading > .ajax-loader {
 {
 	margin: 0px 5px 0 0;
 }
+.filter-form > label > img.status
+{
+	width: 25px;
+}
+
 .filter-form hr {
 	margin: 20px 0;
 	border-top: 1px solid #d2e6f0;
@@ -1311,14 +1319,6 @@ p.value
 {
 	display: inline-block;
 }
-#senegal-right-hand-panel .panel-title .region-name
-{
-	font-size: 15pt;
-}
-#senegal-right-hand-panel .panel-title img.export
-{
-	float: right;
-}
 .panel-title .close-button
 {
 	color: #472001;
@@ -1371,13 +1371,13 @@ img.pp-image-small
 	cursor: pointer;
 }
 
-#right-hand-panel h2
+#right-hand-panel h2, #senegal-right-hand-panel h2
 {
 	font-size: 15pt;
 	font-weight: bold;
 }
 
-#senegal-right-hand-panel h3
+ h3
 {
 	font-size: 10pt;
 	font-weight: bold;
@@ -1818,12 +1818,12 @@ ul.subtopic-content li a
 .reforms-table .left-part
 {
 	display:inline-block;
-	width: 49%;
+	width: 44%;
 }
 .reforms-table .right-part
 {
 	display:inline-block;
-	width: 48%;
+	width: 53%;
 	margin-left: 20px;
 	vertical-align: top;
 }

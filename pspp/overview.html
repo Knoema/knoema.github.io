@@ -14,7 +14,7 @@
 </head>
 <body class="loading">
 
-	<form id="export-form" action="http://pspp.knoema.com/api/1.0/utils/export?client_id=EZj54KGFo3rzIvnLczrElvAitEyU28DGw9R73tif" method="POST">
+	<form id="export-form" action="http://knoema.org/api/1.0/utils/export?client_id=EZj54KGFo3rzIvnLczrElvAitEyU28DGw9R73tif" method="POST">
 		<input type="hidden" name="content" value=""/>
 		<input type="hidden" name="fileName" value="" />
 		<input type="hidden" name="landscape" value="FALSE" />
@@ -126,10 +126,10 @@
 				<label><input type="checkbox" name="ecart" value="100"/><img src="./img/bullet-circle-red.png"/>dépasse 25%</label>
 
 				<h2 class="left-menu">STATUT</h2>
-				<label><input type="checkbox" name="status" value="Annonce"/>Annonce</label>
-				<label><input type="checkbox" name="status" value="En cours"/>En cours</label>
-				<label><input type="checkbox" name="status" value="Complete"/>Complete</label>
-				<label><input type="checkbox" name="status" value="Opérationnel"/>Opérationnel</label>
+				<label class="status"><input type="checkbox" name="status" value="Annonce"/><img src="./img/status/02.png" class="status" />Annonce</label>
+				<label class="status"><input type="checkbox" name="status" value="En cours"/><img src="./img/status/04.png" class="status" />En cours</label>
+				<label class="status"><input type="checkbox" name="status" value="Complete"/><img src="./img/status/07.png" class="status" />Complete</label>
+				<label class="status"><input type="checkbox" name="status" value="Opérationnel"/><img src="./img/status/05.png" class="status" />Opérationnel</label>
 
 				<h2 class="left-menu">Indicateurs Globaux</h2>
 				<label><input type="radio" name="layer" value="none" checked> Indéfini</label>
@@ -388,8 +388,9 @@
 
 			<div id="senegal-right-hand-panel">
 				<div class="panel-title">
-					<h2 class="region-name">Senegal</h2><div class="close-button"><img src="./img_passport/icon-close.png"/>Close</div>
-					<h2 class="region-name" style="margin-top: 5px;">Indicateurs Globaux</h2><img src="./img/right-panel/icon-pdf.png" class="export"/>
+					<h2 class="region-name">Senegal</h2>
+					<img src="./img/right-panel/icon-pdf.png" class="export"/>
+					<div class="close-button"><img src="./img_passport/icon-close.png"/>Close</div>
 				</div>
 
 				<table class="global-indicators">
@@ -399,7 +400,7 @@
 				<table class="realisation-indicators">
 					<thead>
 						<tr>
-							<th colspan="3">Réalisation 2015</th>
+							<th colspan="3">Indicateurs Globaux</th>
 						</tr>
 						<tr>
 							<th>Indicateur Name</th>
@@ -493,7 +494,7 @@
 	</script>
 
 	<script id="new-object-budgetting" type="text/x-handlebars-template">
-		<img src="./img_passport/budgeting.png"/>
+		<iframe src="http://pspp.knoema.com/resource/embed/togswgc?nom-projet={{=it.name}}" frameborder="0" height="100%" width="100%"></iframe>
 	</script>
 
 	<script id="region-profile" type="text/x-handlebars-template">
