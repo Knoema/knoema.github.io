@@ -27,11 +27,19 @@
                                     <div class="item-content collapse item-content-level-2" id="item-content-${i}-${j}-${k}" style="height: 0;">
                                         {{if item3.children && item3.children.length}}
                                             {{each(kk, item4) item3.children}}
-                                                <div>
-                                                    <label>
-                                                        <input data-layer-id="${item4.layerId}" data-layer-type="${item4.layerType}" type="checkbox" /> ${item4.name}
-                                                    </label>
-                                                </div>
+                                                {{if item4.children && item4.children.length && _.every(item4.children, function(layer) { return layer.layerType == 'region'; })}}
+                                                    <div>
+                                                        <label>
+                                                            <input id="${cuid()}" data-layers="${JSON.stringify(item4.children)}" type="checkbox" /> ${item4.title}
+                                                        </label>
+                                                    </div>
+                                                {{else}}
+                                                    <div>
+                                                        <label>
+                                                            <input data-layer-id="${item4.layerId}" data-layer-type="${item4.layerType}" type="checkbox" /> ${item4.name || item4.title}
+                                                        </label>
+                                                    </div>
+                                                {{/if}}
                                             {{/each}}
                                         {{else}}
                                             <div style="display: none;">

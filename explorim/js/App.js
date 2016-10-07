@@ -42,6 +42,7 @@ function App() {
 	this._activeRegionalDivision = null;
 	this._activeGroupCuid = null;
     this._activeAreaLayerId = null;
+    this._layerTitles = {};
 };
 
 App.prototype.init = function () {
@@ -83,6 +84,17 @@ App.prototype.init = function () {
 
 				    _.each(content.layers, function(layer, layerId) {
 				        layer.layerId = layerId;
+                        if (layer.tooltip) {
+                            _.each(_.keys(layer.tooltip), function(entry) {
+                                if (layer.tooltip[entry].state === 'title') {
+
+                                    layer.tooltip[entry].titleField = layer.tooltip[entry].text;
+
+                                    layer.titleField = layer.tooltip[entry].text;
+                                    self._layerTitles[layerId] = layer.tooltip[entry].text;
+                                }
+                            });
+                        }
                     });
 
 					var groupedLayers = _.groupBy(_.values(content.layers), function(f) { return f.groupping.groupName });
@@ -105,7 +117,17 @@ App.prototype.init = function () {
 										},
 										{
 											//"Schools by town"
-											title: "Les écoles par la ville"
+											title: "Les écoles par la ville",
+											children: [
+												{
+													title: "École Primaire",
+													children: groupedLayers["Primary Schools"]
+												},
+												{
+													title: "École Secondaire",
+													children: groupedLayers["Secondary Schools"]
+												}
+											]
 										},
 										{
 											//"Roads"
@@ -365,15 +387,17 @@ App.prototype.bindEvents = function () {
 				var layer = _.find(layers, function(layer) {
 					return layer.name === this._activeRegionalDivision;
 				}.bind(this));
-				if (!layer) {
+				if (!layer && layers[0]) {
 					layerId = layers[0].layerId;
 					activeRegionalDivision = layers[0].name;
-				} else {
+				} else if (layer) {
 					layerId = layer.layerId;
 					activeRegionalDivision = this._activeRegionalDivision;
 				}
-				this.switchDivision(activeRegionalDivision, false);
-				this.loadLayer(layerId, 'region');
+				if (layerId) {
+                    this.switchDivision(activeRegionalDivision, false);
+                    this.loadLayer(layerId, 'region');
+                }
             }
         }
     }, this));
@@ -402,7 +426,6 @@ App.prototype.bindEvents = function () {
 		$timeMember.siblings().removeClass('active');
 		$timeMember.addClass('active');
 		this._activeDate = $timeMember.data('timeMember');
-		console.log('%cTODO Reload layer in according to _activeDate', 'color:red;font-size:200%;');
 	}, this));
 
     $('#timeline').on('click', '.slide-control', $.proxy(function(e) {
@@ -475,10 +498,10 @@ App.prototype.loadLayer = function (layerId, layerType) {
 			if (layerData.layer.layerType === 'point') {
 				_.each(this._layers[layerData.layerId].layer.markerClusterer.markers_, function(marker) {
 					marker.addListener('click', function() {
-						console.log("----------- Marker's content -----------");
-						console.log(this);
-						console.log(this.content);
-						console.log("----------/ Marker's content -----------");
+						// console.log("----------- Marker's content -----------");
+						// console.log(this);
+						// console.log(this.content);
+						// console.log("----------/ Marker's content -----------");
 						var content = _.chain(_.keys(this.content))
 							.map(function(key) {
 								return {
@@ -492,7 +515,8 @@ App.prototype.loadLayer = function (layerId, layerType) {
 							});
 
 						var $infoWindowContent = $.tmpl('info-window.html', {
-							hashMap: content
+							title: this.content[self._layerTitles[layerData.layerId]],
+							content: content
 						});
 						self.infoWindow.setContent($infoWindowContent[0].outerHTML);
 						self.infoWindow.setPosition(this.position);
@@ -502,12 +526,10 @@ App.prototype.loadLayer = function (layerId, layerType) {
 			} else {
 
 				//layerData.layer.data is pivotResponse
-				this.byTime = _.groupBy(data, function(tuple) {
-					//TODO Format using Knoema.Utils & our custom frequencies
-					return tuple.Time.substring(0, 4);
-				});
-
-				debugger;
+				// this.byTime = _.groupBy(layerData.layer.data, function(tuple) {
+				// 	//TODO Format using Knoema.Utils & our custom frequencies
+				// 	return tuple.Time.substring(0, 4);
+				// });
 
                 this._activeAreaLayerId = layerData.layerId;
 			}
