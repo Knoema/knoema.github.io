@@ -13,6 +13,13 @@
 	<link rel="stylesheet" type="text/css" href="app.css"/>	
 </head>
 <body class="loading">
+
+	<form id="export-form" action="http://pspp.knoema.com/api/1.0/utils/export?client_id=EZj54KGFo3rzIvnLczrElvAitEyU28DGw9R73tif" method="POST">
+		<input type="hidden" name="content" value=""/>
+		<input type="hidden" name="fileName" value="" />
+		<input type="hidden" name="landscape" value="FALSE" />
+	</form>
+
 	<div class="ajax-loader"></div>
 
 	<div class="main-menu">
@@ -621,6 +628,329 @@
 			<div><label>Investor:</label> {{=it.investor}}</div>
 		</div>
 	</script>
+
+	<script id="export-content" type="text/x-handlebars-template">
+		<html>
+			<head>
+				<title>Export</title>
+				<link rel='stylesheet' type='text/css' href='https://fonts.googleapis.com/css?family=Roboto'>
+				<link rel='stylesheet' type='text/css' href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,700'>
+			</head>
+			<body>
+				<style>#right-hand-panel, #senegal-right-hand-panel
+					{
+						width: 650px;
+						background-color: #f4ece1;
+						padding: 5px 10px;
+						font-family: 'Roboto', sans-serif;
+						font-size: 12px;
+					}
+					.panel-title img.export
+					{
+						margin: 0 0 5px 10px;
+					}
+					.panel-title .region-name
+					{
+						display: inline-block;
+					}
+					#senegal-right-hand-panel .panel-title .region-name
+					{
+						font-size: 15pt;
+					}
+					#senegal-right-hand-panel .panel-title img.export
+					{
+						float: right;
+					}
+					.panel-title .close-button
+					{
+						color: #472001;
+						margin: 20px 10px 0 0;
+						float: right;
+						cursor: pointer;
+					}
+					.panel-title .close-button img
+					{
+						margin-right: 5px;
+						vertical-align: baseline;
+					}
+					.panel-title
+					{
+						border-bottom: 1px solid #9b7c4f;
+					}
+					#right-hand-panel table,
+					#senegal-right-hand-panel table
+					{
+						width: 100%;
+						margin-top: 20px;
+					}
+					#right-hand-panel table thead tr th,
+					#senegal-right-hand-panel table thead tr th
+					{
+						padding: 2px 5px;
+						font-size: 10pt;
+						text-align: left;
+					}
+					#right-hand-panel table tbody tr td,
+					#senegal-right-hand-panel table tbody tr td
+					{
+						padding: 7px 5px;
+						vertical-align: top;
+					}
+					img.pp-image-small
+					{
+						height: 30px;
+						margin-top: -7px;
+					}
+					#right-hand-panel table tbody tr:nth-child(2n),
+					#senegal-right-hand-panel table tbody tr:nth-child(2n)
+					{
+						background-color: #f3f0ec;
+					}
+					#right-hand-panel table tbody tr,
+					#senegal-right-hand-panel table tbody tr
+					{
+						cursor: pointer;
+					}
+					#right-hand-panel h2
+					{
+						font-size: 15pt;
+						font-weight: bold;
+					}
+					#senegal-right-hand-panel h3
+					{
+						font-size: 10pt;
+						font-weight: bold;
+					}
+
+
+
+					.passport__content__new, .passport__content__new__b
+					{
+						padding: 20px;
+						background-color: #f3ece1;
+						border: solid 1px #9b7c4f;
+					}
+					.passport2__content {
+						position: absolute;
+						left: 10px;
+						right: 10px;
+						top: 50px;
+						bottom: 40px;
+						padding: 20px;
+						background-color: #f4ece1;
+						overflow: auto;
+					}
+					.passport__buttons
+					{
+						position: absolute;
+						left: 10px;
+						right: 10px;
+						bottom: 10px;
+						padding: 20px;
+						background-color: #f4ece1;
+						overflow: auto;
+					}
+					.passport__title
+					{
+						position: absolute;
+						top: 10px;
+						left: 10px;
+						right: 10px;
+						padding: 20px;
+						background-color: #f4ece1;
+						overflow: auto;
+					}
+					.passport__content hr {
+						margin: 20px 0;
+						border-top: 1px solid #e6e6e6;
+					}
+					.passport__close {
+						position: absolute;
+						right: 30px;
+						top: 30px;
+						width: 40px;
+						height: 40px;
+						background: #fff url(./img/icon_close.png) no-repeat center center;
+						cursor: pointer;
+						z-index: 1;
+						border-radius: 50%;
+						box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.15);
+					}
+					.passport__close__new {
+						padding: 10px 20px;
+						position: absolute;
+						right: 10px;
+						top: 10px;
+						width: 110px;
+						height: 40px;
+						background-color: #f4ece1;
+						cursor: pointer;
+						z-index: 5;
+
+						font-size: 11pt;
+						text-transform: uppercase;
+						color: #472001;
+					}
+					.passport__close__new img
+					{
+						margin-right: 10px;
+						margin-top: -3px;
+					}
+					.passport__close:hover {
+						background-image: url(./img/icon_close_hover.png);
+					}
+					.passport__map {
+						width: 240px;
+						height: 240px;
+						background-color: #e6e6e6;
+					}
+					.passport__title {
+						font-family: 'Roboto', sans-serif;
+						font-size: 18px;
+						font-weight: bold;
+						margin-bottom: 15px;
+					}
+					.passport__fields {
+					}
+					.passport__fields__column {
+						float: left;
+						width: 33%;
+					}
+					.passport__field__title {
+						display: block;
+						font-family: 'Roboto', sans-serif;
+						font-size: 11px;
+						font-weight: normal;
+						text-transform: uppercase;
+						color: #646e82;
+					}
+					.passport__field__value {
+						font-family: 'Roboto', sans-serif;
+						font-size: 16px;
+					}
+					.passport__images {
+						float: left;
+						width: 240px;
+					}
+					.passport__image {
+						width: 100%;
+					}
+					.passport__image_mini {
+						float: left;
+						width: 57px;
+						height: 57px;
+						margin: 4px 0 0 4px;
+						font-family: 'Roboto', sans-serif;
+						font-size: 12px;
+						color: #fff !important;
+						background-color: #0078c8;
+						text-decoration: none;
+						line-height: 1.2em;
+					}
+					.passport__image_mini.first {
+						margin-left: 0;
+					}
+					.passport__chart_left {
+						margin-left: 20px;
+						float: left;
+					}
+					.passport__chart_right {
+						float: left;
+					}
+
+					.top-panel
+					{
+						margin-top: 30px;
+					}
+					.top-panel table tr td
+					{
+						padding: 3px 10px;
+						vertical-align: top;
+					}
+					.top-panel table tr td.status img
+					{
+						display: inline-block;
+						vertical-align: top;
+						margin-right: 20px;
+					}
+					.top-panel table tr td.status div
+					{
+						display: inline-block;
+					}
+					p.title
+					{
+						font-family: 'Roboto', sans-serif;
+						font-size: 12pt;
+						color: #9b7c4f;
+						font-weight: bold;
+					}
+					p.value
+					{
+						font-family: 'Roboto', sans-serif;
+						font-size: 16pt;
+						color: #000;
+						margin-bottom: 20px;
+					}
+					.g
+					{
+						display: inline-block;
+					}
+					.map-panel
+					{
+						margin: 30px 20px 20px 0;
+					}
+					.carousel-panel
+					{
+						margin: 30px 200px 0 0;
+					}
+					.chart-panel
+					{
+						vertical-align: top;
+						margin: 30px 0;
+						padding-top: 30px;
+					}
+					.chart-panel img
+					{
+						vertical-align:top;
+					}
+					.status-button
+					{
+						font-family: 'Roboto', sans-serif;
+						font-size: 12pt;
+						color: #f4ece1;
+						font-weight: bold;
+						background-color: #472001;
+						padding: 10px 40px;
+						text-transform: uppercase;
+						margin-top: 50px;
+						margin-left: -20px;
+					}
+
+					.area-profile {
+						font-size: 12px;
+						width: 380px;
+						overflow: hidden;
+						line-height: 1.1em;
+					}
+					.area-profile ul > li {
+						line-height: 1.5em;
+					}
+					.area-profile hr {
+						margin: 17px 0;
+					}
+					.area-profile h4 {
+						font-size: 17px;
+					}
+					.area-profile label {
+						color: rgb(38, 174, 208);
+					}
+				</style>
+				{{=it.content}}
+			</body>
+		</html>
+	</script>
+
+
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
 	<script src="bootstrap/js/bootstrap.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.7.3/js/bootstrap-select.min.js"></script>

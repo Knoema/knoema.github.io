@@ -174,6 +174,11 @@ var Infrastructure;
             	showRegion();
             });
 
+            $('img.export').on('click', function () {
+
+            	_this.export();
+            });
+
             $('#ppp-select-button').on('click', function () {
 
             	var pp = $('#ppp-projects').val() || [];
@@ -310,6 +315,9 @@ var Infrastructure;
             		if (regionId == 'SN') {
             			if (!_this.senegalTabIsLoaded)
             				_this.showSenegalPanel();
+            			else
+            				_this.pushRightPanelContentToExportForm($srhp, 'Senegal');
+
             			$srhp.show();
             			$('#map-canvas').css({ right: '350px' });
             		}
@@ -349,7 +357,8 @@ var Infrastructure;
             	_this.map.setCenter(RegionsCenters[regionId]);
             	_this.map.setZoom(RegionsZoom[regionId]);
 
-            	$rhp.find('.region-name').text($('#regions option[value=' + regionId + ']').text());
+            	var regionName = $('#regions option[value=' + regionId + ']').text();
+            	$rhp.find('.region-name').text(regionName);
 
             	var projects = getProjectByRegion(regionId);
             	var $trs = [];
@@ -394,6 +403,8 @@ var Infrastructure;
             		$('#region-data').empty().append(regionData({
             			indicatorData: data
             		}));
+
+            		_this.pushRightPanelContentToExportForm($rhp, regionName);
             	});
             };
 
@@ -787,6 +798,8 @@ var Infrastructure;
         			$('#new-project-passport .passport__content__new__b').empty().html(template_b({}));
         			$('#new-project-passport').show();
 
+        			self.pushPassportContentToExportForm();
+
         			$('.passport-tab').on('click', function () {
         				var name = $(this).data('name');
         				$('.passport-tab').removeClass('active');
@@ -804,7 +817,11 @@ var Infrastructure;
 
         			$('.passport__close__new').on('click', function () {
         				$('#new-project-passport').hide();
+        			});
 
+        			$('.status-button').on('click', function () {
+
+        				self.export();
         			});
 
         			self.infoWindow.close();
@@ -1360,6 +1377,7 @@ var Infrastructure;
         		}
         		$('#senegal-right-hand-panel .reforms-groups tbody').append(reformTrs);
 
+        		_this.pushRightPanelContentToExportForm($('#senegal-right-hand-panel'), 'Senegal');
         		_this.senegalTabIsLoaded = true;
         	});
         };
@@ -1462,6 +1480,48 @@ var Infrastructure;
         	$rhp.show();
         	$('#map-canvas').css({ right: '350px' });
         	google.maps.event.trigger(_this.map, 'resize');
+        };
+
+        Application.prototype.pushRightPanelContentToExportForm = function (container, fileName) {
+
+        	var clone = container.clone();
+        	clone.find('.panel-title img.export').remove();
+        	clone.find('.close-button').remove();
+        	clone.wrap('<div></div>')
+
+        	var content = clone.parent().html();
+        	content = content.split('./').join(location.protocol + '//' + location.host + '/');
+
+        	var template = doT.template($('#export-content').html());
+        	$('#export-form [name=content]').val(template({
+        		content: content
+        	}));
+        	$('#export-form [name=fileName]').val(fileName);
+        	$('#export-form [name=landscape]').val('FALSE');
+        };
+
+        Application.prototype.pushPassportContentToExportForm = function () {
+
+        	var firstPage = $('.passport__content__new').clone().wrap('<div></div>').parent();
+        	var secondPage = $('.passport__content__new__b').clone().wrap('<div></div>').parent();
+
+        	firstPage.find('.status-button').remove();
+
+        	var content = firstPage.html() + '<div style="page-break-before: always"></div>' + secondPage.html();
+        	content = content.split('./').join(location.protocol + '//' + location.host + '/');
+
+        	var template = doT.template($('#export-content').html());
+        	$('#export-form [name=content]').val(template({
+        		content: content
+        	}));
+        	$('#export-form [name=fileName]').val('- Passport');
+        	$('#export-form [name=landscape]').val('TRUE');
+        };
+
+        Application.prototype.export = function () {
+
+        	var exportForm = $('#export-form');
+        	exportForm.submit();
         };
 
         return Application;
