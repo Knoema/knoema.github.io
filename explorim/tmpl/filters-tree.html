@@ -36,7 +36,11 @@
                                                 {{else}}
                                                     <div>
                                                         <label>
-                                                            <span data-layer-id="${item4.layerId}" data-layer-type="${item4.layerType}" data-type="checkbox"> ${item4.name || item4.title}</span>
+                                                            {{if item4.layerType == 'point'}}
+                                                                <input data-layer-id="${item4.layerId}" data-layer-type="${item4.layerType}" type="checkbox" /> ${item4.name || item4.title}
+                                                            {{else}}
+                                                                <span data-layer-id="${item4.layerId}" data-layer-type="${item4.layerType}" data-type="checkbox"> ${item4.name || item4.title}</span>
+                                                            {{/if}}
                                                         </label>
                                                     </div>
                                                 {{/if}}
