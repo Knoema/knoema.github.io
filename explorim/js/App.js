@@ -76,7 +76,7 @@ App.prototype.init = function () {
 		});
 
 		var self = this;
-		//TODO Load all layers
+
 		google.maps.event.addListenerOnce(this._map, 'idle', function () {
 
 			var idleTimeout = window.setTimeout(function () {
@@ -307,6 +307,7 @@ App.prototype.switchDivision = function (division, reloadLayer) {
 	var $switcher = $('#regional-division-map-switcher');
 
 	$switcher.find('.active').removeClass('active');
+	$switcher.find('.disabled').removeClass('disabled');
 	$switcher.find('a[data-division="' + division + '"]').addClass('active');
 
     var enabledRegionTypes;
@@ -331,7 +332,6 @@ App.prototype.switchDivision = function (division, reloadLayer) {
 		$switcher.find('a').removeClass('disabled');
 	}
 
-    //TODO Find layerGroup by cuid, get proper layer id and load it
 	if (reloadLayer) {
         var $activeGroup = $('#' + this._activeGroupCuid);
         if ($activeGroup.length) {
@@ -387,12 +387,13 @@ App.prototype.bindEvents = function () {
 				var layer = _.find(layers, function(layer) {
 					return layer.name === this._activeRegionalDivision;
 				}.bind(this));
+
 				if (!layer && layers[0]) {
 					layerId = layers[0].layerId;
 					activeRegionalDivision = layers[0].name;
 				} else if (layer) {
 					layerId = layer.layerId;
-					activeRegionalDivision = this._activeRegionalDivision;
+					activeRegionalDivision = layer.name;
 				}
 				if (layerId) {
                     this.switchDivision(activeRegionalDivision, false);
@@ -468,7 +469,8 @@ App.prototype.bindEvents = function () {
 
 App.prototype.loadLayer = function (layerId, layerType) {
 	var self = this;
-	//TODO What to do if selected "Communale" but only two layers exist
+
+	//TODO What to do if selected "Communale" but only two other layers exist
 	if (this._layers[layerId]) {
 
         if (layerType && layerType === 'region' && this._activeAreaLayerId != null) {
