@@ -10,33 +10,29 @@ else {
 	}
 }
 
-$.fn.extend({
-    animateCss: function (animationName) {
-        var animationEnd = 'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend';
-        this.addClass('animated ' + animationName).one(animationEnd, function() {
-            $(this).removeClass('animated ' + animationName);
-        });
-    }
-});
-
 function App() {
 	this._map = null;
 	this.geoPlaygroundId = 'zabecdg';
 	this._layers = {};
     this.infoWindow = new google.maps.InfoWindow();
-	this._divisionTypes = [{
-		name: 'Nationale',
-		className: 'nationale'
-	}, {
-		name: 'Région',
-		className: 'region'
-	}, {
-		name: 'Département',
-		className: 'department'
-	}, {
-		name: 'Communale',
-		className: 'communale'
-	}];
+	this._divisionTypes = [
+        {
+            name: 'Nationale',
+            className: 'nationale'
+        },
+        {
+            name: 'Région',
+            className: 'region'
+        },
+        {
+            name: 'Département',
+            className: 'department'
+        },
+        {
+            name: 'Communale',
+            className: 'communale'
+        }
+	];
 	this._activeDate = null;
 	this.byTime = null;
 	this._activeRegionalDivision = null;
@@ -64,6 +60,19 @@ App.prototype.init = function () {
 
 		//top buttons
 		$('#regional-division-map-switcher').empty().append($topButtons);
+
+		var url = '//mauritania.opendataforafrica.org/api/1.0/meta/dataset/MRSCD2015/dimension/region?access_token=' + access_token ;
+
+        $.getJSON(url).then(function(data) {
+            var $regionsDropdown = $.tmpl('regions-dropdown.html', {
+                regions: _.filter(data.items, function(item) {
+                    return item.level > 0 && item.key < 1000660;
+                })
+            });
+            $('#top-map-buttons').find('.dropdown-holder').append($regionsDropdown);
+
+            $regionsDropdown.selectpicker();
+        });
 
 		this._map = new google.maps.Map($('#map-container')[0], {
 			mapTypeId: google.maps.MapTypeId.HYBRID,
@@ -113,7 +122,8 @@ App.prototype.init = function () {
 										},
 										{
 											//'Water points'
-											title: "Les points d'eau"
+											title: "Les points d'eau",
+                                            children: groupedLayers["Water Wells"]
 										},
 										{
 											//"Schools by town"
@@ -144,7 +154,20 @@ App.prototype.init = function () {
 									children: [
 										{
 											title: "Démographie",
-											children: groupedLayers["Demography"]
+											children: [
+                                                {
+                                                    title: "Male Population",
+                                                    children: groupedLayers["Demography. Male Population"]
+                                                },
+                                                {
+                                                    title: "Female Population",
+                                                    children: groupedLayers["Demography. Female Population"]
+                                                },
+                                                {
+                                                    title: "Total Population",
+                                                    children: groupedLayers["Demography. Total Population"]
+                                                }
+                                            ]
 										},
 										{
 											//"RGPH"
@@ -228,12 +251,122 @@ App.prototype.init = function () {
 									title: "Résultats",
 									children: [
 										{
-											title: "Présidentielle 2014",
-											children: groupedLayers["Presidential 2014"]
+											title: "Inscrits Total",
+											children: [
+                                                {
+                                                    title: "Votants Total",
+                                                    children: groupedLayers["Presidential Election. Votants Total"]
+                                                },
+                                                {
+                                                    title: "Bulletins Blanc",
+                                                    children: groupedLayers["Presidential Election. Bulletins Blanc"]
+                                                },
+                                                {
+                                                    title: "Bulletins Nulls",
+                                                    children: groupedLayers["Presidential Election. Bulletins Nulls"]
+                                                },
+                                                {
+                                                    title: "Mohamed Ould Abdel Aziz",
+                                                    children: groupedLayers["Presidential Election. Mohamed Ould Abdel Aziz"]
+                                                },
+                                                {
+                                                    title: "Boïdiel Ould Houmeit",
+                                                    children: groupedLayers["Presidential Election. Boïdiel Ould Houmeit"]
+                                                },
+                                                {
+                                                    title: "Laila Maryam Mint Moulaye Idriss",
+                                                    children: groupedLayers["Presidential Election. Laila Maryam Mint Moulaye Idriss"]
+                                                },
+                                                {
+                                                    title: "Biram Dah Abeid",
+                                                    children: groupedLayers["Presidential Election. Biram Dah Abeid"]
+                                                },
+                                                {
+                                                    title: "Ibrahima Moctar Sarr",
+                                                    children: groupedLayers["Presidential Election. Ibrahima Moctar Sarr"]
+                                                }
+                                            ]
 										},
 										{
-											title: "2013 Parlementaire",
-											children: groupedLayers["2013 Parliamentary"]
+											title: "Alliance for Democracy in Mauritania",
+											children: [
+                                                {
+                                                    title: "Alliance for Justice and Democracy / Movement for Renovation (AJD / MR)",
+                                                    children: groupedLayers["Parliamentary Election. Alliance for Justice and Democracy / Movement for Renovation (AJD / MR)"]
+                                                },{
+                                                    title: "APP + Tawassul",
+                                                    children: groupedLayers["Parliamentary Election. APP + Tawassul"]
+                                                },{
+                                                    title: "Popular Front (FP)",
+                                                    children: groupedLayers["Parliamentary Election. Popular Front (FP)"]
+                                                },{
+                                                    title: "The People's Progressive Alliance (APP)",
+                                                    children: groupedLayers["Parliamentary Election. The People's Progressive Alliance (APP)"]
+                                                },{
+                                                    title: "El Islah Party",
+                                                    children: groupedLayers["Parliamentary Election. El Islah Party"]
+                                                },{
+                                                    title: "Ravah Party",
+                                                    children: groupedLayers["Parliamentary Election. Ravah Party"]
+                                                },{
+                                                    title: "Party of Unity and Development (PUD)",
+                                                    children: groupedLayers["Parliamentary Election. Party of Unity and Development (PUD)"]
+                                                },{
+                                                    title: "Party of the Union for the Republic (UPR)",
+                                                    children: groupedLayers["Parliamentary Election. Party of the Union for the Republic (UPR)"]
+                                                },{
+                                                    title: "Dignity and Action Party (PDA)",
+                                                    children: groupedLayers["Parliamentary Election. Dignity and Action Party (PDA)"]
+                                                },{
+                                                    title: "Democratic Party of the People (PPD)",
+                                                    children: groupedLayers["Parliamentary Election. Democratic Party of the People (PPD)"]
+                                                },{
+                                                    title: "El Karam Party",
+                                                    children: groupedLayers["Parliamentary Election. El Karam Party"]
+                                                },{
+                                                    title: "EL VADILA Party",
+                                                    children: groupedLayers["Parliamentary Election. EL VADILA Party"]
+                                                },{
+                                                    title: "EL WIAM Party",
+                                                    children: groupedLayers["Parliamentary Election. EL WIAM Party"]
+                                                },{
+                                                    title: "Rally for Unity Party (MAJD)",
+                                                    children: groupedLayers["Parliamentary Election. Rally for Unity Party (MAJD)"]
+                                                },{
+                                                    title: "Republican Party for Democracy and Renewal (RDRP)",
+                                                    children: groupedLayers["Parliamentary Election. Republican Party for Democracy and Renewal (RDRP)"]
+                                                },{
+                                                    title: "RibatDémocratique Party and Social (RDS)",
+                                                    children: groupedLayers["Parliamentary Election. RibatDémocratique Party and Social (RDS)"]
+                                                },{
+                                                    title: "Sawab Party",
+                                                    children: groupedLayers["Parliamentary Election. Sawab Party"]
+                                                },{
+                                                    title: "Third Generation Party (PTG)",
+                                                    children: groupedLayers["Parliamentary Election. Third Generation Party (PTG)"]
+                                                },{
+                                                    title: "National Rally for Reform and Development (tawassul)",
+                                                    children: groupedLayers["Parliamentary Election. National Rally for Reform and Development (tawassul)"]
+                                                },{
+                                                    title: "Democratic Renewal (RD)",
+                                                    children: groupedLayers["Parliamentary Election. Democratic Renewal (RD)"]
+                                                },{
+                                                    title: "Sawab + WIAM",
+                                                    children: groupedLayers["Parliamentary Election. Sawab + WIAM"]
+                                                },{
+                                                    title: "Startle Youth for the Nation (SURSAUT)",
+                                                    children: groupedLayers["Parliamentary Election. Startle Youth for the Nation (SURSAUT)"]
+                                                },{
+                                                    title: "Union of the Democratic Centre (U.C.D)",
+                                                    children: groupedLayers["Parliamentary Election. Union of the Democratic Centre (U.C.D)"]
+                                                },{
+                                                    title: "Union for Democracy and Progress (UDP)",
+                                                    children: groupedLayers["Parliamentary Election. Union for Democracy and Progress (UDP)"]
+                                                },{
+                                                    title: "Total",
+                                                    children: groupedLayers["Parliamentary Election. Total"]
+                                                }
+                                            ]
 										}
 									]
 								}
@@ -252,11 +385,15 @@ App.prototype.init = function () {
 
 					self.bindEvents();
 
+                    $('.map-and-timeline').find('.loading').css({
+                        "z-index": 0
+                    });
+
 					//TODO Restore this
 					//TODO Init it in html somehow
-					$modal.modal({
-						open: true
-					});
+					// $modal.modal({
+					// 	open: true
+					// });
 
 					$(window).trigger('resize');
 
@@ -272,6 +409,8 @@ App.prototype.init = function () {
 
 App.prototype.onResize = function () {
 
+    var timelineHeight = $('#timeline').height();
+
 	var windowHeight = $(window).height();
 	var $sideBar = $('#side-bar');
 	$sideBar.height($(window).height());
@@ -286,17 +425,16 @@ App.prototype.onResize = function () {
 
     $('.time-members-holder').width(mapAndTimelineWidth - 50); //50 width of slide-control
 
-	// $('#timeline').width(mapAndTimelineWidth);
-	// $('#timeline').css({
-	// 	'top': $('#map-container').height()
-	// });
-
     var panelHeadingHeight = $sideBar.find('.panel-heading').first().height();
     var topLevelSectionHeight = filtersHolderHeight - 3 * panelHeadingHeight - 26;//26 for margin/padding
 
     $sideBar.find('.panel-body').css({
         'max-height': topLevelSectionHeight,
         'height': topLevelSectionHeight
+    });
+
+    $('#right-side-bar').css({
+        "height": windowHeight - timelineHeight
     });
 
 };
@@ -320,7 +458,6 @@ App.prototype.switchDivision = function (division, reloadLayer) {
         this._map.setZoom(Math.min(5, this._map.getZoom()));
     }
 
-    //TODO Remove enabled....
 	if (enabledRegionTypes) {
 		$switcher.find('a').each($.proxy(function(i, element) {
 			var $a = $(element);
@@ -351,12 +488,10 @@ App.prototype.bindEvents = function () {
 
 	$('#regional-division-modal-switcher').on('click', '.regional-division-type', function() {
 		self.switchDivision($(event.target).data('division'), false);
-		$('#regional-division-modal-switcher').modal('hide');
 	});
 
     $('#side-bar').on('click', '.clear-filters', $.proxy(function () {
         _.each(this._layers, function (layer) {
-            //TODO Consider clear region layer as well
             layer.clean();
         });
         this._activeGroupCuid = null;
@@ -382,7 +517,6 @@ App.prototype.bindEvents = function () {
 
                 var layers = $target.data('layers');
                 var groupCuid = $target[0].id;
-                this._activeGroupCuid = groupCuid;
 
 				var layer = _.find(layers, function(layer) {
 					return layer.name === this._activeRegionalDivision;
@@ -395,27 +529,25 @@ App.prototype.bindEvents = function () {
 					layerId = layer.layerId;
 					activeRegionalDivision = layer.name;
 				}
-				if (layerId) {
+				if (layerId && this._activeGroupCuid != groupCuid) {
                     this.switchDivision(activeRegionalDivision, false);
+                    this._activeGroupCuid = groupCuid;
                     this.loadLayer(layerId, 'region');
+                } else if (layerId && this._activeGroupCuid == groupCuid) {
+                    this._activeGroupCuid = null;
+                    this._layers[layerId].clean();
                 }
             }
         }
     }, this));
 
     // show.bs.collapse	This event fires immediately when the show instance method is called.
-    // shown.bs.collapse	This event is fired when a collapse element has been made visible to the user (will wait for CSS transitions to complete).
     // hide.bs.collapse	This event is fired immediately when the hide method has been called.
-    // hidden.bs.collapse	This event is fired when a collapse element has been hidden from the user (will wait for CSS transitions to complete).
-
-    $('#filters-tree').find('.item-content').on('show.bs.collapse', function() {
+    $('#filters-tree').find('.item-content').on('show.bs.collapse hide.bs.collapse', function() {
         $(this).closest('.item-content-level-0').find('.scroll-content').mCustomScrollbar('destroy');
     });
-	//TODO Combine with previous somehow
-	$('#filters-tree').find('.item-content').on('hide.bs.collapse', function() {
-		$(this).closest('.item-content-level-0').find('.scroll-content').mCustomScrollbar('destroy');
-	});
 
+    // shown.bs.collapse	This event is fired when a collapse element has been made visible to the user (will wait for CSS transitions to complete).
     $('#filters-tree').find('.item-content').on('shown.bs.collapse', function() {
         $(this).closest('.item-content-level-0').find('.scroll-content').mCustomScrollbar({
             theme: 'dark'
@@ -464,13 +596,40 @@ App.prototype.bindEvents = function () {
 
     }, this));
 
+    $('#select-region').on('hidden.bs.select', function (e) {
+
+        dataDescriptor.Filter[0].Members = [$('#select-region').val()];
+
+        $('#right-side-bar').find('.header').html($('#select-region').find(":selected").data('name'));
+        $('#right-side-bar').find('.side-bar-content').empty().append($('<span class="glyphicon glyphicon-cog fa-spin" aria-hidden="true" title="Loading..."></span>'));
+
+        $('#right-side-bar').animate({
+            "right": 0
+        });
+
+        Knoema.Helpers.post('//mauritania.opendataforafrica.org/api/1.0/data/pivot', dataDescriptor, function(pivotResponse) {
+            $('#right-side-bar').find('.side-bar-content').empty().append($.tmpl('region-details.html', {
+                headerMembers: pivotResponse.header[0].members,
+                rows: _.chunk(pivotResponse.data, pivotResponse.header[0].members.length)
+            }));
+        });
+
+    });
+
+    $('#right-side-bar').on('click', '.close', function() {
+        $('#right-side-bar').animate({
+            "right": -1 * ($('#right-side-bar').width() + 20)
+        }, function() {
+            $('#select-region').selectpicker('val', 'not-selected');
+        });
+    });
+
 	$(window).on('resize', $.proxy(this.onResize, this));
 };
 
 App.prototype.loadLayer = function (layerId, layerType) {
 	var self = this;
 
-	//TODO What to do if selected "Communale" but only two other layers exist
 	if (this._layers[layerId]) {
 
         if (layerType && layerType === 'region' && this._activeAreaLayerId != null) {
@@ -491,19 +650,24 @@ App.prototype.loadLayer = function (layerId, layerType) {
             this._layers[this._activeAreaLayerId].clean();
         }
 
+        $('.map-and-timeline').find('.loading').css({
+            "z-index": 1000000
+        });
+
 		var layer = new GeoPlayground.Layer({
 			map: self._map,
 			layerId: layerId,
 			geoPlaygroundId: self.geoPlaygroundId,
 			infoWindow: self.infoWindow
 		}, $.proxy(function (layerData) {
+
+            $('.map-and-timeline').find('.loading').css({
+                "z-index": 0
+            });
+
 			if (layerData.layer.layerType === 'point') {
 				_.each(this._layers[layerData.layerId].layer.markerClusterer.markers_, function(marker) {
 					marker.addListener('click', function() {
-						// console.log("----------- Marker's content -----------");
-						// console.log(this);
-						// console.log(this.content);
-						// console.log("----------/ Marker's content -----------");
 						var content = _.chain(_.keys(this.content))
 							.map(function(key) {
 								return {
@@ -527,6 +691,7 @@ App.prototype.loadLayer = function (layerId, layerType) {
 				});
 			} else {
 
+			    //TODO Implement timeline
 				//layerData.layer.data is pivotResponse
 				// this.byTime = _.groupBy(layerData.layer.data, function(tuple) {
 				// 	//TODO Format using Knoema.Utils & our custom frequencies
@@ -554,6 +719,8 @@ App.prototype.loadTemplates = function (callback) {
 	}
 	var templates = [
 		$.get('tmpl/regional-divisions.html?random=' + Math.random(), compileTemplate),
+        $.get('tmpl/regions-dropdown.html?random=' + Math.random(), compileTemplate),
+        $.get('tmpl/region-details.html?random=' + Math.random(), compileTemplate),
 		$.get('tmpl/filters-tree.html?random=' + Math.random(), compileTemplate),
         $.get('tmpl/info-window.html?random=' + Math.random(), compileTemplate)
 	];
