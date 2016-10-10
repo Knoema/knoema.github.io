@@ -251,20 +251,8 @@ App.prototype.init = function () {
 									title: "Résultats",
 									children: [
 										{
-											title: "Inscrits Total",
+                                            title: "Présidentielle 2014",
 											children: [
-                                                {
-                                                    title: "Votants Total",
-                                                    children: groupedLayers["Presidential Election. Votants Total"]
-                                                },
-                                                {
-                                                    title: "Bulletins Blanc",
-                                                    children: groupedLayers["Presidential Election. Bulletins Blanc"]
-                                                },
-                                                {
-                                                    title: "Bulletins Nulls",
-                                                    children: groupedLayers["Presidential Election. Bulletins Nulls"]
-                                                },
                                                 {
                                                     title: "Mohamed Ould Abdel Aziz",
                                                     children: groupedLayers["Presidential Election. Mohamed Ould Abdel Aziz"]
@@ -284,12 +272,37 @@ App.prototype.init = function () {
                                                 {
                                                     title: "Ibrahima Moctar Sarr",
                                                     children: groupedLayers["Presidential Election. Ibrahima Moctar Sarr"]
+                                                },
+                                                {
+                                                    title: "Votants Total",
+                                                    children: groupedLayers["Presidential Election. Votants Total"]
+                                                },
+                                                {
+                                                    title: "Inscrits Total",
+                                                    children: groupedLayers["Presidential Election. Votants Total"]
+                                                },
+                                                {
+                                                    title: "Bulletins Blanc",
+                                                    children: groupedLayers["Presidential Election. Bulletins Blanc"]
+                                                },
+                                                {
+                                                    title: "Bulletins Nulls",
+                                                    children: groupedLayers["Presidential Election. Bulletins Nulls"]
                                                 }
                                             ]
 										},
 										{
-											title: "Alliance for Democracy in Mauritania",
+                                            title: "2013 Parlementaire",
 											children: [
+                                                {
+
+                                                    title: "APP + Tawassul",
+                                                    children: groupedLayers["Parliamentary Election. APP + Tawassul"]
+                                                },
+                                                {
+                                                    title: "Alliance for Democracy in Mauritania (ADM)",
+                                                    children: groupedLayers["Parliamentary Election. Alliance for Democracy in Mauritania (ADM)"]
+                                                },
                                                 {
                                                     title: "Alliance for Justice and Democracy / Movement for Renovation (AJD / MR)",
                                                     children: groupedLayers["Parliamentary Election. Alliance for Justice and Democracy / Movement for Renovation (AJD / MR)"]
