@@ -155,10 +155,10 @@ var Infrastructure;
             this.layerData = {};
             this.globalData = {};
             this.realizeData = {};
-            this.senegalTabIsLoaded = false;
             this.preloadedObject = this.getParameterByName('code') ? this.getParameterByName('code') : -1;
             this.filterObjects = this.getParameterByName('objects');
             this.hasGeoJson = false;
+            this.year = 2016;
 
             this.axes = axes;
             this.sectors = sectors;
@@ -182,9 +182,10 @@ var Infrastructure;
             	$('#overviewFilter').trigger('change');
             });
 
-            $('#regions').on('change', function () {
+            $('#regions').on('click', function (e) {
 
-            	showRegion();
+            	if (e.offsetY < 0)
+            		showRegion();
             });
 
             $('img.export').on('click', function () {
@@ -214,7 +215,21 @@ var Infrastructure;
             	google.maps.event.trigger(_this.map, 'resize');
             });
 
-            // Country overview map
+
+            $('.year-item').on('click', function () {
+
+            	$('.year-item').removeClass('active');
+            	$(this).addClass('active');
+
+            	_this.year = parseInt($(this).data('year'));
+
+            	$('#overviewFilter').trigger('change');
+
+            	var regionId = $('#regions').val();
+            	_this.showRegionPanel(regionId);
+            	_this.showSenegalPanel();
+            });
+
             this.map = new google.maps.Map(document.getElementById('map-canvas'), {
                 center: { lat: 14.5067, lng: -14.4167 },
                 zoom: 8,
@@ -325,10 +340,7 @@ var Infrastructure;
             		});
 
             		if (regionId == 'SN') {
-            			if (!_this.senegalTabIsLoaded)
-            				_this.showSenegalPanel();
-            			else
-            				_this.pushRightPanelContentToExportForm($srhp, 'Senegal');
+            			_this.showSenegalPanel();
 
             			$srhp.show();
             			$('#map-canvas').css({ right: '350px' });
@@ -366,101 +378,12 @@ var Infrastructure;
             	_this.map.setCenter(RegionsCenters[regionId]);
             	_this.map.setZoom(RegionsZoom[regionId]);
 
-            	var regionName = $('#regions option[value=' + regionId + ']').text();
-            	$rhp.find('.region-name').text(regionName);
-
-            	var projects = getProjectByRegion(regionId);
-            	var $trs = [];
-            	$rhp.find('tbody').empty();
-            	if (projects.length > 0) {
-            		for (var i = 0; i < projects.length; i++) {
-
-            			var ppNumber = '00';
-            			if (projects[i].pp.length == 4)
-            				ppNumber = projects[i].pp.substr(2, 3);
-            			else if (projects[i].pp.length == 3)
-            				ppNumber = '0' + projects[i].pp.substr(2, 3);
-
-            			$trs.push($('<tr>', { 'data-name': projects[i].name })
-							.append($('<td>').append($('<img>', { src: './img/right-panel/icons-' + ppNumber + '.png', 'class': 'pp-image-small' })))
-							.append($('<td>', { text: projects[i].pp }))
-							.append($('<td>', { text: projects[i].name }))
-							.append($('<td>', { text: projects[i].status }))
-						);
-            		}
-
-            		$rhp.find('tbody').append($trs);
-
-            		$rhp.find('tr').on('click', function () {
-            			var name = $(this).data('name');
-
-            			_this.markers.forEach(function (marker) {
-
-            				var tooltip = marker.get('tooltip');
-            				if (tooltip[_this.projectColumns[_this.nameIndex].name] == name)
-            					new google.maps.event.trigger(marker, 'click');
-            			});
-            		});
-            	}
+            	_this.showRegionPanel(regionId);
 
             	$rhp.show();
             	$('#map-canvas').css({ right: '350px' });
-
-            	_this.getRegionData(regionId, function (data) {
-
-            		var regionData = doT.template($('#region-profile').html());
-            		$('#region-data').empty().append(regionData({
-            			indicatorData: data
-            		}));
-
-            		_this.pushRightPanelContentToExportForm($rhp, regionName);
-            	});
             };
 
-            function getProjectByRegion(regionId) {
-
-            	var res = [];
-            	var dbCodes = [];
-            	for (var i = 0; i < _this.objectData.length / _this.objectColumns.length; i++) {
-
-            		var offset = i * _this.objectColumns.length;
-            		var dbcode = _this.objectData[offset + _this.databaseCodeIndex_O];
-					
-            		if (regionId != _this.objectData[offset + _this.regionIdIndex])
-            			continue;
-
-					if($.inArray(dbcode, dbCodes) == -1)
-            			dbCodes.push(dbcode);
-            	}
-
-            	var unicNames = [];
-            	for (var i = 0; i < _this.projectData.length / _this.projectColumns.length; i++) {
-
-            		var offset = i * _this.projectColumns.length;
-            		var dbcode = _this.projectData[offset + _this.databaseCodeIndex];
-
-            		//only for projects
-            		if (_this.projectData[offset + _this.objectTypeIndex] != 'P')
-            			continue;
-
-            		if ($.inArray(dbcode, dbCodes) == -1)
-            			continue;
-
-            		if ($.inArray(_this.projectData[offset + _this.nameIndex], unicNames) != -1)
-            			continue;
-
-            		unicNames.push(_this.projectData[offset + _this.nameIndex]);
-
-            		res.push({
-            			pp: _this.projectData[offset + _this.ppIndex],
-            			name: _this.projectData[offset + _this.nameIndex],
-						status: _this.projectData[offset + _this.statusIndex],
-            		});
-            	}
-
-            	return res;
-            };
-            
             // Request dataset and show on the map
             var $overviewFilter = $('#overviewFilter').on('change', function (event) {
             	clearTimeout(_this.filterTimeout);
@@ -478,13 +401,11 @@ var Infrastructure;
 
             	var selectedPPName = $('#ppp-projects').val() || [];
 
-            	for (var i = 0; i < _this.projectData.length / _this.projectColumns.length; i++) {
-
-            		var offset = i * _this.projectColumns.length;
+            	_this.loop(_this.projectData, _this.projectColumns, _this.year, function (i, item, columns) {
 
             		//only for projects
-            		if (_this.projectData[offset + _this.objectTypeIndex] != 'P')
-            			continue;
+            		if (item[_this.objectTypeIndex] != 'P')
+            			return;
 					
             		var addObject = true;
             		for (var j in params) {
@@ -492,17 +413,17 @@ var Infrastructure;
             			switch (j) {
 
             				case 'pse':
-            					if ($.inArray(_this.projectData[offset + _this.pseIndex], params[j]) == -1)
+            					if ($.inArray(item[_this.pseIndex], params[j]) == -1)
             						addObject = false;
             					break;
 
             				case 'status':
-            					if ($.inArray(_this.projectData[offset + _this.statusIndex], params[j]) == -1)
+            					if ($.inArray(item[_this.statusIndex], params[j]) == -1)
             						addObject = false;
             					break;
 
             				case 'plan':
-            					var ptipValue = _this.projectData[offset + _this.ptipIndex] == '' ? 'no' : 'yes';
+            					var ptipValue = item[_this.ptipIndex] == '' ? 'no' : 'yes';
 
             					if($.inArray(ptipValue, params[j]) == -1)
             						addObject = false;
@@ -558,59 +479,54 @@ var Infrastructure;
             				break;
             		}
 
-            		if (selectedPPName.length > 0 && $.inArray(_this.projectData[offset + _this.ppIndex], selectedPPName) == -1)
+            		if (selectedPPName.length > 0 && $.inArray(item[_this.ppIndex], selectedPPName) == -1)
             			addObject = false;
 
             		if (_this.filterObjects) {
-            			if (_this.projectData[offset + _this.objectsIndex] != _this.filterObjects)
+            			if (item[_this.objectsIndex] != _this.filterObjects)
             				addObject = false;
             		}
 
             		if (addObject) {
             			var tooltipData = {};
-            			tooltipData[_this.projectColumns[_this.nameIndex].name] = _this.projectData[offset + _this.nameIndex];
-            			tooltipData[_this.projectColumns[_this.pseIndex].name] = _this.projectData[offset + _this.pseIndex] + ' - ' + _this.axes[_this.projectData[offset + _this.pseIndex]];
-            			tooltipData[_this.projectColumns[_this.sectorIndex].name] = _this.projectData[offset + _this.sectorIndex] + ' - ' + _this.sectors[_this.projectData[offset + _this.sectorIndex]];
-            			tooltipData[_this.projectColumns[_this.statusIndex].name] = _this.projectData[offset + _this.statusIndex];
-            			tooltipData[_this.projectColumns[_this.ppIndex].name] = $('#ppp-projects').find('option[value=' + _this.projectData[offset + _this.ppIndex] + ']').text();;
-            			tooltipData[_this.projectColumns[_this.ptipIndex].name] = _this.projectData[offset + _this.ptipIndex];
-            			tooltipData[_this.projectColumns[_this.localeIndex].name] = _this.projectData[offset + _this.localeIndex];
-            			tooltipData[_this.projectColumns[_this.budgetIndex].name] = _this.projectData[offset + _this.budgetIndex];
+            			tooltipData[columns[_this.nameIndex]] = item[_this.nameIndex];
+            			tooltipData[columns[_this.pseIndex]] = item[_this.pseIndex] + ' - ' + _this.axes[item[_this.pseIndex]];
+            			tooltipData[columns[_this.sectorIndex]] = item[_this.sectorIndex] + ' - ' + _this.sectors[item[_this.sectorIndex]];
+            			tooltipData[columns[_this.statusIndex]] = item[_this.statusIndex];
+            			tooltipData[columns[_this.ppIndex]] = $('#ppp-projects').find('option[value=' + item[_this.ppIndex] + ']').text();;
+            			tooltipData[columns[_this.ptipIndex]] = item[_this.ptipIndex];
+            			tooltipData[columns[_this.localeIndex]] = item[_this.localeIndex];
+            			tooltipData[columns[_this.budgetIndex]] = item[_this.budgetIndex];
 
-            			filtredProjects[_this.projectData[offset + _this.databaseCodeIndex]] = tooltipData;
+            			filtredProjects[item[_this.databaseCodeIndex]] = tooltipData;
             		}
-            	}
+            	});
 
             	var locales = {};
-            	for (var i = 0; i < _this.objectData.length / _this.objectColumns.length; i++) {
+            	_this.loop(_this.objectData, _this.objectColumns, null, function (i, item) {
 
-            		var offset = i * _this.objectColumns.length;
+            		if (!locales[item[_this.databaseCodeIndex_O]])
+            			locales[item[_this.databaseCodeIndex_O]] = [];
 
-            		if (!locales[_this.objectData[offset + _this.databaseCodeIndex_O]])
-            			locales[_this.objectData[offset + _this.databaseCodeIndex_O]] = [];
+            		locales[item[_this.databaseCodeIndex_O]].push(item[_this.latIndex] + ', ' + item[_this.lngIndex]);
+            	});
 
-            		locales[_this.objectData[offset + _this.databaseCodeIndex_O]].push(_this.objectData[offset + _this.latIndex] + ', ' + _this.objectData[offset + _this.lngIndex]);
-            	}
+            	_this.loop(_this.objectData, _this.objectColumns, null, function (i, item) {
 
-            	for (var i = 0; i < _this.objectData.length / _this.objectColumns.length; i++) {
-
-            		var offset = i * _this.objectColumns.length;
-
-            		var tooltip = filtredProjects[_this.objectData[offset + _this.databaseCodeIndex_O]];
+            		var tooltip = filtredProjects[item[_this.databaseCodeIndex_O]];
             		if (tooltip) {
-						
-            			tooltip['locales'] = locales[_this.objectData[offset + _this.databaseCodeIndex_O]].join('; ');
+
+            			tooltip['locales'] = locales[item[_this.databaseCodeIndex_O]].join('; ');
 
             			filtredObjects.push({
-            				lat: _this.objectData[offset + _this.latIndex],
-            				lng: _this.objectData[offset + _this.lngIndex],
+            				lat: item[_this.latIndex],
+            				lng: item[_this.lngIndex],
             				tooltip: tooltip,
-            				code: _this.objectData[offset + _this.databaseCodeIndex_O]
+            				code: item[_this.databaseCodeIndex_O]
             			});
             		}
-            	}
-
-
+            	});
+            	
             	if (filtredObjects.length > 0) {
             		_this.filterTimeout = setTimeout(function () {
 
@@ -685,15 +601,13 @@ var Infrastructure;
         Application.prototype.hideNonPresentedProjectsButtons = function () {
 
         	var presented = [];
-        	for (var i = 0; i < this.projectData.length / this.projectColumns.length; i++) {
+        	this.loop(this.projectData, this.projectColumns, null, function (i, item) {
 
-        		var offset = i * this.projectColumns.length;
-
-        		var pp = this.projectData[offset + this.ppIndex];
+        		var pp = item[this.ppIndex];
 
         		if ($.inArray(pp, presented) == -1)
         			presented.push(pp);
-        	}
+        	});
 
         	$('#ppp-projects option').each(function (index, item) {
         		var pp = $(this).val();
@@ -711,18 +625,6 @@ var Infrastructure;
         	});
         };
 
-        Application.prototype.buildModelingChart = function(type, elementSelector, title, subtitle, colors, legend, yMin, yMax, tickInterval) {
-            var categories = [2016, 2017, 2018, 2019, 2020];
-            var series = [];
-            for (var i = 0; i < colors.length; i++) {
-                series.push({ data: [0, 0, 0, 0, 0], color: colors[i] });
-            }
-            return this.buildChart(elementSelector, type, title, subtitle, categories, series, legend, yMin, yMax, tickInterval);
-        };
-
-        Application.prototype.buildChart = function(elementSelector, type, title, subtitle, categories, series, legend, yMin, yMax, tickInterval) {
-        };
-
         Application.prototype.clearMarkers = function () {
             if (Array.isArray(this.markers)) {
                 this.markers.forEach(function(marker) {
@@ -731,23 +633,6 @@ var Infrastructure;
                 this.markers = null;
             }
         };
-
-        Application.prototype.showPassport2 = function () {
-        };
-
-        Application.prototype.showPassport = function(name, typeName) {
-        };
-
-        Application.prototype.buildPassportCharts = function() {
-            var categories = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-            var series = [
-                { color: '#219FC7', data: [9000, 6500, 5000, 4000, 2500, 3000, 3500, 4200, 4000, 3800, 6000, 7000] },
-                { color: '#317850', data: [7500, 5000, 4500, 3000, 3600, 3800, 4000, 4500, 3600, 3400, 4000, 5000] }
-            ];
-            var legend = {enabled: false};
-            var plotOptions = {line: { marker: { enabled: false } } };
-            this.buildChart('.passport__chart_left', 'line', 'Electricity consumption', 'kWt/h', categories, series, legend, plotOptions);
-        }
 
         Application.prototype.addObjectsToMap = function (map, data) {
 
@@ -873,8 +758,6 @@ var Infrastructure;
         		marker.setIcon('img/status/' + statusMapIcons[data[i].tooltip['Statut Projets: Annoncé, En cours, Complété, opérationel Programmes/reformes: En']] + '.png');
         		marker.addListener('click', markerClickHandler);
 
-        		//google.maps.event.addListener(marker, 'click', this.showPassport.bind(this, data.data[rowOffset + 3], data.data[rowOffset + 2]));
-
         		markers.push(marker);
         	}
 
@@ -896,23 +779,17 @@ var Infrastructure;
         	if (self.regionData.length == 0) {
         		self.getRegionsData().done(function (data) {
 
-        			var rowCount = Math.floor(data.data.length / data.columns.length);
-        			for (var rowIndex = 0; rowIndex < rowCount; rowIndex++) {
-        				var rowOffset = rowIndex * data.columns.length;
+        			self.loop(data.data, data.columns, null, function (i, item) {
 
-        				var ind = data.data[rowOffset + 3];
-        				if (self.regionAverageData[ind])
-        					self.regionAverageData[ind] += data.data[rowOffset + 6] * 1 / 14;
-        				else
-        					self.regionAverageData[ind] = data.data[rowOffset + 6] * 1 / 14;
+        				var ind = item[3];
+        				if (!self.regionAverageData[ind])
+        					self.regionAverageData[ind] = 0;
 
-        				self.regionData.push({
-        					regionId: data.data[rowOffset + 1],
-        					indicator: data.data[rowOffset + 3],
-        					value: data.data[rowOffset + 6] * 1
-        				});
-        			}
+        				self.regionAverageData[ind] += item[6] * 1 / 14;
 
+        				self.regionData.push({ regionId: item[1], indicator: ind, value: item[6] * 1 });
+        			});
+        			
         			callback(filterByRegion(regionId));
         		});
         	}
@@ -1115,18 +992,18 @@ var Infrastructure;
         	var minValue = Number.POSITIVE_INFINITY;
         	var maxValue = Number.NEGATIVE_INFINITY;
 
-        	var rowCount = Math.floor(data.data.length / data.columns.length);
-        	for (var rowIndex = 0; rowIndex < rowCount; rowIndex++) {
-        		var rowOffset = rowIndex * data.columns.length;
-        		var value = data.data[rowOffset + valueIndex];
 
-        		rawData[data.data[rowOffset + regionIdIndex]] = value;
+        	this.loop(data.data, data.columns, null, function (i, item) {
+
+        		var value = item[valueIndex];
+
+        		rawData[item[regionIdIndex]] = value;
 
         		if (value < minValue)
         			minValue = value;
         		if (value > maxValue)
         			maxValue = value;
-        	}
+        	});
 
         	var normData = {};
         	if(needToNorm)
@@ -1207,7 +1084,7 @@ var Infrastructure;
 
         Application.prototype.getDataSenegalRealisation = function () {
 
-        	var url = 'http://knoema.com/api/1.0/data/details?client_id=EZj54KGFo3rzIvnLczrElvAitEyU28DGw9R73tif&page_id=PSEIDS2016V1';
+        	var url = 'http://pspp.knoema.com/api/1.0/data/details?client_id=EZj54KGFo3rzIvnLczrElvAitEyU28DGw9R73tif&page_id=PSEIDS2016V1';
         	var description = {
         		"Header": [{
         			"DimensionId": "Time",
@@ -1227,6 +1104,96 @@ var Infrastructure;
         	};
 
         	return $.post(url, description);
+        };
+
+        Application.prototype.getProjectByRegion = function(regionId) {
+
+        	var _this = this;
+        	var res = [];
+        	var dbCodes = [];
+
+        	_this.loop(_this.objectData, _this.objectColumns, null, function (i, item) {
+
+        		if (regionId != item[_this.regionIdIndex])
+        			return;
+
+        		var code = item[_this.databaseCodeIndex_O];
+        		if ($.inArray(code, dbCodes) == -1)
+        			dbCodes.push(code);
+        	});
+
+        	_this.loop(_this.projectData, _this.projectColumns, _this.year, function (i, item) {
+
+        		var dbcode = item[_this.databaseCodeIndex];
+
+        		//only for projects
+        		if (item[_this.objectTypeIndex] != 'P')
+        			return;
+
+        		if ($.inArray(dbcode, dbCodes) == -1)
+        			return;
+
+        		res.push({
+        			pp: item[_this.ppIndex],
+        			name: item[_this.nameIndex],
+        			status: item[_this.statusIndex],
+        		});
+        	});
+
+        	return res;
+        };
+
+        Application.prototype.showRegionPanel = function (regionId) {
+
+        	var _this = this;
+        	var $rhp = $('#right-hand-panel');
+
+        	var regionName = $('#regions option[value=' + regionId + ']').text();
+        	$rhp.find('.region-name').text(regionName);
+
+        	var projects = this.getProjectByRegion(regionId);
+        	var $trs = [];
+        	$rhp.find('tbody').empty();
+        	if (projects.length > 0) {
+        		for (var i = 0; i < projects.length; i++) {
+
+        			var ppNumber = '00';
+        			if (projects[i].pp.length == 4)
+        				ppNumber = projects[i].pp.substr(2, 3);
+        			else if (projects[i].pp.length == 3)
+        				ppNumber = '0' + projects[i].pp.substr(2, 3);
+
+        			$trs.push($('<tr>', { 'data-name': projects[i].name })
+						.append($('<td>').append($('<img>', { src: './img/right-panel/icons-' + ppNumber + '.png', 'class': 'pp-image-small' })))
+						.append($('<td>', { text: projects[i].pp }))
+						.append($('<td>', { text: projects[i].name }))
+						.append($('<td>', { text: projects[i].status }))
+					);
+        		}
+
+        		$rhp.find('tbody').append($trs);
+
+        		$rhp.find('tr').on('click', function () {
+        			var name = $(this).data('name');
+
+        			_this.markers.forEach(function (marker) {
+
+        				var tooltip = marker.get('tooltip');
+        				if (tooltip[_this.projectColumns[_this.nameIndex].name] == name)
+        					new google.maps.event.trigger(marker, 'click');
+        			});
+        		});
+        	}
+
+        	this.getRegionData(regionId, function (data) {
+
+        		var regionData = doT.template($('#region-profile').html());
+        		$('#region-data').empty().append(regionData({
+        			indicatorData: data
+        		}));
+
+        		_this.pushRightPanelContentToExportForm($rhp, regionName);
+        	});
         };
 
         Application.prototype.showSenegalPanel = function () {
@@ -1278,17 +1245,15 @@ var Infrastructure;
         		}
 
         		var realizeData = [];
-        		rowCount = Math.floor(_this.realizeData.data.length / _this.realizeData.columns.length);
-        		for (var rowIndex = 0; rowIndex < rowCount; rowIndex++) {
-        			var rowOffset = rowIndex * _this.realizeData.columns.length;
+        		_this.loop(_this.realizeData.data, _this.realizeData.columns, null, function (i, item) {
 
-        			if (!realizeData[_this.realizeData.data[rowOffset + nameIndex]])
-        				realizeData[_this.realizeData.data[rowOffset + nameIndex]] = {};
+        			if (!realizeData[item[nameIndex]])
+        				realizeData[item[nameIndex]] = {};
 
-        			var year = _this.realizeData.data[rowOffset + dateIndex].value.split('/')[2];
+        			var year = item[dateIndex].value.split('/')[2];
 
-        			realizeData[_this.realizeData.data[rowOffset + nameIndex]][year] = _this.realizeData.data[rowOffset + valueIndex];
-        		}
+        			realizeData[item[nameIndex]][year] = item[valueIndex];
+        		});
 
         		var realizeTData = [];
         		for (var indicator in realizeData) {
@@ -1300,53 +1265,46 @@ var Infrastructure;
 						.append($('<td>', { text: coeff }))
         			);
         		}
-        		$('#senegal-right-hand-panel .realisation-indicators tbody').append(realizeTData);
+        		$('#senegal-right-hand-panel .realisation-indicators tbody').empty().append(realizeTData);
 
 
         		var axeData = { '1': 0, '2': 0, '3': 0 };
-        		rowCount = Math.floor(_this.projectData.length / _this.projectColumns.length);
         		var unicNames = [];
-        		for (var rowIndex = 0; rowIndex < rowCount; rowIndex++) {
-        			var rowOffset = rowIndex * _this.projectColumns.length;
+        		_this.loop(_this.projectData, _this.projectColumns, null, function (i, item) {
 
-        			if ($.inArray(_this.projectData[rowOffset + _this.nameIndex], unicNames) != -1)
-        				continue;
+        			if ($.inArray(item[_this.nameIndex], unicNames) != -1)
+        				return;
 
-        			unicNames.push(_this.projectData[rowOffset + _this.nameIndex]);
+        			unicNames.push(item[_this.nameIndex]);
 
-        			if (_this.projectData[rowOffset + _this.objectTypeIndex] == 'P')
-        				axeData[_this.projectData[rowOffset + _this.pseIndex]] += 1;
-        		}
+        			if (item[_this.objectTypeIndex] == 'P')
+        				axeData[item[_this.pseIndex]] += 1;
+        		});
 
         		var axeTrs = [];
         		axeTrs.push($('<tr>').append($('<td>', { text: axes['1'] })).append($('<td>', { text: axeData['1'] })));
         		axeTrs.push($('<tr>').append($('<td>', { text: axes['2'] })).append($('<td>', { text: axeData['2'] })));
         		axeTrs.push($('<tr>').append($('<td>', { text: axes['3'] })).append($('<td>', { text: axeData['3'] })));
-        		$('#senegal-right-hand-panel .axe-summ tbody').append(axeTrs);
+        		$('#senegal-right-hand-panel .axe-summ tbody').empty().append(axeTrs);
 
 				
         		var PPData = {};
         		var budgetData = {};
-        		rowCount = Math.floor(_this.projectData.length / _this.projectColumns.length);
-        		for (var rowIndex = 0; rowIndex < rowCount; rowIndex++) {
-        			var rowOffset = rowIndex * _this.projectColumns.length;
+        		_this.loop(_this.projectData, _this.projectColumns, _this.year, function (i, item) {
 
-        			if (_this.projectData[rowOffset + _this.objectTypeIndex] != 'P')
-        				continue;
+        			if (item[_this.objectTypeIndex] != 'P')
+        				return;
 
-        			if (_this.projectData[rowOffset + _this.dateIndex].value.split('/')[2] != '2015')
-        				continue;
+        			if (!PPData[item[_this.ppIndex]])
+        				PPData[item[_this.ppIndex]] = 0;
 
-        			if (!PPData[_this.projectData[rowOffset + _this.ppIndex]])
-        				PPData[_this.projectData[rowOffset + _this.ppIndex]] = 0;
+        			PPData[item[_this.ppIndex]] += 1;
 
-        			PPData[_this.projectData[rowOffset + _this.ppIndex]] += 1;
+        			if (!budgetData[item[_this.ppIndex]])
+        				budgetData[item[_this.ppIndex]] = 0;
 
-        			if (!budgetData[_this.projectData[rowOffset + _this.ppIndex]])
-        				budgetData[_this.projectData[rowOffset + _this.ppIndex]] = 0;
-
-        			budgetData[_this.projectData[rowOffset + _this.ppIndex]] += parseFloat((_this.projectData[rowOffset + _this.budgetIndex] ? _this.projectData[rowOffset + _this.budgetIndex] : 0), 10);
-        		}
+        			budgetData[item[_this.ppIndex]] += parseFloat((item[_this.budgetIndex] ? item[_this.budgetIndex] : 0), 10);
+        		});
 
         		var PPSortedData = [];
         		for (var i = 1; i <= 27; i++) {
@@ -1371,7 +1329,7 @@ var Infrastructure;
 						.append($('<td>', { text: PPSortedData[i][2].toString().replace(/(\d{1,3}(?=(\d{3})+(?:\.\d|\b)))/g,"\$1 ") }))
 					);
         		}
-        		$('#senegal-right-hand-panel .pp-summ tbody').append(ppTrs);
+        		$('#senegal-right-hand-panel .pp-summ tbody').empty().append(ppTrs);
 
 
         		var reformsData = {
@@ -1381,24 +1339,20 @@ var Infrastructure;
         			'Economie numérique': 0,
         			'Financement de l’économie': 0
         		};
-        		rowCount = Math.floor(_this.projectData.length / _this.projectColumns.length);
-        		for (var rowIndex = 0; rowIndex < rowCount; rowIndex++) {
-        			var rowOffset = rowIndex * _this.projectColumns.length;
+        		_this.loop(_this.projectData, _this.projectColumns, null, function(i, item){
+        			if (item[_this.objectTypeIndex] != 'R')
+        				return;
 
-        			if (_this.projectData[rowOffset + _this.objectTypeIndex] != 'R')
-        				continue;
-
-        			reformsData[_this.projectData[rowOffset + _this.reformIndex]] += 1;
-        		}
+        			reformsData[item[_this.reformIndex]] += 1;
+        		});
 
         		var reformTrs = [];
-        		for (var ref in reformsData) {
+        		for (var ref in reformsData)
         			reformTrs.push($('<tr>').append($('<td>', { text: ref })).append($('<td>', { text: reformsData[ref] })));
-        		}
-        		$('#senegal-right-hand-panel .reforms-groups tbody').append(reformTrs);
+
+        		$('#senegal-right-hand-panel .reforms-groups tbody').empty().append(reformTrs);
 
         		_this.pushRightPanelContentToExportForm($('#senegal-right-hand-panel'), 'Senegal');
-        		_this.senegalTabIsLoaded = true;
         	});
         };
 
@@ -1435,28 +1389,26 @@ var Infrastructure;
         		var res = [];
         		var unicPP = [];
 
-        		for (var i = 0; i < _this.projectData.length / _this.projectColumns.length; i++) {
-
-        			var offset = i * _this.projectColumns.length;
+        		_this.loop(_this.projectData, _this.projectColumns, null, function (i, item) {
 
         			//only for projects
-        			if (_this.projectData[offset + _this.objectTypeIndex] != 'P')
-        				continue;
+        			if (item[_this.objectTypeIndex] != 'P')
+        				return;
 
-        			if (_this.projectData[offset + _this.objectsIndex] != code)
-        				continue;
+        			if (item[_this.objectsIndex] != code)
+        				return;
 
-        			if ($.inArray(_this.projectData[offset + _this.ppIndex], unicPP) != -1)
-        				continue;
+        			if ($.inArray(item[_this.ppIndex], unicPP) != -1)
+        				return;
 
-        			unicPP.push(_this.projectData[offset + _this.ppIndex]);
+        			unicPP.push(item[_this.ppIndex]);
 
         			res.push({
-        				pp: _this.projectData[offset + _this.ppIndex],
-        				name: _this.projectData[offset + _this.nameIndex],
-        				status: _this.projectData[offset + _this.statusIndex],
+        				pp: item[_this.ppIndex],
+        				name: item[_this.nameIndex],
+        				status: item[_this.statusIndex],
         			});
-        		}
+        		});
 
         		return res;
         	};
@@ -1549,6 +1501,46 @@ var Infrastructure;
         	if (!this.hasGeoJson) {
         		this.hasGeoJson = true;
         		this.map.data.loadGeoJson('senegal.json');
+        	}
+        };
+
+        Application.prototype.loop = function (data, columns, date, eachCallback) {
+
+        	if (!$.isArray(data) || !$.isArray(columns) || !$.isFunction(eachCallback))
+        		return;
+
+        	var dateIndex = -1;
+        	var columnNames = [];
+        	for (var i = 0; i < columns.length; i++) {
+        		columnNames.push(columns[i].name);
+
+        		if (columns[i].type == 'Date')
+        			dateIndex = i;
+        	}
+
+        	if (date && dateIndex == -1)
+        		return;
+
+        	var rowCount = data.length / columns.length;
+        	for (var i = 0; i < rowCount; i++) {
+        		var offset = i * columns.length;
+
+        		if (date) {
+        			var itemDate = data[offset + dateIndex];
+        			if (!itemDate)
+        				continue;
+
+        			var year = itemDate.value.split('/')[2];
+        			if (year != date.toString())
+        				continue;
+        		}
+
+        		var item = [];
+
+        		for (var j = 0; j < columns.length; j++)
+        			item.push(data[offset + j]);
+
+        		eachCallback(i, item, columnNames);
         	}
         };
 

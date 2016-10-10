@@ -259,11 +259,11 @@
 							tr.append($('<td>', { text: periodData[4 * 6], 'class': '' }));
 							tr.append($('<td>', { 'class': 'uoi' }));
 							tr.append($('<td>', { 'class': 'uoi' })
-								.append($('<a>', { href: "./documents/décret contrat d'apprentissage-technique.pdf", target: '_blank' }).append($('<img>', { src: './img/pdf.png',  'class': 'doc-image' })))
-								.append($('<a>', { href: './documents/réforme apprentissage et stage-technique.docx', target: '_blank' }).append($('<img>', { src: './img/doc.png', 'class': 'doc-image' })))
+								.append($('<a>', { href: "./documents/decret contrat d'apprentissage-technique.pdf", target: '_blank' }).append($('<img>', { src: './img/pdf.png', 'class': 'doc-image' })))
+								.append($('<a>', { href: './documents/reforme apprentissage et stage-technique.docx', target: '_blank' }).append($('<img>', { src: './img/doc.png', 'class': 'doc-image' })))
 							);
 							tr.append($('<td>', { 'class': 'uoi' })
-								.append($('<a>', { href: './documents/decret sur le stage version signée-politique.pdf', target: '_blank' }).append($('<img>', { src: './img/pdf.png', 'class': 'doc-image' })))
+								.append($('<a>', { href: './documents/decret sur le stage version signee-politique.pdf', target: '_blank' }).append($('<img>', { src: './img/pdf.png', 'class': 'doc-image' })))
 								.append($('<a>', { href: './documents/loi 2015-04 sur le stage-politique.pdf', target: '_blank' }).append($('<img>', { src: './img/pdf.png', 'class': 'doc-image' })))
 							);
 						}

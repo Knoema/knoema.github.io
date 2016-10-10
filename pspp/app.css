@@ -1399,15 +1399,11 @@ img.pp-image-small
 	left: 300px;
 	right: 0;
 	box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.25);
-}
-
-.calendar-content
-{
 	font-family: 'Roboto', sans-serif;
 	float: left;
 }
 
-.calendar-content .item
+#timeline .item
 {
 	margin-top: 7px;
 	display: inline-block;
@@ -1418,18 +1414,18 @@ img.pp-image-small
 	font-weight: bold;
 }
 
-.calendar-content .item.active
+#timeline .item.active
 {
 	color: #000;
 }
 
-.calendar-content .item .month
+#timeline .item .month
 {
 	font-size: 12pt;
 	margin: 3px 0 0 0;
 }
 
-.calendar-content .item .year
+#timeline .item .year
 {
 	font-size: 9pt;
 	margin-bottom: 10px;
@@ -1443,6 +1439,11 @@ img.pp-image-small
 	color: #472001;
 	padding: 1px 15px;
 	cursor: pointer;
+}
+
+.year-item.active
+{
+	font-weight: bold;
 }
 
 .v-arrow
@@ -1663,6 +1664,7 @@ ul.topic-content
 ul.topic-content.active
 {
 	display: block;
+	overflow-y: auto;
 }
 
 .sidebar-subtopic
@@ -1718,15 +1720,13 @@ ul.subtopic-content li a
 	top: 0;
 	right: 0;
 	bottom: 0;
-	left: 428px;
+	left: 423px;
 }
 
 .tree-wrapper
 {
 	position: absolute;
     left: 0;
-    overflow-y: auto;
-    overflow-x: hidden;
     top: 0;
     bottom: 60px;
 }

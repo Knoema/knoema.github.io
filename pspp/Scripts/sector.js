@@ -1,4 +1,8 @@
 $(function () {
+
+	var height = $('body').height() - $('.main-menu').height() - $('#footer').height() - $('.botton-wrapper').height() - $('.sidebar-topic').outerHeight(true) * $('.sidebar-topic').length;
+	$('.topic-content').css({ 'max-height': height });
+
 	$('.sidebar-topic').on('click', function () {
 
 		var topicId = $(this).data('topic-id');
