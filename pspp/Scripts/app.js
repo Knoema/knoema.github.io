@@ -355,6 +355,7 @@ var Infrastructure;
 
             		if (regionId == 'SN') {
             			_this.showSenegalPanel();
+            			_this.currentLayerName = 'none';
 
             			$srhp.show();
             			$('#map-canvas').css({ right: '350px' });
@@ -370,7 +371,7 @@ var Infrastructure;
             	}
 
             	$srhp.hide();
-
+            	_this.currentLayerName = 'none';
             	$('input[name=layer]').filter('[value=none]').prop('checked', true);
             	_this.loadGeoJSON();
             	_this.map.data.revertStyle();
@@ -445,7 +446,10 @@ var Infrastructure;
 
             				case 'layer':
 
-            					if (params[j][0] == 'none') {
+            					var layerName = params[j][0];
+            					_this.currentLayerName = layerName;
+
+            					if (layerName == 'none') {
             						_this.loadGeoJSON();
             						_this.map.data.revertStyle();
             						_this.map.data.setStyle(function (feature) {
@@ -459,8 +463,6 @@ var Infrastructure;
             					$("#legend").show();
 
             					var dataLoader = null;
-            					var layerName = params[j][0];
-            					_this.currentLayerName = layerName;
             					switch (layerName) {
             						case 'population':
             							dataLoader = _this.getDataLayerPopulation();
@@ -702,6 +704,7 @@ var Infrastructure;
         			objData = JSON.parse(objData);
 
         			var templateData = {
+        				nameEn: objData["Nom Projet"].split('é').join('e').split('à').join('a').split('ï').join('i'),
         				name: objData["Nom Projet"],
         				budget: (objData["Budget Total Prévu: Dépenses Prévues"] ? objData["Budget Total Prévu: Dépenses Prévues"] : 0),
         				axe: objData["Code de l'axe stratégique de la vision 2035"],
