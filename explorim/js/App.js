@@ -60,9 +60,12 @@ App.prototype.init = function () {
 
         $.getJSON(url).then(function(data) {
 
-            var regions = _.filter(data.items, function(item) {
-                return item.level > 0 && item.key < 1000660 && !_.isUndefined(item.fields.regionid);
-            });
+            //TODO Restore filter
+            // var regions = _.filter(data.items, function(item) {
+            //     return item.level > 0 && item.key < 1000660 && !_.isUndefined(item.fields.regionid);
+            // });
+
+            var regions = data.items;
 
             var $regionsDropdown = $.tmpl('regions-dropdown.html', {
                 regions: regions
@@ -256,8 +259,33 @@ App.prototype.init = function () {
 									]
 								},
 								{
-									//"Electoral roll"
-									title: "Liste électorale"
+									title: "Liste électorale",
+                                    children: [
+                                        {
+                                            title: "Number of MPs",
+                                            children: groupedLayers["Liste électorale. Number of MPs"]
+                                        },
+                                        {
+                                            title: "Number of councilors",
+                                            children: groupedLayers["Liste électorale. Number of councilors"]
+                                        },
+                                        {
+                                            title: "Number of mayors",
+                                            children: groupedLayers["Liste électorale. Number of mayors"]
+                                        },
+                                        {
+                                            title: "Number of polling stations",
+                                            children: groupedLayers["Liste électorale. Number of polling stations"]
+                                        },
+                                        {
+                                            title: "Number of voters",
+                                            children: groupedLayers["Liste électorale. Number of voters"]
+                                        },
+                                        {
+                                            title: "Weight",
+                                            children: groupedLayers["Liste électorale. Weight"]
+                                        }
+                                    ]
 								},
 								{
 									//"Results"
