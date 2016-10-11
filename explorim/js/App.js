@@ -38,6 +38,7 @@ function App() {
 	this._activeRegionalDivision = null;
 	this._activeGroupCuid = null;
     this._activeAreaLayerId = null;
+    this._regionsComponent = null;
     this._layerTitles = {};
 };
 
@@ -45,10 +46,7 @@ App.prototype.init = function () {
 
 	this.loadTemplates($.proxy(function onTemplatesLoaded() {
 
-		var $topButtons = $.tmpl('regional-divisions.html', {
-			divisionTypes: this._divisionTypes,
-			className2: 'btn btn-default'
-		});
+	    var self = this;
 
 		var $modalButtons = $.tmpl('regional-divisions.html', {
 			divisionTypes: this._divisionTypes,
@@ -58,21 +56,34 @@ App.prototype.init = function () {
 		var $modal = $('#regional-division-modal-switcher');
 		$modal.find('.regional-division-buttons').empty().append($modalButtons);
 
-		//top buttons
-		$('#regional-division-map-switcher').empty().append($topButtons);
-
 		var url = '//mauritania.opendataforafrica.org/api/1.0/meta/dataset/MRSCD2015/dimension/region?access_token=' + access_token ;
 
         $.getJSON(url).then(function(data) {
-            var $regionsDropdown = $.tmpl('regions-dropdown.html', {
-                regions: _.filter(data.items, function(item) {
-                    return item.level > 0 && item.key < 1000660;
-                })
-            });
-            $('#top-map-buttons').find('.dropdown-holder').append($regionsDropdown);
 
+            var regions = _.filter(data.items, function(item) {
+                return item.level > 0 && item.key < 1000660 && !_.isUndefined(item.fields.regionid);
+            });
+
+            var $regionsDropdown = $.tmpl('regions-dropdown.html', {
+                regions: regions
+            });
+
+            this._regionsComponent = new GeoPlayground.Components.Regions({
+                map: self._map,
+                style: {
+                    strokeWeight: 1,
+                    strokeColor: 'darkgreen',
+                    fillColor: 'green',
+                    visible: true,
+                    clickable: false
+                },
+                geoJsonFile: 'mauritania.json'
+            });
+
+            $('#top-map-buttons').find('.dropdown-holder').append($regionsDropdown);
             $regionsDropdown.selectpicker();
-        });
+
+        }.bind(this));
 
 		this._map = new google.maps.Map($('#map-container')[0], {
 			mapTypeId: google.maps.MapTypeId.HYBRID,
@@ -83,8 +94,6 @@ App.prototype.init = function () {
 				lng: -10.777588
 			}
 		});
-
-		var self = this;
 
 		google.maps.event.addListenerOnce(this._map, 'idle', function () {
 
@@ -467,10 +476,6 @@ App.prototype.switchDivision = function (division, reloadLayer) {
         enabledRegionTypes = _.map(existingLayers, 'name');
     }
 
-    if (division === 'Nationale') {
-        this._map.setZoom(Math.min(5, this._map.getZoom()));
-    }
-
 	if (enabledRegionTypes) {
 		$switcher.find('a').each($.proxy(function(i, element) {
 			var $a = $(element);
@@ -495,6 +500,11 @@ App.prototype.switchDivision = function (division, reloadLayer) {
 
 App.prototype.bindEvents = function () {
 	var self = this;
+
+    $('#zoom-to-country').on('click', function() {
+        this._map.setZoom(Math.min(5, this._map.getZoom()));
+    }.bind(this))
+
 	$('#regional-division-map-switcher').on('click', 'a', function(event) {
 		self.switchDivision($(event.target).data('division'), true);
 	});
@@ -611,9 +621,16 @@ App.prototype.bindEvents = function () {
 
     $('#select-region').on('hidden.bs.select', function (e) {
 
+        var $selected = $('#select-region').find(':selected');
+
+        var regionId = $selected.data('regionId');
+        var regionName = $selected.data('name');
+
         dataDescriptor.Filter[0].Members = [$('#select-region').val()];
 
-        $('#right-side-bar').find('.header').html($('#select-region').find(":selected").data('name'));
+        this._regionsComponent.select(regionId);
+
+        $('#right-side-bar').find('.header').html(regionName);
         $('#right-side-bar').find('.side-bar-content').empty().append($('<span class="glyphicon glyphicon-cog fa-spin" aria-hidden="true" title="Loading..."></span>'));
 
         $('#right-side-bar').animate({
@@ -621,13 +638,18 @@ App.prototype.bindEvents = function () {
         });
 
         Knoema.Helpers.post('//mauritania.opendataforafrica.org/api/1.0/data/pivot', dataDescriptor, function(pivotResponse) {
-            $('#right-side-bar').find('.side-bar-content').empty().append($.tmpl('region-details.html', {
-                headerMembers: pivotResponse.header[0].members,
-                rows: _.chunk(pivotResponse.data, pivotResponse.header[0].members.length)
-            }));
+            if (pivotResponse.data.length) {
+                $('#right-side-bar').find('.side-bar-content').empty().append($.tmpl('region-details.html', {
+                    headerMembers: pivotResponse.header[0].members,
+                    rows: _.chunk(pivotResponse.data, pivotResponse.header[0].members.length)
+                }));
+                $('#right-side-bar').find('.header').append('<a href="javascript:void 0;" class="export-button" title="Export to PDF"></a>');
+            } else {
+                $('#right-side-bar').find('.side-bar-content').empty().append($('<div>No data</div>'));
+            }
         });
 
-    });
+    }.bind(this));
 
     $('#right-side-bar').on('click', '.close', function() {
         $('#right-side-bar').animate({

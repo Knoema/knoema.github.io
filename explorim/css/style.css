@@ -399,6 +399,9 @@ div.dropdown-holder .bootstrap-select {
     #side-bar .logo-container a {
         background-image: url(../img/logo-x2.png);
     }
+    .export-button {
+        background-image: url(../img/ico-pdf-x2.png);
+    }
 }
 /*===================================================================================*/
 
@@ -409,7 +412,7 @@ div.dropdown-holder .bootstrap-select {
 }
 
 #right-side-bar {
-    background-color: white;
+    background-color: #f5f5f5;
     border-left: 1px solid #cecece;
     position: absolute;
     width: 350px;
@@ -424,6 +427,13 @@ div.dropdown-holder .bootstrap-select {
 #right-side-bar .header {
     font-weight: bold;
     margin-bottom: 20px;
+}
+
+.table-striped>tbody>tr:nth-of-type(odd) {
+    background-color: white;
+}
+.table-striped>tbody>tr:nth-of-type(even) {
+    background-color: #ebebeb;
 }
 
 /*===================================================================================*/
@@ -481,4 +491,12 @@ div.dropdown-holder .bootstrap-select {
     left: 50%;
     font-size: 2em;
     color: white;
+}
+
+.export-button {
+    width: 27px;
+    height: 27px;
+    display: inline-block;
+    margin-left: 20px;
+    background-image: url(../img/ico-pdf.png);
 }

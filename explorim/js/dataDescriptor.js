@@ -1,11 +1,11 @@
 var dataDescriptor = {
     "Header": [{
         "DimensionId": "Time",
-        "Members": ["2006-2013"],
+        "Members": ["2006", "2013"],
         "DimensionName": "Time",
         "DatasetId": "MRSCD2015",
         "Order": "0",
-        "UiMode": "range"
+        "UiMode": "individualMembers"
     }],
     "Stub": [{
         "DimensionId": "indicator",
