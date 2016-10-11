@@ -172,15 +172,9 @@ var Infrastructure;
             	values: [0, 100]
             });
 
-            $('#ppp-projects').selectpicker({ size: 10 });
+            $('#ppp-projects').selectpicker({ size: 10, container: 'body' });
             $('#ppp-projects').on('changed.bs.select', function (e) {
 				
-            	$('#overviewFilter').trigger('change');
-            });
-
-            $('#consumers').selectpicker({ size: 10 });
-            $('#consumers').on('changed.bs.select', function (e) {
-
             	$('#overviewFilter').trigger('change');
             });
 
@@ -617,10 +611,11 @@ var Infrastructure;
 
         Application.prototype.hideNonPresentedProjectsButtons = function () {
 
+        	var _this = this;
         	var presented = [];
         	this.loop(this.projectData, this.projectColumns, null, function (i, item) {
 
-        		var pp = item[this.ppIndex];
+        		var pp = item[_this.ppIndex];
 
         		if ($.inArray(pp, presented) == -1)
         			presented.push(pp);
