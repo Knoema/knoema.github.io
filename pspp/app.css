@@ -21,7 +21,7 @@ body.landing
 	left:0;
 	margin: 0 auto;
 	height: 800px;
-	width: 1000px;
+	width: 1030px;
 	font-family: 'Roboto', serif;
 	color: #fff;
 	text-align:center;
@@ -231,11 +231,12 @@ body.loading > .ajax-loader {
 	left: 0;
 	top: 0;
 	bottom: 0;
-	width: 300px;
+	width: 320px;
 	background-color: #f4ece1;
 	padding: 5px 20px;
 	font-family: 'Roboto', sans-serif;
 	font-size: 12px;
+	overflow-y: auto;
 }
 .filter-form > h2 {
 	font-size: 11px;
@@ -271,7 +272,7 @@ body.loading > .ajax-loader {
 }
 .filtered-content {
 	position: absolute;
-	left: 300px;
+	left: 320px;
 	top: 0;
 	right: 0;
 	bottom: 0;
@@ -532,7 +533,7 @@ h2.left-menu
 {
 	position: absolute;
 	top: 9px;
-	left: 430px;
+	left: 450px;
 	font-size: 9.5pt;
 }
 
@@ -877,7 +878,7 @@ h2.left-menu
 	position: absolute;
     right: 10px;
     top: 10px;
-    width: 110px;
+    width: 120px;
     height: 40px;
     background-color: #f4ece1;
     cursor: pointer;
@@ -1396,7 +1397,7 @@ img.pp-image-small
 	height: 45px;
 	background: #9b7c4f;
 	bottom: 45px;
-	left: 300px;
+	left: 320px;
 	right: 0;
 	box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.25);
 	font-family: 'Roboto', sans-serif;

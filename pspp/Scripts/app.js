@@ -153,6 +153,8 @@ var Infrastructure;
             this.regionAverageData = {};
             this.senegalData = {};
             this.layerData = {};
+            this.layerDataForTooltip = {};
+            this.currentLayerName = null;
             this.globalData = {};
             this.realizeData = {};
             this.preloadedObject = this.getParameterByName('code') ? this.getParameterByName('code') : -1;
@@ -239,6 +241,7 @@ var Infrastructure;
                 },
                 mapTypeId: google.maps.MapTypeId.HYBRID
             });
+            this.map.data.addListener('click', $.proxy(this.clickDataLayerListener, this));
 
             $.when(this.getProjects(), this.getObjects()).done(function (projectData, objectData) {
             	
@@ -336,7 +339,18 @@ var Infrastructure;
             		_this.map.data.revertStyle();
             		_this.map.data.setStyle(function (feature) {
 
-            			return { visible: false };
+            			if (regionId == 'SN')
+            				return {
+            					fillColor: '#fff',
+            					fillOpacity: '0.3',
+            					strokeWeight: 0,
+            					strokeColor: '#fff',
+            					visible: true
+            				};
+            			else
+            				return {
+            					visible: false
+            				};
             		});
 
             		if (regionId == 'SN') {
@@ -446,6 +460,7 @@ var Infrastructure;
 
             					var dataLoader = null;
             					var layerName = params[j][0];
+            					_this.currentLayerName = layerName;
             					switch (layerName) {
             						case 'population':
             							dataLoader = _this.getDataLayerPopulation();
@@ -462,13 +477,13 @@ var Infrastructure;
             					}
 
             					if (_this.layerData[layerName]) {
-            						_this.displayLayerData(_this.layerData[layerName], layerName == 'population');
+            						_this.displayLayerData(layerName, _this.layerData[layerName], layerName == 'population');
             					}
             					else {
             						dataLoader.done(function (data) {
 
             							_this.layerData[layerName] = data;
-            							_this.displayLayerData(data, layerName == 'population');
+            							_this.displayLayerData(layerName, data, layerName == 'population');
             						});
             					}
 
@@ -975,7 +990,7 @@ var Infrastructure;
         	return $.post(url, description);
         };
 
-        Application.prototype.displayLayerData = function (data, needToNorm) {
+        Application.prototype.displayLayerData = function (layer, data, needToNorm) {
 
         	var regionIdIndex = -1;
         	var valueIndex = -1;
@@ -1004,6 +1019,9 @@ var Infrastructure;
         		if (value > maxValue)
         			maxValue = value;
         	});
+
+        	if (!this.layerDataForTooltip[layer])
+        		this.layerDataForTooltip[layer] = rawData;
 
         	var normData = {};
         	if(needToNorm)
@@ -1155,6 +1173,8 @@ var Infrastructure;
         	var $trs = [];
         	$rhp.find('tbody').empty();
         	if (projects.length > 0) {
+        		$('.table-container').show();
+
         		for (var i = 0; i < projects.length; i++) {
 
         			var ppNumber = '00';
@@ -1183,6 +1203,9 @@ var Infrastructure;
         					new google.maps.event.trigger(marker, 'click');
         			});
         		});
+        	}
+        	else {
+        		$('.table-container').hide();
         	}
 
         	this.getRegionData(regionId, function (data) {
@@ -1542,6 +1565,23 @@ var Infrastructure;
 
         		eachCallback(i, item, columnNames);
         	}
+        };
+
+        Application.prototype.clickDataLayerListener = function (event) {
+			
+        	if (this.infoWindow != null)
+        		this.infoWindow.close();
+
+        	var regionId = event.feature.getProperty('Id');
+        	var value = this.layerDataForTooltip[this.currentLayerName][regionId].toString().replace(/(\d{1,3}(?=(\d{3})+(?:\.\d|\b)))/g, "\$1 ");
+        	var content = '<b>Region:&nbsp;</b>' + event.feature.getProperty('Name') + '<br /><b>Value:&nbsp;</b>' + value;
+
+        	this.infoWindow = new google.maps.InfoWindow({
+        		content: content,
+        		position: event.latLng
+        	});
+
+        	this.infoWindow.open(this.map);
         };
 
         return Application;
