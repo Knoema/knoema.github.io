@@ -56,7 +56,9 @@ App.prototype.init = function () {
 		var $modal = $('#regional-division-modal-switcher');
 		$modal.find('.regional-division-buttons').empty().append($modalButtons);
 
-		var url = '//mauritania.opendataforafrica.org/api/1.0/meta/dataset/MRSCD2015/dimension/region?access_token=' + access_token ;
+		//var url = '//mauritania.opendataforafrica.org/api/1.0/meta/dataset/MRSCD2015/dimension/region?access_token=' + access_token ;
+
+        var url = '//explorim.knoema.com/api/1.0/meta/dataset/ftqbdwb/dimension/region?access_token=' + access_token ;
 
         $.getJSON(url).then(function(data) {
 
