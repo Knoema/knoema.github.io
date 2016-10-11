@@ -704,7 +704,7 @@ var Infrastructure;
         			objData = JSON.parse(objData);
 
         			var templateData = {
-        				nameEn: objData["Nom Projet"].split('é').join('e').split('à').join('a').split('ï').join('i'),
+        				nameEn: objData["Nom Projet"].split('é').join('e').split('à').join('a').split('ï').join('i').split('è').join('e'),
         				name: objData["Nom Projet"],
         				budget: (objData["Budget Total Prévu: Dépenses Prévues"] ? objData["Budget Total Prévu: Dépenses Prévues"] : 0),
         				axe: objData["Code de l'axe stratégique de la vision 2035"],
@@ -715,7 +715,7 @@ var Infrastructure;
         				ptip: objData["Code PTIP"],
         				locale: objData["locales"],
         			};
-
+					
         			var template = doT.template($('#new-object-passport').html());
         			var template_b = doT.template($('#new-object-budgetting').html());
 
