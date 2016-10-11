@@ -77,7 +77,11 @@ App.prototype.init = function () {
                     visible: true,
                     clickable: false
                 },
-                geoJsonFile: 'mauritania.json'
+                geoJsonFile: 'mauritania.json',
+                onSelectRegion: function(regionId, dataLayer, feature) {
+                    //mapsObject.panBy(200, 100)
+                    //panTo(latLng:LatLng|LatLngLiteral)
+                }
             });
 
             $('#top-map-buttons').find('.dropdown-holder').append($regionsDropdown);
@@ -628,6 +632,12 @@ App.prototype.bindEvents = function () {
 
         dataDescriptor.Filter[0].Members = [$('#select-region').val()];
 
+        $('#map-container').css({
+            "width": $(window).width() - 400 - 350
+        });
+
+        google.maps.event.trigger(this._map, "resize");
+
         this._regionsComponent.select(regionId);
 
         $('#right-side-bar').find('.header').html(regionName);
@@ -652,10 +662,16 @@ App.prototype.bindEvents = function () {
     }.bind(this));
 
     $('#right-side-bar').on('click', '.close', function() {
+        $('#map-container').css({
+            "width": $(window).width() - 400
+        });
+        google.maps.event.trigger(self._map, "resize");
+
         $('#right-side-bar').animate({
             "right": -1 * ($('#right-side-bar').width() + 20)
         }, function() {
             $('#select-region').selectpicker('val', 'not-selected');
+            self._regionsComponent.select(null);
         });
     });
 

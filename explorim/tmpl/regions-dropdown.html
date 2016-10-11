@@ -1,5 +1,7 @@
 <select id="select-region">
-    <option value="not-selected" selected disabled style="color: #cecece;">Select region</option>
+    <option value="not-selected" selected disabled style="color: #cecece;">
+        Pas de Choix
+    </option>
     {{each(i, region) regions}}
     <option data-name="${region.name}" data-region-id="${region.fields.regionid}" value="${region.key}">
         ${Array(region.level).join('&nbsp;&nbsp;')} ${region.name}
