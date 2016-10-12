@@ -1483,7 +1483,7 @@ var Infrastructure;
         	clone.wrap('<div></div>')
 
         	var content = clone.parent().html();
-        	content = content.split('./').join(location.protocol + '//' + location.host + '/');
+        	content = content.split('./').join(location.protocol + '//' + location.host + '/pspp/');
 
         	var template = doT.template($('#export-content').html());
         	$('#export-form [name=content]').val(template({
