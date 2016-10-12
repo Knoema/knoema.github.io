@@ -333,6 +333,27 @@ div.dropdown-holder .bootstrap-select {
     background-image: url(../img/icon-expand-x2.png);
 }
 
+.item-holder, .item-holder label {
+    cursor: pointer;
+}
+
+.item-holder:hover .dataset-link {
+    display: inline-block;
+}
+
+
+.dataset-link {
+    display: none;
+    float: right;
+    color: gray;
+    font-size: 0.8em;
+}
+.dataset-link:hover {
+    color: green;
+}
+
+
+
 
 .panel-group .panel+.panel {
     /*margin-top: -1px;*/
@@ -368,6 +389,14 @@ div.dropdown-holder .bootstrap-select {
     background-image: url('../img/icon-03.png');
 }
 
+.zone-de-ville {
+    background-image: url('../img/icon-04.png');
+}
+
+.politics {
+    background-image: url('../img/icon-03-x2.png');
+}
+
 .mCSB_dragger_bar {
     background-color: #245b13!important;
 }
@@ -396,6 +425,13 @@ div.dropdown-holder .bootstrap-select {
     .elections {
         background-image: url('../img/icon-03-x2.png');
     }
+    .zone-de-ville {
+        background-image: url('../img/icon-04-x2.png');
+    }
+    .politics {
+        background-image: url('../img/icon-03-x2.png');
+    }
+
     #side-bar .logo-container a {
         background-image: url(../img/logo-x2.png);
     }

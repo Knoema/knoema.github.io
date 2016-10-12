@@ -28,13 +28,16 @@
                                         {{if item3.children && item3.children.length}}
                                             {{each(kk, item4) item3.children}}
                                                 {{if item4.children && item4.children.length && _.every(item4.children, function(layer) { return layer.layerType == 'region'; })}}
-                                                    <div>
+                                                    <div class="item-holder">
                                                         <label>
                                                             <input id="${cuid()}" data-layers="${JSON.stringify(item4.children)}" type="checkbox" /> ${item4.title}
                                                         </label>
+                                                        <a href="//explorim.knoema.com/${item4.children[0].datasetId}" class="dataset-link" target="_blank" title="View data">
+                                                            <span class="glyphicon glyphicon-new-window" aria-hidden="true"></span>
+                                                        </a>
                                                     </div>
                                                 {{else}}
-                                                    <div>
+                                                    <div class="item-holder">
                                                         <label>
                                                             {{if item4.layerType == 'point'}}
                                                                 <input data-layer-id="${item4.layerId}" data-layer-type="${item4.layerType}" type="checkbox" /> ${item4.name || item4.title}
@@ -42,6 +45,9 @@
                                                                 <span data-layer-id="${item4.layerId}" data-layer-type="${item4.layerType}" data-type="checkbox"> ${item4.name || item4.title}</span>
                                                             {{/if}}
                                                         </label>
+                                                        <a href="//explorim.knoema.com/${item4.datasetId}" class="dataset-link" target="_blank" title="View data">
+                                                            <span class="glyphicon glyphicon-new-window" aria-hidden="true"></span>
+                                                        </a>
                                                     </div>
                                                 {{/if}}
                                             {{/each}}
