@@ -16,10 +16,10 @@ function App() {
 	this._layers = {};
     this.infoWindow = new google.maps.InfoWindow();
 	this._divisionTypes = [
-        {
-            name: 'Nationale',
-            className: 'nationale'
-        },
+        // {
+        //     name: 'Nationale',
+        //     className: 'nationale'
+        // },
         {
             name: 'Région',
             className: 'region'
@@ -178,8 +178,8 @@ App.prototype.init = function () {
                                     title: "Population",
                                     children: [
                                         {
-                                            //Recensement Général de la Population et de l'Habitat
-                                            title: "RGPH",
+                                            //title: "RGPH",
+                                            title: "Recensement Général de la Population et de l'Habitat (RGPH)",
                                             children: [
                                                 {
                                                     title: "Habitat"
@@ -250,7 +250,24 @@ App.prototype.init = function () {
                                     title: "Végétation"
                                 },
                                 {
-                                    title: "Trafic"
+                                    title: "Trafic",
+                                    children: [
+                                        {
+                                            title: "Humains"
+                                        },
+                                        {
+                                            title: "Esclavage, employé"
+                                        },
+                                        {
+                                            title: "Exclavage, sexe"
+                                        },
+                                        {
+                                            title: "Stupéfiants"
+                                        },
+                                        {
+                                            title: "Armes"
+                                        }
+                                    ]
                                 },
                                 {
                                     title: "Terrorisme et les conflits",
@@ -293,38 +310,42 @@ App.prototype.init = function () {
                                         },
                                         {
                                             title: "Fonctionnaires",
-                                            children: [
-                                                {
-                                                    title: "Actif dans la région"
-                                                },
-                                                {
-                                                    title: "De la région"
-                                                },
-                                                {
-                                                    title: "Affecté"
-                                                },
-                                                {
-                                                    title: "Originaire de"
-                                                },
-                                                {
-                                                    title: "Fonction actuelle"
-                                                },
-                                                {
-                                                    title: "NNI"
-                                                },
-                                                {
-                                                    title: "prénom"
-                                                },
-                                                {
-                                                    title: "Date de naissance"
-                                                },
-                                                {
-                                                    title: "Lieu de naissance"
-                                                },
-                                                {
-                                                    title: "Crédit"
-                                                }
-                                            ]
+
+                                            //TODO Refactor Fonctionnaires
+                                            children: groupedLayers["Fonctionnaires"]
+
+                                            //     [
+                                            //     {
+                                            //         title: "Actif dans la région"
+                                            //     },
+                                            //     {
+                                            //         title: "De la région"
+                                            //     },
+                                            //     {
+                                            //         title: "Affecté"
+                                            //     },
+                                            //     {
+                                            //         title: "Originaire de"
+                                            //     },
+                                            //     {
+                                            //         title: "Fonction actuelle"
+                                            //     },
+                                            //     {
+                                            //         title: "NNI"
+                                            //     },
+                                            //     {
+                                            //         title: "prénom"
+                                            //     },
+                                            //     {
+                                            //         title: "Date de naissance"
+                                            //     },
+                                            //     {
+                                            //         title: "Lieu de naissance"
+                                            //     },
+                                            //     {
+                                            //         title: "Crédit"
+                                            //     }
+                                            // ]
                                         },
                                         {
                                             title: "Hommes d'affaires",
@@ -555,11 +576,6 @@ App.prototype.init = function () {
                                                     title: "Weight",
                                                     children: groupedLayers["Liste électorale. Weight"]
                                                 },
-
-                                                {
-                                                    title: "--------------------------"
-                                                },
-
                                                 {
                                                     title: "Les députés"
                                                 },
@@ -735,19 +751,23 @@ App.prototype.onResize = function () {
 
 };
 
-App.prototype.switchDivision = function (division, reloadLayer) {
+App.prototype.switchDivision = function (division, reloadLayer, layerId, availableLayers) {
 	this._activeRegionalDivision = division;
 
 	var $switcher = $('#regional-division-map-switcher');
 
 	$switcher.find('.active').removeClass('active');
-	$switcher.find('.disabled').removeClass('disabled');
+    $switcher.find('.disabled').removeClass('disabled');
 	$switcher.find('a[data-division="' + division + '"]').addClass('active');
 
     var enabledRegionTypes;
     if (this._activeGroupCuid) {
         var existingLayers = $('#' + this._activeGroupCuid).data('layers');
         enabledRegionTypes = _.map(existingLayers, 'name');
+    }
+
+    if (availableLayers) {
+        enabledRegionTypes = availableLayers;
     }
 
 	if (enabledRegionTypes) {
@@ -767,7 +787,13 @@ App.prototype.switchDivision = function (division, reloadLayer) {
             var layer = _.find($activeGroup.data().layers, $.proxy(function(layer) {
                 return layer.name === division;
             }, this));
-            this.loadLayer(layer.layerId, 'region');
+
+            if (layer) {
+                this.loadLayer(layer.layerId, 'region');
+            } else {
+                //this.loadLayer(layer.layerId, 'region');
+            }
+
         }
     }
 };
@@ -780,7 +806,7 @@ App.prototype.bindEvents = function () {
     }.bind(this))
 
 	$('#regional-division-map-switcher').on('click', 'a', function(event) {
-		self.switchDivision($(event.target).data('division'), true);
+		self.switchDivision($(event.target).data('division'), true, $(event.target).data('layerId'));
 	});
 
 	$('#regional-division-modal-switcher').on('click', '.regional-division-type', function() {
@@ -797,7 +823,9 @@ App.prototype.bindEvents = function () {
     }, this));
 
     $('#filters-tree').on('click', 'label', $.proxy(function(event) {
+
         if (event.target.tagName === 'INPUT') {
+
             var $target = $(event.target);
             var layerId, activeRegionalDivision;
             var layerType = $target.data('layerType');
@@ -819,6 +847,10 @@ App.prototype.bindEvents = function () {
 					return layer.name === this._activeRegionalDivision;
 				}.bind(this));
 
+                var availableLayers = _.map(layers, function(layer) {
+                    return layer.name;
+                });
+
 				if (!layer && layers[0]) {
 					layerId = layers[0].layerId;
 					activeRegionalDivision = layers[0].name;
@@ -826,12 +858,22 @@ App.prototype.bindEvents = function () {
 					layerId = layer.layerId;
 					activeRegionalDivision = layer.name;
 				}
+
 				if (layerId && this._activeGroupCuid != groupCuid) {
-                    this.switchDivision(activeRegionalDivision, false);
+                    this.switchDivision(activeRegionalDivision, false, null, availableLayers);
                     this._activeGroupCuid = groupCuid;
+
+                    $('#regional-division-map-switcher').find('a').each(function(i, a) {
+                        var $a = $(a);
+                        var layer  = _.find(layers, function(layer) {return layer.name == $a.data('division')});
+                        var layerId = layer ? layer.layerId : null;
+                        $a.data('layerId', layerId);
+                    });
+
                     this.loadLayer(layerId, 'region');
                 } else if (layerId && this._activeGroupCuid == groupCuid) {
                     this._activeGroupCuid = null;
+                    $('#regional-division-map-switcher').find('a').data('layer-id', null);
                     this._layers[layerId].clean();
                 }
             }
@@ -960,19 +1002,32 @@ App.prototype.bindEvents = function () {
 	$(window).on('resize', $.proxy(this.onResize, this));
 };
 
+App.prototype.showLegend = function (ranges) {
+    $('#map-legend-holder').empty()
+        .append($.tmpl('map-legend.html', { ranges: ranges }))
+        .show();
+};
+
+App.prototype.hideLegend = function () {
+    $('#map-legend-holder').empty().hide();
+};
+
 App.prototype.loadLayer = function (layerId, layerType) {
 	var self = this;
 
 	if (this._layers[layerId]) {
 
         if (layerType && layerType === 'region' && this._activeAreaLayerId != null) {
+            this.hideLegend();
             this._layers[this._activeAreaLayerId].clean();
         }
 
         //layer.bounds == null means that layer is not displayed on the map
         if (this._layers[layerId].layer.bounds == null) {
+            this.showLegend(this._layers[layerId].layer.ranges);
             this._layers[layerId].load();
         } else {
+            this.hideLegend();
             this._layers[layerId].clean();
         }
         $('input[data-layer-id="' + layerId + '"]').prop('disabled', false);
@@ -1024,6 +1079,17 @@ App.prototype.loadLayer = function (layerId, layerType) {
 				});
 			} else {
 
+                this.showLegend(this._layers[layerId].layer.ranges);
+
+                layerData.layer.dataLayer.addListener('click', function (e/*: google.maps.Data.MouseEvent*/) {
+                    var data = e.feature.getProperty('tooltipData');
+
+                    self.infoWindow.setContent('<h3>' + data.name + '</h3><p>' + data.value + '</p>');
+                    self.infoWindow.setPosition(e.latLng);
+                    self.infoWindow.open(self._map);
+                });
+
+
 			    //TODO Implement timeline
 				//layerData.layer.data is pivotResponse
 				// this.byTime = _.groupBy(layerData.layer.data, function(tuple) {
@@ -1038,6 +1104,7 @@ App.prototype.loadLayer = function (layerId, layerType) {
             $('input[data-layer-id="' + layerData.layerId + '"]').prop('disabled', false);
 
         }, this));
+
 		layer.load();
 		this._layers[layerId] = layer;
 	}
@@ -1055,7 +1122,8 @@ App.prototype.loadTemplates = function (callback) {
         $.get('tmpl/regions-dropdown.html?random=' + Math.random(), compileTemplate),
         $.get('tmpl/region-details.html?random=' + Math.random(), compileTemplate),
 		$.get('tmpl/filters-tree.html?random=' + Math.random(), compileTemplate),
-        $.get('tmpl/info-window.html?random=' + Math.random(), compileTemplate)
+        $.get('tmpl/info-window.html?random=' + Math.random(), compileTemplate),
+        $.get('tmpl/map-legend.html?random=' + Math.random(), compileTemplate)
 	];
 	$.when.apply(null, templates).done(function onTemplatesLoaded() {
 		if ($.isFunction(callback)) {

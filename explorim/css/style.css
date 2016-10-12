@@ -328,6 +328,7 @@ div.dropdown-holder .bootstrap-select {
     margin-bottom: 15px;
     padding-left: 30px;
     background-image: url(../img/icon-collapse-x2.png);
+    background-position: left -3px;
 }
 .item-title-1.collapsed, .item-title-2.collapsed {
     background-image: url(../img/icon-expand-x2.png);
@@ -535,4 +536,43 @@ div.dropdown-holder .bootstrap-select {
     display: inline-block;
     margin-left: 20px;
     background-image: url(../img/ico-pdf.png);
+}
+
+#profile-modal .modal-dialog {
+    margin: 30px auto;
+    width: 80%!important;
+    height: 80%!important;
+}
+
+#map-legend-holder {
+    position: absolute;
+    z-index: 10;
+    background-color: white;
+    height: 42px;
+    bottom: 100px;
+    left: 20px;
+    padding: 0 5px;
+    display: none;
+}
+.map-legend {
+    display: table;
+}
+.map-legend-color-row {
+    display: table-row;
+}
+.map-legend-cell {
+    width: 40px;
+    display: table-cell;
+}
+.map-legend-low {
+    float: left;
+    font-size: 0.8em;
+}
+.map-legend-height {
+    float: right;
+    font-size: 0.8em;
+}
+.color-cell {
+    height: 10px;
+    display: inline-block;
 }

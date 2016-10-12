@@ -1,0 +1,22 @@
+<div class="map-legend">
+    <div class="map-legend-colors-row">
+        {{each(i, range) ranges}}
+            <div class="map-legend-cell color-cell" style="background-color:#${range.color};">
+            </div>
+        {{/each}}
+    </div>
+    <div class="map-legend-numbers-row">
+        {{each(i, range) ranges}}
+            {{if i == 0}}
+                <div class="map-legend-low">
+                    ${range.low}
+                </div>
+            {{/if}}
+            {{if i == ranges.length - 1}}
+                <div class="map-legend-height">
+                    ${range.high}
+                </div>
+            {{/if}}
+        {{/each}}
+    </div>
+</div>
