@@ -7,11 +7,11 @@
     {{/if}}
 
     {{if typeof content === 'string'}}
-        ${content}
+        ${content.replace('.', ',')}
     {{else}}
         {{each(key, value) content}}
         <div class="info-window__content">
-            <strong>${key}</strong>: ${value}
+            <strong>${key}</strong>: ${Boolean(value) ? value.toString().replace('.', ',') : null}
         </div>
         {{/each}}
     {{/if}}

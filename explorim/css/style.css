@@ -313,6 +313,14 @@ div.dropdown-holder .bootstrap-select {
     color: #3a8e20;
 }
 
+span.item-title {
+    color: gray;
+}
+span.item-title:hover {
+    color: gray;
+    cursor: default;
+}
+
 .item-title-0 {
     font-size: 1.1em;
     text-transform: uppercase;
@@ -475,6 +483,7 @@ div.dropdown-holder .bootstrap-select {
 #right-side-bar .header {
     font-weight: bold;
     margin-bottom: 20px;
+    font-size: 1.4em;
 }
 
 .table-striped>tbody>tr:nth-of-type(odd) {
@@ -605,4 +614,13 @@ div.dropdown-holder .bootstrap-select {
 }
 .info-window__content {
     font-size: 13pt;
+}
+
+
+.bootstrap-select {
+    text-transform: lowercase;
+}
+
+.bootstrap-select.btn-group .dropdown-menu li a span.text:first-letter {
+    text-transform: uppercase;
 }

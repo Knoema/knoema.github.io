@@ -15,6 +15,21 @@ function App() {
 	this.geoPlaygroundId = 'zabecdg';
 	this._layers = {};
     this.infoWindow = new google.maps.InfoWindow();
+
+    this._visibleStyle = {
+        strokeColor: 'white',
+        strokeWeight: 1,
+        fillColor: 'transparent',
+        clickable: true
+    };
+
+    this._invisibleStyle = {
+        strokeColor: 'transparent',
+        strokeWeight: 1,
+        fillColor: 'transparent',
+        clickable: false
+    };
+
 	this._divisionTypes = [
         // {
         //     name: 'Nationale',
@@ -40,6 +55,7 @@ function App() {
 	this._activeGroupCuid = null;
     this._activeAreaLayerId = null;
     this._regionsComponent = null;
+    this._dataLayers = {};
     this._layerTitles = {};
 };
 
@@ -106,6 +122,38 @@ App.prototype.init = function () {
 		google.maps.event.addListenerOnce(this._map, 'idle', function () {
 
 			var idleTimeout = window.setTimeout(function () {
+
+                $.when.apply(null, [
+                    $.getJSON('mauritaniaCommunes.json'),
+                    $.getJSON('mauritaniaDepartments.json'),
+                    $.getJSON('mauritaniaGovernorates.json')
+                ]).done(function onGeoJsonLoaded(communes, departments, governorates) {
+
+                    self._dataLayers['Région'] = new google.maps.Data();
+                    self._dataLayers['Région'].setMap(self._map);
+                    self._dataLayers['Région'].addGeoJson(governorates[0]);
+                    self._dataLayers['Région'].setStyle(self._invisibleStyle);
+
+
+                    self._dataLayers['Département'] = new google.maps.Data();
+                    self._dataLayers['Département'].setMap(self._map);
+                    self._dataLayers['Département'].addGeoJson(departments[0]);
+                    self._dataLayers['Département'].setStyle(self._invisibleStyle);
+
+                    self._dataLayers['Communale'] = new google.maps.Data();
+                    self._dataLayers['Communale'].setMap(self._map);
+                    self._dataLayers['Communale'].addGeoJson(communes[0]);
+                    self._dataLayers['Communale'].setStyle(self._invisibleStyle);
+
+                    //TODO Add same handler as in
+                    //$('#select-region').on('hidden.bs.select', this.selectRegion.bind(this));
+
+                    self._dataLayers['Région'].addListener('click', self.selectRegion.bind(self));
+                    self._dataLayers['Département'].addListener('click', self.selectRegion.bind(self));
+                    self._dataLayers['Communale'].addListener('click', self.selectRegion.bind(self));
+
+                });
+
 				$.get('//knoema.com/api/1.0/frontend/resource/' + self.geoPlaygroundId + '/content', function(content) {
 
 				    _.each(content.layers, function(layer, layerId) {
@@ -133,56 +181,61 @@ App.prototype.init = function () {
                                 {
                                     title: "Infrastructures",
                                     children: [
-
-                                        //TODO Remove this ===============================================
-                                        //TODO Remove this ===============================================
-                                        //TODO Remove this ===============================================
-                                        // {
-                                        //     title: "Routes DDDDD",
-                                        //     children: [
-                                        //         {
-                                        //             title: "Routes 1",
-                                        //             children: [
-                                        //                 {
-                                        //                     title: "Routes 1-1",
-                                        //                     children: [
-                                        //                         {
-                                        //                             title: "Routes 1-1-1"
-                                        //                         },
-                                        //                         {
-                                        //                             title: "Schools",
-                                        //                             children: [
-                                        //                                 {
-                                        //                                     title: "Primary Schools",
-                                        //                                     children: groupedLayers["Primary Schools"]
-                                        //                                 },
-                                        //                                 {
-                                        //                                     title: "Secondary Schools",
-                                        //                                     children: groupedLayers["Secondary Schools"]
-                                        //                                 }
-                                        //                             ]
-                                        //                         }
-                                        //                     ]
-                                        //                 },
-                                        //                 {
-                                        //                     title: "Routes 1-2"
-                                        //                 }
-                                        //             ]
-                                        //         },
-                                        //         {
-                                        //             title: "Routes 2"
-                                        //         }
-                                        //     ]
-                                        // },
-                                        //TODO Remove this ===============================================
-                                        //TODO Remove this ===============================================
-                                        //TODO Remove this ===============================================
-
                                         {
                                             title: "Routes"
                                         },
                                         {
-                                            title: "Projets actuels"
+                                            title: "Projets actuels",
+                                            children: [
+                                                {
+                                                    title: "Education, Anticipated",
+                                                    children: groupedLayers["Education, Anticipated"]
+                                                },
+                                                {
+                                                    title: "Education, Finalised",
+                                                    children: groupedLayers["Education, Finalised"]
+                                                },
+                                                {
+                                                    title: "Electricity, Anticipated",
+                                                    children: groupedLayers["Electricity, Anticipated"]
+                                                },
+                                                {
+                                                    title: "Electricity, Finalised",
+                                                    children: groupedLayers["Electricity, Finalised"]
+                                                },
+                                                {
+                                                    title: "Health, Anticipated",
+                                                    children: groupedLayers["Health, Anticipated"]
+                                                },
+                                                {
+                                                    title: "Health, Finalised",
+                                                    children: groupedLayers["Health, Finalised"]
+                                                },
+                                                {
+                                                    title: "Other, Anticipated",
+                                                    children: groupedLayers["Other, Anticipated"]
+                                                },
+                                                {
+                                                    title: "Other, Finalised",
+                                                    children: groupedLayers["Other, Finalised"]
+                                                },
+                                                {
+                                                    title: "Social (Boutique Emel), Anticipated",
+                                                    children: groupedLayers["Social (Boutique Emel), Anticipated"]
+                                                },
+                                                {
+                                                    title: "Social (Boutique Emel), Finalised",
+                                                    children: groupedLayers["Social (Boutique Emel), Finalised"]
+                                                },
+                                                {
+                                                    title: "Water, Anticipated",
+                                                    children: groupedLayers["Water, Anticipated"]
+                                                },
+                                                {
+                                                    title: "Water, Finalised",
+                                                    children: groupedLayers["Water, Finalised"]
+                                                }
+                                            ]
                                         },
                                         {
                                             title: "Télécommunications"
@@ -224,7 +277,8 @@ App.prototype.init = function () {
                                             title: "Recensement Général de la Population et de l'Habitat (RGPH)",
                                             children: [
                                                 {
-                                                    title: "Habitat"
+                                                    title: "Habitat",
+                                                    children: groupedLayers["Habitat"]
                                                 },
                                                 {
                                                     title: "Équipments de la maison"
@@ -233,7 +287,8 @@ App.prototype.init = function () {
                                                     title: "Cuisine eclairage eau"
                                                 },
                                                 {
-                                                    title: "Assainissement"
+                                                    title: "Assainissement",
+                                                    children: groupedLayers["Assainissement"]
                                                 }
                                             ]
                                         },
@@ -272,7 +327,8 @@ App.prototype.init = function () {
                             className: "zone-de-ville",
                             children: [
                                 {
-                                    title: "Pêches"
+                                    title: "Pêches",
+                                    children: groupedLayers["Peches"]
                                 },
                                 {
                                     title: "Immigration illégale"
@@ -354,42 +410,7 @@ App.prototype.init = function () {
                                         },
                                         {
                                             title: "Fonctionnaires",
-
-                                            //TODO Refactor Fonctionnaires
                                             children: groupedLayers["Fonctionnaires"]
-
-                                            //     [
-                                            //     {
-                                            //         title: "Actif dans la région"
-                                            //     },
-                                            //     {
-                                            //         title: "De la région"
-                                            //     },
-                                            //     {
-                                            //         title: "Affecté"
-                                            //     },
-                                            //     {
-                                            //         title: "Originaire de"
-                                            //     },
-                                            //     {
-                                            //         title: "Fonction actuelle"
-                                            //     },
-                                            //     {
-                                            //         title: "NNI"
-                                            //     },
-                                            //     {
-                                            //         title: "prénom"
-                                            //     },
-                                            //     {
-                                            //         title: "Date de naissance"
-                                            //     },
-                                            //     {
-                                            //         title: "Lieu de naissance"
-                                            //     },
-                                            //     {
-                                            //         title: "Crédit"
-                                            //     }
-                                            // ]
                                         },
                                         {
                                             title: "Hommes d'affaires",
@@ -689,6 +710,14 @@ App.prototype.onResize = function () {
 App.prototype.switchDivision = function (division, reloadLayer, layerId, availableLayers) {
 	this._activeRegionalDivision = division;
 
+    for (var d in this._dataLayers) {
+        if (d == division) {
+            this._dataLayers[d].setStyle(this._visibleStyle);
+        } else {
+            this._dataLayers[d].setStyle(this._invisibleStyle);
+        }
+    }
+
 	var $switcher = $('#regional-division-map-switcher');
 
 	$switcher.find('.active').removeClass('active');
@@ -735,11 +764,62 @@ App.prototype.switchDivision = function (division, reloadLayer, layerId, availab
     }
 };
 
+App.prototype.selectRegion = function (e) {
+
+    var $selected = $('#select-region').find(':selected');
+
+    var regionId, regionName, key;
+
+    if (e.feature) {
+        regionId = e.feature.getId();
+        regionName = e.feature.getProperty('name');
+        key = $('#select-region').find('[data-region-id="' + regionId + '"]').val();
+        $('#select-region').selectpicker('val', key);
+    } else {
+        regionId = $selected.data('regionId');
+        regionName = $selected.data('name');
+        key = $('#select-region').val();
+    }
+
+    if (!regionId) {
+        return;
+    }
+
+    dataDescriptor.Filter[0].Members = [key];
+
+    $('#map-container').css({
+        "width": $(window).width() - 400 - 350
+    });
+
+    google.maps.event.trigger(this._map, "resize");
+
+    this._regionsComponent.select(regionId);
+
+    $('#right-side-bar').find('.header').html(regionName);
+    $('#right-side-bar').find('.side-bar-content').empty().append($('<span class="glyphicon glyphicon-cog fa-spin" aria-hidden="true" title="Loading..."></span>'));
+
+    $('#right-side-bar').animate({
+        "right": 0
+    });
+
+    Knoema.Helpers.post('//mauritania.opendataforafrica.org/api/1.0/data/pivot', dataDescriptor, function(pivotResponse) {
+        if (pivotResponse.data.length) {
+            $('#right-side-bar').find('.side-bar-content').empty().append($.tmpl('region-details.html', {
+                headerMembers: pivotResponse.header[0].members,
+                rows: _.chunk(pivotResponse.data, pivotResponse.header[0].members.length)
+            }));
+            $('#right-side-bar').find('.header').append('<a href="javascript:void 0;" class="export-button" title="Export to PDF"></a>');
+        } else {
+            $('#right-side-bar').find('.side-bar-content').empty().append($('<a href="#" class="btn" id="view-profile">Voir le profil régional</a><div>No data</div>'));
+        }
+    });
+};
+
 App.prototype.bindEvents = function () {
 	var self = this;
 
     $('#zoom-to-country').on('click', function() {
-        this._map.setZoom(Math.min(5, this._map.getZoom()));
+        this._map.setZoom(Math.min(6, this._map.getZoom()));
     }.bind(this))
 
 	$('#regional-division-map-switcher').on('click', 'a', function(event) {
@@ -888,43 +968,7 @@ App.prototype.bindEvents = function () {
 
     }, this));
 
-    $('#select-region').on('hidden.bs.select', function (e) {
-
-        var $selected = $('#select-region').find(':selected');
-
-        var regionId = $selected.data('regionId');
-        var regionName = $selected.data('name');
-
-        dataDescriptor.Filter[0].Members = [$('#select-region').val()];
-
-        $('#map-container').css({
-            "width": $(window).width() - 400 - 350
-        });
-
-        google.maps.event.trigger(this._map, "resize");
-
-        this._regionsComponent.select(regionId);
-
-        $('#right-side-bar').find('.header').html(regionName);
-        $('#right-side-bar').find('.side-bar-content').empty().append($('<span class="glyphicon glyphicon-cog fa-spin" aria-hidden="true" title="Loading..."></span>'));
-
-        $('#right-side-bar').animate({
-            "right": 0
-        });
-
-        Knoema.Helpers.post('//mauritania.opendataforafrica.org/api/1.0/data/pivot', dataDescriptor, function(pivotResponse) {
-            if (pivotResponse.data.length) {
-                $('#right-side-bar').find('.side-bar-content').empty().append($.tmpl('region-details.html', {
-                    headerMembers: pivotResponse.header[0].members,
-                    rows: _.chunk(pivotResponse.data, pivotResponse.header[0].members.length)
-                }));
-                $('#right-side-bar').find('.header').append('<a href="javascript:void 0;" class="export-button" title="Export to PDF"></a>');
-            } else {
-                $('#right-side-bar').find('.side-bar-content').empty().append($('<div>No data</div>'));
-            }
-        });
-
-    }.bind(this));
+    $('#select-region').on('hidden.bs.select', this.selectRegion.bind(this));
 
     $('#right-side-bar').on('click', '#view-profile', function() {
         $('#profile-modal').modal({
@@ -1034,7 +1078,7 @@ App.prototype.loadLayer = function (layerId, layerType) {
 
                 this.showLegend(this._layers[layerId].layer.ranges);
 
-                layerData.layer.dataLayer.addListener('click', function (e/*: google.maps.Data.MouseEvent*/) {
+                layerData.layer.dataLayer.addListener('click', function (e) {
                     var data = e.feature.getProperty('tooltipData');
                     var $infoWindowContent = $.tmpl('info-window.html', {
                         title: data.name,
