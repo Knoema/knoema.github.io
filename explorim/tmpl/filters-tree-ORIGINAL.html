@@ -1,0 +1,68 @@
+<div class="panel-group" id="filters-tree">
+    {{each(i, item) items}}
+        <div class="panel">
+            <div class="panel-heading" role="tab" id="headingOne">
+                <a class="item-title item-title-0 ${item.className}" data-toggle="collapse" data-parent="#filters-tree" href="#item-content-${i}">
+                    ${item.title}
+                </a>
+            </div>
+            <div class="item-content panel-collapse collapse item-content-level-0" id="item-content-${i}" style="height: 0;">
+                <div class="panel-body scroll-content">
+                    {{each(j, item2) item.children}}
+                        <a class="item-title item-title-1 collapsed" data-toggle="collapse" data-parent="#item-content-${i}" href="#item-content-${i}-${j}">
+                            ${item2.title}
+                        </a>
+                        <div class="item-content collapse item-content-level-1" id="item-content-${i}-${j}" style="height: 0;">
+                            {{each(k, item3) item2.children}}
+                                {{if item3.children && item3.children.length && _.every(item3.children, function(layer) { return layer.layerType == 'region'; })}}
+                                    <div>
+                                        <label>
+                                            <input id="${cuid()}" data-layers="${JSON.stringify(item3.children)}" type="checkbox" /> ${item3.title}
+                                        </label>
+                                    </div>
+                                {{else}}
+                                    <a class="item-title item-title-2 collapsed" data-toggle="collapse" data-parent="#item-content-${i}-${j}" href="#item-content-${i}-${j}-${k}">
+                                        ${item3.title}
+                                    </a>
+                                    <div class="item-content collapse item-content-level-2" id="item-content-${i}-${j}-${k}" style="height: 0;">
+                                        {{if item3.children && item3.children.length}}
+                                            {{each(kk, item4) item3.children}}
+                                                {{if item4.children && item4.children.length && _.every(item4.children, function(layer) { return layer.layerType == 'region'; })}}
+                                                    <div class="item-holder">
+                                                        <label>
+                                                            <input id="${cuid()}" data-layers="${JSON.stringify(item4.children)}" type="checkbox" /> ${item4.title}
+                                                        </label>
+                                                        <a href="//explorim.knoema.com/${item4.children[0].datasetId}" class="dataset-link" target="_blank" title="View data">
+                                                            <span class="glyphicon glyphicon-new-window" aria-hidden="true"></span>
+                                                        </a>
+                                                    </div>
+                                                {{else}}
+                                                    <div class="item-holder">
+                                                        <label>
+                                                            {{if item4.layerType == 'point'}}
+                                                                <input data-layer-id="${item4.layerId}" data-layer-type="${item4.layerType}" type="checkbox" /> ${item4.name || item4.title}
+                                                            {{else}}
+                                                                <span data-layer-id="${item4.layerId}" data-layer-type="${item4.layerType}" data-type="checkbox"> ${item4.name || item4.title}</span>
+                                                            {{/if}}
+                                                        </label>
+                                                        <a href="//explorim.knoema.com/${item4.datasetId}" class="dataset-link" target="_blank" title="View data">
+                                                            <span class="glyphicon glyphicon-new-window" aria-hidden="true"></span>
+                                                        </a>
+                                                    </div>
+                                                {{/if}}
+                                            {{/each}}
+                                        {{else}}
+                                            <div style="display: none;">
+                                                Content of ${item3.title}
+                                            </div>
+                                        {{/if}}
+                                    </div>
+                                {{/if}}
+                            {{/each}}
+                        </div>
+                    {{/each}}
+                </div><!--.scroll-content-->
+            </div>
+        </div>
+    {{/each}}
+</div>
