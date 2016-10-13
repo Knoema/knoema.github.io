@@ -1500,8 +1500,8 @@ var Infrastructure;
 
         	firstPage.find('.status-button').remove();
 
-        	var content = firstPage.html() + '<div style="page-break-before: always"></div>' + secondPage.html();
-        	content = content.split('./').join(location.protocol + '//' + location.host + '/');
+        	var content = firstPage.html();// + '<div style="page-break-before: always"></div>' + secondPage.html();
+        	content = content.split('./').join(location.protocol + '//' + location.host + '/pspp/');
 
         	var template = doT.template($('#export-content').html());
         	$('#export-form [name=content]').val(template({
