@@ -1,10 +1,19 @@
 <div class="info-window">
-    <h3>
+
+    {{if title}}
+    <div class="info-window__header">
         ${title}
-    </h3>
-    {{each(key, value) content}}
-        <div>
+    </div>
+    {{/if}}
+
+    {{if typeof content === 'string'}}
+        ${content}
+    {{else}}
+        {{each(key, value) content}}
+        <div class="info-window__content">
             <strong>${key}</strong>: ${value}
         </div>
-    {{/each}}
+        {{/each}}
+    {{/if}}
+
 </div>

@@ -1,0 +1,40 @@
+{{if item.children && item.children.length && _.every(item.children, function(layer) { return $.inArray(layer.name, ['Région', 'Département', 'Communale']) > -1 && layer.layerType == 'region'; })}}
+    <div>
+        <label>
+            <input id="${cuid()}" data-layers="${JSON.stringify(item.children)}" type="checkbox" /> ${item.title}
+        </label>
+    </div>
+{{else}}
+
+    {{if item.children && item.children.length}}
+        <a class="item-title item-title-1 {{if item.children && item.children.length}}collapsed{{/if}}" {{if item.children && item.children.length}}data-toggle="collapse"{{/if}} href="#item-content-${treeItemId}">
+            ${item.title}
+        </a>
+        <div class="item-content item-content-level-1 {{if item.children && item.children.length}}collapse{{/if}}" id="item-content-${treeItemId}" style="/*height: 0;*/">
+            {{each(i, childItem) item.children}}
+                {{tmpl({item : childItem, treeItemId: cuid()}) 'tree-item-template.html'}}
+            {{/each}}
+        </div>
+    {{else}}
+        <div class="item-holder">
+            {{if item.layerType == 'region'}}
+                <label>
+                    <input data-layer-id="${item.layerId}" data-layer-type="${item.layerType}" type="checkbox" /> ${item.title || item.name}
+                </label>
+            {{else}}
+                {{if item.layerType == 'point'}}
+                    <label>
+                        <input data-layer-id="${item.layerId}" data-layer-type="${item.layerType}" type="checkbox" /> ${item.name || item.title}
+                    </label>
+                {{else}}
+                    <span class="item-title item-title-1 no-children">
+                        ${item.title || item.name}
+                    </span>
+                {{/if}}
+            {{/if}}
+        </div>
+    {{/if}}
+
+{{/if}}
+
+

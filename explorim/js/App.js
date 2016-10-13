@@ -20,6 +20,7 @@ function App() {
         //     name: 'Nationale',
         //     className: 'nationale'
         // },
+
         {
             name: 'Région',
             className: 'region'
@@ -55,8 +56,6 @@ App.prototype.init = function () {
 
 		var $modal = $('#regional-division-modal-switcher');
 		$modal.find('.regional-division-buttons').empty().append($modalButtons);
-
-		//var url = '//mauritania.opendataforafrica.org/api/1.0/meta/dataset/MRSCD2015/dimension/region?access_token=' + access_token ;
 
         var url = '//explorim.knoema.com/api/1.0/meta/dataset/ftqbdwb/dimension/region?access_token=' + access_token ;
 
@@ -134,6 +133,51 @@ App.prototype.init = function () {
                                 {
                                     title: "Infrastructures",
                                     children: [
+
+                                        //TODO Remove this ===============================================
+                                        //TODO Remove this ===============================================
+                                        //TODO Remove this ===============================================
+                                        // {
+                                        //     title: "Routes DDDDD",
+                                        //     children: [
+                                        //         {
+                                        //             title: "Routes 1",
+                                        //             children: [
+                                        //                 {
+                                        //                     title: "Routes 1-1",
+                                        //                     children: [
+                                        //                         {
+                                        //                             title: "Routes 1-1-1"
+                                        //                         },
+                                        //                         {
+                                        //                             title: "Schools",
+                                        //                             children: [
+                                        //                                 {
+                                        //                                     title: "Primary Schools",
+                                        //                                     children: groupedLayers["Primary Schools"]
+                                        //                                 },
+                                        //                                 {
+                                        //                                     title: "Secondary Schools",
+                                        //                                     children: groupedLayers["Secondary Schools"]
+                                        //                                 }
+                                        //                             ]
+                                        //                         }
+                                        //                     ]
+                                        //                 },
+                                        //                 {
+                                        //                     title: "Routes 1-2"
+                                        //                 }
+                                        //             ]
+                                        //         },
+                                        //         {
+                                        //             title: "Routes 2"
+                                        //         }
+                                        //     ]
+                                        // },
+                                        //TODO Remove this ===============================================
+                                        //TODO Remove this ===============================================
+                                        //TODO Remove this ===============================================
+
                                         {
                                             title: "Routes"
                                         },
@@ -147,7 +191,6 @@ App.prototype.init = function () {
                                             title: "Electricité"
                                         },
                                         {
-                                            //"Schools by town"
                                             title: "Les écoles par la ville",
                                             children: [
                                                 {
@@ -161,7 +204,6 @@ App.prototype.init = function () {
                                             ]
                                         },
                                         {
-                                            //'Water points'
                                             title: "Les points d'eau",
                                             children: groupedLayers["Water Wells"]
                                         },
@@ -210,21 +252,16 @@ App.prototype.init = function () {
                                             title: "Santé"
                                         },
                                         {
-                                            title: "Démographie",
-                                            children: [
-                                                {
-                                                    title: "Male Population",
-                                                    children: groupedLayers["Demography. Male Population"]
-                                                },
-                                                {
-                                                    title: "Female Population",
-                                                    children: groupedLayers["Demography. Female Population"]
-                                                },
-                                                {
-                                                    title: "Total Population",
-                                                    children: groupedLayers["Demography. Total Population"]
-                                                }
-                                            ]
+                                            title: "Male Population",
+                                            children: groupedLayers["Demography. Male Population"]
+                                        },
+                                        {
+                                            title: "Female Population",
+                                            children: groupedLayers["Demography. Female Population"]
+                                        },
+                                        {
+                                            title: "Total Population",
+                                            children: groupedLayers["Demography. Total Population"]
                                         }
                                     ]
                                 }
@@ -253,13 +290,15 @@ App.prototype.init = function () {
                                     title: "Trafic",
                                     children: [
                                         {
-                                            title: "Humains"
-                                        },
-                                        {
-                                            title: "Esclavage, employé"
-                                        },
-                                        {
-                                            title: "Exclavage, sexe"
+                                            title: "Humains",
+                                            children: [
+                                                {
+                                                    title: "Esclavage, employé"
+                                                },
+                                                {
+                                                    title: "Exclavage, sexe"
+                                                }
+                                            ]
                                         },
                                         {
                                             title: "Stupéfiants"
@@ -282,13 +321,18 @@ App.prototype.init = function () {
                                 }
                             ]
                         },
-
-                        //TODO Restore this
-                        // {
-                        //     title: "Pluies",
-                        //     className: "climate"
-                        // },
-
+                        {
+                            title: "Pluies",
+                            className: "climate",
+                            children: [
+                                {
+                                    title: "Pluies #0"
+                                },
+                                {
+                                    title: "Pluies #1"
+                                }
+                            ]
+                        },
                         {
                             title: "Politique",
                             className: "politics",
@@ -553,159 +597,50 @@ App.prototype.init = function () {
                                             title: "Listes électorales",
                                             children: [
                                                 {
-                                                    title: "Number of MPs",
+                                                    title: "Les députés",
                                                     children: groupedLayers["Liste électorale. Number of MPs"]
                                                 },
                                                 {
-                                                    title: "Number of councilors",
+                                                    title: "Conseillers",
                                                     children: groupedLayers["Liste électorale. Number of councilors"]
                                                 },
                                                 {
-                                                    title: "Number of mayors",
+                                                    title: "Maires",
                                                     children: groupedLayers["Liste électorale. Number of mayors"]
                                                 },
                                                 {
-                                                    title: "Number of polling stations",
+                                                    title: "Bureaux de vote",
                                                     children: groupedLayers["Liste électorale. Number of polling stations"]
                                                 },
                                                 {
-                                                    title: "Number of voters",
+                                                    title: "Électeurs",
                                                     children: groupedLayers["Liste électorale. Number of voters"]
                                                 },
                                                 {
-                                                    title: "Weight",
+                                                    title: "Poids",
                                                     children: groupedLayers["Liste électorale. Weight"]
-                                                },
-                                                {
-                                                    title: "Les députés"
-                                                },
-                                                {
-                                                    title: "Conseillers"
-                                                },
-                                                {
-                                                    title: "Maires"
-                                                },
-                                                {
-                                                    title: "Bureaux de vote"
-                                                },
-                                                {
-                                                    title: "Électeurs"
-                                                },
-                                                {
-                                                    title: "Poids"
                                                 }
                                             ]
                                         }
                                     ]
                                 }
                             ]
-                        },
-
-                        //OLD TREE ============================================================
-                        // {
-							// title: "La pluie et la végétation",
-							// className: 'climate',
-							// children: [
-							// 	{
-							// 		//"Past"
-							// 		title: "Passé",
-							// 		children: [
-							// 			{
-							// 				//"Vegetation"
-							// 				title: "Végétation"
-							// 			},
-							// 			{
-							// 				//"Rains"
-							// 				title: "Des pluies"
-							// 			}
-							// 		]
-							// 	},
-							// 	{
-							// 		//"Forecast"
-							// 		title: "Prévoir",
-							// 		children: [
-							// 			{
-							// 				//"Rains 7 days"
-							// 				title: "Rains 7 jours"
-							// 			},
-							// 			{
-							// 				//"Confidence"
-							// 				title: "Confiance"
-							// 			}
-							// 		]
-							// 	}
-							// ]
-                        // },
-						// {
-						// 	title: "Élections",
-						// 	className: 'elections',
-						// 	children: [
-						// 		{
-						// 			title: "Social",
-						// 			children: [
-						// 				{
-						// 					//"Actors"
-						// 					title: "Acteurs"
-						// 				},
-						// 				{
-						// 					//"Other tables"
-						// 					title: "Autres tables"
-						// 				}
-						// 			]
-						// 		},
-						// 		{
-						// 			title: "Liste électorale",
-                         //            children: [
-                         //                {
-                         //                    title: "Number of MPs",
-                         //                    children: groupedLayers["Liste électorale. Number of MPs"]
-                         //                },
-                         //                {
-                         //                    title: "Number of councilors",
-                         //                    children: groupedLayers["Liste électorale. Number of councilors"]
-                         //                },
-                         //                {
-                         //                    title: "Number of mayors",
-                         //                    children: groupedLayers["Liste électorale. Number of mayors"]
-                         //                },
-                         //                {
-                         //                    title: "Number of polling stations",
-                         //                    children: groupedLayers["Liste électorale. Number of polling stations"]
-                         //                },
-                         //                {
-                         //                    title: "Number of voters",
-                         //                    children: groupedLayers["Liste électorale. Number of voters"]
-                         //                },
-                         //                {
-                         //                    title: "Weight",
-                         //                    children: groupedLayers["Liste électorale. Weight"]
-                         //                }
-                         //            ]
-						// 		}
-						// 	]
-						// }
+                        }
 					];
 
 					var $filtersTree = $.tmpl('filters-tree.html', {
 						items: items
 					});
 
-					//TODO Setup proper height in filters tree (and add handler in onResize)
-					//$filtersTree
-
 					$('#side-bar').find('.filters-holder').append($filtersTree);
 
 					self.bindEvents();
 
+                    $modal.modal('show');
+
                     $('.map-and-timeline').find('.loading').css({
                         "z-index": 0
                     });
-
-					//TODO Restore this
-					//TODO Init it in html somehow
-					// $modal.modal({
-					// 	open: true
-					// });
 
 					$(window).trigger('resize');
 
@@ -759,6 +694,8 @@ App.prototype.switchDivision = function (division, reloadLayer, layerId, availab
 	$switcher.find('.active').removeClass('active');
     $switcher.find('.disabled').removeClass('disabled');
 	$switcher.find('a[data-division="' + division + '"]').addClass('active');
+
+    $('#regional-division-modal-switcher').modal('hide');
 
     var enabledRegionTypes;
     if (this._activeGroupCuid) {
@@ -836,45 +773,61 @@ App.prototype.bindEvents = function () {
                 this.loadLayer(layerId, 'point');
             } else {
 
-                if (this._activeGroupCuid) {
-                    $('#' + this._activeGroupCuid).prop('checked', false);
-                }
-
+                layerId = $target.data('layerId');
                 var layers = $target.data('layers');
-                var groupCuid = $target[0].id;
 
-				var layer = _.find(layers, function(layer) {
-					return layer.name === this._activeRegionalDivision;
-				}.bind(this));
+                if (layerId) {
+                    //Simple region layer (no sublayers like Regionale, Department, Communale)
 
-                var availableLayers = _.map(layers, function(layer) {
-                    return layer.name;
-                });
+                    if ($target.is(':checked')) {
+                        this.loadLayer(layerId, 'region');
+                    } else {
+                        this._layers[layerId].clean();
+                        this.hideLegend();
+                    }
 
-				if (!layer && layers[0]) {
-					layerId = layers[0].layerId;
-					activeRegionalDivision = layers[0].name;
-				} else if (layer) {
-					layerId = layer.layerId;
-					activeRegionalDivision = layer.name;
-				}
+                } else {
+                    //"Grouped" data layer (one layer consists of Regionale, Department, Communale)
+                    if (this._activeGroupCuid) {
+                        $('#' + this._activeGroupCuid).prop('checked', false);
+                    }
 
-				if (layerId && this._activeGroupCuid != groupCuid) {
-                    this.switchDivision(activeRegionalDivision, false, null, availableLayers);
-                    this._activeGroupCuid = groupCuid;
+                    var groupCuid = $target[0].id;
 
-                    $('#regional-division-map-switcher').find('a').each(function(i, a) {
-                        var $a = $(a);
-                        var layer  = _.find(layers, function(layer) {return layer.name == $a.data('division')});
-                        var layerId = layer ? layer.layerId : null;
-                        $a.data('layerId', layerId);
+                    var layer = _.find(layers, function(layer) {
+                        return layer.name === this._activeRegionalDivision;
+                    }.bind(this));
+
+                    var availableLayers = _.map(layers, function(layer) {
+                        return layer.name;
                     });
 
-                    this.loadLayer(layerId, 'region');
-                } else if (layerId && this._activeGroupCuid == groupCuid) {
-                    this._activeGroupCuid = null;
-                    $('#regional-division-map-switcher').find('a').data('layer-id', null);
-                    this._layers[layerId].clean();
+                    if (!layer && layers[0]) {
+                        layerId = layers[0].layerId;
+                        activeRegionalDivision = layers[0].name;
+                    } else if (layer) {
+                        layerId = layer.layerId;
+                        activeRegionalDivision = layer.name;
+                    }
+
+                    if (layerId && this._activeGroupCuid != groupCuid) {
+                        this.switchDivision(activeRegionalDivision, false, null, availableLayers);
+                        this._activeGroupCuid = groupCuid;
+
+                        $('#regional-division-map-switcher').find('a').each(function(i, a) {
+                            var $a = $(a);
+                            var layer  = _.find(layers, function(layer) {return layer.name == $a.data('division')});
+                            var layerId = layer ? layer.layerId : null;
+                            $a.data('layerId', layerId);
+                        });
+
+                        this.loadLayer(layerId, 'region');
+                    } else if (layerId && this._activeGroupCuid == groupCuid) {
+                        this._activeGroupCuid = null;
+                        $('#regional-division-map-switcher').find('a').data('layer-id', null);
+                        this._layers[layerId].clean();
+                    }
+
                 }
             }
         }
@@ -1083,12 +1036,14 @@ App.prototype.loadLayer = function (layerId, layerType) {
 
                 layerData.layer.dataLayer.addListener('click', function (e/*: google.maps.Data.MouseEvent*/) {
                     var data = e.feature.getProperty('tooltipData');
-
-                    self.infoWindow.setContent('<h3>' + data.name + '</h3><p>' + data.value + '</p>');
+                    var $infoWindowContent = $.tmpl('info-window.html', {
+                        title: data.name,
+                        content: data.value.toString()
+                    });
+                    self.infoWindow.setContent($infoWindowContent[0].outerHTML);
                     self.infoWindow.setPosition(e.latLng);
                     self.infoWindow.open(self._map);
                 });
-
 
 			    //TODO Implement timeline
 				//layerData.layer.data is pivotResponse
@@ -1125,9 +1080,14 @@ App.prototype.loadTemplates = function (callback) {
         $.get('tmpl/info-window.html?random=' + Math.random(), compileTemplate),
         $.get('tmpl/map-legend.html?random=' + Math.random(), compileTemplate)
 	];
-	$.when.apply(null, templates).done(function onTemplatesLoaded() {
-		if ($.isFunction(callback)) {
-			callback();
-		}
-	});
+
+    //This "tree-item-template.html" should be defined before "filters-tree.html" loaded
+    $.get('tmpl/tree-item-template.html?random=' + Math.random(), compileTemplate).then(function () {
+        $.when.apply(null, templates).done(function onTemplatesLoaded() {
+            if ($.isFunction(callback)) {
+                callback();
+            }
+        });
+    });
+
 };
