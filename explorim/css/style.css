@@ -354,12 +354,16 @@ span.item-title:hover {
 
 .item-holder, .item-holder label {
     cursor: pointer;
+    width: 90%;
 }
 
 .item-holder:hover .dataset-link {
     display: inline-block;
 }
 
+.item-holder > label {
+    padding-left: 10px;
+}
 
 .dataset-link {
     display: none;
@@ -493,6 +497,7 @@ span.item-title:hover {
     font-weight: bold;
     margin-bottom: 20px;
     font-size: 1.7em;
+    text-align: center;
 }
 
 table {
@@ -658,7 +663,6 @@ table tr:nth-of-type(even) {
     background-color: #245b13;
     color: white;
     margin: 0 auto;
-    display: block;
     border-color: #245b13;
 }
 
@@ -689,6 +693,8 @@ table tr:nth-of-type(even) {
 .side-bar-content h4 {
     text-align: center;
     font-weight: bold;
+    background-color: #C4D099;
+    padding: 5px 0;
 }
 
 .side-bar-content h5 {
@@ -710,4 +716,36 @@ table tr:nth-of-type(even) {
     padding: 10px;
     font-family: 'Roboto', sans-serif;
     font-size: 0.7em;
+}
+
+.table-row-header-0 {
+    /*background-color: red;*/
+    /*it is "complex-table"'s header*/
+}
+
+[class*="table-row-header-"] {
+    margin-left: 10px;
+    padding-left: 20px;
+    background-repeat: no-repeat;
+    background-position: left center;
+    background-size: 16px 16px;
+    line-height: 2em;
+}
+.table-row-header-1 {
+    background-image: url("../img/education-x2.png");
+}
+.table-row-header-2 {
+    background-image: url("../img/electricity-x2.png");
+}
+.table-row-header-3 {
+    background-image: url("../img/health-x2.png");
+}
+.table-row-header-4 {
+    background-image: url("../img/social-x2.png");
+}
+.table-row-header-5 {
+    background-image: url("../img/water-x2.png");
+}
+.table-row-header-6 {
+    background-image: url("../img/other-x2.png");
 }

@@ -3,7 +3,9 @@
     {{each(i, row) rows}}
     <tr>
         <td>
-            ${row[0].indicator.substr(0, row[0].indicator.indexOf(','))}&nbsp;
+            <div class="table-row-header-${i}">
+                ${row[0].indicator.substr(0, row[0].indicator.indexOf(','))}&nbsp;
+            </div>
         </td>
         {{each(j, rowMember) row}}
         <td>

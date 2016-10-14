@@ -1,0 +1,2026 @@
+[
+  {
+    "name": "HODH CHARGHI",
+    "level": 1,
+    "fields": {
+      "regionid": "MR-01"
+    }
+  },
+  {
+    "name": "AMOURJ",
+    "level": 2,
+    "fields": {
+      "regionid": "MR-01-AM"
+    }
+  },
+  {
+    "name": "AMOURJ",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-01-AM-AM"
+    }
+  },
+  {
+    "name": "ADEL BAGROU",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-01-AM-AD"
+    }
+  },
+  {
+    "name": "BOUGADOUM",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-01-AM-BO"
+    }
+  },
+  {
+    "name": "BASSIKNOU",
+    "level": 2,
+    "fields": {
+      "regionid": "MR-01-BA"
+    }
+  },
+  {
+    "name": "BASSEKNOU",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-01-BA-BA"
+    }
+  },
+  {
+    "name": "EL MEGVE",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-01-BA-EM"
+    }
+  },
+  {
+    "name": "VESSALE",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-01-BA-FA"
+    }
+  },
+  {
+    "name": "DHAR",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-01-BA-DH"
+    }
+  },
+  {
+    "name": "DJIGUENI",
+    "level": 2,
+    "fields": {
+      "regionid": "MR-01-DJ"
+    }
+  },
+  {
+    "name": "DJIGUENNI",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-01-DJ-DJ"
+    }
+  },
+  {
+    "name": "MABROUK",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-01-DJ-EM"
+    }
+  },
+  {
+    "name": "FEIRENNI",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-01-DJ-FE"
+    }
+  },
+  {
+    "name": "BENEAMANE",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-01-DJ-BE"
+    }
+  },
+  {
+    "name": "AOUEUNAT EZ BEL",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-01-DJ-AO"
+    }
+  },
+  {
+    "name": "GHLIG EHEL BEYA",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-01-DJ-GH"
+    }
+  },
+  {
+    "name": "KASR EL BARKE",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-01-DJ-KS"
+    }
+  },
+  {
+    "name": "NEMA",
+    "level": 2,
+    "fields": {
+      "regionid": "MR-01-NE"
+    }
+  },
+  {
+    "name": "NEMA",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-01-NE-NE"
+    }
+  },
+  {
+    "name": "ACHEMIM",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-01-NE-AC"
+    }
+  },
+  {
+    "name": "JREIV",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-01-NE-JE"
+    }
+  },
+  {
+    "name": "BANGOU",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-01-NE-BA"
+    }
+  },
+  {
+    "name": "HASSI ETILE",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-01-NE-HA"
+    }
+  },
+  {
+    "name": "OUM AVNADECH",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-01-NE-OU"
+    }
+  },
+  {
+    "name": "EL MABROUK",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-01-NE-EM"
+    }
+  },
+  {
+    "name": "BERIBAVAT",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-01-NE-BE"
+    }
+  },
+  {
+    "name": "NOUAL",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-01-NE-NO"
+    }
+  },
+  {
+    "name": "AGOUEINIT",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-01-NE-AG"
+    }
+  },
+  {
+    "name": "OUALATA",
+    "level": 2,
+    "fields": {
+      "regionid": "MR-01-OU"
+    }
+  },
+  {
+    "name": "OUALATA",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-01-OU-OU"
+    }
+  },
+  {
+    "name": "TIMBEDRA",
+    "level": 2,
+    "fields": {
+      "regionid": "MR-01-TI"
+    }
+  },
+  {
+    "name": "TEMBEDGHA",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-01-TI-TI"
+    }
+  },
+  {
+    "name": "ITWIL",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-01-TI-TO"
+    }
+  },
+  {
+    "name": "KOUMBI SALEH",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-01-TI-KO"
+    }
+  },
+  {
+    "name": "BOUSTELLE",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-01-TI-BO"
+    }
+  },
+  {
+    "name": "HASSI M'HADI",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-01-TI-HA"
+    }
+  },
+  {
+    "name": "NBEIKET LAHWACH",
+    "level": 2,
+    "fields": {
+      "regionid": "MR-01-BE"
+    }
+  },
+  {
+    "name": "N'BEIKETT LEHOUACH",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-01-BE-BE"
+    }
+  },
+  {
+    "name": "HODH GHARBY",
+    "level": 1,
+    "fields": {
+      "regionid": "MR-02"
+    }
+  },
+  {
+    "name": "AIOUN EL ATROUSS",
+    "level": 2,
+    "fields": {
+      "regionid": "MR-02-AI"
+    }
+  },
+  {
+    "name": "AIOUN EL ATROUSS",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-02-AI-AI"
+    }
+  },
+  {
+    "name": "N'SAVENNI",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-02-AI-NS"
+    }
+  },
+  {
+    "name": "DOUEIRARA",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-02-AI-DO"
+    }
+  },
+  {
+    "name": "TEN HAMADI",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-02-AI-TE"
+    }
+  },
+  {
+    "name": "BENEAMANE",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-02-AI-BE"
+    }
+  },
+  {
+    "name": "EGJERT",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-02-AI-EG"
+    }
+  },
+  {
+    "name": "OUME LAHYADH",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-02-AI-OU"
+    }
+  },
+  {
+    "name": "KOBENNI",
+    "level": 2,
+    "fields": {
+      "regionid": "MR-02-KO"
+    }
+  },
+  {
+    "name": "KOUBENNI",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-02-KO-KO"
+    }
+  },
+  {
+    "name": "HASSI EHEL AHMED BECHNE",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-02-KO-HA"
+    }
+  },
+  {
+    "name": "TIMZINE",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-02-KO-TI"
+    }
+  },
+  {
+    "name": "LEGHLIG",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-02-KO-LE"
+    }
+  },
+  {
+    "name": "GOUGUI ZEMMAL",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-02-KO-GO"
+    }
+  },
+  {
+    "name": "MODIBOUGOU",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-02-KO-MO"
+    }
+  },
+  {
+    "name": "VOULLANIYA",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-02-KO-VO"
+    }
+  },
+  {
+    "name": "TAMCHEKETT",
+    "level": 2,
+    "fields": {
+      "regionid": "MR-02-TA"
+    }
+  },
+  {
+    "name": "TAMCHEKETT",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-02-TA-TA"
+    }
+  },
+  {
+    "name": "MABROUK",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-02-TA-EM"
+    }
+  },
+  {
+    "name": "RADHI",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-02-TA-RA"
+    }
+  },
+  {
+    "name": "GUETAE TEIDOUME",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-02-TA-GU"
+    }
+  },
+  {
+    "name": "SAVA",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-02-TA-SA"
+    }
+  },
+  {
+    "name": "TINTANE",
+    "level": 2,
+    "fields": {
+      "regionid": "MR-02-TI"
+    }
+  },
+  {
+    "name": "TINTAN",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-02-TI-TI"
+    }
+  },
+  {
+    "name": "HASSI ABDELLAH",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-02-TI-HA"
+    }
+  },
+  {
+    "name": "AWEINAT THALLE",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-02-TI-AW"
+    }
+  },
+  {
+    "name": "TOUIL",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-02-TI-TO"
+    }
+  },
+  {
+    "name": "LEHREIJAT",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-02-TI-LE"
+    }
+  },
+  {
+    "name": "AIN VARBA",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-02-TI-AI"
+    }
+  },
+  {
+    "name": "AGHARGHAR",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-02-TI-EG"
+    }
+  },
+  {
+    "name": "DEVA",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-02-TI-DE"
+    }
+  },
+  {
+    "name": "ASSABA",
+    "level": 1,
+    "fields": {
+      "regionid": "MR-03"
+    }
+  },
+  {
+    "name": "BARKEIWEL",
+    "level": 2,
+    "fields": {
+      "regionid": "MR-03-BA"
+    }
+  },
+  {
+    "name": "BARKEIWEL",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-03-BA-BA"
+    }
+  },
+  {
+    "name": "GUELLER",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-03-BA-GU"
+    }
+  },
+  {
+    "name": "LEBHERT",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-03-BA-LE"
+    }
+  },
+  {
+    "name": "LAWEISSI",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-03-BA-LA"
+    }
+  },
+  {
+    "name": "DAGHVEG",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-03-BA-DA"
+    }
+  },
+  {
+    "name": "EL GHABRA",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-03-BA-EG"
+    }
+  },
+  {
+    "name": "R'DHEIDHIE",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-03-BA-RD"
+    }
+  },
+  {
+    "name": "BOU LAHRATH",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-03-BA-BO"
+    }
+  },
+  {
+    "name": "BOUMDEID",
+    "level": 2,
+    "fields": {
+      "regionid": "MR-03-BO"
+    }
+  },
+  {
+    "name": "BOUMDEID",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-03-BO-BO"
+    }
+  },
+  {
+    "name": "HSEIY TIN",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-03-BO-HS"
+    }
+  },
+  {
+    "name": "LAVTAH",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-03-BO-LA"
+    }
+  },
+  {
+    "name": "GUEROU",
+    "level": 2,
+    "fields": {
+      "regionid": "MR-03-GU"
+    }
+  },
+  {
+    "name": "GUEROU",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-03-GU-GU"
+    }
+  },
+  {
+    "name": "OUDEIY JRID",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-03-GU-OU"
+    }
+  },
+  {
+    "name": "ELGHAIRE",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-03-GU-EG"
+    }
+  },
+  {
+    "name": "KAMOUR",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-03-GU-KA"
+    }
+  },
+  {
+    "name": "KANKOUSSA",
+    "level": 2,
+    "fields": {
+      "regionid": "MR-03-KA"
+    }
+  },
+  {
+    "name": "KANKOUSSA",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-03-KA-KA"
+    }
+  },
+  {
+    "name": "SANI",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-03-KA-SA"
+    }
+  },
+  {
+    "name": "BLAJMIL",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-03-KA-BL"
+    }
+  },
+  {
+    "name": "TENAHA",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-03-KA-TE"
+    }
+  },
+  {
+    "name": "HAMED",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-03-KA-HA"
+    }
+  },
+  {
+    "name": "KIFFA",
+    "level": 2,
+    "fields": {
+      "regionid": "MR-03-KI"
+    }
+  },
+  {
+    "name": "KIFFA",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-03-KI-KI"
+    }
+  },
+  {
+    "name": "NOUAMLEIN",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-03-KI-NO"
+    }
+  },
+  {
+    "name": "AGHORAT",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-03-KI-AG"
+    }
+  },
+  {
+    "name": "EL MELGUE",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-03-KI-EM"
+    }
+  },
+  {
+    "name": "KOUROUDIEL",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-03-KI-KO"
+    }
+  },
+  {
+    "name": "LEGRANE",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-03-KI-LE"
+    }
+  },
+  {
+    "name": "GORGOL",
+    "level": 1,
+    "fields": {
+      "regionid": "MR-04"
+    }
+  },
+  {
+    "name": "KAEDI",
+    "level": 2,
+    "fields": {
+      "regionid": "MR-04-KA"
+    }
+  },
+  {
+    "name": "KAEDI",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-04-KA-KA"
+    }
+  },
+  {
+    "name": "NERE WALO",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-04-KA-NE"
+    }
+  },
+  {
+    "name": "GANKI",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-04-KA-GA"
+    }
+  },
+  {
+    "name": "DIEWOL",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-04-KA-DJ"
+    }
+  },
+  {
+    "name": "LEXEIBE",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-04-KA-LE"
+    }
+  },
+  {
+    "name": "TOGHOMADI",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-04-KA-TO"
+    }
+  },
+  {
+    "name": "TIFONDE CIVE",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-04-KA-TI"
+    }
+  },
+  {
+    "name": "MAGHAMA",
+    "level": 2,
+    "fields": {
+      "regionid": "MR-04-MA"
+    }
+  },
+  {
+    "name": "MAGHAMA",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-04-MA-MA"
+    }
+  },
+  {
+    "name": "DAO",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-04-MA-DA"
+    }
+  },
+  {
+    "name": "DOLOL CIVRE",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-04-MA-DO"
+    }
+  },
+  {
+    "name": "BEILOUGUET LITAME",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-04-MA-BE"
+    }
+  },
+  {
+    "name": "VREA LITAME",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-04-MA-VR"
+    }
+  },
+  {
+    "name": "TOULEL",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-04-MA-TO"
+    }
+  },
+  {
+    "name": "SAGNE",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-04-MA-SA"
+    }
+  },
+  {
+    "name": "WALI DIANTANG",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-04-MA-WA"
+    }
+  },
+  {
+    "name": "MBOUD",
+    "level": 2,
+    "fields": {
+      "regionid": "MR-04-MB"
+    }
+  },
+  {
+    "name": "M'BOUD",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-04-MB-MB"
+    }
+  },
+  {
+    "name": "TIKOBRA",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-04-MB-TI"
+    }
+  },
+  {
+    "name": "TERENGUET EHEL MOULAYE ELY",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-04-MB-TE"
+    }
+  },
+  {
+    "name": "N'DJADJBENNI GANDEGA",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-04-MB-DI"
+    }
+  },
+  {
+    "name": "EDEBAYE EHEL GUELAYE",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-04-MB-ED"
+    }
+  },
+  {
+    "name": "VOUM LEGLEITE",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-04-MB-FO"
+    }
+  },
+  {
+    "name": "CHELKHET TIYAB",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-04-MB-CH"
+    }
+  },
+  {
+    "name": "LAHRACH",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-04-MB-LA"
+    }
+  },
+  {
+    "name": "SOUVE",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-04-MB-SO"
+    }
+  },
+  {
+    "name": "MOUNGUEL",
+    "level": 2,
+    "fields": {
+      "regionid": "MR-04-MO"
+    }
+  },
+  {
+    "name": "MOUNGUEL",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-04-MO-MO"
+    }
+  },
+  {
+    "name": "BATHET MOIT",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-04-MO-BT"
+    }
+  },
+  {
+    "name": "BOKHOL",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-04-MO-BK"
+    }
+  },
+  {
+    "name": "MELZEM TEICHET",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-04-MO-ME"
+    }
+  },
+  {
+    "name": "AZGUEILEM TIYAB",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-04-MO-AZ"
+    }
+  },
+  {
+    "name": "BRAKNA",
+    "level": 1,
+    "fields": {
+      "regionid": "MR-05"
+    }
+  },
+  {
+    "name": "ALEG",
+    "level": 2,
+    "fields": {
+      "regionid": "MR-05-AL"
+    }
+  },
+  {
+    "name": "ALEG",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-05-AL-AL"
+    }
+  },
+  {
+    "name": "CHEGAR",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-05-AL-CH"
+    }
+  },
+  {
+    "name": "MAL",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-05-AL-MA"
+    }
+  },
+  {
+    "name": "DGELLEWAR",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-05-AL-DJ"
+    }
+  },
+  {
+    "name": "BOUHDIDA",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-05-AL-BO"
+    }
+  },
+  {
+    "name": "AGHCHOURGUIT",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-05-AL-AG"
+    }
+  },
+  {
+    "name": "BABABE",
+    "level": 2,
+    "fields": {
+      "regionid": "MR-05-BA"
+    }
+  },
+  {
+    "name": "BABABE",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-05-BA-BA"
+    }
+  },
+  {
+    "name": "EL VARAE",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-05-BA-EV"
+    }
+  },
+  {
+    "name": "AERE M'BAR",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-05-BA-AE"
+    }
+  },
+  {
+    "name": "BOGHE",
+    "level": 2,
+    "fields": {
+      "regionid": "MR-05-BO"
+    }
+  },
+  {
+    "name": "BOGHE",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-05-BO-BO"
+    }
+  },
+  {
+    "name": "DAR EL AVIYE",
+    "level": 0,
+    "fields": {
+      "regionid": "MR-05-BO-DEA"
+    }
+  },
+  {
+    "name": "DAR EL BARKE",
+    "level": 0,
+    "fields": {
+      "regionid": "MR-05-BO-DEB"
+    }
+  },
+  {
+    "name": "OULD BIRAM",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-05-BO-OU"
+    }
+  },
+  {
+    "name": "MAGTA LAHJAR",
+    "level": 2,
+    "fields": {
+      "regionid": "MR-05-MA"
+    }
+  },
+  {
+    "name": "MAGTALAHJAR",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-05-MA-MA"
+    }
+  },
+  {
+    "name": "SANGRAVE",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-05-MA-SA"
+    }
+  },
+  {
+    "name": "DJONABE",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-05-MA-DJ"
+    }
+  },
+  {
+    "name": "OUAD EMMOUR",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-05-MA-OU"
+    }
+  },
+  {
+    "name": "MBAGNE",
+    "level": 2,
+    "fields": {
+      "regionid": "MR-05-MB"
+    }
+  },
+  {
+    "name": "M'BAGNE",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-05-MB-MB"
+    }
+  },
+  {
+    "name": "NIABINA",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-05-MB-NI"
+    }
+  },
+  {
+    "name": "EDEBAYE EL HEJJAJ",
+    "level": 0,
+    "fields": {
+      "regionid": " MR-05-MB-ED"
+    }
+  },
+  {
+    "name": "BAGODINE",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-05-MB-BA"
+    }
+  },
+  {
+    "name": "TRARZA",
+    "level": 1,
+    "fields": {
+      "regionid": "MR-06"
+    }
+  },
+  {
+    "name": "BOUTILIMITT",
+    "level": 2,
+    "fields": {
+      "regionid": "MR-06-BO"
+    }
+  },
+  {
+    "name": "BOUTILIMIT",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-06-BO-BO"
+    }
+  },
+  {
+    "name": "ELB ADRESS",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-06-BO-EA"
+    }
+  },
+  {
+    "name": "AJOUEIR",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-06-BO-AJ"
+    }
+  },
+  {
+    "name": "N'TEICHET",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-06-BO-NT"
+    }
+  },
+  {
+    "name": "NEBAGHIYE",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-06-BO-NE"
+    }
+  },
+  {
+    "name": "TENGHADEJ",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-06-BO-TE"
+    }
+  },
+  {
+    "name": "EL MOUYESSAR",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-06-BO-EM"
+    }
+  },
+  {
+    "name": "KEUR MACENE",
+    "level": 2,
+    "fields": {
+      "regionid": "MR-06-KE"
+    }
+  },
+  {
+    "name": "KEURMACEN",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-06-KE-KE"
+    }
+  },
+  {
+    "name": "N'DIAGO",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-06-KE-ND"
+    }
+  },
+  {
+    "name": "M'BALAL",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-06-KE-MB"
+    }
+  },
+  {
+    "name": "MEDERDRA",
+    "level": 2,
+    "fields": {
+      "regionid": "MR-06-ME"
+    }
+  },
+  {
+    "name": "MEDERDRA",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-06-ME-ME"
+    }
+  },
+  {
+    "name": "BEIR TAOURESS",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-06-ME-BE"
+    }
+  },
+  {
+    "name": "TAGUILALET",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-06-ME-TA"
+    }
+  },
+  {
+    "name": "EL KHAT",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-06-ME-EK"
+    }
+  },
+  {
+    "name": "TIGUENT (EL JEDIDE)",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-06-ME-TI"
+    }
+  },
+  {
+    "name": "OUAD NAGA",
+    "level": 2,
+    "fields": {
+      "regionid": "MR-06-OU"
+    }
+  },
+  {
+    "name": "OUAD NAGA",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-06-OU-OU"
+    }
+  },
+  {
+    "name": "AOULEIYGAT",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-06-OU-AO"
+    }
+  },
+  {
+    "name": "EL ARIYE",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-06-OU-EA"
+    }
+  },
+  {
+    "name": "RKIZ",
+    "level": 2,
+    "fields": {
+      "regionid": "MR-06-RK"
+    }
+  },
+  {
+    "name": "R'KIZ",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-06-RK-RK"
+    }
+  },
+  {
+    "name": "BOUTALHAYE",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-06-RK-BO"
+    }
+  },
+  {
+    "name": "LEXEIBE2",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-06-RK-LE"
+    }
+  },
+  {
+    "name": "THIEIKANE",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-06-RK-TE"
+    }
+  },
+  {
+    "name": "BAREINE",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-06-RK-BA"
+    }
+  },
+  {
+    "name": "ROSSO",
+    "level": 2,
+    "fields": {
+      "regionid": "MR-06-RO"
+    }
+  },
+  {
+    "name": "ROSSO",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-06-RO-RO"
+    }
+  },
+  {
+    "name": "JEDREL MOUHGUEN",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-06-RO-JE"
+    }
+  },
+  {
+    "name": "ADRAR",
+    "level": 1,
+    "fields": {
+      "regionid": "MR-07"
+    }
+  },
+  {
+    "name": "AOUJEFT",
+    "level": 2,
+    "fields": {
+      "regionid": "MR-07-AO"
+    }
+  },
+  {
+    "name": "AOUJEFT",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-07-AO-AO"
+    }
+  },
+  {
+    "name": "MAEDEN",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-07-AO-MA"
+    }
+  },
+  {
+    "name": "N'TEIRGUENT",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-07-AO-NT"
+    }
+  },
+  {
+    "name": "EL MEDAH",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-07-AO-ME"
+    }
+  },
+  {
+    "name": "ATAR",
+    "level": 2,
+    "fields": {
+      "regionid": "MR-07-AT"
+    }
+  },
+  {
+    "name": "ATAR",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-07-AT-AT"
+    }
+  },
+  {
+    "name": "AIN EHEL TAYA",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-07-AT-AI"
+    }
+  },
+  {
+    "name": "TAWAZ",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-07-AT-TA"
+    }
+  },
+  {
+    "name": "CHOUM",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-07-AT-CH"
+    }
+  },
+  {
+    "name": "CHINGUITTI",
+    "level": 2,
+    "fields": {
+      "regionid": "MR-07-CH"
+    }
+  },
+  {
+    "name": "CHINGUITTI",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-07-CH-CH"
+    }
+  },
+  {
+    "name": "AIN SAVRA",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-07-CH-AI"
+    }
+  },
+  {
+    "name": "OUADANE",
+    "level": 2,
+    "fields": {
+      "regionid": "MR-07-OU"
+    }
+  },
+  {
+    "name": "OUADAN",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-07-OU-OU"
+    }
+  },
+  {
+    "name": "DAKHLET NOUADHIBOU",
+    "level": 1,
+    "fields": {
+      "regionid": "MR-08"
+    }
+  },
+  {
+    "name": "NOUADHIBOU",
+    "level": 2,
+    "fields": {
+      "regionid": "MR-08-NO"
+    }
+  },
+  {
+    "name": "NOUADHIBOU",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-08-NO-NO"
+    }
+  },
+  {
+    "name": "BOULENOUAR",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-08-NO-BO"
+    }
+  },
+  {
+    "name": "INAL",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-08-NO-IN"
+    }
+  },
+  {
+    "name": "TMEIMICHAT",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-08-CH-TM"
+    }
+  },
+  {
+    "name": "NOUAMGHAR",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-08-CH-NO"
+    }
+  },
+  {
+    "name": "CHAMI",
+    "level": 2,
+    "fields": {
+      "regionid": "MR-08-CH"
+    }
+  },
+  {
+    "name": "CHAMI",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-08-CH-CH"
+    }
+  },
+  {
+    "name": "TAGANT",
+    "level": 1,
+    "fields": {
+      "regionid": "MR-09"
+    }
+  },
+  {
+    "name": "MOUDJERIA",
+    "level": 2,
+    "fields": {
+      "regionid": "MR-09-MO"
+    }
+  },
+  {
+    "name": "MOUDJERIA",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-09-MO-MO"
+    }
+  },
+  {
+    "name": "N'BEIKE",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-09-MO-NB"
+    }
+  },
+  {
+    "name": "SOUDOUD (ECHRAM)",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-09-MO-SO"
+    }
+  },
+  {
+    "name": "TICHITT",
+    "level": 2,
+    "fields": {
+      "regionid": "MR-09-TI"
+    }
+  },
+  {
+    "name": "TICHIT",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-09-TI-TI"
+    }
+  },
+  {
+    "name": "LEKHCHAB",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-09-TI-LE"
+    }
+  },
+  {
+    "name": "TIDJIKJA",
+    "level": 2,
+    "fields": {
+      "regionid": "MR-09-TA"
+    }
+  },
+  {
+    "name": "TIDJIKDJA",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-09-TA-TI"
+    }
+  },
+  {
+    "name": "EL WAHAT",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-09-TA-EW"
+    }
+  },
+  {
+    "name": "TENSIGH",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-09-TA-TE"
+    }
+  },
+  {
+    "name": "BOUBACAR BEN AMER",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-09-TA-BO"
+    }
+  },
+  {
+    "name": "LEHSIRA",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-09-TA-LE"
+    }
+  },
+  {
+    "name": "GUIDIMAKHA",
+    "level": 1,
+    "fields": {
+      "regionid": "MR-10"
+    }
+  },
+  {
+    "name": "OULD YENGE",
+    "level": 2,
+    "fields": {
+      "regionid": "MR-10-OU"
+    }
+  },
+  {
+    "name": "OULD YENGE",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-10-OU-OU"
+    }
+  },
+  {
+    "name": "LEEBELLI",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-10-OU-BL"
+    }
+  },
+  {
+    "name": "TEKTAKE",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-10-OU-TE"
+    }
+  },
+  {
+    "name": "DAVOUE",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-10-OU-DA"
+    }
+  },
+  {
+    "name": "BOUANZ",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-10-OU-BA"
+    }
+  },
+  {
+    "name": "LEHRAJ",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-10-OU-LA"
+    }
+  },
+  {
+    "name": "LEAWEINAT",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-10-OU-LE"
+    }
+  },
+  {
+    "name": "SELIBABI",
+    "level": 2,
+    "fields": {
+      "regionid": "MR-10-SE"
+    }
+  },
+  {
+    "name": "SELIBABI",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-10-SE-SE"
+    }
+  },
+  {
+    "name": "SOUVI",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-10-SE-SO"
+    }
+  },
+  {
+    "name": "BAYDJAM",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-10-SE-BA"
+    }
+  },
+  {
+    "name": "WOMPOU",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-10-SE-WO"
+    }
+  },
+  {
+    "name": "GOURAYE",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-10-SE-GO"
+    }
+  },
+  {
+    "name": "GHABOU",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-10-SE-GH"
+    }
+  },
+  {
+    "name": "ARR",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-10-SE-AR"
+    }
+  },
+  {
+    "name": "EJAR",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-10-SE-AJ"
+    }
+  },
+  {
+    "name": "OULD M'BONNY",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-10-SE-OU"
+    }
+  },
+  {
+    "name": "TACHOUT",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-10-SE-TA"
+    }
+  },
+  {
+    "name": "HASSI CHEGAR",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-10-SE-HA"
+    }
+  },
+  {
+    "name": "TIRIS ZEMMOUR",
+    "level": 1,
+    "fields": {
+      "regionid": "MR-11"
+    }
+  },
+  {
+    "name": "BIR MOGHREIN",
+    "level": 2,
+    "fields": {
+      "regionid": "MR-11-BM"
+    }
+  },
+  {
+    "name": "BIRMOUGHREIN",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-11-BM-BI"
+    }
+  },
+  {
+    "name": "FDERICK",
+    "level": 2,
+    "fields": {
+      "regionid": "MR-11-FD"
+    }
+  },
+  {
+    "name": "F'DEIRICK",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-11-FD-FD"
+    }
+  },
+  {
+    "name": "ZOUEIRAT",
+    "level": 2,
+    "fields": {
+      "regionid": "MR-11-ZO"
+    }
+  },
+  {
+    "name": "ZOUEIRAT",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-11-ZO-ZO"
+    }
+  },
+  {
+    "name": "INCHIRI",
+    "level": 1,
+    "fields": {
+      "regionid": "MR-12"
+    }
+  },
+  {
+    "name": "AKJOUJT",
+    "level": 2,
+    "fields": {
+      "regionid": "MR-12-AK"
+    }
+  },
+  {
+    "name": "AKJOUJT",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-12-AK-AK"
+    }
+  },
+  {
+    "name": "BENNECHAB",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-12-AK-BE"
+    }
+  },
+
+  {
+    "name": "NOUAKCHOTT OUEST",
+    "level": 1,
+    "fields": {
+      "regionid": "MR-NKC"
+    }
+  },
+  {
+    "name": "KSAR",
+    "level": 2,
+    "fields": {
+      "regionid": "MR-NKC-KS"
+    }
+  },
+  {
+    "name": "KSAR",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-NKC-KS-KS"
+    }
+  },
+  {
+    "name": "TEVRAGH ZEIN",
+    "level": 2,
+    "fields": {
+      "regionid": "MR-NKC-TZ"
+    }
+  },
+  {
+    "name": "TEVRAGH-ZEINA",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-NKC-TZ-TZ"
+    }
+  },
+
+  {
+    "name": "SEBKHA",
+    "level": 2,
+    "fields": {
+      "regionid": "MR-NKC-SE"
+    }
+  },
+  {
+    "name": "SEBKHA",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-NKC-SE-SE"
+    }
+  },
+
+
+
+
+  {
+    "name": "NOUAKCHOTT NORD",
+    "level": 1,
+    "fields": {
+      "regionid": "MR-NKC"
+    }
+  },
+  {
+    "name": "TEYARETT",
+    "level": 2,
+    "fields": {
+      "regionid": "MR-NKC-TE"
+    }
+  },
+  {
+    "name": "TEYARETT",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-NKC-TE-TE"
+    }
+  },
+  {
+    "name": "TOUJOUNINE",
+    "level": 2,
+    "fields": {
+      "regionid": "MR-NKC-TO"
+    }
+  },
+  {
+    "name": "TOUJOUNINE",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-NKC-TO-TO"
+    }
+  },
+  {
+    "name": "DAR NAIM",
+    "level": 2,
+    "fields": {
+      "regionid": "MR-NKC-DN"
+    }
+  },
+  {
+    "name": "DAR NAIM",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-NKC-DN-DN"
+    }
+  },
+
+
+  {
+    "name": "NOUAKCHOTT SUD",
+    "level": 1,
+    "fields": {
+      "regionid": "MR-NKC"
+    }
+  },
+  {
+    "name": "EL MINA",
+    "level": 2,
+    "fields": {
+      "regionid": "MR-NKC-EM"
+    }
+  },
+  {
+    "name": "EL MINA",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-NKC-EM-EM"
+    }
+  },
+  {
+    "name": "ARAFAT",
+    "level": 2,
+    "fields": {
+      "regionid": "MR-NKC-AR"
+    }
+  },
+  {
+    "name": "ARAFAT",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-NKC-AR-AR"
+    }
+  },
+  {
+    "name": "RIYADH",
+    "level": 2,
+    "fields": {
+      "regionid": "MR-NKC-RI"
+    }
+  },
+  {
+    "name": "RIADH",
+    "level": 3,
+    "fields": {
+      "regionid": "MR-NKC-RI-RI"
+    }
+  }
+]

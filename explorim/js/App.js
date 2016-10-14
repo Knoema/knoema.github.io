@@ -31,11 +31,6 @@ function App() {
     };
 
 	this._divisionTypes = [
-        // {
-        //     name: 'Nationale',
-        //     className: 'nationale'
-        // },
-
         {
             name: 'Région',
             className: 'region'
@@ -57,6 +52,46 @@ function App() {
     this._regionsComponent = null;
     this._dataLayers = {};
     this._layerTitles = {};
+
+    //new-regions.json -> proper structured mauritania-regions.json
+    // $.ajax({
+    //     dataType: "json",
+    //     url: 'new-regions.json',
+    //     success: function(data) {
+    //         var ddd = _.map(data.regions, function(r) {
+    //             var spl = r.split(',');
+    //
+    //             var regionIdSplitted = spl[1].split('-');
+    //
+    //             var level = 0;
+    //
+    //             // data-name="${region.name}"
+    //             // data-region-id="${region.fields.regionid}"
+    //             // value="${region.key}"
+    //
+    //             if (spl[1].length == 5) {
+    //                 level = 1;
+    //             }
+    //
+    //             if (spl[1].length == 8) {
+    //                 level = 2;
+    //             }
+    //
+    //             if (spl[1].length == 11) {
+    //                 level = 3;
+    //             }
+    //             return {
+    //                 name: spl[0],
+    //                 level: level ? level : 0,
+    //                 fields: {
+    //                     regionid: spl[1]
+    //                 }
+    //             }
+    //         });
+    //     }, error: function (d) {
+    //     }
+    // });
+
 };
 
 App.prototype.init = function () {
@@ -77,39 +112,48 @@ App.prototype.init = function () {
 
         $.getJSON(url).then(function(data) {
 
-            //TODO Restore filter
             // var regions = _.filter(data.items, function(item) {
             //     return item.level > 0 && item.key < 1000660 && !_.isUndefined(item.fields.regionid);
             // });
 
-            var regions = _.filter(data.items, function(item) {
-                return item.key < 1003410;
-            });
+            $.getJSON('mauritania-regions.json').then(function(regions) {
 
-            var $regionsDropdown = $.tmpl('regions-dropdown.html', {
-                regions: regions
-            });
+                var regionsWithKeys = _.filter(data.items, function(item) {
+                    return item.key < 1003410;
+                });
 
-            this._regionsComponent = new GeoPlayground.Components.Regions({
-                map: self._map,
-                style: {
-                    strokeWeight: 1,
-                    strokeColor: 'white',
-                    fillColor: 'white',
-                    visible: true,
-                    clickable: false
-                },
-                geoJsonFile: 'mauritania.json',
-                onSelectRegion: function(regionId, dataLayer, feature) {
-                    //mapsObject.panBy(200, 100)
-                    //panTo(latLng:LatLng|LatLngLiteral)
-                }
-            });
+                _.each(regions, function(region) {
+                    var sameRegion = _.find(regionsWithKeys, function(r) {
+                        return r.fields.regionid === region.fields.regionid;
+                    });
+                    if (sameRegion) {
+                        //TODO Find key in regionsWithKeys by region Id
+                        region.key = sameRegion.key;
+                    }
+                });
 
-            $('#top-map-buttons').find('.dropdown-holder').append($regionsDropdown);
-            $regionsDropdown.selectpicker();
+                var $regionsDropdown = $.tmpl('regions-dropdown.html', {
+                    regions: regions
+                });
 
-            $('#select-region').on('hidden.bs.select', this.selectRegion.bind(this));
+                this._regionsComponent = new GeoPlayground.Components.Regions({
+                    map: self._map,
+                    style: {
+                        strokeWeight: 1,
+                        strokeColor: 'white',
+                        fillColor: 'white',
+                        visible: true,
+                        clickable: false
+                    },
+                    geoJsonFile: 'mauritania.json'
+                });
+
+                $('#top-map-buttons').find('.dropdown-holder').append($regionsDropdown);
+                $regionsDropdown.selectpicker();
+
+                $('#select-region').on('hidden.bs.select', this.selectRegion.bind(this));
+
+            }.bind(this));
 
         }.bind(this));
 
@@ -284,11 +328,11 @@ App.prototype.init = function () {
                                                     children: groupedLayers["Demography. Male Population"]
                                                 },
                                                 {
-                                                    title: "Female population",
+                                                    title: "Population, femelle",
                                                     children: groupedLayers["Demography. Female Population"]
                                                 },
                                                 {
-                                                    title: "Total population’ to ‘Population totale",
+                                                    title: "Population totale",
                                                     children: groupedLayers["Demography. Total Population"]
                                                 }
                                             ]
@@ -422,7 +466,8 @@ App.prototype.init = function () {
                                             title: "Cadres"
                                         },
                                         {
-                                            title: "Fonctionnaires"
+                                            title: "Fonctionnaires",
+                                            children: groupedLayers["Fonctionnaires"]
                                         },
                                         {
                                             title: "Hommes d'affaires"
@@ -708,10 +753,8 @@ App.prototype.onResize = function () {
     });
 
     $('#right-side-bar').find('.side-bar-content').css({
-        "height": windowHeight - timelineHeight - 60
+        "height": windowHeight - timelineHeight - 110
     });
-
-
 
     google.maps.event.trigger(this._map, "resize");
 
@@ -804,7 +847,7 @@ App.prototype.selectRegion = function (e) {
     this._regionsComponent.select(regionId);
 
     $('#right-side-bar').find('.header').html(regionName);
-    $('#right-side-bar').find('.header').append('<a href="javascript:void 0;" class="export-button" title="Export to PDF"></a><a style="margin-top: 10px;" href="#" class="btn" id="view-profile">     Voir le profil régional </a>');
+    $('#right-side-bar').find('.header').append('<a href="javascript:void 0;" class="export-button" title="Export to PDF"></a><div style="text-align: center"><a style="margin-top: 10px;" href="#" class="btn" id="view-profile">     Voir le profil régional </a></div>');
 
     $('#right-side-bar').find('.side-bar-content').empty().append($('<span class="glyphicon glyphicon-cog fa-spin" aria-hidden="true" title="Loading..."></span>'));
 
@@ -890,32 +933,28 @@ App.prototype.selectRegion = function (e) {
             rows: rows
         });
 
-        $('#right-side-bar').find('.side-bar-content').empty();
+        var $sideBarContent = $('#right-side-bar').find('.side-bar-content');
 
-        $('#right-side-bar').find('.side-bar-content').append('<h4>Economique et social</h4>');
+        //$sideBarContent.mCustomScrollbar('destroy');
 
-        $('#right-side-bar').find('.side-bar-content').append($table1);
-        $('#right-side-bar').find('.side-bar-content').append('<hr />');
-        $('#right-side-bar').find('.side-bar-content').append($table2);
+        $sideBarContent.empty();
 
-        $('#right-side-bar').find('.side-bar-content').append('<h4>Zone de vie</h4>');
+        $sideBarContent.append('<h4>Economique et social</h4>');
 
-        //Flat dataset
-        // $('#right-side-bar').find('.side-bar-content').append($.tmpl('simple-table.html', {
-        //     headerMembers: zoneDeVille0.header[0].members,
-        //     rows: _.chunk(zoneDeVille0.data, zoneDeVille0.header[0].members.length)
-        // }));
+        $sideBarContent.append($table1);
+        $sideBarContent.append('<hr />');
+        $sideBarContent.append($table2);
 
-        $('#right-side-bar').find('.side-bar-content').append($.tmpl('simple-table.html', {
+        $sideBarContent.append('<h4>Zone de vie</h4>');
+
+        $sideBarContent.append($.tmpl('simple-table.html', {
             headerMembers: zoneDeVille1.header[0].members,
             rows: _.chunk(zoneDeVille1.data, zoneDeVille1.header[0].members.length)
         }));
 
-        //$('#right-side-bar').find('.side-bar-content').append('<h4>Pluies</h4>');
+        $sideBarContent.append('<h4>Politique</h4>');
 
-        $('#right-side-bar').find('.side-bar-content').append('<h4>Politique</h4>');
-
-        $('#right-side-bar').find('.side-bar-content').append('<h5>Tribus</h5>');
+        $sideBarContent.append('<h5>Tribus</h5>');
 
 
         var ddd = _.chunk(politics0.data, politics0.columns.length);
@@ -926,20 +965,18 @@ App.prototype.selectRegion = function (e) {
             };
         })];
 
-        var TribusContent = '<table>' + _.map(rows1[0], function(r) {return '<tr><td>' + r.Value + '</td></tr>'}).join('') + '</table>';
+        $sideBarContent.append('<table>' + _.map(rows1[0], function(r) {return '<tr><td>' + r.Value + '</td></tr>'}).join('') + '</table>');
 
-        $('#right-side-bar').find('.side-bar-content').append(TribusContent);
+        $sideBarContent.append('<h5>Élections</h5>');
 
-        $('#right-side-bar').find('.side-bar-content').append('<h5>Élections</h5>');
-
-        $('#right-side-bar').find('.side-bar-content').append($.tmpl('simple-table.html', {
+        $sideBarContent.append($.tmpl('simple-table.html', {
             headerMembers: politics1.header[0].members,
             rows: _.chunk(politics1.data, politics1.header[0].members.length)
         }));
 
-        $('.side-bar-content').mCustomScrollbar({
-            theme: 'dark'
-        });
+        // $sideBarContent.mCustomScrollbar({
+        //     theme: 'dark'
+        // });
 
     });
 };
@@ -1035,6 +1072,7 @@ App.prototype.bindEvents = function () {
                         this._activeGroupCuid = null;
                         $('#regional-division-map-switcher').find('a').data('layer-id', null);
                         this._layers[layerId].clean();
+                        this.hideLegend();
                     }
 
                 }
@@ -1148,10 +1186,16 @@ App.prototype.showLegend = function (ranges) {
     $('#map-legend-holder').empty()
         .append($.tmpl('map-legend.html', { ranges: ranges }))
         .show();
+
+    _.each(this._dataLayers, function(dataLayer) {
+        dataLayer.setStyle(this._invisibleStyle);
+    }.bind(this));
+
 };
 
 App.prototype.hideLegend = function () {
     $('#map-legend-holder').empty().hide();
+    this._dataLayers[this._activeRegionalDivision].setStyle(this._visibleStyle);
 };
 
 App.prototype.loadLayer = function (layerId, layerType) {
@@ -1177,6 +1221,7 @@ App.prototype.loadLayer = function (layerId, layerType) {
 	else {
 
         if (layerType && layerType === 'region' && this._activeAreaLayerId != null) {
+            this.hideLegend();
             this._layers[this._activeAreaLayerId].clean();
         }
 
@@ -1228,37 +1273,38 @@ App.prototype.loadLayer = function (layerId, layerType) {
 
                 this.showLegend(this._layers[layerId].layer.ranges);
 
-                layerData.layer.dataLayer.addListener('mouseover', function(e) {
-                    var data = e.feature.getProperty('tooltipData');
-                    var $infoWindowContent = $.tmpl('info-window.html', {
-                        title: data.name,
-                        content: Globalize.format(parseFloat(data.value))
-                    });
-                    var ddd = {
-                        top: e.eb.clientY,
-                        left: e.eb.clientX - 400,
-                        "z-index": 1000000000,
-                        "display": "block"
-                    };
-                    $('#tooltip').empty()
-                        .css(ddd)
-                        .append($infoWindowContent);
-                });
-
-                layerData.layer.dataLayer.addListener('mouseup', function(e) {
-                    $('#tooltip').empty().hide();
-                });
-
-                // layerData.layer.dataLayer.addListener('click', function (e) {
+                //MOUSEOVER
+                // layerData.layer.dataLayer.addListener('mouseover', function(e) {
                 //     var data = e.feature.getProperty('tooltipData');
                 //     var $infoWindowContent = $.tmpl('info-window.html', {
                 //         title: data.name,
                 //         content: Globalize.format(parseFloat(data.value))
                 //     });
-                //     self.infoWindow.setContent($infoWindowContent[0].outerHTML);
-                //     self.infoWindow.setPosition(e.latLng);
-                //     self.infoWindow.open(self._map);
+                //     var ddd = {
+                //         top: e.eb.clientY,
+                //         left: e.eb.clientX - 400,
+                //         "z-index": 1000000000,
+                //         "display": "block"
+                //     };
+                //     $('#tooltip').empty()
+                //         .css(ddd)
+                //         .append($infoWindowContent);
                 // });
+                //
+                // layerData.layer.dataLayer.addListener('mouseup', function(e) {
+                //     $('#tooltip').empty().hide();
+                // });
+
+                layerData.layer.dataLayer.addListener('click', function (e) {
+                    var data = e.feature.getProperty('tooltipData');
+                    var $infoWindowContent = $.tmpl('info-window.html', {
+                        title: data.name,
+                        content: Globalize.format(parseFloat(data.value))
+                    });
+                    self.infoWindow.setContent($infoWindowContent[0].outerHTML);
+                    self.infoWindow.setPosition(e.latLng);
+                    self.infoWindow.open(self._map);
+                });
 
 			    //TODO Implement timeline
 				//layerData.layer.data is pivotResponse
