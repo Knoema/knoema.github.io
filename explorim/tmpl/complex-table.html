@@ -1,0 +1,15 @@
+<h3>${title}</h3>
+<table border="0" class="complex-table">
+    {{each(i, row) rows}}
+    <tr>
+        <td>
+            ${row[0].indicator.substr(0, row[0].indicator.indexOf(','))}&nbsp;
+        </td>
+        {{each(j, rowMember) row}}
+        <td>
+            ${Boolean(rowMember.Value) ? Globalize.format(rowMember.Value) : rowMember.Value}
+        </td>
+        {{/each}}
+    </tr>
+    {{/each}}
+</table>

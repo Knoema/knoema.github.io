@@ -1,8 +1,11 @@
 {{if item.children && item.children.length && _.every(item.children, function(layer) { return $.inArray(layer.name, ['Région', 'Département', 'Communale']) > -1 && layer.layerType == 'region'; })}}
-    <div>
+    <div class="item-holder">
         <label>
             <input id="${cuid()}" data-layers="${JSON.stringify(item.children)}" type="checkbox" /> ${item.title}
         </label>
+        <a href="//explorim.knoema.com/${item.children[0].datasetId}" class="dataset-link" target="_blank" title="View data">
+            <span class="glyphicon glyphicon-new-window" aria-hidden="true" data-ddd="${JSON.stringify(item)}"></span>
+        </a>
     </div>
 {{else}}
 
@@ -21,11 +24,17 @@
                 <label>
                     <input data-layer-id="${item.layerId}" data-layer-type="${item.layerType}" type="checkbox" /> ${item.title || item.name}
                 </label>
+                <a href="//explorim.knoema.com/${item.datasetId}" class="dataset-link" target="_blank" title="View data">
+                    <span class="glyphicon glyphicon-new-window" aria-hidden="true"></span>
+                </a>
             {{else}}
                 {{if item.layerType == 'point'}}
                     <label>
                         <input data-layer-id="${item.layerId}" data-layer-type="${item.layerType}" type="checkbox" /> ${item.name || item.title}
                     </label>
+                    <a href="//explorim.knoema.com/${item.datasetId}" class="dataset-link" target="_blank" title="View data">
+                        <span class="glyphicon glyphicon-new-window" aria-hidden="true"></span>
+                    </a>
                 {{else}}
                     <span class="item-title item-title-1 no-children">
                         ${item.title || item.name}

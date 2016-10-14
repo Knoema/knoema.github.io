@@ -1,0 +1,30 @@
+<table border="0">
+    <thead>
+        <tr>
+            <th>
+                &nbsp;
+            </th>
+            {{each(k, headerMember) headerMembers}}
+                <th>
+                    ${headerMember}
+                </th>
+            {{/each}}
+        </tr>
+    </thead>
+    <tbody>
+        {{each(i, row) rows}}
+            <tr>
+                {{if row[0]}}
+                <td>
+                    ${row[0].indicator}
+                </td>
+                {{/if}}
+                {{each(j, rowMember) row}}
+                <td>
+                    ${Boolean(rowMember.Value) ? Globalize.format(rowMember.Value) : rowMember.Value}
+                </td>
+                {{/each}}
+            </tr>
+        {{/each}}
+    </tbody>
+</table>

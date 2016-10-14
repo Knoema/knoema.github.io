@@ -82,7 +82,9 @@ App.prototype.init = function () {
             //     return item.level > 0 && item.key < 1000660 && !_.isUndefined(item.fields.regionid);
             // });
 
-            var regions = data.items;
+            var regions = _.filter(data.items, function(item) {
+                return item.key < 1003410;
+            });
 
             var $regionsDropdown = $.tmpl('regions-dropdown.html', {
                 regions: regions
@@ -106,6 +108,8 @@ App.prototype.init = function () {
 
             $('#top-map-buttons').find('.dropdown-holder').append($regionsDropdown);
             $regionsDropdown.selectpicker();
+
+            $('#select-region').on('hidden.bs.select', this.selectRegion.bind(this));
 
         }.bind(this));
 
@@ -273,6 +277,23 @@ App.prototype.init = function () {
                                     title: "Population",
                                     children: [
                                         {
+                                            title: "Démographie",
+                                            children: [
+                                                {
+                                                    title: "Population, mâle",
+                                                    children: groupedLayers["Demography. Male Population"]
+                                                },
+                                                {
+                                                    title: "Female population",
+                                                    children: groupedLayers["Demography. Female Population"]
+                                                },
+                                                {
+                                                    title: "Total population’ to ‘Population totale",
+                                                    children: groupedLayers["Demography. Total Population"]
+                                                }
+                                            ]
+                                        },
+                                        {
                                             //title: "RGPH",
                                             title: "Recensement Général de la Population et de l'Habitat (RGPH)",
                                             children: [
@@ -281,10 +302,12 @@ App.prototype.init = function () {
                                                     children: groupedLayers["Habitat"]
                                                 },
                                                 {
-                                                    title: "Équipments de la maison"
+                                                    title: "Équipments de la maison",
+                                                    children: groupedLayers["Équipments de la maison"]
                                                 },
                                                 {
-                                                    title: "Cuisine eclairage eau"
+                                                    title: "Cuisine eclairage eau",
+                                                    children: groupedLayers["Cuisine eclairage eau"]
                                                 },
                                                 {
                                                     title: "Assainissement",
@@ -305,18 +328,6 @@ App.prototype.init = function () {
                                         },
                                         {
                                             title: "Santé"
-                                        },
-                                        {
-                                            title: "Male Population",
-                                            children: groupedLayers["Demography. Male Population"]
-                                        },
-                                        {
-                                            title: "Female Population",
-                                            children: groupedLayers["Demography. Female Population"]
-                                        },
-                                        {
-                                            title: "Total Population",
-                                            children: groupedLayers["Demography. Total Population"]
                                         }
                                     ]
                                 }
@@ -352,7 +363,7 @@ App.prototype.init = function () {
                                                     title: "Esclavage, employé"
                                                 },
                                                 {
-                                                    title: "Exclavage, sexe"
+                                                    title: "Esclavage, sexe"
                                                 }
                                             ]
                                         },
@@ -366,14 +377,15 @@ App.prototype.init = function () {
                                 },
                                 {
                                     title: "Terrorisme et les conflits",
-                                    children: [
-                                        {
-                                            title: "Incidents de terrorisme"
-                                        },
-                                        {
-                                            title: "Les conflits armés"
-                                        }
-                                    ]
+                                    children: groupedLayers["Terrorisme et les conflits"]
+                                    // children: [
+                                    //     {
+                                    //         title: "Incidents de terrorisme"
+                                    //     },
+                                    //     {
+                                    //         title: "Les conflits armés"
+                                    //     }
+                                    // ]
                                 }
                             ]
                         },
@@ -397,7 +409,8 @@ App.prototype.init = function () {
                                   title: "Mahadras"
                                 },
                                 {
-                                    title: "Tribus"
+                                    title: "Tribus",
+                                    children: groupedLayers["Tribus"]
                                 },
                                 {
                                     title: "Social",
@@ -409,60 +422,13 @@ App.prototype.init = function () {
                                             title: "Cadres"
                                         },
                                         {
-                                            title: "Fonctionnaires",
-                                            children: groupedLayers["Fonctionnaires"]
+                                            title: "Fonctionnaires"
                                         },
                                         {
-                                            title: "Hommes d'affaires",
-                                            children: [
-                                                {
-                                                    title: "Actif dans la région"
-                                                },
-                                                {
-                                                    title: "De la région"
-                                                },
-                                                {
-                                                    title: "NNI"
-                                                },
-                                                {
-                                                    title: "Prénom"
-                                                },
-                                                {
-                                                    title: "Date de naissance"
-                                                },
-                                                {
-                                                    title: "Lieu de naissance"
-                                                },
-                                                {
-                                                    title: "Crédit"
-                                                }
-                                            ]
+                                            title: "Hommes d'affaires"
                                         },
                                         {
-                                            title: "Acteurs politiques",
-                                            children: [
-                                                {
-                                                    title: "Mandat"
-                                                },
-                                                {
-                                                    title: "Parti politique"
-                                                },
-                                                {
-                                                    title: "NNI"
-                                                },
-                                                {
-                                                    title: "Prénom"
-                                                },
-                                                {
-                                                    title: "Date de naissance"
-                                                },
-                                                {
-                                                    title: "Lieu de naissance"
-                                                },
-                                                {
-                                                    title: "Crédit"
-                                                }
-                                            ]
+                                            title: "Acteurs politiques"
                                         },
                                         {
                                             title: "Notable"
@@ -505,22 +471,25 @@ App.prototype.init = function () {
                                                         {
                                                             title: "Inscrits Total",
                                                             children: groupedLayers["Presidential Election. Votants Total"]
-                                                        },
-                                                        {
-                                                            title: "Bulletins Blanc",
-                                                            children: groupedLayers["Presidential Election. Bulletins Blanc"]
-                                                        },
-                                                        {
-                                                            title: "Bulletins Nulls",
-                                                            children: groupedLayers["Presidential Election. Bulletins Nulls"]
                                                         }
+                                                        // {
+                                                        //     title: "Bulletins Blanc",
+                                                        //     children: groupedLayers["Presidential Election. Bulletins Blanc"]
+                                                        // },
+                                                        // {
+                                                        //     title: "Bulletins Nulls",
+                                                        //     children: groupedLayers["Presidential Election. Bulletins Nulls"]
+                                                        // }
                                                     ]
                                                 },
                                                 {
                                                     title: "2013 Parlementaire",
                                                     children: [
                                                         {
-
+                                                            title: "Total",
+                                                            children: groupedLayers["Parliamentary Election. Total"]
+                                                        },
+                                                        {
                                                             title: "APP + Tawassul",
                                                             children: groupedLayers["Parliamentary Election. APP + Tawassul"]
                                                         },
@@ -531,78 +500,98 @@ App.prototype.init = function () {
                                                         {
                                                             title: "Alliance for Justice and Democracy / Movement for Renovation (AJD / MR)",
                                                             children: groupedLayers["Parliamentary Election. Alliance for Justice and Democracy / Movement for Renovation (AJD / MR)"]
-                                                        },{
+                                                        },
+                                                        {
                                                             title: "APP + Tawassul",
                                                             children: groupedLayers["Parliamentary Election. APP + Tawassul"]
-                                                        },{
+                                                        },
+                                                        {
                                                             title: "Popular Front (FP)",
                                                             children: groupedLayers["Parliamentary Election. Popular Front (FP)"]
-                                                        },{
+                                                        },
+                                                        {
                                                             title: "The People's Progressive Alliance (APP)",
                                                             children: groupedLayers["Parliamentary Election. The People's Progressive Alliance (APP)"]
-                                                        },{
+                                                        },
+                                                        {
                                                             title: "El Islah Party",
                                                             children: groupedLayers["Parliamentary Election. El Islah Party"]
-                                                        },{
+                                                        },
+                                                        {
                                                             title: "Ravah Party",
                                                             children: groupedLayers["Parliamentary Election. Ravah Party"]
-                                                        },{
+                                                        },
+                                                        {
                                                             title: "Party of Unity and Development (PUD)",
                                                             children: groupedLayers["Parliamentary Election. Party of Unity and Development (PUD)"]
-                                                        },{
+                                                        },
+                                                        {
                                                             title: "Party of the Union for the Republic (UPR)",
                                                             children: groupedLayers["Parliamentary Election. Party of the Union for the Republic (UPR)"]
-                                                        },{
+                                                        },
+                                                        {
                                                             title: "Dignity and Action Party (PDA)",
                                                             children: groupedLayers["Parliamentary Election. Dignity and Action Party (PDA)"]
-                                                        },{
+                                                        },
+                                                        {
                                                             title: "Democratic Party of the People (PPD)",
                                                             children: groupedLayers["Parliamentary Election. Democratic Party of the People (PPD)"]
-                                                        },{
+                                                        },
+                                                        {
                                                             title: "El Karam Party",
                                                             children: groupedLayers["Parliamentary Election. El Karam Party"]
-                                                        },{
+                                                        },
+                                                        {
                                                             title: "EL VADILA Party",
                                                             children: groupedLayers["Parliamentary Election. EL VADILA Party"]
-                                                        },{
+                                                        },
+                                                        {
                                                             title: "EL WIAM Party",
                                                             children: groupedLayers["Parliamentary Election. EL WIAM Party"]
-                                                        },{
+                                                        },
+                                                        {
                                                             title: "Rally for Unity Party (MAJD)",
                                                             children: groupedLayers["Parliamentary Election. Rally for Unity Party (MAJD)"]
-                                                        },{
+                                                        },
+                                                        {
                                                             title: "Republican Party for Democracy and Renewal (RDRP)",
                                                             children: groupedLayers["Parliamentary Election. Republican Party for Democracy and Renewal (RDRP)"]
-                                                        },{
+                                                        },
+                                                        {
                                                             title: "RibatDémocratique Party and Social (RDS)",
                                                             children: groupedLayers["Parliamentary Election. RibatDémocratique Party and Social (RDS)"]
-                                                        },{
+                                                        },
+                                                        {
                                                             title: "Sawab Party",
                                                             children: groupedLayers["Parliamentary Election. Sawab Party"]
-                                                        },{
+                                                        },
+                                                        {
                                                             title: "Third Generation Party (PTG)",
                                                             children: groupedLayers["Parliamentary Election. Third Generation Party (PTG)"]
-                                                        },{
+                                                        },
+                                                        {
                                                             title: "National Rally for Reform and Development (tawassul)",
                                                             children: groupedLayers["Parliamentary Election. National Rally for Reform and Development (tawassul)"]
-                                                        },{
+                                                        },
+                                                        {
                                                             title: "Democratic Renewal (RD)",
                                                             children: groupedLayers["Parliamentary Election. Democratic Renewal (RD)"]
-                                                        },{
+                                                        },
+                                                        {
                                                             title: "Sawab + WIAM",
                                                             children: groupedLayers["Parliamentary Election. Sawab + WIAM"]
-                                                        },{
+                                                        },
+                                                        {
                                                             title: "Startle Youth for the Nation (SURSAUT)",
                                                             children: groupedLayers["Parliamentary Election. Startle Youth for the Nation (SURSAUT)"]
-                                                        },{
+                                                        },
+                                                        {
                                                             title: "Union of the Democratic Centre (U.C.D)",
                                                             children: groupedLayers["Parliamentary Election. Union of the Democratic Centre (U.C.D)"]
-                                                        },{
+                                                        },
+                                                        {
                                                             title: "Union for Democracy and Progress (UDP)",
                                                             children: groupedLayers["Parliamentary Election. Union for Democracy and Progress (UDP)"]
-                                                        },{
-                                                            title: "Total",
-                                                            children: groupedLayers["Parliamentary Election. Total"]
                                                         }
                                                     ]
                                                 },
@@ -718,6 +707,12 @@ App.prototype.onResize = function () {
         "height": windowHeight - timelineHeight
     });
 
+    $('#right-side-bar').find('.side-bar-content').css({
+        "height": windowHeight - timelineHeight - 60
+    });
+
+
+
     google.maps.event.trigger(this._map, "resize");
 
 };
@@ -800,10 +795,8 @@ App.prototype.selectRegion = function (e) {
         return;
     }
 
-    dataDescriptor.Filter[0].Members = [key];
-
     $('#map-container').css({
-        "width": $(window).width() - 400 - 350
+        "width": $(window).width() - 400 - 400
     });
 
     google.maps.event.trigger(this._map, "resize");
@@ -811,22 +804,143 @@ App.prototype.selectRegion = function (e) {
     this._regionsComponent.select(regionId);
 
     $('#right-side-bar').find('.header').html(regionName);
+    $('#right-side-bar').find('.header').append('<a href="javascript:void 0;" class="export-button" title="Export to PDF"></a><a style="margin-top: 10px;" href="#" class="btn" id="view-profile">     Voir le profil régional </a>');
+
     $('#right-side-bar').find('.side-bar-content').empty().append($('<span class="glyphicon glyphicon-cog fa-spin" aria-hidden="true" title="Loading..."></span>'));
 
     $('#right-side-bar').animate({
         "right": 0
     });
 
-    Knoema.Helpers.post('//mauritania.opendataforafrica.org/api/1.0/data/pivot', dataDescriptor, function(pivotResponse) {
-        if (pivotResponse.data.length) {
-            $('#right-side-bar').find('.side-bar-content').empty().append($.tmpl('region-details.html', {
-                headerMembers: pivotResponse.header[0].members,
-                rows: _.chunk(pivotResponse.data, pivotResponse.header[0].members.length)
-            }));
-            $('#right-side-bar').find('.header').append('<a href="javascript:void 0;" class="export-button" title="Export to PDF"></a>');
-        } else {
-            $('#right-side-bar').find('.side-bar-content').empty().append($('<a href="#" class="btn" id="view-profile">Voir le profil régional</a><div>No data</div>'));
+    dataDescriptors.old.Filter[0].Members = [key];
+
+    dataDescriptors.economics0.Filter[0].Members = [key];
+    dataDescriptors.economics1.Filter[0].Members = [key];
+
+    dataDescriptors.zoneDeVille0.Filter[0].Members = [key];
+    dataDescriptors.zoneDeVille1.Filter[0].Members = [key];
+
+    //dataDescriptors.pluies.Filter[0].Members = [key];
+    dataDescriptors.politics1.Filter[0].Members = [key];
+
+    //Economique et social
+    var economics0 = $.Deferred();
+    Knoema.Helpers.post('//explorim.knoema.com/api/1.0/data/pivot', dataDescriptors.economics0, function(pivotResponse) {
+        economics0.resolve(pivotResponse);
+    });
+
+    var economics1 = $.Deferred();
+    Knoema.Helpers.post('//explorim.knoema.com/api/1.0/data/pivot', dataDescriptors.economics1, function(pivotResponse) {
+        economics1.resolve(pivotResponse);
+    });
+
+    var zoneDeVille0 = $.Deferred();
+    Knoema.Helpers.post('//explorim.knoema.com/api/1.0/data/pivot', dataDescriptors.zoneDeVille0, function(pivotResponse) {
+        zoneDeVille0.resolve(pivotResponse);
+    });
+
+    var zoneDeVille1 = $.Deferred();
+    Knoema.Helpers.post('//explorim.knoema.com/api/1.0/data/pivot', dataDescriptors.zoneDeVille1, function(pivotResponse) {
+        zoneDeVille1.resolve(pivotResponse);
+    });
+
+    var politics0 = $.Deferred();
+    Knoema.Helpers.post('//explorim.knoema.com/api/1.0/data/details', dataDescriptors.politics0, function(pivotResponse) {
+        politics0.resolve(pivotResponse);
+    });
+
+    var politics1 = $.Deferred();
+    Knoema.Helpers.post('//explorim.knoema.com/api/1.0/data/pivot', dataDescriptors.politics1, function(pivotResponse) {
+        politics1.resolve(pivotResponse);
+    });
+
+    $.when.apply(null, [
+        economics0,
+        economics1,
+        zoneDeVille0,
+        zoneDeVille1,
+        politics0,
+        politics1
+    ]).done(function onPivotRequestsFinished(economics0, economics1, zoneDeVille0, zoneDeVille1, politics0, politics1) {
+
+        //$table1
+        var $table1 = $.tmpl('simple-table.html', {
+            headerMembers: economics0.header[0].members,
+            rows: _.chunk(economics0.data, economics0.header[0].members.length)
+        });
+
+        //$table2
+        var rows = _.chunk(economics1.data, 2);
+        rows.unshift([
+            {
+                indicator: '',
+                Value: 'Anticipated'
+            },
+            {
+                indicator: '',
+                Value: 'Finalised'
+            }
+        ]);
+        if (rows[rows.length - 1].length == 1) {
+            rows[rows.length - 1].push({
+                Value: ''
+            });
         }
+        var $table2 = $.tmpl('complex-table.html', {
+            rows: rows
+        });
+
+        $('#right-side-bar').find('.side-bar-content').empty();
+
+        $('#right-side-bar').find('.side-bar-content').append('<h4>Economique et social</h4>');
+
+        $('#right-side-bar').find('.side-bar-content').append($table1);
+        $('#right-side-bar').find('.side-bar-content').append('<hr />');
+        $('#right-side-bar').find('.side-bar-content').append($table2);
+
+        $('#right-side-bar').find('.side-bar-content').append('<h4>Zone de vie</h4>');
+
+        //Flat dataset
+        // $('#right-side-bar').find('.side-bar-content').append($.tmpl('simple-table.html', {
+        //     headerMembers: zoneDeVille0.header[0].members,
+        //     rows: _.chunk(zoneDeVille0.data, zoneDeVille0.header[0].members.length)
+        // }));
+
+        $('#right-side-bar').find('.side-bar-content').append($.tmpl('simple-table.html', {
+            headerMembers: zoneDeVille1.header[0].members,
+            rows: _.chunk(zoneDeVille1.data, zoneDeVille1.header[0].members.length)
+        }));
+
+        //$('#right-side-bar').find('.side-bar-content').append('<h4>Pluies</h4>');
+
+        $('#right-side-bar').find('.side-bar-content').append('<h4>Politique</h4>');
+
+        $('#right-side-bar').find('.side-bar-content').append('<h5>Tribus</h5>');
+
+
+        var ddd = _.chunk(politics0.data, politics0.columns.length);
+
+        var rows1 = [_.map(ddd, function(d) {
+            return {
+                Value: d[2]
+            };
+        })];
+
+        var TribusContent = '<table>' + _.map(rows1[0], function(r) {return '<tr><td>' + r.Value + '</td></tr>'}).join('') + '</table>';
+
+        $('#right-side-bar').find('.side-bar-content').append(TribusContent);
+
+        $('#right-side-bar').find('.side-bar-content').append('<h5>Élections</h5>');
+
+        $('#right-side-bar').find('.side-bar-content').append($.tmpl('simple-table.html', {
+            headerMembers: politics1.header[0].members,
+            rows: _.chunk(politics1.data, politics1.header[0].members.length)
+        }));
+
+        $('.side-bar-content').mCustomScrollbar({
+            theme: 'dark'
+        });
+
     });
 };
 
@@ -983,10 +1097,10 @@ App.prototype.bindEvents = function () {
 
     }, this));
 
-    $('#select-region').on('hidden.bs.select', this.selectRegion.bind(this));
+    //$('#select-region').on('hidden.bs.select', this.selectRegion.bind(this));
 
 
-    $('#profile-modal-2').on('click', '.close', function() {
+    $('#profile-modal-2').on('click', '.close-modal-2', function() {
         $('#profile-modal-2').hide();
     });
 
@@ -994,7 +1108,7 @@ App.prototype.bindEvents = function () {
 
         $('#profile-modal-2').css({
             "top": 10,
-            "bottom": $('#timeline').height() + 41, //for padding of .close button
+            "bottom": $('#timeline').height() + 51, //for padding of .close button
             "width": $('#map-container').width() - 20,
             "left": 10
         }).show();
@@ -1114,16 +1228,37 @@ App.prototype.loadLayer = function (layerId, layerType) {
 
                 this.showLegend(this._layers[layerId].layer.ranges);
 
-                layerData.layer.dataLayer.addListener('click', function (e) {
+                layerData.layer.dataLayer.addListener('mouseover', function(e) {
                     var data = e.feature.getProperty('tooltipData');
                     var $infoWindowContent = $.tmpl('info-window.html', {
                         title: data.name,
                         content: Globalize.format(parseFloat(data.value))
                     });
-                    self.infoWindow.setContent($infoWindowContent[0].outerHTML);
-                    self.infoWindow.setPosition(e.latLng);
-                    self.infoWindow.open(self._map);
+                    var ddd = {
+                        top: e.eb.clientY,
+                        left: e.eb.clientX - 400,
+                        "z-index": 1000000000,
+                        "display": "block"
+                    };
+                    $('#tooltip').empty()
+                        .css(ddd)
+                        .append($infoWindowContent);
                 });
+
+                layerData.layer.dataLayer.addListener('mouseup', function(e) {
+                    $('#tooltip').empty().hide();
+                });
+
+                // layerData.layer.dataLayer.addListener('click', function (e) {
+                //     var data = e.feature.getProperty('tooltipData');
+                //     var $infoWindowContent = $.tmpl('info-window.html', {
+                //         title: data.name,
+                //         content: Globalize.format(parseFloat(data.value))
+                //     });
+                //     self.infoWindow.setContent($infoWindowContent[0].outerHTML);
+                //     self.infoWindow.setPosition(e.latLng);
+                //     self.infoWindow.open(self._map);
+                // });
 
 			    //TODO Implement timeline
 				//layerData.layer.data is pivotResponse
@@ -1158,6 +1293,8 @@ App.prototype.loadTemplates = function (callback) {
         $.get('tmpl/region-details.html?random=' + Math.random(), compileTemplate),
 		$.get('tmpl/filters-tree.html?random=' + Math.random(), compileTemplate),
         $.get('tmpl/info-window.html?random=' + Math.random(), compileTemplate),
+        $.get('tmpl/simple-table.html?random=' + Math.random(), compileTemplate),
+        $.get('tmpl/complex-table.html?random=' + Math.random(), compileTemplate),
         $.get('tmpl/map-legend.html?random=' + Math.random(), compileTemplate)
 	];
 

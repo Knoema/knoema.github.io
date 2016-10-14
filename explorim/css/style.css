@@ -315,6 +315,7 @@ div.dropdown-holder .bootstrap-select {
 
 span.item-title {
     color: gray;
+    background-image: url(../img/icon-expand-x2.png);
 }
 span.item-title:hover {
     color: gray;
@@ -476,11 +477,14 @@ span.item-title:hover {
     background-color: #f5f5f5;
     border-left: 1px solid #cecece;
     position: absolute;
-    width: 350px;
+    width: 400px;
     top: 0;
     z-index: 1000;
-    right: -370px;
+    right: -420px;
     padding: 10px;
+    overflow: hidden;
+
+    font-size: 0.7em;
 }
 #right-side-bar .close {
     float: right;
@@ -488,15 +492,24 @@ span.item-title:hover {
 #right-side-bar .header {
     font-weight: bold;
     margin-bottom: 20px;
-    font-size: 1.4em;
+    font-size: 1.7em;
 }
 
 table {
     width: 100%;
+    font-size: 1.4em;
 }
 
 table td, table th {
-    padding: 5px 0;
+    padding: 10px 0;
+    white-space: nowrap;
+}
+
+table td, table th {
+    text-align: right;
+}
+table td:first-child, table th:first-child {
+    text-align: left;
 }
 
 table thead tr:nth-of-type(odd) {
@@ -587,8 +600,23 @@ table tr:nth-of-type(even) {
     background-color: white;
 }
 
-#profile-modal-2 .close {
+#profile-modal-2 .close-modal-2 {
     padding: 5px 10px;
+    cursor: pointer;
+    padding: 10px;
+}
+
+#profile-modal-2 .close-modal-2:hover {
+    color: #cecece;
+}
+
+#profile-modal-2 .header {
+    background-color: #245b13;
+    color: white;
+    height: 40px;
+    line-height: 40px;
+    padding-left: 10px;
+    font-size: 1.3em;
 }
 
 #map-legend-holder {
@@ -600,6 +628,7 @@ table tr:nth-of-type(even) {
     left: 20px;
     padding: 0 5px;
     display: none;
+    font-family: 'Roboto', sans-serif;
 }
 .map-legend {
     display: table;
@@ -637,7 +666,7 @@ table tr:nth-of-type(even) {
     font-family: 'Roboto', sans-serif;
 }
 .info-window__header {
-    font-size: 18pt;
+    font-size: 16pt;
 }
 .info-window__content {
     font-size: 13pt;
@@ -650,4 +679,35 @@ table tr:nth-of-type(even) {
 
 .bootstrap-select.btn-group .dropdown-menu li a span.text:first-letter {
     text-transform: uppercase;
+}
+
+.side-bar-content {
+    overflow-x: auto;
+    font-size: 0.8em;
+}
+
+.side-bar-content h4 {
+    text-align: center;
+    font-weight: bold;
+}
+
+.side-bar-content h5 {
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.7em;
+}
+
+.complex-table tr:first-child {
+    font-weight: bold;
+}
+
+#tooltip {
+    background-color: white;
+    position: absolute;
+    min-height: 50px;
+    z-index: 100000;
+    display: none;
+    padding: 10px;
+    font-family: 'Roboto', sans-serif;
+    font-size: 0.7em;
 }
