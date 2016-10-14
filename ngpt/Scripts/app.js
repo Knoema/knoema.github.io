@@ -109,35 +109,35 @@ var Infrastructure;
     };
 
     var RegionsCenters = {
-    	'NA-CA': { lat: -22.4904, lng: 18.9576 },
-    	'NA-ER': { lat: -22.4904, lng: 18.9576 },
-    	'NA-HA': { lat: -22.4904, lng: 18.9576 },
-    	'NA-KA': { lat: -22.4904, lng: 18.9576 },
-    	'NA-KH': { lat: -22.4904, lng: 18.9576 },
-    	'NA-KU': { lat: -22.4904, lng: 18.9576 },
-    	'NA-OD': { lat: -22.4904, lng: 18.9576 },
-    	'NA-OH': { lat: -22.4904, lng: 18.9576 },
+    	'NA-CA': { lat: -18.0904, lng: 24.4576 },
+    	'NA-ER': { lat: -22.2904, lng: 16.0576 },
+    	'NA-HA': { lat: -24.4904, lng: 17.9576 },
+    	'NA-KA': { lat: -27.1004, lng: 18.5576 },
+    	'NA-KH': { lat: -23.0904, lng: 17.9576 },
+    	'NA-KU': { lat: -19.1904, lng: 14.9576 },
+    	'NA-OD': { lat: -20.4904, lng: 19.5576 },
+    	'NA-OH': { lat: -22.0904, lng: 20.4576 },
     	'NA-OK': { lat: -22.4904, lng: 18.9576 },
-    	'NA-ON': { lat: -22.4904, lng: 18.9576 },
-    	'NA-OS': { lat: -22.4904, lng: 18.9576 },
-    	'NA-OT': { lat: -22.4904, lng: 18.9576 },
-    	'NA-OW': { lat: -22.4904, lng: 18.9576 }
+    	'NA-ON': { lat: -18.4904, lng: 16.3576 },
+    	'NA-OS': { lat: -18.4504, lng: 15.3576 },
+    	'NA-OT': { lat: -18.6904, lng: 17.3576 },
+    	'NA-OW': { lat: -17.7004, lng: 17.2076 }
     };
 
     var RegionsZoom = {
-    	'NA-CA': 6,
-    	'NA-ER': 6,
-    	'NA-HA': 6,
-    	'NA-KA': 6,
-    	'NA-KH': 6,
-    	'NA-KU': 6,
-    	'NA-OD': 6,
-    	'NA-OH': 6,
+    	'NA-CA': 9,
+    	'NA-ER': 8,
+    	'NA-HA': 8,
+    	'NA-KA': 8,
+    	'NA-KH': 8,
+    	'NA-KU': 8,
+    	'NA-OD': 8,
+    	'NA-OH': 8,
     	'NA-OK': 6,
-    	'NA-ON': 6,
-    	'NA-OS': 6,
-    	'NA-OT': 6,
-    	'NA-OW': 6,
+    	'NA-ON': 9,
+    	'NA-OS': 9,
+    	'NA-OT': 9,
+    	'NA-OW': 9,
     };
 
     var Application = (function () {
@@ -666,23 +666,23 @@ var Infrastructure;
         		html += '<div class="data-block">';
 
         		html += '<div class="title-block">';
-        		html += '<div style="max-width: 300px;"><label>Nom Projet:</label><br />' + (tooltipData['Nom Projet'] == null ? '' : tooltipData['Nom Projet']) + '</div>';
+        		html += '<div style="max-width: 300px;"><label>Project Name:</label><br />' + (tooltipData['Nom Projet'] == null ? '' : tooltipData['Nom Projet']) + '</div>';
         		html += '</div>';
 
         		html += '<div class="data-block col1">';
 
-        		html += '<div><label>Localité:</label><br />' + tooltipData['locales'] + '</div>';
-        		html += '<div><label>Budget Total Prévu:</label><br />' + (tooltipData['Budget Total Prévu: Dépenses Prévues'] == null ? '0' : tooltipData['Budget Total Prévu: Dépenses Prévues']) + '</div>';
-        		html += "<div><label>Code de l'axe stratégique de la vision 2035:</label><br />" + (tooltipData["Code de l'axe stratégique de la vision 2035"] == null ? '' : tooltipData["Code de l'axe stratégique de la vision 2035"]) + '</div>';
+        		html += '<div><label>Coordinates:</label><br />' + tooltipData['locales'] + '</div>';
+        		html += '<div><label>Total Planned Budget:</label><br />' + (tooltipData['Budget Total Prévu: Dépenses Prévues'] == null ? '0' : tooltipData['Budget Total Prévu: Dépenses Prévues']) + '</div>';
+        		html += "<div><label>The Strategy Vision code:</label><br />" + (tooltipData["Code de l'axe stratégique de la vision 2035"] == null ? '' : tooltipData["Code de l'axe stratégique de la vision 2035"]) + '</div>';
 
         		html += '</div>';
 
         		html += '<div class="data-block col2">';
 
-        		html += '<div><label>Sous Secteur:</label><br />' + (tooltipData['Code du Sous-Secteur (voir feuille Read me pour avoir les codes)'] == null ? '' : tooltipData['Code du Sous-Secteur (voir feuille Read me pour avoir les codes)']) + '</div>';
-        		html += '<div><label>Plan Senegal Emergent project:</label><br />' + (tooltipData['Numéro du projet phare / numéro de la réforme phare. (PP# / RP#)'] == null ? '' : tooltipData['Numéro du projet phare / numéro de la réforme phare. (PP# / RP#)']) + '</div>';
+        		html += '<div><label>Sub Sector:</label><br />' + (tooltipData['Code du Sous-Secteur (voir feuille Read me pour avoir les codes)'] == null ? '' : tooltipData['Code du Sous-Secteur (voir feuille Read me pour avoir les codes)']) + '</div>';
+        		html += '<div><label>Namibia Government Plan:</label><br />' + (tooltipData['Numéro du projet phare / numéro de la réforme phare. (PP# / RP#)'] == null ? '' : tooltipData['Numéro du projet phare / numéro de la réforme phare. (PP# / RP#)']) + '</div>';
         		html += '<div><label>Code PTIP:</label><br />' + (tooltipData['Code PTIP'] == null ? '' : tooltipData['Code PTIP']) + '</div>';
-        		html += '<div><label>Dépenses réalisées:</label><br />' + (tooltipData['Budget Total Prévu: Dépenses Prévues'] == null ? '0' : tooltipData['Budget Total Prévu: Dépenses Prévues']) + '</div>';
+        		html += '<div><label>Expenses Incurred:</label><br />' + (tooltipData['Budget Total Prévu: Dépenses Prévues'] == null ? '0' : tooltipData['Budget Total Prévu: Dépenses Prévues']) + '</div>';
         		
 
         		html += '</div>';

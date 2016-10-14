@@ -201,10 +201,10 @@
 					var tec = (_this.projectData[offset + _this.pTecOuiNon] == '1' ? true : (_this.projectData[offset + _this.pTecOuiNon] == '0' ? false : null));
 					var pol = (_this.projectData[offset + _this.pPolOuiNon] == '1' ? true : (_this.projectData[offset + _this.pPolOuiNon] == '0' ? false : null));
 					var periodData = [
-						"Période d'Exécution",
+						"Execution Period",
 						"Preparation",
-						"Technique",
-						"Politique",
+						"Technical",
+						"Policy",
 
 						"Complétement exécuté?",
 						(_this.projectData[offset + _this.pForOuiNon] == '1' ? 'Oui' : (_this.projectData[offset + _this.pForOuiNon] == '0' ? 'Non' : '')),

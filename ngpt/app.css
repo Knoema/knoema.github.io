@@ -41,10 +41,12 @@ body.landing
 	display: inline-block;
 	cursor: pointer;
 	padding: 20px 15px;
+	border-top: 5px solid #3172bb;
 }
 .menu .item:hover
 {
 	background-color: #213078;
+	border-top-color: #ffd83a;
 }
 .menu .item img
 {
@@ -63,11 +65,11 @@ body.landing
 }
 .menu .item.s2
 {
-	width: 200px;
+	width: 230px;
 }
 .menu .item.s2 .title
 {
-	width: 180px;
+	width: 200px;
 }
 .menu .item .title
 {
@@ -147,6 +149,7 @@ body.loading > .ajax-loader {
 	list-style-type: none;
 	display: inline-block;
 	border-left: 1px solid #485286;
+	border-top: 3px solid #0e1c5b;
 	vertical-align: top;
 	margin: 0;
 	height: 70px;
@@ -173,6 +176,7 @@ body.loading > .ajax-loader {
 }
 .main-menu .items li.active {
 	background-color: #29569c;
+	border-top: 3px solid #ffd83a;
 }
 .main-menu .items li.active a
 {
@@ -184,6 +188,7 @@ body.loading > .ajax-loader {
 }
 .main-menu .items li:hover {
 	background-color: #29569c;
+	border-top: 3px solid #ffd83a;
 }
 
 .filter-form {
@@ -734,17 +739,14 @@ body.loading > .ajax-loader {
 .passport__tabs__new ul li
 {
 	display: inline-block;
-	background-color: #f4ece1;
 	padding: 10px 20px;
 	margin: 0px;
-	border: solid 1px #9b7c4f;
-
 	font-weight: bold;
 	font-size: 11pt;
 	text-transform: uppercase;
-	color: #472001;
-	
 	cursor: pointer;
+	background-color: #dcdcdc;
+	color: #3172bb;
 }
 .passport__tabs__new ul li:first-child
 {
@@ -754,6 +756,8 @@ body.loading > .ajax-loader {
 {
 	padding-bottom: 13px;
 	border-bottom: none;
+	background-color: #fff;
+	color: #472001;
 }
 .passport__content__new, .passport__content__new__b
 {
@@ -763,10 +767,8 @@ body.loading > .ajax-loader {
 	top: 53px;
 	bottom: 10px;
 	padding: 20px;
-	background-color: #f3ece1;
+	background-color: #fff;
 	overflow: auto;
-	z-index: 3;
-	border: solid 1px #9b7c4f;
 }
 .passport__content__new__b
 {
@@ -825,18 +827,19 @@ body.loading > .ajax-loader {
     top: 10px;
     width: 120px;
     height: 40px;
-    background-color: #f4ece1;
+    background-color: #fff;
     cursor: pointer;
     z-index: 5;
 
 	font-size: 11pt;
 	text-transform: uppercase;
-	color: #472001;
+	color: #3172bb;
 }
 .passport__close__new img
 {
 	margin-right: 10px;
 	margin-top: -3px;
+	width: 12px;
 }
 .passport__close:hover {
 	background-image: url(./img/icon_close_hover.png);
@@ -921,14 +924,12 @@ body.loading > .ajax-loader {
 }
 p.title
 {
-	font-family: 'Roboto', sans-serif;
 	font-size: 12pt;
-	color: #9b7c4f;
+	color: #000;
 	font-weight: bold;
 }
 p.value
 {
-	font-family: 'Roboto', sans-serif;
 	font-size: 16pt;
 	color: #000;
 	margin-bottom: 20px;
@@ -957,11 +958,10 @@ p.value
 }
 .status-button
 {
-	font-family: 'Roboto', sans-serif;
 	font-size: 12pt;
-	color: #f4ece1;
+	color: #fff;
 	font-weight: bold;
-	background-color: #472001;
+	background-color: #3172bb;
 	padding: 10px 40px;
 	text-transform: uppercase;
 	margin-top: 50px;
@@ -1409,12 +1409,12 @@ img.pp-image-small
 {
 	margin: 0 0 15px 0;
 	display: inline-block;
-	color: #472001;
+	color: #000;
 }
 
 .map-tooltip .data-block label
 {
-	color: #9b7c4f;
+	color: #0e1c5b;
 	margin: 0;
 	float: left;
 	font-weight: bold;
@@ -1426,7 +1426,7 @@ img.pp-image-small
 
 .map-tooltip .data-block .title-block
 {
-	border-bottom: 1px solid #dad2cc;
+	border-bottom: 1px solid #29569c;
 }
 
 .map-tooltip .data-block.col1, .map-tooltip .data-block.col2
@@ -1437,12 +1437,12 @@ img.pp-image-small
 
 .map-tooltip .opp-button
 {
-	background-color: #472001;
+	background-color: #0e1c5b;
 	text-transform: uppercase;
 	font-weight: bold;
 	padding: 8px 14px;
 	text-decoration: none;
-	color: #f4ece1;
+	color: #fff;
 	font-size: 11pt;
 	display: block;
 	margin-left: 140px;
@@ -1800,6 +1800,7 @@ ul.subtopic-content li a
 {
 	border: 0;
 	background-color: #3172bb;
+	color: #fff;
 	font-weight: bold;
 	width: 25%;
 }

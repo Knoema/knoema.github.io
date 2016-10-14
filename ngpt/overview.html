@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8" />
-    <title>Namibia Governemt Projects Tracker</title>
+    <title> Namibia Government Projects Tracker</title>
     <link rel='stylesheet' type='text/css' href='https://fonts.googleapis.com/css?family=Lato'>
 	<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.7.3/css/bootstrap-select.min.css"/>
@@ -32,23 +32,23 @@
     			</a>
     		</li><!--
     		--><li class="active">
-				<a href="overview.html" class="s2" title="Country overview">
+				<a href="overview.html" class="s2" title="Country Overview">
 					<img src="./img/icons-banner-02-x2.png" />
 					Country overview
 				</a>
 			</li><!--
     		--><li>
-				<a href="portfolio.html" class="s1" title="Portfolio Projects">
+				<a href="portfolio.html" class="s1" title="Projects Portfolio">
 					<img src="./img/icons-banner-07-x2.png" />
 				</a>
 			</li><!--
     		--><li>
-				<a href="reformsTracker.html" class="s1" title="National Reforms" >
+				<a href="reformsTracker.html" class="s1" title="Reforms Tracker" >
 					<img src="./img/icons-banner-03-x2.png"/>
 				</a>
 			</li><!--
     		--><li>
-				<a href="sectorMonitor.html" class="s1" title="The Main Monitoring Indicators">
+				<a href="sectorMonitor.html" class="s1" title="Global Standing">
 					<img src="./img/icons-banner-04-x2.png" />
 				</a>
 			</li><!--
@@ -58,7 +58,7 @@
 				</a>
 			</li><!--
     		--><li>
-				<a href="sdg.html" class="s1" title="The Sustainable Development Goals">
+				<a href="sdg.html" class="s1" title="Monitoring Sustainable Development Goals">
 					<img src="./img/icons-banner-06-x2.png" />
 				</a>
 			</li><!--
@@ -74,7 +74,7 @@
 				<label><input type="checkbox" name="pse" value="2"/>Axis 2</label>
 				<label><input type="checkbox" name="pse" value="3"/>Axis 3</label>
 				
-				<h2>The 27 Flafship projects of the PSE:</h2>
+				<h2>THE 27 FLAFSHIP PROJECTS:</h2>
 				<select class="form-control input-sm ppp-projects-container" id="ppp-projects" multiple title="Nothing selected">
 					<option value="Undefined">Undefined</option>
 					<option value="PP1">PP1&nbsp;&nbsp;&nbsp;&nbsp;100-150 aggregation projects focused on livestock and high value added agriculture sectors</option>
@@ -182,23 +182,18 @@
 			<div id="new-project-passport" class="passport-popup-new">
 				<div class="passport__tabs__new">
 					<ul>
-						<li class="passport-tab active" data-name="passport">Passeport</li>
-						<!--<li>Schedule</li>-->
-						<!--<li>Documents</li>-->
-						<!--<li>Resource map</li>-->
-						<li class="passport-tab" data-name="budgetting">Budgétisation</li>
-						<!--<li>Risk management</li>-->
-						<!--<li>Issues</li>-->
+						<li class="passport-tab active" data-name="passport">Passport</li>
+						<li class="passport-tab" data-name="budgetting">Budget</li>
 					</ul>
 				</div>
-				<div class="passport__close__new"><img src="./img_passport/icon-close.png"/>Fermer</div>
+				<div class="passport__close__new"><img src="./img/icon_close_hover.png"/>Close</div>
     			<div class="passport__content__new"></div>
 				<div class="passport__content__new__b"></div>
 			</div>
 
 			<div id="ppp-frame-popup" class="passport2-popup">
 				<div class="inner-content">
-				<div class="passport__title" style="text-transform: uppercase;">The 27 Flagship of the PSE</div>
+				<div class="passport__title" style="text-transform: uppercase;">THE 27 FLAFSHIP PROJECTS</div>
 				<div class="passport__close"></div>
     			<div class="passport2__content">
 					<div class="ppp-item" data-value="Undefined">
@@ -347,7 +342,7 @@
 
 			<div id="senegal-right-hand-panel">
 				<div class="panel-title">
-					<h2 class="region-name">Senegal</h2>
+					<h2 class="region-name">Namibia</h2>
 					<img src="./img/right-panel/icon-pdf.png" class="export"/>
 					<div class="close-button"><img src="./img/icon-close.png"/>CLose</div>
 				</div>
@@ -428,15 +423,15 @@
 			<table style="width: 100%">
 				<tbody>
 					<tr>
-						<td style="width: 20%"><p class="title">Nom Projet</p><p class="value">{{=it.name}}</p></td>
-						<td style="width: 20%"><p class="title">Localité</p><p class="value">{{=it.locale}}</p></td>
-						<td style="width: 30%"><p class="title">Code de l'axe stratégique de la vision 2035</p><p class="value">{{=it.axe}}</p></td>
-						<td style="width: 30%"><p class="title">Plan Senegal Emergent project</p><p class="value">{{=it.number}}</p></td>
+						<td style="width: 20%"><p class="title">Project Name</p><p class="value">{{=it.name}}</p></td>
+						<td style="width: 20%"><p class="title">Coordinates</p><p class="value">{{=it.locale}}</p></td>
+						<td style="width: 30%"><p class="title">The Strategy Vision code</p><p class="value">{{=it.axe}}</p></td>
+						<td style="width: 30%"><p class="title">Namibia Government Plan</p><p class="value">{{=it.number}}</p></td>
 					</tr>
 					<tr>
-						<td class="status"><img src="./img/status/{{=it.statusIcon}}-x2.png"/><div><p class="title">Statut</p><p class="value">{{=it.status}}</p></div></td>
-						<td><p class="title">Budget Total Prévu</p><p class="value">{{=it.budget}}</p></td>
-						<td><p class="title">Sous Secteur</p><p class="value">{{=it.sour}}</p></td>
+						<td class="status"><img src="./img/status/{{=it.statusIcon}}-x2.png"/><div><p class="title">Status</p><p class="value">{{=it.status}}</p></div></td>
+						<td><p class="title">Total Planned Budget</p><p class="value">{{=it.budget}}</p></td>
+						<td><p class="title">Sub Sector</p><p class="value">{{=it.sour}}</p></td>
 						<td><p class="title">Code PTIP</p><p class="value">{{=it.ptip}}</p></td>
 						
 						<td></td>
@@ -445,14 +440,14 @@
 			</table>
 		</div>
 		<div class="g map-panel">
-			<img src="./img_passport/{{=it.nameEn}}.png"/>
+			<img src="./img/map.jpg"/>
 		</div>
 		<div class="g carousel-panel">
-			<img src="./img_passport/photos.jpg"/>
+			<img src="./img/photos.jpg"/>
 		</div>
 		<div class="g chart-panel">
-			<img src="./img_passport/score.png"/>
-			<div class="status-button">Rapport de situation</div>
+			<img src="./img/score.png"/>
+			<div class="status-button">Status report</div>
 		</div>
 	</script>
 
