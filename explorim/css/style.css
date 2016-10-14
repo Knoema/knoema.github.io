@@ -467,6 +467,11 @@ span.item-title:hover {
     /*background-color: grey;*/
 }
 
+
+
+
+
+/*==============================   #right-side-bar   ==============================*/
 #right-side-bar {
     background-color: #f5f5f5;
     border-left: 1px solid #cecece;
@@ -486,14 +491,25 @@ span.item-title:hover {
     font-size: 1.4em;
 }
 
-.table-striped>tbody>tr:nth-of-type(odd) {
-    background-color: white;
+table {
+    width: 100%;
 }
-.table-striped>tbody>tr:nth-of-type(even) {
+
+table td, table th {
+    padding: 5px 0;
+}
+
+table thead tr:nth-of-type(odd) {
     background-color: #ebebeb;
 }
 
-/*===================================================================================*/
+table tr:nth-of-type(odd) {
+    background-color: white;
+}
+table tr:nth-of-type(even) {
+    background-color: #ebebeb;
+}
+
 #right-side-bar .fa-spin {
     position: absolute;
     top: 50%;
@@ -530,7 +546,7 @@ span.item-title:hover {
         transform: rotate(359deg);
     }
 }
-/*===================================================================================*/
+/*==============================   #right-side-bar   ==============================*/
 
 .map-and-timeline .loading {
     position: absolute;
@@ -562,6 +578,17 @@ span.item-title:hover {
     margin: 30px auto;
     width: 80%!important;
     height: 80%!important;
+}
+
+#profile-modal-2 {
+    position: absolute;
+    z-index: 10;
+    display: none;
+    background-color: white;
+}
+
+#profile-modal-2 .close {
+    padding: 5px 10px;
 }
 
 #map-legend-holder {

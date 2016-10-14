@@ -683,13 +683,26 @@ App.prototype.onResize = function () {
 	var $sideBar = $('#side-bar');
 	$sideBar.height($(window).height());
 
-	$('#map-container').height(windowHeight - $('#timeline').height());
-
     var filtersHolderHeight = windowHeight - 180;
 
 	$sideBar.find('.filters-holder').height(filtersHolderHeight);
 
     var mapAndTimelineWidth = $(window).width() - $sideBar.width();
+
+    var rightSideBarPosition = $('#right-side-bar').position();
+
+    if (rightSideBarPosition.left <= $(window).width()) {
+        mapAndTimelineWidth = mapAndTimelineWidth - $('#right-side-bar').width() - 20;
+    }
+
+    $('#map-container').css({
+        "height": windowHeight - $('#timeline').height(),
+        "width": mapAndTimelineWidth
+    });
+
+    $('#profile-modal-2').css({
+        "width": mapAndTimelineWidth - 20
+    });
 
     $('.time-members-holder').width(mapAndTimelineWidth - 50); //50 width of slide-control
 
@@ -704,6 +717,8 @@ App.prototype.onResize = function () {
     $('#right-side-bar').css({
         "height": windowHeight - timelineHeight
     });
+
+    google.maps.event.trigger(this._map, "resize");
 
 };
 
@@ -970,10 +985,24 @@ App.prototype.bindEvents = function () {
 
     $('#select-region').on('hidden.bs.select', this.selectRegion.bind(this));
 
+
+    $('#profile-modal-2').on('click', '.close', function() {
+        $('#profile-modal-2').hide();
+    });
+
     $('#right-side-bar').on('click', '#view-profile', function() {
-        $('#profile-modal').modal({
-            open: true
-        });
+
+        $('#profile-modal-2').css({
+            "top": 10,
+            "bottom": $('#timeline').height() + 41, //for padding of .close button
+            "width": $('#map-container').width() - 20,
+            "left": 10
+        }).show();
+
+        //Old version
+        // $('#profile-modal').modal({
+        //     open: true
+        // });
     });
 
     $('#right-side-bar').on('click', '.export-button', function() {
@@ -987,6 +1016,8 @@ App.prototype.bindEvents = function () {
             "width": $(window).width() - 400
         });
         google.maps.event.trigger(self._map, "resize");
+
+        $('#profile-modal-2').hide();
 
         $('#right-side-bar').animate({
             "right": -1 * ($('#right-side-bar').width() + 20)
@@ -1051,18 +1082,23 @@ App.prototype.loadLayer = function (layerId, layerType) {
             });
 
 			if (layerData.layer.layerType === 'point') {
+
+                var propsToDisplay = _.filter(_.keys(this._layers[layerData.layerId].layer.tooltip), function(key) {
+                    return self._layers[layerData.layerId].layer.tooltip[key].state === "visible";
+                });
+
 				_.each(this._layers[layerData.layerId].layer.markerClusterer.markers_, function(marker) {
 					marker.addListener('click', function() {
 						var content = _.chain(_.keys(this.content))
 							.map(function(key) {
 								return {
 									key: key,
-									value: this.content[key]
+									value: _.isNaN(parseFloat(this.content[key])) ? this.content[key] : Globalize.format(parseFloat(this.content[key]))
 								};
 							}.bind(this))
 							.value()
 							.filter(function(entry) {
-								return entry.value.toString() !== '';
+								return entry.value.toString() !== '' && propsToDisplay.indexOf(entry.key) > -1;
 							});
 
 						var $infoWindowContent = $.tmpl('info-window.html', {
@@ -1082,7 +1118,7 @@ App.prototype.loadLayer = function (layerId, layerType) {
                     var data = e.feature.getProperty('tooltipData');
                     var $infoWindowContent = $.tmpl('info-window.html', {
                         title: data.name,
-                        content: data.value.toString()
+                        content: Globalize.format(parseFloat(data.value))
                     });
                     self.infoWindow.setContent($infoWindowContent[0].outerHTML);
                     self.infoWindow.setPosition(e.latLng);

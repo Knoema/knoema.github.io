@@ -7,11 +7,11 @@
     {{/if}}
 
     {{if typeof content === 'string'}}
-        ${content.replace('.', ',')}
+        ${Globalize.format(content)}
     {{else}}
         {{each(key, value) content}}
         <div class="info-window__content">
-            <strong>${key}</strong>: ${Boolean(value) ? value.toString().replace('.', ',') : null}
+            <strong>${key}</strong>: ${Boolean(value) ? Globalize.format(value) : null}
         </div>
         {{/each}}
     {{/if}}

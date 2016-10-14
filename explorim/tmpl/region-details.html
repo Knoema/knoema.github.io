@@ -4,7 +4,7 @@
 
 <hr />
 
-<table class="table table-condensed table-striped" border="0">
+<table data-class="table table-condensed table-striped" border="0">
     <thead>
         <tr>
             <th>
@@ -25,7 +25,7 @@
                 </td>
                 {{each(j, rowMember) row}}
                 <td>
-                    ${Boolean(rowMember.Value) ? rowMember.Value.toString().replace('.', ',') : null}
+                    ${Boolean(rowMember.Value) ? Globalize.format(rowMember.Value) : null}
                 </td>
                 {{/each}}
             </tr>

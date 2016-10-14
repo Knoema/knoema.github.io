@@ -9,12 +9,12 @@
         {{each(i, range) ranges}}
             {{if i == 0}}
                 <div class="map-legend-low">
-                    ${range.low.toString().replace('.', ',')}
+                    ${Globalize.format(range.low)}
                 </div>
             {{/if}}
             {{if i == ranges.length - 1}}
                 <div class="map-legend-height">
-                    ${range.high.toString().replace('.', ',')}
+                    ${Globalize.format(range.high)}
                 </div>
             {{/if}}
         {{/each}}
