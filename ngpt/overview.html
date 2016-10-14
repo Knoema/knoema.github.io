@@ -1,0 +1,931 @@
+﻿<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>Namibia Governemt Projects Tracker</title>
+    <link rel='stylesheet' type='text/css' href='https://fonts.googleapis.com/css?family=Lato'>
+	<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.7.3/css/bootstrap-select.min.css"/>
+	<link rel="stylesheet" type="text/css" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+	<link rel="stylesheet" type="text/css" href="app.css"/>	
+</head>
+<body class="loading">
+
+	<form id="export-form" action="http://knoema.com/api/1.0/utils/export?client_id=EZj54KGFo3rzIvnLczrElvAitEyU28DGw9R73tif" method="POST">
+		<input type="hidden" name="content" value=""/>
+		<input type="hidden" name="fileName" value="" />
+		<input type="hidden" name="landscape" value="FALSE" />
+	</form>
+
+	<div class="ajax-loader"></div>
+
+	<div class="main-menu">
+		<a href="index.html">
+			<img src="./img/coat-x2.png" class="logo"/>
+			<img src="./img/logo-x2.png" class="logo-title"/>
+		</a>
+		<ul class="items">
+    		<li>
+    			<a href="index.html" class="s1">
+					<img src="./img/icons-banner-01-x2.png" />
+    			</a>
+    		</li><!--
+    		--><li class="active">
+				<a href="overview.html" class="s2" title="Country overview">
+					<img src="./img/icons-banner-02-x2.png" />
+					Country overview
+				</a>
+			</li><!--
+    		--><li>
+				<a href="portfolio.html" class="s1" title="Portfolio Projects">
+					<img src="./img/icons-banner-07-x2.png" />
+				</a>
+			</li><!--
+    		--><li>
+				<a href="reformsTracker.html" class="s1" title="National Reforms" >
+					<img src="./img/icons-banner-03-x2.png"/>
+				</a>
+			</li><!--
+    		--><li>
+				<a href="sectorMonitor.html" class="s1" title="The Main Monitoring Indicators">
+					<img src="./img/icons-banner-04-x2.png" />
+				</a>
+			</li><!--
+    		--><li>
+				<a href="globalStanding.html" class="s1" title="Ranking and regional">
+					<img src="./img/icons-banner-05-x2.png" />
+				</a>
+			</li><!--
+    		--><li>
+				<a href="sdg.html" class="s1" title="The Sustainable Development Goals">
+					<img src="./img/icons-banner-06-x2.png" />
+				</a>
+			</li><!--
+    --></ul>
+	</div>
+
+	<div class="tab-content">
+		<!-- COUNTRY OVERVIEW -->
+    	<div id="overview" class="tab-pane active">
+			<form id="overviewFilter" class="filter-form">
+				<h2>Axis:</h2>
+				<label><input type="checkbox" name="pse" value="1"/>Axis 1</label>
+				<label><input type="checkbox" name="pse" value="2"/>Axis 2</label>
+				<label><input type="checkbox" name="pse" value="3"/>Axis 3</label>
+				
+				<h2>The 27 Flafship projects of the PSE:</h2>
+				<select class="form-control input-sm ppp-projects-container" id="ppp-projects" multiple title="Nothing selected">
+					<option value="Undefined">Undefined</option>
+					<option value="PP1">PP1&nbsp;&nbsp;&nbsp;&nbsp;100-150 aggregation projects focused on livestock and high value added agriculture sectors</option>
+					<option value="PP2">PP2&nbsp;&nbsp;&nbsp;&nbsp;3-4 grain development corridors</option>
+					<option value="PP3">PP3&nbsp;&nbsp;&nbsp;&nbsp;150-200 Micro-projects supporting family farming</option>
+					<option value="PP4">PP4&nbsp;&nbsp;&nbsp;&nbsp;Restructuring of the ground nut sector</option>
+					<option value="PP5">PP5&nbsp;&nbsp;&nbsp;&nbsp;Accelerated development of aquaculturee</option>
+					<option value="PP6">PP6&nbsp;&nbsp;&nbsp;&nbsp;Social housing acceleration program</option>
+					<option value="PP7">PP7&nbsp;&nbsp;&nbsp;&nbsp;20 craft development centers</option>
+					<option value="PP8">PP8&nbsp;&nbsp;&nbsp;&nbsp;Arts and craft sector pilot</option>
+					<option value="PP9">PP9&nbsp;&nbsp;&nbsp;&nbsp;Micro-tourism sector pilot</option>
+					<option value="PP10">PP10&nbsp;&nbsp;Commercial infrastructure</option>
+					<option value="PP11">PP11&nbsp;&nbsp;Iron ore recovery project - Faleme mine</option>
+					<option value="PP12">PP12&nbsp;&nbsp;Development of the phosphate industry</option>
+					<option value="PP13">PP13&nbsp;&nbsp;Acceleration of the exploitation of zircon</option>
+					<option value="PP14">PP14&nbsp;&nbsp;Acceleration of the operation of the gold sector; national scale mining program</option>
+					<option value="PP15">PP15&nbsp;&nbsp;Regional mining hub</option>
+					<option value="PP16">PP16&nbsp;&nbsp;2-3 integrated industrial platforms</option>
+					<option value="PP17">PP17&nbsp;&nbsp;Integrated industrial hubs</option>
+					<option value="PP18">PP18&nbsp;&nbsp;Integrated logistics hubs</option>
+					<option value="PP19">PP19&nbsp;&nbsp;Digital-economy zones dedicated to export services</option>
+					<option value="PP20">PP20&nbsp;&nbsp;Business park for regional headquarters and bases</option>
+					<option value="PP21">PP21&nbsp;&nbsp;Dakar medical city</option>
+					<option value="PP22">PP22&nbsp;&nbsp;Dakar regional reference campus</option>
+					<option value="PP23">PP23&nbsp;&nbsp;3-6 integrated tourist areas</option>
+					<option value="PP24">PP24&nbsp;&nbsp;Air recovery plan</option>
+					<option value="PP25">PP25&nbsp;&nbsp;Integrated electricity recovery plan</option>
+					<option value="PP26">PP26&nbsp;&nbsp;Hydrocarbon supply</option>
+					<option value="PP27">PP27&nbsp;&nbsp;Universal energy service</option>
+				</select>
+				<button id="ppp-select-button">Select</button>
+
+				<h2>PTIP "Three years investment plan"</h2>
+				<label><input type="checkbox" name="plan" value="yes" />Yes</label>
+				<label><input type="checkbox" name="plan" value="no" />No</label>
+
+				<h2>Budget total</h2>
+				<input type="text" name="budget-min" id="budget-min" class="budget-input" value="0" />
+				<input type="text" name="budget-max" id="budget-max" class="budget-input" value="100"/>
+				<div id="slider-range"></div>
+
+				<h2>Spending gap</h2>
+				<label><input type="checkbox" name="ecart" value="10"/><img src="./img/bullet-circle-green.png"/>10% or less of total</label>
+				<label><input type="checkbox" name="ecart" value="25"/><img src="./img/bullet-circle-yellow.png"/>25% to 11%</label>
+				<label><input type="checkbox" name="ecart" value="100"/><img src="./img/bullet-circle-red.png"/>exceeds 25%</label>
+
+				<h2>Status</h2>
+				<label class="status"><input type="checkbox" name="status" value="Announced"/><img src="./img/status/02.png" class="status" />Announced</label>
+				<label class="status"><input type="checkbox" name="status" value="In progress"/><img src="./img/status/04.png" class="status" />In progress</label>
+				<label class="status"><input type="checkbox" name="status" value="Complete"/><img src="./img/status/07.png" class="status" />Completed</label>
+				<label class="status"><input type="checkbox" name="status" value="Operational"/><img src="./img/status/05.png" class="status" />Operational</label>
+
+				<h2>Global indicators</h2>
+				<label><input type="radio" name="layer" value="none" checked> Indéfini</label>
+				<label><input type="radio" name="layer" value="population" /> Population, Total (2013)</label>
+				<label><input type="radio" name="layer" value="urbanization" /> Taux d'urbanisation (2011)</label>
+				<label><input type="radio" name="layer" value="school" /> Taux net de fréquentation scolaire, primaire (2011)</label>
+				<label><input type="radio" name="layer" value="poverty" /> Incidence de la pauvreté (2002)</label>
+
+				<div id="legend" style="display: none;">
+					<img src="img/legend.png">
+					<div id="legend_low">Low</div>
+					<div id="legend_high">High</div>
+                </div>
+			</form>
+    		<div id="map-canvas" class="filtered-content"></div>
+
+			<div id="regions-control" class="form-inline">
+				<div class="input-group">
+					<span class="input-group-addon">Regions:</span>
+					<select id="regions">
+						<option value="-1">Select a region</option>
+						<option value="NA">Namibia</option>
+						<option value="NA-CA">Caprivi</option>
+						<option value="NA-ER">Erongo</option>
+						<option value="NA-HA">Hardap</option>
+						<option value="NA-KA">Karas</option>
+						<option value="NA-KH">Khomas</option>
+						<option value="NA-KU">Kunene</option>
+						<option value="NA-OD">Otjozondjupa</option>
+						<option value="NA-OH">Omaheke</option>
+						<option value="NA-OK">Kavango</option>
+						<option value="NA-ON">Oshana</option>
+						<option value="NA-OS">Omusati</option>
+						<option value="NA-OT">Oshikoto</option>
+						<option value="NA-OW">Ohangwena</option>
+					</select>
+				</div>
+
+				<!--div class="input-group" style="background-color: transparent;">
+					<button class="region-profile-button">Voir le profil régional</button>
+				</div-->
+			</div>
+
+			<div id="pdf-frame-popup" class="passport-popup">
+    			<div class="passport__close"></div>
+    			<div class="passport__content"></div>
+		   </div>
+
+			<div id="senegal-frame-popup" class="passport-popup">
+    			<div class="passport__close"></div>
+    			<div class="passport__content"></div>
+		   </div>
+
+			<div id="new-project-passport" class="passport-popup-new">
+				<div class="passport__tabs__new">
+					<ul>
+						<li class="passport-tab active" data-name="passport">Passeport</li>
+						<!--<li>Schedule</li>-->
+						<!--<li>Documents</li>-->
+						<!--<li>Resource map</li>-->
+						<li class="passport-tab" data-name="budgetting">Budgétisation</li>
+						<!--<li>Risk management</li>-->
+						<!--<li>Issues</li>-->
+					</ul>
+				</div>
+				<div class="passport__close__new"><img src="./img_passport/icon-close.png"/>Fermer</div>
+    			<div class="passport__content__new"></div>
+				<div class="passport__content__new__b"></div>
+			</div>
+
+			<div id="ppp-frame-popup" class="passport2-popup">
+				<div class="inner-content">
+				<div class="passport__title" style="text-transform: uppercase;">The 27 Flagship of the PSE</div>
+				<div class="passport__close"></div>
+    			<div class="passport2__content">
+					<div class="ppp-item" data-value="Undefined">
+						<div class="pp-title"><div class="checkbox"></div>Undefined<div class="pp-icon i00"></div></div>
+						<div class="pp-name"></div>
+					</div>
+					<div class="ppp-item" data-value="PP1">
+						<div class="pp-title"><div class="checkbox"></div>PP1<div class="pp-icon i01"></div></div>
+						<div class="pp-name">100-150 aggregation projects focused on livestock and high value added agriculture sectors</div>
+					</div>
+					<div class="ppp-item" data-value="PP2">
+						<div class="pp-title"><div class="checkbox"></div>PP2<div class="pp-icon i02"></div></div>
+						<div class="pp-name">3-4 grain development corridors</div>
+					</div>
+					<div class="ppp-item" data-value="PP3">
+						<div class="pp-title"><div class="checkbox"></div>PP3<div class="pp-icon i03"></div></div>
+						<div class="pp-name">150-200 Micro-projects supporting family farming</div>
+					</div>
+					<div class="ppp-item" data-value="PP4">
+						<div class="pp-title"><div class="checkbox"></div>PP4<div class="pp-icon i04"></div></div>
+						<div class="pp-name">Restructuring of the ground nut sector</div>
+					</div>
+					<div class="ppp-item" data-value="PP5">
+						<div class="pp-title"><div class="checkbox"></div>PP5<div class="pp-icon i05"></div></div>
+						<div class="pp-name">Accelerated development of aquaculturee</div>
+					</div>
+					<div class="ppp-item" data-value="PP6">
+						<div class="pp-title"><div class="checkbox"></div>PP6<div class="pp-icon i06"></div></div>
+						<div class="pp-name">Social housing acceleration program</div>
+					</div>
+					<div class="ppp-item" data-value="PP7">
+						<div class="pp-title"><div class="checkbox"></div>PP7<div class="pp-icon i07"></div></div>
+						<div class="pp-name">20 craft development centers</div>
+					</div>
+					<div class="ppp-item" data-value="PP8">
+						<div class="pp-title"><div class="checkbox"></div>PP8<div class="pp-icon i08"></div></div>
+						<div class="pp-name">Arts and craft sector pilot</div>
+					</div>
+					<div class="ppp-item" data-value="PP9">
+						<div class="pp-title"><div class="checkbox"></div>PP9<div class="pp-icon i09"></div></div>
+						<div class="pp-name">Micro-tourism sector pilot</div>
+					</div>
+					<div class="ppp-item" data-value="PP10">
+						<div class="pp-title"><div class="checkbox"></div>PP10<div class="pp-icon i10"></div></div>
+						<div class="pp-name">Commercial infrastructure</div>
+					</div>
+					<div class="ppp-item" data-value="PP11">
+						<div class="pp-title"><div class="checkbox"></div>PP11<div class="pp-icon i11"></div></div>
+						<div class="pp-name">Iron ore recovery project - Faleme mine</div>
+					</div>
+					<div class="ppp-item" data-value="PP12">
+						<div class="pp-title"><div class="checkbox"></div>PP12<div class="pp-icon i12"></div></div>
+						<div class="pp-name">Development of the phosphate industry</div>
+					</div>
+					<div class="ppp-item" data-value="PP13">
+						<div class="pp-title"><div class="checkbox"></div>PP13<div class="pp-icon i13"></div></div>
+						<div class="pp-name">Acceleration of the exploitation of zircon</div>
+					</div>
+					<div class="ppp-item" data-value="PP14">
+						<div class="pp-title"><div class="checkbox"></div>PP14<div class="pp-icon i14"></div></div>
+						<div class="pp-name">Acceleration of the operation of the gold sector; national scale mining program</div>
+					</div>
+					<div class="ppp-item" data-value="PP15">
+						<div class="pp-title"><div class="checkbox"></div>PP15<div class="pp-icon i15"></div></div>
+						<div class="pp-name">Regional mining hub</div>
+					</div>
+					<div class="ppp-item" data-value="PP16">
+						<div class="pp-title"><div class="checkbox"></div>PP16<div class="pp-icon i16"></div></div>
+						<div class="pp-name">2-3 integrated industrial platforms</div>
+					</div>
+					<div class="ppp-item" data-value="PP17">
+						<div class="pp-title"><div class="checkbox"></div>PP17<div class="pp-icon i17"></div></div>
+						<div class="pp-name">Integrated industrial hubs</div>
+					</div>
+					<div class="ppp-item" data-value="PP18">
+						<div class="pp-title"><div class="checkbox"></div>PP18<div class="pp-icon i18"></div></div>
+						<div class="pp-name">Integrated logistics hubs</div>
+					</div>
+					<div class="ppp-item" data-value="PP19">
+						<div class="pp-title"><div class="checkbox"></div>PP19<div class="pp-icon i19"></div></div>
+						<div class="pp-name">Digital-economy zones dedicated to export services</div>
+					</div>
+					<div class="ppp-item" data-value="PP20">
+						<div class="pp-title"><div class="checkbox"></div>PP20<div class="pp-icon i20"></div></div>
+						<div class="pp-name">Business park for regional headquarters and bases</div>
+					</div>
+					<div class="ppp-item" data-value="PP21">
+						<div class="pp-title"><div class="checkbox"></div>PP21<div class="pp-icon i21"></div></div>
+						<div class="pp-name">Dakar medical city</div>
+					</div>
+					<div class="ppp-item" data-value="PP22">
+						<div class="pp-title"><div class="checkbox"></div>PP22<div class="pp-icon i22"></div></div>
+						<div class="pp-name">Dakar regional reference campus</div>
+					</div>
+					<div class="ppp-item" data-value="PP23">
+						<div class="pp-title"><div class="checkbox"></div>PP23<div class="pp-icon i23"></div></div>
+						<div class="pp-name">3-6 integrated tourist areas</div>
+					</div>
+					<div class="ppp-item" data-value="PP24">
+						<div class="pp-title"><div class="checkbox"></div>PP24<div class="pp-icon i24"></div></div>
+						<div class="pp-name">Air recovery plan</div>
+					</div>
+					<div class="ppp-item" data-value="PP25">
+						<div class="pp-title"><div class="checkbox"></div>PP25<div class="pp-icon i25"></div></div>
+						<div class="pp-name">Integrated electricity recovery plan</div>
+					</div>
+					<div class="ppp-item" data-value="PP26">
+						<div class="pp-title"><div class="checkbox"></div>PP26<div class="pp-icon i26"></div></div>
+						<div class="pp-name">Hydrocarbon supply</div>
+					</div>
+					<div class="ppp-item" data-value="PP27">
+						<div class="pp-title"><div class="checkbox"></div>PP27<div class="pp-icon i27"></div></div>
+						<div class="pp-name">Universal energy service</div>
+					</div>
+    			</div>
+				<div class="passport__buttons">
+					<button class="pp-btn" id="pp-select-all">Select all</button>
+					<button class="pp-btn" id="pp-deselect-all">Deselect all</button>
+					<button class="pp-btn" id="pp-ok">Ok</button>
+					<button class="pp-btn" id="pp-cancel">Cancel</button>
+				</div>
+				</div>
+			</div>
+
+			<div id="right-hand-panel">
+				<div class="panel-title">
+					<h2 class="region-name"></h2>
+					<img src="./img/right-panel/icon-pdf.png" class="export"/>
+					<div class="close-button"><img src="./img/icon-close.png"/>Close</div>
+				</div>
+
+				<div id="region-data"></div>
+
+				<div class="table-container clicable">
+					<table>
+						<thead>
+							<tr>
+								<th colspan="3">Projet</th>
+								<th>Statut</th>
+							</tr>
+						</thead>
+						<tbody></tbody>
+					</table>
+				</div>
+			</div>
+
+			<div id="senegal-right-hand-panel">
+				<div class="panel-title">
+					<h2 class="region-name">Senegal</h2>
+					<img src="./img/right-panel/icon-pdf.png" class="export"/>
+					<div class="close-button"><img src="./img/icon-close.png"/>CLose</div>
+				</div>
+
+				<table class="global-indicators">
+					<tbody></tbody>
+				</table>
+
+				<table class="realisation-indicators">
+					<thead>
+						<tr>
+							<th colspan="3">Indicateurs Globaux</th>
+						</tr>
+						<tr>
+							<th>Indicateur Name</th>
+							<th>Valeur en 2015</th>
+							<th>Variation en Pourcentage</th>
+						</tr>
+					</thead>
+					<tbody></tbody>
+				</table>
+
+				<h3>Sélectionnez une région pour une liste détaillée des projets.</h3>
+
+				<table class="axe-summ">
+					<thead>
+						<tr>
+							<th colspan="2">Nombre de projets par Stratégique de la Vision 2035</th>
+						</tr>
+					</thead>
+					<tbody></tbody>
+				</table>
+
+				<table class="pp-summ" style="width: 100%">
+					<thead>
+						<tr>
+							<th colspan="4">Nombre de projets et le budget total</th>
+						</tr>
+						<tr>
+							<th colspan="2">PP</th>
+							<th>Projets</th>
+							<th>Budget</th>
+						</tr>
+					</thead>
+					<tbody></tbody>
+				</table>
+
+				<table class="reforms-groups">
+					<thead>
+						<tr>
+							<th>Résumé des réformes</th>
+						</tr>
+					</thead>
+					<tbody></tbody>
+				</table>
+			</div>
+    	</div>
+    </div>
+
+	<div id="timeline">
+		<div class="play-btn"></div>
+		<div class="year-item" data-year="2014">
+			<p class="year">2014</p>
+		</div>
+		<div class="year-item" data-year="2015">
+			<p class="year">2015</p>
+		</div>
+		<div class="year-item active" data-year="2016">
+			<p class="year">2016</p>
+		</div>
+		<div class="v-arrow left"></div>
+	</div>
+
+	<div id="footer"></div>
+
+	<script id="new-object-passport" type="text/x-handlebars-template">
+		<div class="top-panel">
+			<table style="width: 100%">
+				<tbody>
+					<tr>
+						<td style="width: 20%"><p class="title">Nom Projet</p><p class="value">{{=it.name}}</p></td>
+						<td style="width: 20%"><p class="title">Localité</p><p class="value">{{=it.locale}}</p></td>
+						<td style="width: 30%"><p class="title">Code de l'axe stratégique de la vision 2035</p><p class="value">{{=it.axe}}</p></td>
+						<td style="width: 30%"><p class="title">Plan Senegal Emergent project</p><p class="value">{{=it.number}}</p></td>
+					</tr>
+					<tr>
+						<td class="status"><img src="./img/status/{{=it.statusIcon}}-x2.png"/><div><p class="title">Statut</p><p class="value">{{=it.status}}</p></div></td>
+						<td><p class="title">Budget Total Prévu</p><p class="value">{{=it.budget}}</p></td>
+						<td><p class="title">Sous Secteur</p><p class="value">{{=it.sour}}</p></td>
+						<td><p class="title">Code PTIP</p><p class="value">{{=it.ptip}}</p></td>
+						
+						<td></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<div class="g map-panel">
+			<img src="./img_passport/{{=it.nameEn}}.png"/>
+		</div>
+		<div class="g carousel-panel">
+			<img src="./img_passport/photos.jpg"/>
+		</div>
+		<div class="g chart-panel">
+			<img src="./img_passport/score.png"/>
+			<div class="status-button">Rapport de situation</div>
+		</div>
+	</script>
+
+	<script id="new-object-budgetting" type="text/x-handlebars-template">
+		<iframe src="http://pspp.knoema.com/resource/embed/togswgc?nom-projet={{=it.name}}" frameborder="0" height="100%" width="100%"></iframe>
+	</script>
+
+	<script id="region-profile" type="text/x-handlebars-template">
+
+		<table>
+			<thead>
+				<tr>
+					<th colspan="3">Développement économique</th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>GDP per capita</td>
+					<td>{{=it.indicatorData["GDP per capita"]}}</td>
+				</tr>
+				<tr>
+					<td>Non-farm economy, weight</td>
+					<td>{{=it.indicatorData["Non-farm economy, weight"]}}</td>
+				</tr>
+				<tr>
+					<td>GDP growth (2005-2011)</td>
+					<td>{{=it.indicatorData["GDP growth (2005-2011)"]}}</td>
+				</tr>
+				<tr>
+					<td>Share in GDP Growth (2005-2011)</td>
+					<td>{{=it.indicatorData["Share in GDP Growth (2005-2011)"]}}</td>
+				</tr>
+				<tr>
+					<td>Deviation from average of economic development</td>
+					<td>{{=it.indicatorData["Deviation from average of economic development"]}}</td>
+				</tr>
+			</tbody>
+		</table>
+
+		<table>
+			<thead>
+				<tr>
+					<th colspan="3">Développement humain</th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>Literacy</td>
+					<td>{{=it.indicatorData["Literacy"]}}</td>
+				</tr>
+				<tr>
+					<td>Life expectancy</td>
+					<td>{{=it.indicatorData["Life expectancy"]}}</td>
+				</tr>
+				<tr>
+					<td>Population above the poverty line</td>
+					<td>{{=it.indicatorData["Population above the poverty line"]}}</td>
+				</tr>
+				<tr>
+					<td>Deviation from average of human development</td>
+					<td>{{=it.indicatorData["Deviation from average of human development"]}}</td>
+				</tr>
+			</tbody>
+		</table>
+
+	</script>
+
+	<script id="senegal-profile" type="text/x-handlebars-template">
+		<tr><td colspan="3">Macroeconomic Framework</td></tr>
+		<tr><td>Real Gdp Growth Rate</td><td>{{=it["Real Gdp Growth Rate"]}}</td><td>%</td></tr>
+		<tr><td>Investment Rate (Gfcf)</td><td>{{=it["Investment Rate (Gfcf)"]}}</td><td>%</td></tr>
+		<tr><td>Inflation Rate (Hicp)</td><td>{{=it["Inflation Rate (Hicp)"]}}</td><td>%</td></tr>
+		<tr><td>Budget Deficit As% Of Gdp</td><td>{{=it["Budget Deficit As% Of Gdp"]}}</td><td>%</td></tr>
+		<tr><td>Current Account Deficit As% Of Gdp</td><td>{{=it["Current Account Deficit As% Of Gdp"]}}</td><td>%</td></tr>
+		<tr><td>Percentage Of Population Living Below The Absolute Poverty Line</td><td>{{=it["Percentage Of Population Living Below The Absolute Poverty Line (%)"]}}</td><td>%</td></tr>
+		<tr><td colspan="3">Trade</td></tr>
+		<tr><td>Growth In Export Values</td><td>{{=it["Growth In Export Values"]}}</td><td>%</td></tr>
+		<tr><td>Import Growth Rate Of Goods And Services</td><td>{{=it["Import Growth Rate Of Goods And Services"]}}</td><td>%</td></tr>
+		<tr><td>Of Coverage Of Imports By Exports</td><td>{{=it["Of Coverage Of Imports By Exports"]}}</td><td>%</td></tr></tr>
+		<tr><td colspan="3">Energy</td></tr>
+		<tr><td>Average Production Cost Per Kwh (Fcfa)</td><td>{{=it["Average Production Cost Per Kwh (Fcfa)"]}}</td><td>KWH</td></tr>
+		<tr><td>Number Of Megawatts Into Service (Installed Power)</td><td>{{=it["Number Of Megawatts Into Service (Installed Power)"]}}</td><td>number</td></tr>
+		<tr><td>Energy Not Distributed To Customers (Gwh)</td><td>{{=it["Energy Not Distributed To Customers (Gwh)"]}}</td><td>GWH</td></tr>
+		<tr><td>Rural Electrification Rate</td><td>{{=it["Rural Electrification Rate"]}}</td><td>%</td></tr></tr>
+		<tr><td colspan="3">National Education</td></tr>
+		<tr><td>Gross Intake Rate At Ci (Tba)</td><td>{{=it["Gross Intake Rate At Ci (Tba)"]}}</td><td>%</td></tr>
+		<tr><td>Gross Enrollment Rate In Elementary (Tbs)</td><td>{{=it["Gross Enrollment Rate In Elementary (Tbs)"]}}</td><td>%</td></tr>
+		<tr><td>Completion Rates At Primary (Tap)</td><td>{{=it["Completion Rates At Primary (Tap)"]}}</td><td>%</td></tr></tr>
+		<tr><td colspan="3">Health And Nutrition</td></tr>
+		<tr><td>Rate Of Births Attended By Trained Personnel</td><td>{{=it["Rate Of Births Attended By Trained Personnel"]}}</td><td>%</td></tr>
+		<tr><td>Contraceptive Prevalence Rate</td><td>{{=it["Contraceptive Prevalence Rate"]}}</td><td>%</td></tr>
+		<tr><td>Completion Rate (Adequate Coverage) In Eic</td><td>{{=it["Completion Rate (Adequate Coverage) In Eic"]}}</td><td>%</td></tr>
+		<tr><td>Child Mortality Rate</td><td>{{=it["Child Mortality Rate"]}}</td><td>%</td></tr>
+	</script>
+
+	<script id="senegal-region-profile" type="text/x-handlebars-template">
+		
+	</script>
+
+	<script id="pdf-frame" type="text/x-handlebars-template">
+		<iframe src="./pdf/{{=it.name}}.pdf" width="100%" height="100%"  />
+	</script>
+
+	<script id="area-profile-template" type="text/x-handlebars-template">
+		<div class="area-profile">
+			<h4>Area Profile</h4>
+			<div class="row">
+				<div class="col-md-6">
+					<div><label>Region:</label> {{=it.region}}</div>
+					<div><label>Village(s):</label> {{=it.village}}</div>
+				</div>
+				<div class="col-md-6">
+					<div><label>Population:</label> {{=it.population}}</div>
+					<div><label>Incidence of poverty:</label> {{=it.incidence}}</div>
+				</div>
+			</div>
+			<hr>
+			<div><label>Access to electricity:</label> {{=it.access}}</div>
+			<div><label>Electricity consumption (average per capita):</label> {{=it.consumption}}</div>
+			<div><label>Cost of electricity:</label> {{=it.cost}}</div>
+			<div><label>National grid connection:</label> {{=it.grid}}</div>
+			<div><label>Primary electricity source:</label> {{=it.source}}</div>
+			<br />
+			<div><label>Nearest hospital:</label> {{=it.hospital}}</div>
+			<div><label>Number of local shools:</label> {{=it.schools}}</div>
+			<br />
+			<div>
+				<label>Ongoing investment project:</label> 
+				<ul>
+					<li>Name: {{=it.investmentProject.name}}</li>
+					<li>Location: {{=it.investmentProject.location}}</li>
+					<li>End date: {{=it.investmentProject.endDate}}</li>
+				</ul>
+			</div>
+			<div><label>Investor:</label> {{=it.investor}}</div>
+		</div>
+	</script>
+
+	<script id="export-content" type="text/x-handlebars-template">
+		<html>
+			<head>
+				<title>Export</title>
+				<link rel='stylesheet' type='text/css' href='https://fonts.googleapis.com/css?family=Roboto'>
+				<link rel='stylesheet' type='text/css' href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,700'>
+			</head>
+			<body>
+				<style>#right-hand-panel, #senegal-right-hand-panel
+					{
+						width: 650px;
+						background-color: #f4ece1;
+						padding: 5px 10px;
+						font-family: 'Roboto', sans-serif;
+						font-size: 12px;
+					}
+					.panel-title img.export
+					{
+						margin: 0 0 5px 10px;
+					}
+					.panel-title .region-name
+					{
+						display: inline-block;
+					}
+					#senegal-right-hand-panel .panel-title .region-name
+					{
+						font-size: 15pt;
+					}
+					#senegal-right-hand-panel .panel-title img.export
+					{
+						float: right;
+					}
+					.panel-title .close-button
+					{
+						color: #472001;
+						margin: 20px 10px 0 0;
+						float: right;
+						cursor: pointer;
+					}
+					.panel-title .close-button img
+					{
+						margin-right: 5px;
+						vertical-align: baseline;
+					}
+					.panel-title
+					{
+						border-bottom: 1px solid #9b7c4f;
+					}
+					#right-hand-panel table,
+					#senegal-right-hand-panel table
+					{
+						width: 100%;
+						margin-top: 20px;
+					}
+					#right-hand-panel table thead tr th,
+					#senegal-right-hand-panel table thead tr th
+					{
+						padding: 2px 5px;
+						font-size: 10pt;
+						text-align: left;
+					}
+					#right-hand-panel table tbody tr td,
+					#senegal-right-hand-panel table tbody tr td
+					{
+						padding: 7px 5px;
+						vertical-align: top;
+					}
+					img.pp-image-small
+					{
+						height: 30px;
+						margin-top: -7px;
+					}
+					#right-hand-panel table tbody tr:nth-child(2n),
+					#senegal-right-hand-panel table tbody tr:nth-child(2n)
+					{
+						background-color: #f3f0ec;
+					}
+					#right-hand-panel table tbody tr,
+					#senegal-right-hand-panel table tbody tr
+					{
+						cursor: pointer;
+					}
+					#right-hand-panel h2
+					{
+						font-size: 15pt;
+						font-weight: bold;
+					}
+					#senegal-right-hand-panel h3
+					{
+						font-size: 10pt;
+						font-weight: bold;
+					}
+
+
+
+					.passport__content__new, .passport__content__new__b
+					{
+						padding: 20px;
+						background-color: #f3ece1;
+						border: solid 1px #9b7c4f;
+						width: 1200px;
+					}
+					.passport2__content {
+						position: absolute;
+						left: 10px;
+						right: 10px;
+						top: 50px;
+						bottom: 40px;
+						padding: 20px;
+						background-color: #f4ece1;
+						overflow: auto;
+					}
+					.passport__buttons
+					{
+						position: absolute;
+						left: 10px;
+						right: 10px;
+						bottom: 10px;
+						padding: 20px;
+						background-color: #f4ece1;
+						overflow: auto;
+					}
+					.passport__title
+					{
+						position: absolute;
+						top: 10px;
+						left: 10px;
+						right: 10px;
+						padding: 20px;
+						background-color: #f4ece1;
+						overflow: auto;
+					}
+					.passport__content hr {
+						margin: 20px 0;
+						border-top: 1px solid #e6e6e6;
+					}
+					.passport__close {
+						position: absolute;
+						right: 30px;
+						top: 30px;
+						width: 40px;
+						height: 40px;
+						background: #fff url(./img/icon_close.png) no-repeat center center;
+						cursor: pointer;
+						z-index: 1;
+						border-radius: 50%;
+						box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.15);
+					}
+					.passport__close__new {
+						padding: 10px 20px;
+						position: absolute;
+						right: 10px;
+						top: 10px;
+						width: 110px;
+						height: 40px;
+						background-color: #f4ece1;
+						cursor: pointer;
+						z-index: 5;
+
+						font-size: 11pt;
+						text-transform: uppercase;
+						color: #472001;
+					}
+					.passport__close__new img
+					{
+						margin-right: 10px;
+						margin-top: -3px;
+					}
+					.passport__close:hover {
+						background-image: url(./img/icon_close_hover.png);
+					}
+					.passport__map {
+						width: 240px;
+						height: 240px;
+						background-color: #e6e6e6;
+					}
+					.passport__title {
+						font-family: 'Roboto', sans-serif;
+						font-size: 18px;
+						font-weight: bold;
+						margin-bottom: 15px;
+					}
+					.passport__fields {
+					}
+					.passport__fields__column {
+						float: left;
+						width: 33%;
+					}
+					.passport__field__title {
+						display: block;
+						font-family: 'Roboto', sans-serif;
+						font-size: 11px;
+						font-weight: normal;
+						text-transform: uppercase;
+						color: #646e82;
+					}
+					.passport__field__value {
+						font-family: 'Roboto', sans-serif;
+						font-size: 16px;
+					}
+					.passport__images {
+						float: left;
+						width: 240px;
+					}
+					.passport__image {
+						width: 100%;
+					}
+					.passport__image_mini {
+						float: left;
+						width: 57px;
+						height: 57px;
+						margin: 4px 0 0 4px;
+						font-family: 'Roboto', sans-serif;
+						font-size: 12px;
+						color: #fff !important;
+						background-color: #0078c8;
+						text-decoration: none;
+						line-height: 1.2em;
+					}
+					.passport__image_mini.first {
+						margin-left: 0;
+					}
+					.passport__chart_left {
+						margin-left: 20px;
+						float: left;
+					}
+					.passport__chart_right {
+						float: left;
+					}
+
+					.top-panel
+					{
+						margin-top: 30px;
+					}
+					.top-panel table tr td
+					{
+						padding: 3px 10px;
+						vertical-align: top;
+					}
+					.top-panel table tr td.status img
+					{
+						display: inline-block;
+						vertical-align: top;
+						margin-right: 20px;
+					}
+					.top-panel table tr td.status div
+					{
+						display: inline-block;
+					}
+					p.title
+					{
+						font-family: 'Roboto', sans-serif;
+						font-size: 12pt;
+						color: #9b7c4f;
+						font-weight: bold;
+					}
+					p.value
+					{
+						font-family: 'Roboto', sans-serif;
+						font-size: 16pt;
+						color: #000;
+						margin-bottom: 20px;
+					}
+					.g
+					{
+						display: inline-block;
+					}
+					.map-panel
+					{
+						margin: 30px 20px 20px 0;
+					}
+					.carousel-panel
+					{
+						margin: 30px 200px 0 0;
+					}
+					.chart-panel
+					{
+						vertical-align: top;
+						margin: 30px 0;
+						padding-top: 30px;
+					}
+					.chart-panel img
+					{
+						vertical-align:top;
+					}
+					.status-button
+					{
+						font-family: 'Roboto', sans-serif;
+						font-size: 12pt;
+						color: #f4ece1;
+						font-weight: bold;
+						background-color: #472001;
+						padding: 10px 40px;
+						text-transform: uppercase;
+						margin-top: 50px;
+						margin-left: -20px;
+					}
+
+					.area-profile {
+						font-size: 12px;
+						width: 380px;
+						overflow: hidden;
+						line-height: 1.1em;
+					}
+					.area-profile ul > li {
+						line-height: 1.5em;
+					}
+					.area-profile hr {
+						margin: 17px 0;
+					}
+					.area-profile h4 {
+						font-size: 17px;
+					}
+					.area-profile label {
+						color: rgb(38, 174, 208);
+					}
+				</style>
+				{{=it.content}}
+			</body>
+		</html>
+	</script>
+
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+	<script src="bootstrap/js/bootstrap.min.js"></script>
+	<script src="bootstrap/js/bootstrap-select.js"></script>
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDW5mB0UdDWi7EdcoH3eE-IunlT7nISRuA&v=3.exp&libraries=visualization,drawing"></script>
+	<script src="http://code.jquery.com/ui/1.11.4/jquery-ui.min.js" type="text/javascript"></script>
+	<script src="http://code.highcharts.com/highcharts.js"></script>
+	<script src="https://pspp.knoema.com/app-script?version=2.0" type="text/javascript" ></script>
+	<script src="Scripts/marketwithlabel.js"></script>
+	<script src="Scripts/doT.min.js"></script>
+	<script src="Scripts/auth.js"></script>
+	<script src="Scripts/app.js"></script>
+</body>
+</html>

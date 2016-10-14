@@ -1,0 +1,53 @@
+﻿<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>Plateforme De Suivi Des Politiques Publiques</title>
+    <link rel='stylesheet' type='text/css' href='https://fonts.googleapis.com/css?family=Lato'>
+	<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="app.css"/>	
+</head>
+<body class="landing">
+
+	<img id="logo" src="./img/coat-start-x2.png" />
+	<img id="logo-title" src="./img/logo-start-x2.png" />
+	<div class="menu">
+		<div class="item s1" data-link="overview">
+			<img src="./img/ico-start-01-x2.png"/>
+			<div class="title">Country overview</div>
+		</div>
+		<div class="item s1" data-link="portfolio">
+			<img src="./img/ico-start-02-x2.png" />
+			<div class="title">Portfolio Projects</div>
+		</div>
+		<div class="item s1" data-link="reformsTracker">
+			<img src="./img/ico-start-03-x2.png"/>
+			<div class="title">National Reforms</div>
+		</div>
+		<div class="item s2" data-link="sectorMonitor">
+			<img src="./img/ico-start-04-x2.png"/>
+			<div class="title">The Main Monitoring Indicators</div>
+		</div>
+		<div class="item s1" data-link="globalStanding">
+			<img src="./img/ico-start-05-x2.png"/>
+			<div class="title">Ranking and regional</div>
+		</div>
+		<div class="item s2" data-link="sdg">
+			<img src="./img/ico-start-06-x2.png"/>
+			<div class="title">The Sustainable Development Goals</div>
+		</div>
+	</div>
+
+	<script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
+	<script>
+		(function () {
+			$('.menu .item').on('click', function () {
+
+				window.location = './' + $(this).data('link') + '.html';
+			});
+		})();
+	</script>
+
+</body>
+</html>
