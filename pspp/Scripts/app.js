@@ -178,10 +178,9 @@ var Infrastructure;
             	$('#overviewFilter').trigger('change');
             });
 
-            $('#regions').on('click', function (e) {
+            $('#regions').on('change', function (e) {
 
-            	if (e.offsetY < 0)
-            		showRegion();
+            	showRegion();
             });
 
             $('img.export').on('click', function () {
