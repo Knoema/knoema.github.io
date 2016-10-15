@@ -838,6 +838,8 @@ App.prototype.selectRegion = function (e) {
         return;
     }
 
+    this.infoWindow.close();
+
     $('#map-container').css({
         "width": $(window).width() - 400 - 400
     });
@@ -860,42 +862,64 @@ App.prototype.selectRegion = function (e) {
     dataDescriptors.economics0.Filter[0].Members = [key];
     dataDescriptors.economics1.Filter[0].Members = [key];
 
-    dataDescriptors.zoneDeVille0.Filter[0].Members = [key];
-    dataDescriptors.zoneDeVille1.Filter[0].Members = [key];
+    //"pjsnuj" - No Mauritania regions, no need to change key
+    // dataDescriptors.zoneDeVille0.Filter[0].Members = [key];
+    //"tklplkf" - No Mauritania regions, no need to change key
+    // dataDescriptors.zoneDeVille1.Filter[0].Members = [key];
 
-    //dataDescriptors.pluies.Filter[0].Members = [key];
+    //TODO Set proper key (find by regionId)
+    dataDescriptors.politics0.Filter[0].Members = [key];
     dataDescriptors.politics1.Filter[0].Members = [key];
 
+    //ftqbdwb dataset used
     //Economique et social
     var economics0 = $.Deferred();
     Knoema.Helpers.post('//explorim.knoema.com/api/1.0/data/pivot', dataDescriptors.economics0, function(pivotResponse) {
         economics0.resolve(pivotResponse);
     });
-
     var economics1 = $.Deferred();
     Knoema.Helpers.post('//explorim.knoema.com/api/1.0/data/pivot', dataDescriptors.economics1, function(pivotResponse) {
         economics1.resolve(pivotResponse);
     });
 
+    //pjsnuj dataset used
     var zoneDeVille0 = $.Deferred();
     Knoema.Helpers.post('//explorim.knoema.com/api/1.0/data/pivot', dataDescriptors.zoneDeVille0, function(pivotResponse) {
         zoneDeVille0.resolve(pivotResponse);
     });
 
+    //tklplkf dataset used
     var zoneDeVille1 = $.Deferred();
     Knoema.Helpers.post('//explorim.knoema.com/api/1.0/data/pivot', dataDescriptors.zoneDeVille1, function(pivotResponse) {
         zoneDeVille1.resolve(pivotResponse);
     });
 
+    //yqjhdag dataset used
     var politics0 = $.Deferred();
     Knoema.Helpers.post('//explorim.knoema.com/api/1.0/data/details', dataDescriptors.politics0, function(pivotResponse) {
         politics0.resolve(pivotResponse);
     });
 
+    //ftqbdwb dataset used
     var politics1 = $.Deferred();
     Knoema.Helpers.post('//explorim.knoema.com/api/1.0/data/pivot', dataDescriptors.politics1, function(pivotResponse) {
         politics1.resolve(pivotResponse);
     });
+
+    var regionKeys = {
+
+        "pjsnuj": null,  //No Mauritania regions, no need to change key
+        "tklplkf": null, //No Mauritania regions, no need to change key
+
+        "yqjhdag": null
+    };
+
+    ////explorim.knoema.com/api/1.0/meta/dataset/CDIACTACHIINDUSAA/dimension/Location
+
+    // var pjsnuj = $.Deferred();
+    // Knoema.Helpers.get('//explorim.knoema.com/api/1.0/data/pivot', dataDescriptors.politics1, function(pivotResponse) {
+    //     pjsnuj.resolve(pivotResponse);
+    // });
 
     $.when.apply(null, [
         economics0,
@@ -917,11 +941,11 @@ App.prototype.selectRegion = function (e) {
         rows.unshift([
             {
                 indicator: '',
-                Value: 'Anticipated'
+                Value: 'Anticipé'
             },
             {
                 indicator: '',
-                Value: 'Finalised'
+                Value: 'Finalisé'
             }
         ]);
         if (rows[rows.length - 1].length == 1) {
@@ -947,25 +971,25 @@ App.prototype.selectRegion = function (e) {
 
         $sideBarContent.append('<h4>Zone de vie</h4>');
 
-        $sideBarContent.append($.tmpl('simple-table.html', {
-            headerMembers: zoneDeVille1.header[0].members,
-            rows: _.chunk(zoneDeVille1.data, zoneDeVille1.header[0].members.length)
-        }));
+        $sideBarContent.append('<table><tr><td>&nbsp;</td><td>All time</td></tr><tr><td>Violence against civilians</td><td>18</td></tr></table>');
+
+        $sideBarContent.append('<table><tr><td>&nbsp;</td><td colspan="2">All time</td></tr><tr><td>&nbsp;</td><td>Sum (Injuries)</td><td>Sum(Fatalities)</td></tr><tr><td>Incidents de terrorisme</td><td>0</td><td>40</td></tr></table>');
 
         $sideBarContent.append('<h4>Politique</h4>');
 
         $sideBarContent.append('<h5>Tribus</h5>');
 
-
         var ddd = _.chunk(politics0.data, politics0.columns.length);
 
-        var rows1 = [_.map(ddd, function(d) {
-            return {
-                Value: d[2]
-            };
-        })];
+        $sideBarContent.append('<table><tbody><tr><td>EWLAD NASSER</td></tr><tr><td>IDAWALY</td></tr><tr><td>IDEYBOUSSATT</td></tr><tr><td>KOUNTER</td></tr><tr><td>LAGHLAL</td></tr><tr><td>OULAD BILLE</td></tr><tr><td>TENWAJIW</td></tr></tbody></table>');
 
-        $sideBarContent.append('<table>' + _.map(rows1[0], function(r) {return '<tr><td>' + r.Value + '</td></tr>'}).join('') + '</table>');
+        // var rows1 = [_.map(ddd, function(d) {
+        //     return {
+        //         Value: d[2]
+        //     };
+        // })];
+        //
+        // $sideBarContent.append('<table>' + _.map(rows1[0], function(r) {return '<tr><td>' + r.Value + '</td></tr>'}).join('') + '</table>');
 
         $sideBarContent.append('<h5>Élections</h5>');
 
@@ -1195,6 +1219,7 @@ App.prototype.showLegend = function (ranges) {
 
 App.prototype.hideLegend = function () {
     $('#map-legend-holder').empty().hide();
+    this.infoWindow.close();
     this._dataLayers[this._activeRegionalDivision].setStyle(this._visibleStyle);
 };
 

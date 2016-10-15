@@ -512,6 +512,7 @@ table td, table th {
 
 table td, table th {
     text-align: right;
+    padding: 10px;
 }
 table td:first-child, table th:first-child {
     text-align: left;
@@ -724,7 +725,6 @@ table tr:nth-of-type(even) {
 }
 
 [class*="table-row-header-"] {
-    margin-left: 10px;
     padding-left: 20px;
     background-repeat: no-repeat;
     background-position: left center;

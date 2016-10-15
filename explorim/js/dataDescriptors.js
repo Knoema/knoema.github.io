@@ -206,110 +206,60 @@ var dataDescriptors = {
         "Header": [
             {
                 "DimensionId": "Time",
-                "Members": [
-                    "2007-2014"
-                ],
-                "DimensionName": "Time",
-                "UiMode": "range"
-            }
-        ],
-        "Stub": [
-            {
-                "DimensionId": "indicator",
-                "Members": [
-                    "1000040",
-                    "1000150",
-                    "1000110",
-                    "1000120"
-                ],
-                "DimensionName": "Indicator"
-            }
-        ],
-        "Filter": [
-            {
-                "DimensionId": "country",
-                "Members": [
-                    "1001220"
-                ],
-                "DimensionName": "Country"
-            }
-        ],
-        "Frequencies": [
-            "A"
-        ],
-        "Calendar": 0,
-        "Dataset": "gffcoef"
-    },
-
-    //This is fake data descriptor
-    pluies: {
-        "Header": [
-            {
-                "DimensionId": "Time",
                 "Members": [],
                 "DimensionName": "Time",
                 "UiMode": "range",
                 "DateFields": [
                     {
                         "DateColumn": "0",
-                        "DatasetId": "pjsnuj"
+                        "DatasetId": "tklplkf"
                     }
                 ]
-            }
-        ],
-        "Stub": [
-            {
-                "DimensionId": "event-type",
-                "Members": [
-                    "1000170",
-                    {
-                        "Key": -3696,
-                        "Name": "Incidents de terrorisme",
-                        "Formula": [
-                            "1000090",
-                            "1000100",
-                            "+",
-                            "1000110",
-                            "+",
-                            "1000130",
-                            "+",
-                            "1000150",
-                            "+"
-                        ]
-                    }
-                ],
-                "DimensionName": "EVENT_TYPE"
-            }
-        ],
-        "Filter": [
-            {
-                "DimensionId": "country",
-                "Members": [
-                    "1000790"
-                ],
-                "DimensionName": "COUNTRY"
             },
             {
                 "DimensionId": "measure",
                 "Members": [
                     {
-                        "Key": -2037,
-                        "Name": "Sum(FATALITIES)",
+                        "Key": -2813,
+                        "Name": "Sum(Injuries)",
                         "Formula": [
-                            "4373380",
+                            "4842580",
                             "sum"
-                        ],
-                        "Transform": null
+                        ]
+                    },
+                    {
+                        "Key": -788,
+                        "Name": "Sum(Fatalities)",
+                        "Formula": [
+                            "4842590",
+                            "sum"
+                        ]
                     }
                 ],
                 "DimensionName": "Measure"
             }
         ],
+        "Stub": [
+            {
+                "DimensionId": "country",
+                "Members": [
+                    {
+                        "Key": -1845,
+                        "Name": "Incidents de terrorisme",
+                        "Formula": [
+                            "1001170"
+                        ]
+                    }
+                ],
+                "DimensionName": "Location"
+            }
+        ],
+        "Filter": [],
         "Frequencies": [
             "D"
         ],
         "Calendar": 0,
-        "Dataset": "pjsnuj"
+        "Dataset": "tklplkf"
     },
 
     politics0: {
@@ -474,7 +424,7 @@ var dataDescriptors = {
         "RegionIdsRequired": true,
         "RegionDimensionId": "region"
     },
-    politics1: {
+    politics1:   {
         "Header": [
             {
                 "DimensionId": "Time",
