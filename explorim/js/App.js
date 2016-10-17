@@ -391,7 +391,8 @@ App.prototype.init = function () {
                                     title: "Immigration illégale"
                                 },
                                 {
-                                    title: "Zones agricoles"
+                                    title: "Zones agricoles",
+                                    children: groupedLayers['Agriculture potentielle']
                                 },
                                 {
                                     title: "Elevage"
@@ -1045,6 +1046,10 @@ App.prototype.bindEvents = function () {
                 this.loadLayer(layerId, 'point');
             } else {
 
+                if (this._activeAreaLayerId) {
+                    $('[data-layer-id="' + this._activeAreaLayerId + '"]').prop('checked', false);
+                }
+
                 layerId = $target.data('layerId');
                 var layers = $target.data('layers');
 
@@ -1239,6 +1244,7 @@ App.prototype.loadLayer = function (layerId, layerType) {
             this._layers[layerId].load();
         } else {
             this.hideLegend();
+            $('[data-layer-type="region"]').prop('checked', false);
             this._layers[layerId].clean();
         }
         $('input[data-layer-id="' + layerId + '"]').prop('disabled', false);
