@@ -96,6 +96,8 @@ function App() {
 
 App.prototype.init = function () {
 
+    $('[data-toggle="tooltip"]').tooltip();
+
 	this.loadTemplates($.proxy(function onTemplatesLoaded() {
 
 	    var self = this;
@@ -460,7 +462,7 @@ App.prototype.init = function () {
                                     title: "Social",
                                     children: [
                                         {
-                                            title: "FA et Sec"
+                                            title: "Forces armées"
                                         },
                                         {
                                             title: "Cadres"
@@ -709,6 +711,34 @@ App.prototype.init = function () {
 
 };
 
+App.prototype.export = function () {
+    var $form = $('#export-form');
+
+    $.get('css/style.css').then(function(css) {
+
+        var $content = $('<html></html>');
+
+        var $head = $('<head><style>' + css + '</style></head>');
+
+        $content.append($head);
+
+         var $header = $('#right-side-bar').find('.header').clone();
+
+        $header.find('#view-profile').remove();
+
+        var regionName = $header.text();
+
+        $content.append('<h2>' + regionName + '</h2>');
+        $content.append($('#right-side-bar').find('.side-bar-content').clone().prop("style", ""));
+
+        $form.find('.content').val($content[0].outerHTML);
+        $form.find('.fileName').val(regionName + ' - passport');
+        $('#export-form [name=landscape]').val('False');
+        $form.submit();
+    });
+
+};
+
 App.prototype.onResize = function () {
 
     var timelineHeight = $('#timeline').height();
@@ -762,6 +792,8 @@ App.prototype.onResize = function () {
 
 App.prototype.switchDivision = function (division, reloadLayer, layerId, availableLayers) {
 	this._activeRegionalDivision = division;
+
+    $('#filters').html(division);
 
     for (var d in this._dataLayers) {
         if (d == division) {
@@ -1182,9 +1214,7 @@ App.prototype.bindEvents = function () {
     });
 
     $('#right-side-bar').on('click', '.export-button', function() {
-        alert('TODO Implement export');
-        //TODO Implement export
-        //$('#export-form').submit();
+        self.export();
     });
 
     $('#right-side-bar').on('click', '.close', function() {

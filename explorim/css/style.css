@@ -195,6 +195,10 @@ body {
     text-transform: uppercase;
 }
 
+.tooltip {
+    white-space: nowrap;
+}
+
 /*=========================================================================================*/
 /*=========================================================================================*/
 /*=========================================================================================*/
@@ -506,7 +510,7 @@ table {
 }
 
 table td, table th {
-    padding: 10px 0;
+    padding: 10px;
     white-space: nowrap;
 }
 
@@ -678,6 +682,7 @@ table tr:nth-of-type(even) {
 }
 
 
+
 .bootstrap-select {
     text-transform: lowercase;
 }
@@ -689,6 +694,7 @@ table tr:nth-of-type(even) {
 .side-bar-content {
     overflow-x: auto;
     font-size: 0.8em;
+    margin-bottom: 20px;
 }
 
 .side-bar-content h4 {
@@ -706,22 +712,6 @@ table tr:nth-of-type(even) {
 
 .complex-table tr:first-child {
     font-weight: bold;
-}
-
-#tooltip {
-    background-color: white;
-    position: absolute;
-    min-height: 50px;
-    z-index: 100000;
-    display: none;
-    padding: 10px;
-    font-family: 'Roboto', sans-serif;
-    font-size: 0.7em;
-}
-
-.table-row-header-0 {
-    /*background-color: red;*/
-    /*it is "complex-table"'s header*/
 }
 
 [class*="table-row-header-"] {

@@ -17,13 +17,14 @@
 				<a href="index.html">&nbsp;</a>
 			</div>
 			<div class="title-section">
-				<h2>Filtres</h2>
-				<a href="#" class="clear-filters btn pull-right">Effacer tous les filters</a>
+				<h2 id="filters">Filtres</h2>
+				<a href="#" class="clear-filters btn pull-right" data-toggle="tooltip" data-placement="right" title="Effacer tous les filters">
+					<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+				</a>
 			</div>
 			<div class="filters-holder">
 			</div>
 		</div>
-
 
 		<div id="right-side-bar">
 			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -165,10 +166,11 @@
 			</div><!-- /.modal-dialog -->
 		</div><!-- /.modal -->
 
-		<form id="export-form" action="//knoema.org/api/1.0/utils/export?client_id=EZj54KGFo3rzIvnLczrElvAitEyU28DGw9R73tif" method="POST">
-			<input type="hidden" name="content" value=""/>
-			<input type="hidden" name="fileName" value="" />
-			<input type="hidden" name="landscape" value="FALSE" />
+		<!-- Shouldn't client_id be in form -->
+		<form id="export-form" action="//knoema.com/api/1.0/utils/export?client_id=EZj54KGFo3rzIvnLczrElvAitEyU28DGw9R73tif" method="POST">
+			<input type="hidden" name="content"   class="content"   value=""/>
+			<input type="hidden" name="fileName"  class="fileName"  value="" />
+			<input type="hidden" name="landscape" class="landscape" value="TRUE" />
 		</form>
 
 		<script src="//ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
