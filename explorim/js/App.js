@@ -894,11 +894,6 @@ App.prototype.selectRegion = function (e) {
     dataDescriptors.economics0.Filter[0].Members = [key];
     dataDescriptors.economics1.Filter[0].Members = [key];
 
-    //"pjsnuj" - No Mauritania regions, no need to change key
-    // dataDescriptors.zoneDeVille0.Filter[0].Members = [key];
-    //"tklplkf" - No Mauritania regions, no need to change key
-    // dataDescriptors.zoneDeVille1.Filter[0].Members = [key];
-
     //TODO Set proper key (find by regionId)
     dataDescriptors.politics0.Filter[0].Members = [key];
     dataDescriptors.politics1.Filter[0].Members = [key];
@@ -914,18 +909,6 @@ App.prototype.selectRegion = function (e) {
         economics1.resolve(pivotResponse);
     });
 
-    //pjsnuj dataset used
-    var zoneDeVille0 = $.Deferred();
-    Knoema.Helpers.post('//explorim.knoema.com/api/1.0/data/pivot', dataDescriptors.zoneDeVille0, function(pivotResponse) {
-        zoneDeVille0.resolve(pivotResponse);
-    });
-
-    //tklplkf dataset used
-    var zoneDeVille1 = $.Deferred();
-    Knoema.Helpers.post('//explorim.knoema.com/api/1.0/data/pivot', dataDescriptors.zoneDeVille1, function(pivotResponse) {
-        zoneDeVille1.resolve(pivotResponse);
-    });
-
     //yqjhdag dataset used
     var politics0 = $.Deferred();
     Knoema.Helpers.post('//explorim.knoema.com/api/1.0/data/details', dataDescriptors.politics0, function(pivotResponse) {
@@ -938,14 +921,6 @@ App.prototype.selectRegion = function (e) {
         politics1.resolve(pivotResponse);
     });
 
-    var regionKeys = {
-
-        "pjsnuj": null,  //No Mauritania regions, no need to change key
-        "tklplkf": null, //No Mauritania regions, no need to change key
-
-        "yqjhdag": null
-    };
-
     ////explorim.knoema.com/api/1.0/meta/dataset/CDIACTACHIINDUSAA/dimension/Location
 
     // var pjsnuj = $.Deferred();
@@ -956,11 +931,9 @@ App.prototype.selectRegion = function (e) {
     $.when.apply(null, [
         economics0,
         economics1,
-        zoneDeVille0,
-        zoneDeVille1,
         politics0,
         politics1
-    ]).done(function onPivotRequestsFinished(economics0, economics1, zoneDeVille0, zoneDeVille1, politics0, politics1) {
+    ]).done(function onPivotRequestsFinished(economics0, economics1, politics0, politics1) {
 
         //$table1
         var $table1 = $.tmpl('simple-table.html', {
@@ -1001,11 +974,7 @@ App.prototype.selectRegion = function (e) {
         $sideBarContent.append('<hr />');
         $sideBarContent.append($table2);
 
-        $sideBarContent.append('<h4>Zone de vie</h4>');
-
-        $sideBarContent.append('<table><tr><td>&nbsp;</td><td>All time</td></tr><tr><td>Violence against civilians</td><td>18</td></tr></table>');
-
-        $sideBarContent.append('<table><tr><td>&nbsp;</td><td colspan="2">All time</td></tr><tr><td>&nbsp;</td><td>Sum (Injuries)</td><td>Sum(Fatalities)</td></tr><tr><td>Incidents de terrorisme</td><td>0</td><td>40</td></tr></table>');
+        $sideBarContent.append($.tmpl('zone-de-vie.html'));
 
         $sideBarContent.append('<h4>Politique</h4>');
 
@@ -1013,6 +982,7 @@ App.prototype.selectRegion = function (e) {
 
         var ddd = _.chunk(politics0.data, politics0.columns.length);
 
+        //TODO Replace with new table
         $sideBarContent.append('<table><tbody><tr><td>EWLAD NASSER</td></tr><tr><td>IDAWALY</td></tr><tr><td>IDEYBOUSSATT</td></tr><tr><td>KOUNTER</td></tr><tr><td>LAGHLAL</td></tr><tr><td>OULAD BILLE</td></tr><tr><td>TENWAJIW</td></tr></tbody></table>');
 
         // var rows1 = [_.map(ddd, function(d) {
@@ -1328,28 +1298,6 @@ App.prototype.loadLayer = function (layerId, layerType) {
 
                 this.showLegend(this._layers[layerId].layer.ranges);
 
-                //MOUSEOVER
-                // layerData.layer.dataLayer.addListener('mouseover', function(e) {
-                //     var data = e.feature.getProperty('tooltipData');
-                //     var $infoWindowContent = $.tmpl('info-window.html', {
-                //         title: data.name,
-                //         content: Globalize.format(parseFloat(data.value))
-                //     });
-                //     var ddd = {
-                //         top: e.eb.clientY,
-                //         left: e.eb.clientX - 400,
-                //         "z-index": 1000000000,
-                //         "display": "block"
-                //     };
-                //     $('#tooltip').empty()
-                //         .css(ddd)
-                //         .append($infoWindowContent);
-                // });
-                //
-                // layerData.layer.dataLayer.addListener('mouseup', function(e) {
-                //     $('#tooltip').empty().hide();
-                // });
-
                 layerData.layer.dataLayer.addListener('click', function (e) {
                     var data = e.feature.getProperty('tooltipData');
                     var $infoWindowContent = $.tmpl('info-window.html', {
@@ -1392,10 +1340,11 @@ App.prototype.loadTemplates = function (callback) {
 		$.get('tmpl/regional-divisions.html?random=' + Math.random(), compileTemplate),
         $.get('tmpl/regions-dropdown.html?random=' + Math.random(), compileTemplate),
         $.get('tmpl/region-details.html?random=' + Math.random(), compileTemplate),
+        $.get('tmpl/complex-table.html?random=' + Math.random(), compileTemplate),
 		$.get('tmpl/filters-tree.html?random=' + Math.random(), compileTemplate),
         $.get('tmpl/info-window.html?random=' + Math.random(), compileTemplate),
         $.get('tmpl/simple-table.html?random=' + Math.random(), compileTemplate),
-        $.get('tmpl/complex-table.html?random=' + Math.random(), compileTemplate),
+        $.get('tmpl/zone-de-vie.html?random=' + Math.random(), compileTemplate),
         $.get('tmpl/map-legend.html?random=' + Math.random(), compileTemplate)
 	];
 

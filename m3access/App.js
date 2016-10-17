@@ -1,6 +1,6 @@
 (function () {
 
-    var app = function () {
+    function App() {
         this.topBarHeight = 80 + 40;//40 - height of .main-menu-holder
         this.timelineHeight = 60;
         this.map = null;
@@ -23,7 +23,7 @@
         }
     });
 
-    app.prototype.run = function() {
+    App.prototype.run = function() {
         var self = this;
         $(window).on('resize', $.proxy(this.onResize, this));
 
@@ -58,6 +58,8 @@
         google.maps.event.addListenerOnce(this.map, 'idle', function () {
             var idleTimeout = window.setTimeout(function () {
                 $.get('//knoema.com/api/1.0/frontend/resource/' + self.geoPlaygroundId + '/content', function(content) {
+                    //debugger;
+                    //TODO Load layer or just build left side bar?
                     for (var layerId in content.layers) {
                         self.loadLayer(layerId);
                     }
@@ -199,7 +201,7 @@
         $(window).trigger('resize');
     };
 
-    app.prototype.reloadLayers = function () {
+    App.prototype.reloadLayers = function () {
         var self = this;
         self.infoWindow.close();
         _.each(self.markers, function(marker) {
@@ -210,19 +212,19 @@
         });
     };
 
-    app.prototype.hidePricesComparison = function () {
+    App.prototype.hidePricesComparison = function () {
         $('#prices-comparison-tool').animate({
             width: 0
         });
     };
 
-    app.prototype.showPricesComparison = function () {
+    App.prototype.showPricesComparison = function () {
         $('#prices-comparison-tool').animate({
             width: 470
         });
     };
 
-    app.prototype.handleResetControl = function () {
+    App.prototype.handleResetControl = function () {
         var self = this;
         if (_.isEmpty(self.filters.hide) && _.isEmpty(self.filters.medicine)) {
             $('#side-bar').find('.reset').hide();
@@ -231,7 +233,7 @@
         }
     };
 
-    app.prototype.onBeforeDraw = function (event, callback, id) {
+    App.prototype.onBeforeDraw = function (event, callback, id) {
         var self = this;
 
         if (!_.isEmpty(this.filters.search)) {
@@ -287,7 +289,7 @@
 
     };
 
-    app.prototype.loadLayer = function (id) {
+    App.prototype.loadLayer = function (id) {
         var self = this;
         var layer = this.layers[id];
 
@@ -347,7 +349,7 @@
 
     };
 
-    app.prototype.markerClickHandler = function(event) {
+    App.prototype.markerClickHandler = function(event) {
         var self = this;
         self.hidePricesComparison();
         var drugList = _.clone(self.drugSelectList);
@@ -370,7 +372,7 @@
             .modal('show');
     };
 
-    app.prototype.initSideBar = function () {
+    App.prototype.initSideBar = function () {
         function createFilterSectionMarkup(data) {
 
             //Content for NCD
@@ -446,7 +448,7 @@
         });
     };
 
-    app.prototype.onResize = function () {
+    App.prototype.onResize = function () {
         var newHeight = $(window).height() - 7;
         var sideBarHeight = newHeight - this.topBarHeight - 20;
 
@@ -484,7 +486,7 @@
         $mapCanvas.height(newHeight - this.topBarHeight - this.timelineHeight);
     };
 
-    app.prototype.loadTemplates = function (callback) {
+    App.prototype.loadTemplates = function (callback) {
         var self = this;
         function compileTemplate(templateSrc) {
             var templateId = this.url.replace('tmpl/', '');
@@ -508,7 +510,7 @@
     };
 
     google.maps.event.addDomListener(window, 'load', function () {
-        new app().run();
+        new App().run();
     });
 
 })();
