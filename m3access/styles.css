@@ -531,3 +531,19 @@ only screen and (                min-resolution: 2dppx) {
 .bootstrap-select .check-mark {
     color: #12A80D;
 }
+
+.checkbox.marker-icon label {
+    line-height: 30px;
+}
+
+.checkbox.marker-icon input {
+    margin-top: 7px;
+}
+
+.checkbox.marker-icon span {
+    width: 20px;
+    background-image: url('img/ico-marker-x2.png');
+    display: inline-block;
+    overflow: visible;
+    background-size: contain;
+}

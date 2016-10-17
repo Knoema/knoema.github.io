@@ -4,7 +4,13 @@
         this.topBarHeight = 80 + 40;//40 - height of .main-menu-holder
         this.timelineHeight = 60;
         this.map = null;
-        this.geoPlaygroundId = 'rdedwfb';
+
+        //Old geoplayground
+        //this.geoPlaygroundId = 'rdedwfb';
+
+        //New geoplayground
+        this.geoPlaygroundId = 'zohqw';
+
         this.infoWindow = new google.maps.InfoWindow();
         this.layers = {};
         this.drugSelectList = [];
@@ -31,7 +37,6 @@
         $('#timeline').css({
             visibility: 'visible'
         });
-        
 
         this.loadTemplates(function() {
             self.initSideBar();
@@ -56,10 +61,8 @@
         });
 
         google.maps.event.addListenerOnce(this.map, 'idle', function () {
-            var idleTimeout = window.setTimeout(function () {
+            setTimeout(function () {
                 $.get('//knoema.com/api/1.0/frontend/resource/' + self.geoPlaygroundId + '/content', function(content) {
-                    //debugger;
-                    //TODO Load layer or just build left side bar?
                     for (var layerId in content.layers) {
                         self.loadLayer(layerId);
                     }
@@ -84,28 +87,36 @@
 
         $('#side-bar').on('change', 'input[type="checkbox"]', function() {
             var dimension = $(this).data('dimension');
-            var filterValue = $(this).val();
-            var isChecked = $(this).is(':checked');
 
-            if (filterValue === 'populationDensity') {
-                self.filters.populationDensity = isChecked;
-            }
-
-            if (isChecked) {
-                if (_.isUndefined(self.filters.hide[dimension])) {
-                    self.filters.hide[dimension] = [];
-                }
-                self.filters.hide[dimension].push(filterValue);
-            } else {
-                _.remove(self.filters.hide[dimension], function(item) {
-                    return item === filterValue;
-                });
-            }
             if (dimension) {
-                if (self.filters.hide[dimension].length === 0) {
-                    delete self.filters.hide[dimension];
+                var filterValue = $(this).val();
+                var isChecked = $(this).is(':checked');
+
+                if (filterValue === 'populationDensity') {
+                    self.filters.populationDensity = isChecked;
                 }
+
+                if (isChecked) {
+                    if (_.isUndefined(self.filters.hide[dimension])) {
+                        self.filters.hide[dimension] = [];
+                    }
+                    self.filters.hide[dimension].push(filterValue);
+                } else {
+                    _.remove(self.filters.hide[dimension], function(item) {
+                        return item === filterValue;
+                    });
+                }
+                if (dimension) {
+                    if (self.filters.hide[dimension].length === 0) {
+                        delete self.filters.hide[dimension];
+                    }
+                }
+            } else {
+                var flag = $(this).data('flag');
+                debugger;
+                //survey-2013
             }
+
             self.handleResetControl();
             self.reloadLayers();
         });
@@ -233,7 +244,7 @@
         }
     };
 
-    App.prototype.onBeforeDraw = function (event, callback, id) {
+    App.prototype.onBeforeDraw = function (event, callback, layerId) {
         var self = this;
 
         if (!_.isEmpty(this.filters.search)) {
@@ -259,16 +270,24 @@
         if (event.data.visible) {
             event.data.visible = false;
 
-            switch(event.data.content['NCD-SARA Composite Score']) {
-                case 'Red':
-                    url = 'img/marker-red.png';
-                    break;
-                case 'Green':
+            var availability = event.data.content['Medicine Availability'];
+
+            if (this.layers[layerId].layer.name === 'Layer 2016') {
+                if (availability === 'High') {
                     url = 'img/marker-green.png';
-                    break;
-                case 'Yellow':
+                } else if (availability === 'Medium')  {
                     url = 'img/marker-yellow.png';
-                    break;
+                } else if (availability === 'Low') {
+                    url = 'img/marker-red.png';
+                }
+            } else {
+                if (availability === 'High') {
+                    url = 'img/map_marker_mini_green.png';
+                } else if (availability === 'Medium')  {
+                    url = 'img/map_marker_mini_yellow.png';
+                } else if (availability === 'Low') {
+                    url = 'img/map_marker_mini_red.png';
+                }
             }
 
             var marker = new google.maps.Marker({
@@ -289,16 +308,16 @@
 
     };
 
-    App.prototype.loadLayer = function (id) {
+    App.prototype.loadLayer = function (layerId) {
         var self = this;
-        var layer = this.layers[id];
+        var layer = this.layers[layerId];
 
         //TODO $(document.body).addClass('loading');
 
         if (!layer) {
             layer = new GeoPlayground.Layer({
                 map: self.map,
-                layerId: id,
+                layerId: layerId,
                 geoPlaygroundId: self.geoPlaygroundId
             }, function(layer2) {
                 $(document.body).removeClass('loading');
@@ -329,10 +348,10 @@
                 self.infoWindow.open(self.map);
             });
             layer.on('beforeDraw', function (e, callback) {
-                self.onBeforeDraw(e, callback, id);
+                self.onBeforeDraw(e, callback, layerId);
             });
 
-            self.layers[id] = layer;
+            self.layers[layerId] = layer;
         }
 
         if (layer.layerId === '5da3ae80-846f-c7b8-5445-3ecd00954e1c') {
@@ -376,10 +395,15 @@
         function createFilterSectionMarkup(data) {
 
             //Content for NCD
-            var tooltipContent = 'Total number of selected chronic disease medications available at a facility when surveyed.';
+
+            //Old
+            //var tooltipContent = 'Total number of selected chronic disease medications available at a facility when surveyed.';
+
+            //New
+            var tooltipContent = 'Availability of essential medicines for facilities surveyed under the M3 Access Pilot 2016 program are coded as: green (17-24 medicines), yellow (9-16), red (0-8). The selected NCDs from SARA 2013 are coded: green (7-10 medicines), yellow (3-6), red (0-2).';
 
             if (data.id === 'facility-type') {
-                tooltipContent = $.tmpl('long-tooltip.html').html()//get(0).outerHTML;
+                tooltipContent = $.tmpl('long-tooltip.html').html();
 
                 var properOrder = [
                     "HC II",
@@ -393,6 +417,11 @@
                     return _.indexOf(properOrder, item.name);
                 });
             }
+
+            if (data.name === "NCD-SARA Composite Score") {
+                data.name = "Medicine Availability";
+            }
+
             return $.tmpl('side-bar-checkbox-section.html', {
                 className: data.id,
                 header: data.name,
@@ -417,14 +446,14 @@
             var ncdData = ncd[0];
             _.each(ncdData.items, function(item) {
                 switch(item.name) {
-                    case 'Red':
-                        item.displayName = '0 - 2';
+                    case 'Green':
+                        item.displayName = 'High';
                         break;
                     case 'Yellow':
-                        item.displayName = '3 - 6';
+                        item.displayName = 'Medium';
                         break;
-                    case 'Green':
-                        item.displayName = '7 - 10';
+                    case 'Red':
+                        item.displayName = 'Low';
                         break;
                 }
             });
@@ -434,6 +463,8 @@
             }));
 
             $('#side-bar').append(createFilterSectionMarkup(ncdData));
+
+            $('#side-bar').append($.tmpl('survey-2013.html'));
 
             $('#side-bar').append($.tmpl('side-bar-radio-section.html'));
 
@@ -499,6 +530,7 @@
             $.get('tmpl/info-window-content.html', compileTemplate),
             $.get('tmpl/facility-profile.html', compileTemplate),
             $.get('tmpl/select-medicine.html', compileTemplate),
+            $.get('tmpl/survey-2013.html', compileTemplate),
             $.get('tmpl/heatmap-legend.html', compileTemplate),
             $.get('tmpl/long-tooltip.html', compileTemplate)
         ];
@@ -510,7 +542,8 @@
     };
 
     google.maps.event.addDomListener(window, 'load', function () {
-        new App().run();
+        window.app = new App();
+        window.app.run();
     });
 
 })();
