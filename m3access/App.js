@@ -1,5 +1,7 @@
 (function () {
 
+    Knoema.Helpers.clientId = 'EZj54KGFo3rzIvnLczrElvAitEyU28DGw9R73tif';
+
     function App() {
         this.topBarHeight = 80 + 40;//40 - height of .main-menu-holder
         this.timelineHeight = 60;
@@ -19,15 +21,10 @@
             search: '',
             medicine: null,
             hide: {},
+            survey: false,
             populationDensity: false
         };
     };
-
-    $.ajaxSetup({
-        data: {
-            client_id: 'EZj54KGFo3rzIvnLczrElvAitEyU28DGw9R73tif'
-        }
-    });
 
     App.prototype.run = function() {
         var self = this;
@@ -62,7 +59,7 @@
 
         google.maps.event.addListenerOnce(this.map, 'idle', function () {
             setTimeout(function () {
-                $.get('//knoema.com/api/1.0/frontend/resource/' + self.geoPlaygroundId + '/content', function(content) {
+                Knoema.Helpers.get('//knoema.com/api/1.0/frontend/resource/' + self.geoPlaygroundId + '/content', function(content) {
                     for (var layerId in content.layers) {
                         self.loadLayer(layerId);
                     }
@@ -86,11 +83,11 @@
         });
 
         $('#side-bar').on('change', 'input[type="checkbox"]', function() {
+            var isChecked = $(this).is(':checked');
             var dimension = $(this).data('dimension');
 
             if (dimension) {
                 var filterValue = $(this).val();
-                var isChecked = $(this).is(':checked');
 
                 if (filterValue === 'populationDensity') {
                     self.filters.populationDensity = isChecked;
@@ -112,9 +109,9 @@
                     }
                 }
             } else {
-                var flag = $(this).data('flag');
-                debugger;
-                //survey-2013
+                if ($(this).data('survey') === 'survey2013') {
+                    self.filters.survey = isChecked;
+                }
             }
 
             self.handleResetControl();
@@ -134,7 +131,7 @@
             }
         });
 
-        $.get('//yale.knoema.com/api/1.0/meta/dataset/pvbple/dimension/measure', function(measureDimension) {
+        Knoema.Helpers.get('//yale.knoema.com/api/1.0/meta/dataset/pvbple/dimension/measure', function(measureDimension) {
             var medicineList = [
                 {
                     disease: 'Diabetes',
@@ -252,6 +249,7 @@
         }
 
         if (!_.isEmpty(this.filters.hide)) {
+
             _.forIn(event.data.content, function(value, key) {
                 if (!_.isUndefined(self.filters.hide[key])) {
                     event.data.visible = event.data.visible && _.indexOf(self.filters.hide[key], event.data.content[key]) >= 0;
@@ -264,6 +262,20 @@
                 return visible && Boolean(event.data.content[nextFilter]);
             }, event.data.visible);
             event.data.visible = event.data.visible && visible;
+        }
+
+        // When user selects a filter on the left, that filter is applied to both Layer 2013 and Layer 2016 layers, but Layer 2013 symbols become visible only if Survey 2013 filter is enabled.
+        // If user selects just Survey 2013 filter then only Layer 2013 symbols are visible on the map.
+        // It means that Survey 2013 is not a standard filter, it enables\disables entier layer (Layer 2013)
+
+        if (this.layers[layerId].layer.name === 'Layer 2016') {
+            if (_.keys(this.filters.hide).length === 0 && this.filters.survey) {
+                event.data.visible = false;
+            }
+        } else {
+            if (_.keys(this.filters.hide).length) {
+                event.data.visible = event.data.visible && this.filters.survey;
+            }
         }
 
         var url;
@@ -431,19 +443,34 @@
             });
         }
 
-        var dimensionRequests = [
-            $.get('//yale.knoema.com/api/1.0/meta/dataset/pvbple/dimension/facility-type'),
-            $.get('//yale.knoema.com/api/1.0/meta/dataset/pvbple/dimension/location'),
-            $.get('//yale.knoema.com/api/1.0/meta/dataset/pvbple/dimension/sector'),
-            $.get('//yale.knoema.com/api/1.0/meta/dataset/pvbple/dimension/ncd-sara-composite-score')
-        ];
+        var d0 = $.Deferred();
+        var d1 = $.Deferred();
+        var d2 = $.Deferred();
+        var d3 = $.Deferred();
 
-        $.when.apply(null, dimensionRequests).done(function onDimensionsLoaded(facilityType, location, sector, ncd) {
-            $('#side-bar').append(createFilterSectionMarkup(facilityType[0]));
-            $('#side-bar').append(createFilterSectionMarkup(location[0]));
-            $('#side-bar').append(createFilterSectionMarkup(sector[0]));
+        Knoema.Helpers.get('//yale.knoema.com/api/1.0/meta/dataset/pvbple/dimension/facility-type', function(data) {
+            d0.resolve(data);
+        });
+        Knoema.Helpers.get('//yale.knoema.com/api/1.0/meta/dataset/pvbple/dimension/location', function(data) {
+            d1.resolve(data);
+        });
+        Knoema.Helpers.get('//yale.knoema.com/api/1.0/meta/dataset/pvbple/dimension/sector', function(data) {
+            d2.resolve(data);
+        });
+        Knoema.Helpers.get('//yale.knoema.com/api/1.0/meta/dataset/pvbple/dimension/ncd-sara-composite-score', function(data) {
+            d3.resolve(data);
+        });
 
-            var ncdData = ncd[0];
+        $.when.apply(null, [
+            d0,
+            d1,
+            d2,
+            d3
+        ]).done(function onDimensionsLoaded(facilityType, location, sector, ncdData) {
+            $('#side-bar').append(createFilterSectionMarkup(facilityType));
+            $('#side-bar').append(createFilterSectionMarkup(location));
+            $('#side-bar').append(createFilterSectionMarkup(sector));
+
             _.each(ncdData.items, function(item) {
                 switch(item.name) {
                     case 'Green':
@@ -521,7 +548,6 @@
         var self = this;
         function compileTemplate(templateSrc) {
             var templateId = this.url.replace('tmpl/', '');
-            templateId = templateId.substring(0, templateId.indexOf('?'))
             $.template(templateId, templateSrc);
         }
         var templates = [
