@@ -4,7 +4,7 @@
 
     function App() {
         this.topBarHeight = 80 + 40;//40 - height of .main-menu-holder
-        this.timelineHeight = 60;
+        this.timelineHeight = 90;
         this.map = null;
 
         //Old geoplayground
@@ -37,14 +37,6 @@
 
         this.loadTemplates(function() {
             self.initSideBar();
-        });
-
-        $('#timeline').find('.scroll-content').mCustomScrollbar({
-            theme: "dark",
-            axis:"x",
-            advanced:{
-                autoExpandHorizontalScroll:true
-            }
         });
 
         this.map = new google.maps.Map(document.getElementById('map-canvas'), {
@@ -249,7 +241,6 @@
         }
 
         if (!_.isEmpty(this.filters.hide)) {
-
             _.forIn(event.data.content, function(value, key) {
                 if (!_.isUndefined(self.filters.hide[key])) {
                     event.data.visible = event.data.visible && _.indexOf(self.filters.hide[key], event.data.content[key]) >= 0;
@@ -334,6 +325,40 @@
             }, function(layer2) {
                 $(document.body).removeClass('loading');
 
+                if (layer2.layer.name === "Layer 2016") {
+
+                    var timeMembersWithData = _.map(_.sortBy(_.keys(layer2.layer.parsedData)), function(date) {
+                        return (new Date(Date.parse(date))).toLocaleDateString('en-us');
+                    });
+
+
+                    _.each(weeks2016, function(w) {
+                        if (w.isNewMonth) {
+                            w.month = new Date(w.weekStart).toLocaleString('en-us', {"month": "short"});
+                        }
+                        if (timeMembersWithData.indexOf(w.weekStart) > -1) {
+                            w.hasData = true;
+                        }
+                    });
+
+                    $('#timeline').find('.scroll-content').empty().append($.tmpl('time-members.html', {
+                        timeMembers: window.weeks2016
+                    }));
+
+                    $('#timeline').on('click', '.timepoint', function(e) {
+                        var $a = $(e.target);
+
+                    }.bind(this));
+
+                    $('#timeline').find('.scroll-content').mCustomScrollbar({
+                        theme: "dark",
+                        axis:"x",
+                        advanced:{
+                            autoExpandHorizontalScroll:true
+                        }
+                    });
+                }
+
                 $('.nav').find('[disabled]').removeAttr('disabled');
 
                 if (layer2.layer.ranges && !$('#heatmap-legend').length) {
@@ -405,7 +430,7 @@
 
     App.prototype.initSideBar = function () {
         function createFilterSectionMarkup(data) {
-
+            //debugger;
             //Content for NCD
 
             //Old
@@ -556,9 +581,10 @@
             $.get('tmpl/info-window-content.html', compileTemplate),
             $.get('tmpl/facility-profile.html', compileTemplate),
             $.get('tmpl/select-medicine.html', compileTemplate),
-            $.get('tmpl/survey-2013.html', compileTemplate),
             $.get('tmpl/heatmap-legend.html', compileTemplate),
-            $.get('tmpl/long-tooltip.html', compileTemplate)
+            $.get('tmpl/time-members.html', compileTemplate),
+            $.get('tmpl/long-tooltip.html', compileTemplate),
+            $.get('tmpl/survey-2013.html', compileTemplate)
         ];
         $.when.apply(null, templates).done(function onTemplatesLoaded() {
             if ($.isFunction(callback)) {

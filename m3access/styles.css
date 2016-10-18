@@ -274,8 +274,8 @@ only screen and (                min-resolution: 2dppx) {
     margin-right: 15px;
 }
 
-#side-bar .mCSB_dragger_bar {
-    background-color: #1b3768!important;
+.mCS-dark.mCSB_scrollTools .mCSB_dragger:hover .mCSB_dragger_bar {
+    background-color: #1b3768;
 }
 
 #modal-dialog-holder {
@@ -430,17 +430,22 @@ only screen and (                min-resolution: 2dppx) {
     position: absolute;
     bottom: -60px;
     background-color: #C8D2E6;
+    display: table-row;
 }
 
 #timeline a {
     display: table-cell;
     text-align: center;
-    height:      30px;
+    height: 30px;
+    width: 30px;
+    min-width: 30px;
+
     line-height: 30px;
     text-decoration: none;
-    margin: 0 -3px;
+    /*margin: 0 -3px;*/
     vertical-align: middle;
     white-space: nowrap;
+    display: table-cell;
 }
 
 #timeline a.play-button {
@@ -452,42 +457,74 @@ only screen and (                min-resolution: 2dppx) {
     color: #1b3768;
     vertical-align: top;
     padding-top: 10px;
+
+    background-color: red;
+    width: 50px;
+    height: 50px;
 }
 
-#timeline a.play-button:hover {
-    background-color: transparent;
-    color: #415E92;
-}
+/*#timeline a.play-button:hover {*/
+    /*background-color: transparent;*/
+    /*color: #415E92;*/
+/*}*/
 
-#timeline a.timepoint {
-    background-color: #1b3768;
-    color: white;
+.timepoint {
+    /*background-color: #1b3768;*/
     padding: 0 7px;
+    border-left: 1px solid #8795a3;
 }
 
 #timeline a:hover {
-    background-color: #415E92;
+    /*background-color: #415E92;*/
+    color: #415E92;
+    background-color: white;
 }
 
-#timeline a.active {
-    background-color: #415E92;
+#timeline a.has-data {
+    background-color: #1b3768;
     color: white;
 }
 
-#timeline .time-members {
+#timeline a.active {
+    background-color: #3588f5;
+    color: white;
+}
+
+.time-member {
     display: table-cell;
-    /*background-color: gold;*/
-    /*max-width: 100px;*/
-    /*width:     100px;*/
+    height: 60px;
+
+}
+
+.time-member.new-month .timepoint {
+    border-left: none;
+}
+
+.time-member.new-month {
+    border-left: 1px solid #8795a3;
+    width: 30px;
+    max-width: 30px;
+}
+
+.time-member.new-month .month {
+    font-weight: bold;
+}
+
+.month-name {
+    position: relative;
+    padding-left: 5px;
+    padding-top: 10px;
 }
 
 #timeline .time-members .scroll-content {
-    height: 50px;
-    width: auto;
-    max-width: 10%;
+    height: 80px;
+    /*width: auto;*/
+    /*max-width: 10%;*/
     display: inline-block;
     vertical-align: bottom;
     margin-top: 10px;
+    width: 400px;
+    overflow: auto;
 }
 
 #heatmap-legend {
