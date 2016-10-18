@@ -474,15 +474,14 @@ only screen and (                min-resolution: 2dppx) {
     border-left: 1px solid #8795a3;
 }
 
-#timeline a:hover {
-    /*background-color: #415E92;*/
-    color: #415E92;
-    background-color: white;
-}
-
 #timeline a.has-data {
     background-color: #1b3768;
     color: white;
+}
+
+#timeline a.has-data:hover {
+    background-color: white;
+    color: #1b3768;
 }
 
 #timeline a.active {

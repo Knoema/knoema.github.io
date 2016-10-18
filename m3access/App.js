@@ -13,10 +13,21 @@
         //New geoplayground
         this.geoPlaygroundId = 'zohqw';
 
+        this.timeMembers = [
+            "8/29/2016",
+            "9/5/2016",
+            "9/12/2016",
+            "9/19/2016",
+            "9/26/2016"
+        ];
+
+        this.timePoint = '9/26/2016';
+
         this.infoWindow = new google.maps.InfoWindow();
         this.layers = {};
         this.drugSelectList = [];
         this.markers = [];
+        this.timePoint = null;
         this.filters = {
             search: '',
             medicine: null,
@@ -37,6 +48,7 @@
 
         this.loadTemplates(function() {
             self.initSideBar();
+            self.createTimeline();
         });
 
         this.map = new google.maps.Map(document.getElementById('map-canvas'), {
@@ -260,6 +272,20 @@
         // It means that Survey 2013 is not a standard filter, it enables\disables entier layer (Layer 2013)
 
         if (this.layers[layerId].layer.name === 'Layer 2016') {
+
+            var timePoint = (new Date(Date.parse(self.timePoint))).toLocaleDateString('en-us');
+
+            _.each(event.layer.parsedData, function(obj, date) {
+                if (timePoint === (new Date(Date.parse(date))).toLocaleDateString('en-us')) {
+                    var names = _.map(obj, function(o) {
+                        return o.data['Name of facility'];
+                    });
+                    event.data.visible = event.data.visible && names.indexOf(event.data.content['Name of facility']) > -1;
+                } else {
+                    event.data.visible = false;
+                }
+            });
+
             if (_.keys(this.filters.hide).length === 0 && this.filters.survey) {
                 event.data.visible = false;
             }
@@ -315,8 +341,6 @@
         var self = this;
         var layer = this.layers[layerId];
 
-        //TODO $(document.body).addClass('loading');
-
         if (!layer) {
             layer = new GeoPlayground.Layer({
                 map: self.map,
@@ -331,32 +355,24 @@
                         return (new Date(Date.parse(date))).toLocaleDateString('en-us');
                     });
 
-
-                    _.each(weeks2016, function(w) {
-                        if (w.isNewMonth) {
-                            w.month = new Date(w.weekStart).toLocaleString('en-us', {"month": "short"});
-                        }
-                        if (timeMembersWithData.indexOf(w.weekStart) > -1) {
-                            w.hasData = true;
-                        }
+                    _.each(timeMembersWithData, function(timePoint) {
+                        $('#timeline').find('[data-time-point="' + timePoint + '"]').addClass('has-data');
                     });
 
-                    $('#timeline').find('.scroll-content').empty().append($.tmpl('time-members.html', {
-                        timeMembers: window.weeks2016
-                    }));
+                    // $('#timeline').find('.timepoint').each(function(elem) {
+                    //     var $a = $(elem);
+                    //     if ($a.data('timePoint') === )
+                    // });
 
-                    $('#timeline').on('click', '.timepoint', function(e) {
-                        var $a = $(e.target);
+                    //debugger;
+                    //TODO Highlight corresponding members (.has-data)
 
-                    }.bind(this));
-
-                    $('#timeline').find('.scroll-content').mCustomScrollbar({
-                        theme: "dark",
-                        axis:"x",
-                        advanced:{
-                            autoExpandHorizontalScroll:true
-                        }
-                    });
+                    // if (timeMembersWithData.indexOf(w.weekStart) > -1) {
+                    //     w.hasData = true;
+                    //     if (timeMembersWithData.indexOf(w.weekStart) === timeMembersWithData.length - 1) {
+                    //         w.isActive = true;
+                    //     }
+                    // }
                 }
 
                 $('.nav').find('[disabled]').removeAttr('disabled');
@@ -403,6 +419,35 @@
             layer.load();
         }
 
+    };
+
+    App.prototype.createTimeline = function() {
+        var self = this;
+        _.each(weeks2016, function(w) {
+            if (w.isNewMonth) {
+                w.month = new Date(w.weekStart).toLocaleString('en-us', {"month": "short"});
+            }
+        });
+
+        $('#timeline').find('.scroll-content').empty().append($.tmpl('time-members.html', {
+            timeMembers: window.weeks2016
+        }));
+
+        $('#timeline').on('click', '.timepoint.has-data', function(e) {
+            var $a = $(e.target);
+            self.timePoint =  $a.data('timePoint');
+            $('#timeline').find('.active').removeClass('active');
+            $a.addClass('active');
+            self.reloadLayers();
+        });
+
+        $('#timeline').find('.scroll-content').mCustomScrollbar({
+            theme: "dark",
+            axis:"x",
+            advanced:{
+                autoExpandHorizontalScroll:true
+            }
+        });
     };
 
     App.prototype.markerClickHandler = function(event) {
