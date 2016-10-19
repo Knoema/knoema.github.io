@@ -1,162 +1,162 @@
 window.weeks2016 = [
     {
-        "weekStart": "1/4/2016",
+        "weekStart": "01/04/2016",
         "isNewMonth": true
     },
     {
-        "weekStart": "1/11/2016",
+        "weekStart": "01/11/2016",
         "isNewMonth": false
     },
     {
-        "weekStart": "1/18/2016",
+        "weekStart": "01/18/2016",
         "isNewMonth": false
     },
     {
-        "weekStart": "1/25/2016",
+        "weekStart": "01/25/2016",
         "isNewMonth": false
     },
     {
-        "weekStart": "2/1/2016",
+        "weekStart": "02/01/2016",
         "isNewMonth": true
     },
     {
-        "weekStart": "2/8/2016",
+        "weekStart": "02/08/2016",
         "isNewMonth": false
     },
     {
-        "weekStart": "2/15/2016",
+        "weekStart": "02/15/2016",
         "isNewMonth": false
     },
     {
-        "weekStart": "2/22/2016",
+        "weekStart": "02/22/2016",
         "isNewMonth": false
     },
     {
-        "weekStart": "2/29/2016",
+        "weekStart": "02/29/2016",
         "isNewMonth": false
     },
     {
-        "weekStart": "3/7/2016",
+        "weekStart": "03/07/2016",
         "isNewMonth": true
     },
     {
-        "weekStart": "3/14/2016",
+        "weekStart": "03/14/2016",
         "isNewMonth": false
     },
     {
-        "weekStart": "3/21/2016",
+        "weekStart": "03/21/2016",
         "isNewMonth": false
     },
     {
-        "weekStart": "3/28/2016",
+        "weekStart": "03/28/2016",
         "isNewMonth": false
     },
     {
-        "weekStart": "4/4/2016",
+        "weekStart": "04/04/2016",
         "isNewMonth": false
     },
     {
-        "weekStart": "4/11/2016",
+        "weekStart": "04/11/2016",
         "isNewMonth": false
     },
     {
-        "weekStart": "4/18/2016",
+        "weekStart": "04/18/2016",
         "isNewMonth": false
     },
     {
-        "weekStart": "4/25/2016",
+        "weekStart": "04/25/2016",
         "isNewMonth": false
     },
     {
-        "weekStart": "5/2/2016",
+        "weekStart": "05/02/2016",
         "isNewMonth": true
     },
     {
-        "weekStart": "5/9/2016",
+        "weekStart": "05/09/2016",
         "isNewMonth": false
     },
     {
-        "weekStart": "5/16/2016",
+        "weekStart": "05/16/2016",
         "isNewMonth": false
     },
     {
-        "weekStart": "5/23/2016",
+        "weekStart": "05/23/2016",
         "isNewMonth": false
     },
     {
-        "weekStart": "5/30/2016",
+        "weekStart": "05/30/2016",
         "isNewMonth": false
     },
     {
-        "weekStart": "6/6/2016",
+        "weekStart": "06/06/2016",
         "isNewMonth": true
     },
     {
-        "weekStart": "6/13/2016",
+        "weekStart": "06/13/2016",
         "isNewMonth": false
     },
     {
-        "weekStart": "6/20/2016",
+        "weekStart": "06/20/2016",
         "isNewMonth": false
     },
     {
-        "weekStart": "6/27/2016",
+        "weekStart": "06/27/2016",
         "isNewMonth": false
     },
     {
-        "weekStart": "7/4/2016",
+        "weekStart": "07/04/2016",
         "isNewMonth": true
     },
     {
-        "weekStart": "7/11/2016",
+        "weekStart": "07/11/2016",
         "isNewMonth": false
     },
     {
-        "weekStart": "7/18/2016",
+        "weekStart": "07/18/2016",
         "isNewMonth": false
     },
     {
-        "weekStart": "7/25/2016",
+        "weekStart": "07/25/2016",
         "isNewMonth": false
     },
     {
-        "weekStart": "8/1/2016",
+        "weekStart": "08/01/2016",
         "isNewMonth": true
     },
     {
-        "weekStart": "8/8/2016",
+        "weekStart": "08/08/2016",
         "isNewMonth": false
     },
     {
-        "weekStart": "8/15/2016",
+        "weekStart": "08/15/2016",
         "isNewMonth": false
     },
     {
-        "weekStart": "8/22/2016",
+        "weekStart": "08/22/2016",
         "isNewMonth": false
     },
     {
-        "weekStart": "8/29/2016",
+        "weekStart": "08/29/2016",
         "isNewMonth": false
     },
     {
-        "weekStart": "9/5/2016",
+        "weekStart": "09/05/2016",
         "isNewMonth": true
     },
     {
-        "weekStart": "9/12/2016",
+        "weekStart": "09/12/2016",
         "isNewMonth": false
     },
     {
-        "weekStart": "9/19/2016",
+        "weekStart": "09/19/2016",
         "isNewMonth": false
     },
     {
-        "weekStart": "9/26/2016",
+        "weekStart": "09/26/2016",
         "isNewMonth": false
     },
     {
-        "weekStart": "10/3/2016",
+        "weekStart": "10/03/2016",
         "isNewMonth": true
     },
     {
@@ -176,7 +176,7 @@ window.weeks2016 = [
         "isNewMonth": false
     },
     {
-        "weekStart": "11/7/2016",
+        "weekStart": "11/07/2016",
         "isNewMonth": true
     },
     {
@@ -192,7 +192,7 @@ window.weeks2016 = [
         "isNewMonth": false
     },
     {
-        "weekStart": "12/5/2016",
+        "weekStart": "12/05/2016",
         "isNewMonth": true
     },
     {

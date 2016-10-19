@@ -13,21 +13,23 @@
         //New geoplayground
         this.geoPlaygroundId = 'zohqw';
 
+        this.layerId2016 = 'dc3bfd66-3fc5-34dd-9523-704ba9f8df03';
+
+        //Hardcoded dates fot "Layer 2016"
         this.timeMembers = [
-            "8/29/2016",
-            "9/5/2016",
-            "9/12/2016",
-            "9/19/2016",
-            "9/26/2016"
+            "08/29/2016",
+            "09/05/2016",
+            "09/12/2016",
+            "09/19/2016",
+            "09/26/2016"
         ];
 
-        this.timePoint = '9/26/2016';
+        this.timePoint = '09/26/2016';
+        //Globalize.format(new Date(), 'MM/dd/yyyy', 'en')
 
         this.infoWindow = new google.maps.InfoWindow();
         this.layers = {};
         this.drugSelectList = [];
-        this.markers = [];
-        this.timePoint = null;
         this.filters = {
             search: '',
             medicine: null,
@@ -216,9 +218,6 @@
     App.prototype.reloadLayers = function () {
         var self = this;
         self.infoWindow.close();
-        _.each(self.markers, function(marker) {
-            marker.setMap(null);
-        });
         _.each(_.keys(this.layers), function(layerId) {
             self.loadLayer(layerId);
         });
@@ -271,67 +270,94 @@
         // If user selects just Survey 2013 filter then only Layer 2013 symbols are visible on the map.
         // It means that Survey 2013 is not a standard filter, it enables\disables entier layer (Layer 2013)
 
+        var availability = event.data.content['Medicine Availability'];
+
         if (this.layers[layerId].layer.name === 'Layer 2016') {
-
-            var timePoint = (new Date(Date.parse(self.timePoint))).toLocaleDateString('en-us');
-
-            _.each(event.layer.parsedData, function(obj, date) {
-                if (timePoint === (new Date(Date.parse(date))).toLocaleDateString('en-us')) {
-                    var names = _.map(obj, function(o) {
-                        return o.data['Name of facility'];
-                    });
-                    event.data.visible = event.data.visible && names.indexOf(event.data.content['Name of facility']) > -1;
-                } else {
-                    event.data.visible = false;
-                }
-            });
-
             if (_.keys(this.filters.hide).length === 0 && this.filters.survey) {
                 event.data.visible = false;
+            } else {
+                var url;
+                switch (availability) {
+                    case 'High':
+                        url = 'img/marker-green.png';
+                        break;
+                    case 'Medium':
+                        url = 'img/marker-yellow.png';
+                        break;
+                    case 'Low':
+                        url = 'img/marker-red.png';
+                        break;
+                }
+                event.data.icon = {
+                    url: url
+                    // scaledSize: new google.maps.Size(width, height),
+                    // origin: new google.maps.Point(0, 0),
+                    // anchor: new google.maps.Point(width / 2, height)
+                };
             }
         } else {
             if (_.keys(this.filters.hide).length) {
                 event.data.visible = event.data.visible && this.filters.survey;
-            }
-        }
-
-        var url;
-        if (event.data.visible) {
-            event.data.visible = false;
-
-            var availability = event.data.content['Medicine Availability'];
-
-            if (this.layers[layerId].layer.name === 'Layer 2016') {
-                if (availability === 'High') {
-                    url = 'img/marker-green.png';
-                } else if (availability === 'Medium')  {
-                    url = 'img/marker-yellow.png';
-                } else if (availability === 'Low') {
-                    url = 'img/marker-red.png';
-                }
             } else {
-                if (availability === 'High') {
-                    url = 'img/map_marker_mini_green.png';
-                } else if (availability === 'Medium')  {
-                    url = 'img/map_marker_mini_yellow.png';
-                } else if (availability === 'Low') {
-                    url = 'img/map_marker_mini_red.png';
+                var url;
+                switch (availability) {
+                    case 'High':
+                        url = 'img/map_marker_mini_green.png';
+                        break;
+                    case 'Medium':
+                        url = 'img/map_marker_mini_yellow.png';
+                        break;
+                    case 'Low':
+                        url = 'img/map_marker_mini_red.png';
+                        break;
                 }
+                event.data.icon = {
+                    url: url
+                    // scaledSize: new google.maps.Size(width, height),
+                    // origin: new google.maps.Point(0, 0),
+                    // anchor: new google.maps.Point(width / 2, height)
+                };
             }
-
-            var marker = new google.maps.Marker({
-                title: event.data.content['Name of facility'],
-                position: event.data.position,
-                map: self.map,
-                icon: url
-            });
-
-            marker.addListener('click', function() {
-                self.markerClickHandler(event);
-            });
-
-            self.markers.push(marker);
         }
+
+        // var url;
+        // if (event.data.visible) {
+        //     event.data.visible = false;
+        //
+        //
+        //
+        //     if (this.layers[layerId].layer.name === 'Layer 2016') {
+        //         if (availability === 'High') {
+        //             url = 'img/marker-green.png';
+        //         } else if (availability === 'Medium')  {
+        //             url = 'img/marker-yellow.png';
+        //         } else if (availability === 'Low') {
+        //             url = 'img/marker-red.png';
+        //         }
+        //     } else {
+        //         if (availability === 'High') {
+        //             url = 'img/map_marker_mini_green.png';
+        //         } else if (availability === 'Medium')  {
+        //             url = 'img/map_marker_mini_yellow.png';
+        //         } else if (availability === 'Low') {
+        //             url = 'img/map_marker_mini_red.png';
+        //         }
+        //     }
+        //
+        //     var marker = new google.maps.Marker({
+        //         title: event.data.content['Name of facility'],
+        //         position: event.data.position,
+        //         map: self.map,
+        //         icon: url,
+        //         layerId: layerId
+        //     });
+        //
+        //     marker.addListener('click', function() {
+        //         self.markerClickHandler(event);
+        //     });
+        //
+        //     self.markers.push(marker);
+        // }
 
         callback(event.data);
 
@@ -351,28 +377,15 @@
 
                 if (layer2.layer.name === "Layer 2016") {
 
-                    var timeMembersWithData = _.map(_.sortBy(_.keys(layer2.layer.parsedData)), function(date) {
-                        return (new Date(Date.parse(date))).toLocaleDateString('en-us');
+                    var timeMembersWithData = _.sortBy(_.keys(layer2.layer.parsedData));
+
+                    _.each(timeMembersWithData, function(timePoint, i) {
+                        var $timepoint = $('#timeline').find('[data-time-point="' + timePoint + '"]');
+                        $timepoint.addClass('has-data');
+                        if (self.timePoint === timePoint) {
+                            $timepoint.addClass('active');
+                        }
                     });
-
-                    _.each(timeMembersWithData, function(timePoint) {
-                        $('#timeline').find('[data-time-point="' + timePoint + '"]').addClass('has-data');
-                    });
-
-                    // $('#timeline').find('.timepoint').each(function(elem) {
-                    //     var $a = $(elem);
-                    //     if ($a.data('timePoint') === )
-                    // });
-
-                    //debugger;
-                    //TODO Highlight corresponding members (.has-data)
-
-                    // if (timeMembersWithData.indexOf(w.weekStart) > -1) {
-                    //     w.hasData = true;
-                    //     if (timeMembersWithData.indexOf(w.weekStart) === timeMembersWithData.length - 1) {
-                    //         w.isActive = true;
-                    //     }
-                    // }
                 }
 
                 $('.nav').find('[disabled]').removeAttr('disabled');
@@ -392,13 +405,17 @@
             });
 
             layer.on('click', function (e) {
-                e.data.tooltip.time = (new Date(e.data.tooltip.time)).toISOString().slice(0, 4);
-                self.infoWindow.setContent($.tmpl('info-window-content.html', {
-                    tooltip: e.layer.tooltip,
-                    data: e.data.tooltip
-                })[0].outerHTML);
-                self.infoWindow.setPosition(e.data.latLng);
-                self.infoWindow.open(self.map);
+                if (e.layer.layerType === 'point') {
+                    self.markerClickHandler(e);
+                } else {
+                    e.data.tooltip.time = (new Date(e.data.tooltip.time || e.data.tooltip.Date)).toISOString().slice(0, 4);
+                    self.infoWindow.setContent($.tmpl('info-window-content.html', {
+                        tooltip: e.layer.tooltip,
+                        data: e.data.tooltip
+                    })[0].outerHTML);
+                    self.infoWindow.setPosition(e.data.latLng);
+                    self.infoWindow.open(self.map);
+                }
             });
             layer.on('beforeDraw', function (e, callback) {
                 self.onBeforeDraw(e, callback, layerId);
@@ -423,6 +440,7 @@
 
     App.prototype.createTimeline = function() {
         var self = this;
+
         _.each(weeks2016, function(w) {
             if (w.isNewMonth) {
                 w.month = new Date(w.weekStart).toLocaleString('en-us', {"month": "short"});
@@ -435,10 +453,19 @@
 
         $('#timeline').on('click', '.timepoint.has-data', function(e) {
             var $a = $(e.target);
+
+            var previousTimePoint = self.timePoint;
             self.timePoint =  $a.data('timePoint');
+
             $('#timeline').find('.active').removeClass('active');
             $a.addClass('active');
-            self.reloadLayers();
+
+            //This is the right way to implement
+            self.layers[self.layerId2016].load(previousTimePoint, self.timePoint);
+
+            //self.layers[self.layerId2016].load('09/26/2016', '09/12/2016');
+
+            //self.reloadLayers();
         });
 
         $('#timeline').find('.scroll-content').mCustomScrollbar({
@@ -458,14 +485,14 @@
         _.each(drugList, function(listItem, i) {
             listItem.drugs = _.map(listItem.drugs, function(drug) {
                 return _.assign(drug, {
-                    isAvailable: Boolean(event.data.content[drug.drugName])
+                    isAvailable: Boolean(event.data.tooltip[drug.drugName])
                 });
             });
         });
 
         $('#modal-dialog-holder')
             .html($.tmpl('facility-profile.html', {
-                data: event.data.content,
+                data: event.data.tooltip,
                 drugList: drugList,
                 //TODO Find nearest hospital: google.maps.geometry.spherical.computeDistanceBetween (latLngA, latLngB);
                 distance: '5km'
