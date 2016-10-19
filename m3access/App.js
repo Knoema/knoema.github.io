@@ -7,25 +7,12 @@
         this.timelineHeight = 90;
         this.map = null;
 
-        //Old geoplayground
-        //this.geoPlaygroundId = 'rdedwfb';
-
         //New geoplayground
         this.geoPlaygroundId = 'zohqw';
 
         this.layerId2016 = 'dc3bfd66-3fc5-34dd-9523-704ba9f8df03';
 
-        //Hardcoded dates fot "Layer 2016"
-        this.timeMembers = [
-            "08/29/2016",
-            "09/05/2016",
-            "09/12/2016",
-            "09/19/2016",
-            "09/26/2016"
-        ];
-
         this.timePoint = '09/26/2016';
-        //Globalize.format(new Date(), 'MM/dd/yyyy', 'en')
 
         this.infoWindow = new google.maps.InfoWindow();
         this.layers = {};
@@ -94,6 +81,10 @@
 
             if (dimension) {
                 var filterValue = $(this).val();
+
+                if ($(this).data('displayName')) {
+                    filterValue = $(this).data('displayName');
+                }
 
                 if (filterValue === 'populationDensity') {
                     self.filters.populationDensity = isChecked;
@@ -244,7 +235,7 @@
         }
     };
 
-    App.prototype.onBeforeDraw = function (event, callback, layerId) {
+    App.prototype.onBeforeDraw = function (event, callback) {
         var self = this;
 
         if (!_.isEmpty(this.filters.search)) {
@@ -272,52 +263,50 @@
 
         var availability = event.data.content['Medicine Availability'];
 
-        if (this.layers[layerId].layer.name === 'Layer 2016') {
+        if (this.layers[event.layerId].layer.name === 'Layer 2016') {
             if (_.keys(this.filters.hide).length === 0 && this.filters.survey) {
                 event.data.visible = false;
-            } else {
-                var url;
-                switch (availability) {
-                    case 'High':
-                        url = 'img/marker-green.png';
-                        break;
-                    case 'Medium':
-                        url = 'img/marker-yellow.png';
-                        break;
-                    case 'Low':
-                        url = 'img/marker-red.png';
-                        break;
-                }
-                event.data.icon = {
-                    url: url
-                    // scaledSize: new google.maps.Size(width, height),
-                    // origin: new google.maps.Point(0, 0),
-                    // anchor: new google.maps.Point(width / 2, height)
-                };
             }
+            var url;
+            switch (availability) {
+                case 'High':
+                    url = 'img/marker-green.png';
+                    break;
+                case 'Medium':
+                    url = 'img/marker-yellow.png';
+                    break;
+                case 'Low':
+                    url = 'img/marker-red.png';
+                    break;
+            }
+            event.data.icon = {
+                url: url
+                // scaledSize: new google.maps.Size(width, height),
+                // origin: new google.maps.Point(0, 0),
+                // anchor: new google.maps.Point(width / 2, height)
+            };
         } else {
             if (_.keys(this.filters.hide).length) {
                 event.data.visible = event.data.visible && this.filters.survey;
-            } else {
-                var url;
-                switch (availability) {
-                    case 'High':
-                        url = 'img/map_marker_mini_green.png';
-                        break;
-                    case 'Medium':
-                        url = 'img/map_marker_mini_yellow.png';
-                        break;
-                    case 'Low':
-                        url = 'img/map_marker_mini_red.png';
-                        break;
-                }
-                event.data.icon = {
-                    url: url
-                    // scaledSize: new google.maps.Size(width, height),
-                    // origin: new google.maps.Point(0, 0),
-                    // anchor: new google.maps.Point(width / 2, height)
-                };
             }
+            var url;
+            switch (availability) {
+                case 'High':
+                    url = 'img/map_marker_mini_green.png';
+                    break;
+                case 'Medium':
+                    url = 'img/map_marker_mini_yellow.png';
+                    break;
+                case 'Low':
+                    url = 'img/map_marker_mini_red.png';
+                    break;
+            }
+            event.data.icon = {
+                url: url
+                // scaledSize: new google.maps.Size(width, height),
+                // origin: new google.maps.Point(0, 0),
+                // anchor: new google.maps.Point(width / 2, height)
+            };
         }
 
         // var url;
@@ -418,7 +407,7 @@
                 }
             });
             layer.on('beforeDraw', function (e, callback) {
-                self.onBeforeDraw(e, callback, layerId);
+                self.onBeforeDraw(e, callback);
             });
 
             self.layers[layerId] = layer;
