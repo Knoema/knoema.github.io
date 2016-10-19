@@ -115,7 +115,7 @@ div#ftt-index ul li div
 
 div#ftt-index a#explore-forecasting
 {
-	background-image: url("/ftt/img/button-explore-forecasting.png");
+	background-image: url("../img/button-explore-forecasting.png");
 	background-position: 0 0;
 	display: inline-block;
 	height: 50px;
