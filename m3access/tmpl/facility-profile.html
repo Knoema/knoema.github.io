@@ -28,18 +28,13 @@
                     <dt>Sector:</dt>
                     <dd>${data['Sector']}</dd>
 
-                    <dt>NCD-SARA:</dt>
-                    <dd>
-                        {{if data['NCD-SARA Composite Score'] == 'Green'}}
-                            7 - 10
-                        {{/if}}
-                        {{if data['NCD-SARA Composite Score'] == 'Yellow'}}
-                            3 - 6
-                        {{/if}}
-                        {{if data['NCD-SARA Composite Score'] == 'Red'}}
-                            0 - 2
-                        {{/if}}
-                    </dd>
+                    {{if layerId !== 'dc3bfd66-3fc5-34dd-9523-704ba9f8df03'}}
+                        <dt>NCD-SARA Composite<br />Score 2013:</dt>
+                        <dd>
+                            <br />
+                            <span class="circle ${data['Medicine Availability']}">&#x25cf;&nbsp;</span>${data['NCD-SARA Composite Score Value unchanged']}
+                        </dd>
+                    {{/if}}
 
                     <dt>Nearest hospital:</dt>
                     <dd>${distance}</dd>
@@ -70,24 +65,25 @@
                         </div>
                     {{/each}}
                 </div>
-                <div class="row">
-                    <div class="col-xs-12">
-                        <hr />
-                    </div>
+            </div>
+        </div>
+        {{if layerId === 'dc3bfd66-3fc5-34dd-9523-704ba9f8df03'}}
+            <div class="row">
+                <div class="col-xs-12">
+                    <hr />
                 </div>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-xs-12">
-                <h5>Medication prices</h5>
-                <p>
-                    Metformin, cost for 100 tablets, roughly a 3-month course, excluding inhalers: 42,000 USh
-                </p>
-                <p class="notice">
-                    For more details see <a href="#">Pharmacy Prices Datasheet</a>. To compare prices in th region use <a href="#" class="prices-comparison-tool" data-dismiss="modal">Prices Comparison Tool</a>
-                </p>
+            <div class="row">
+                <div class="col-xs-12">
+                    <h5>Medication prices</h5>
+                    <p>
+                        Metformin, cost for 100 tablets, roughly a 3-month course, excluding inhalers: 42,000 USh
+                    </p>
+                    <p class="notice">
+                        For more details see <a href="#">Pharmacy Prices Datasheet</a>. To compare prices in th region use <a href="#" class="prices-comparison-tool" data-dismiss="modal">Prices Comparison Tool</a>
+                    </p>
+                </div>
             </div>
-        </div>
-
+        {{/if}}
     </div>
 </div>

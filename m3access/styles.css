@@ -225,20 +225,20 @@ only screen and (                min-resolution: 2dppx) {
     display: none;
 }
 
-.ncd-sara-composite-score .circle {
+.circle {
     font-size: 1.2em;
     line-height: 1em;
 }
 
-.ncd-sara-composite-score .Red {
+.ncd-sara-composite-score .Red, .circle.Low {
     color: #DC040A;
 }
 
-.ncd-sara-composite-score .Green {
+.ncd-sara-composite-score .Green, .circle.High  {
     color: #12A80D;
 }
 
-.ncd-sara-composite-score .Yellow {
+.ncd-sara-composite-score .Yellow, .circle.Medium  {
     color: #EFC607;
 }
 

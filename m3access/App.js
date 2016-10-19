@@ -484,7 +484,8 @@
                 data: event.data.tooltip,
                 drugList: drugList,
                 //TODO Find nearest hospital: google.maps.geometry.spherical.computeDistanceBetween (latLngA, latLngB);
-                distance: '5km'
+                distance: '5km',
+                layerId: event.layerId
             }))
             .modal('show');
     };
