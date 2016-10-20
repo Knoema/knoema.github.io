@@ -14,6 +14,8 @@
 
         this.timePoint = '09/26/2016';
 
+        this.minMax = null;
+
         this.infoWindow = new google.maps.InfoWindow();
         this.layers = {};
         this.drugSelectList = [];
@@ -24,6 +26,9 @@
             survey: false,
             populationDensity: false
         };
+
+        this.drugPrices = null;
+
     };
 
     App.prototype.run = function() {
@@ -119,16 +124,11 @@
         });
 
         $( "#slider" ).slider({
-
             disabled: true,
-
             range: true,
             min: 0,
             max: 500,
-            values: [ 75, 300 ],
-            slide: function( event, ui ) {
-                $( "#amount" ).val( "$" + ui.values[ 0 ] + " - $" + ui.values[ 1 ] );
-            }
+            values: [ 0, 500 ]
         });
 
         //TODO Get dataset id from geoplayground
@@ -295,9 +295,99 @@
 
             $('#select-medicine').on('change', function() {
                 self.filters.medicine = $(this).val();
+
+                if (_.isArray(self.filters.medicine) && self.filters.medicine.length > 1) {
+                    $('#min').val('').prop('disabled', true);
+                    $('#max').val('').prop('disabled', true);
+                    $( "#slider" ).slider({
+                        disabled: true
+                    });
+                    self.minMax = null;
+                } else {
+
+                    var medicine = self.filters.medicine[0];
+
+                    $('#min,#max').prop('disabled', false);
+
+                    var drug = _.find(window.drugs.items, function(item) {
+                        return item.name === medicine;
+                    });
+
+                    if (drug) {
+                        var minDataDescriptor = _.cloneDeep(dataDescriptors.drugPrice);
+                        var maxDataDescriptor = _.cloneDeep(dataDescriptors.drugPrice);
+
+                        minDataDescriptor.Stub[0].Members[0] = {
+                            "Key": -107,
+                            "Name": "Max",
+                            "Formula": [
+                                drug.key,
+                                "min"
+                            ],
+                            "Transform": null
+                        };
+
+                        maxDataDescriptor.Stub[0].Members[0] = {
+                            "Key": -107,
+                            "Name": "Min",
+                            "Formula": [
+                                drug.key,
+                                "max"
+                            ],
+                            "Transform": null
+                        };
+
+                        var def0 = $.Deferred();
+                        Knoema.Helpers.post('//yale.knoema.com/api/1.0/data/pivot', minDataDescriptor, function(pivotResponse) {
+                            def0.resolve(pivotResponse);
+                        });
+
+                        var def1 = $.Deferred();
+                        Knoema.Helpers.post('//yale.knoema.com/api/1.0/data/pivot', maxDataDescriptor, function(pivotResponse) {
+                            def1.resolve(pivotResponse);
+                        });
+
+                        $.when.apply(null, [
+                            def0,
+                            def1
+                        ]).done(function (resp0, resp1) {
+
+                            var min = resp0.data[0].Value;
+                            var max = resp1.data[0].Value;
+
+                            $('#min').val(min);
+                            $('#max').val(max);
+
+                            //TODO Populate with proper min/max values
+                            $( "#slider" ).slider({
+                                disabled: false,
+                                range: true,
+                                min: min,
+                                max: max,
+                                values: [min, max],
+                                slide: _.debounce(function( event, ui ) {
+                                    $('#min').val(ui.values[0]);
+                                    $('#max').val(ui.values[1]);
+
+                                    self.minMax = {
+                                        medicine: medicine,
+                                        min: ui.values[0],
+                                        max: ui.values[1]
+                                    };
+
+                                    self.layers[self.layerId2016].load(null, self.timePoint);
+                                }, 200)
+                            });
+                        });
+
+                    }
+
+                }
+
                 self.handleResetControl();
+
                 self.layers[self.layerId2016].load(null, self.timePoint);
-                //self.reloadLayers();
+
             });
 
         });
@@ -375,6 +465,22 @@
         var availability = event.data.content['Medicine Availability'];
 
         if (this.layers[event.layerId].layer.name === 'Layer 2016') {
+
+            //self.minMax
+
+            if (self.minMax) {
+                event.data.content[self.minMax.medicine];
+
+                if (!event.data.content[self.minMax.medicine] ||
+                    event.data.content[self.minMax.medicine] < self.minMax.min ||
+                    event.data.content[self.minMax.medicine] > self.minMax.max) {
+
+                    //console.log('Hide facility with value: ', event.data.content[self.minMax.medicine]);
+                    event.data.visible = false;
+                }
+
+            }
+
             if (_.keys(this.filters.hide).length === 0 && this.filters.survey) {
                 event.data.visible = false;
             }
@@ -476,6 +582,8 @@
                 $(document.body).removeClass('loading');
 
                 if (layer2.layer.name === "Layer 2016") {
+
+                    self.allWeeks = _.flatten(_.values(layer2.layer.parsedData));
 
                     var timeMembersWithData = _.sortBy(_.keys(layer2.layer.parsedData));
 
