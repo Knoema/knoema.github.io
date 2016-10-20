@@ -34,7 +34,7 @@ window.dataDescriptors = {
                         "Name": "Sum(PMetformin)",
                         "Formula": [
                             "5881390",
-                            "sum"
+                            "min"
                         ],
                         "Transform": null
                     }

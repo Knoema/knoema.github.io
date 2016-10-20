@@ -322,7 +322,7 @@
                             "Name": "Sum(PMetformin)",
                             "Formula": [
                                 drug.key.toString(),//Doesn't work without toString()
-                                "sum"
+                                "min"
                             ],
                             "Transform": null
                         };
