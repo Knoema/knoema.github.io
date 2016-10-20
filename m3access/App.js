@@ -54,6 +54,9 @@
             setTimeout(function () {
                 Knoema.Helpers.get('//knoema.com/api/1.0/frontend/resource/' + self.geoPlaygroundId + '/content', function(content) {
                     for (var layerId in content.layers) {
+                        // if (layerId === 'dc3bfd66-3fc5-34dd-9523-704ba9f8df03') {
+                        //     self.loadLayer(layerId);
+                        // }
                         self.loadLayer(layerId);
                     }
                 });
@@ -293,7 +296,8 @@
             $('#select-medicine').on('change', function() {
                 self.filters.medicine = $(this).val();
                 self.handleResetControl();
-                self.reloadLayers();
+                self.layers[self.layerId2016].load(null, self.timePoint);
+                //self.reloadLayers();
             });
 
         });
@@ -352,6 +356,10 @@
                 }
             });
         }
+
+        // if (event.data.content["Name of facility"] === "JINJA REGIONAL REFERRAL HOSPITAL") {
+        //     debugger;
+        // }
 
         if (event.data.visible && !_.isEmpty(this.filters.medicine) && this.layers[event.layerId].layer.name === 'Layer 2016') {
             var visible = _.reduce(this.filters.medicine, function(visible, nextFilter) {
