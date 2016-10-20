@@ -314,46 +314,46 @@
                     });
 
                     if (drug) {
-                        var minDataDescriptor = _.cloneDeep(dataDescriptors.drugPrice);
-                        var maxDataDescriptor = _.cloneDeep(dataDescriptors.drugPrice);
+                        var minDataDescriptor = _.cloneDeep(dataDescriptors.min);
+                        var maxDataDescriptor = _.cloneDeep(dataDescriptors.max);
 
-                        minDataDescriptor.Stub[0].Members[0] = {
-                            "Key": -107,
-                            "Name": "Max",
+                        minDataDescriptor.Filter[0].Members[0] = {
+                            "Key": -715,
+                            "Name": "Sum(PMetformin)",
                             "Formula": [
-                                drug.key,
-                                "min"
+                                drug.key.toString(),//Doesn't work without toString()
+                                "sum"
                             ],
                             "Transform": null
                         };
 
                         maxDataDescriptor.Stub[0].Members[0] = {
                             "Key": -107,
-                            "Name": "Min",
+                            "Name": "Max",
                             "Formula": [
-                                drug.key,
+                                drug.key.toString(),
                                 "max"
                             ],
                             "Transform": null
                         };
 
-                        var def0 = $.Deferred();
+                        var minDef = $.Deferred();
                         Knoema.Helpers.post('//yale.knoema.com/api/1.0/data/pivot', minDataDescriptor, function(pivotResponse) {
-                            def0.resolve(pivotResponse);
+                            minDef.resolve(pivotResponse);
                         });
 
-                        var def1 = $.Deferred();
+                        var maxDef = $.Deferred();
                         Knoema.Helpers.post('//yale.knoema.com/api/1.0/data/pivot', maxDataDescriptor, function(pivotResponse) {
-                            def1.resolve(pivotResponse);
+                            maxDef.resolve(pivotResponse);
                         });
 
                         $.when.apply(null, [
-                            def0,
-                            def1
-                        ]).done(function (resp0, resp1) {
+                            minDef,
+                            maxDef
+                        ]).done(function (minResp, maxResp) {
 
-                            var min = resp0.data[0].Value;
-                            var max = resp1.data[0].Value;
+                            var min = _.min(_.filter(_.map(minResp.data, 'Value')));
+                            var max = maxResp.data[0].Value;
 
                             $('#min').val(min);
                             $('#max').val(max);
@@ -469,16 +469,15 @@
             //self.minMax
 
             if (self.minMax) {
-                event.data.content[self.minMax.medicine];
+                if (event.data.content[self.minMax.medicine] != 0) {
+                    if (!event.data.content[self.minMax.medicine] ||
+                        event.data.content[self.minMax.medicine] < self.minMax.min ||
+                        event.data.content[self.minMax.medicine] > self.minMax.max) {
 
-                if (!event.data.content[self.minMax.medicine] ||
-                    event.data.content[self.minMax.medicine] < self.minMax.min ||
-                    event.data.content[self.minMax.medicine] > self.minMax.max) {
-
-                    //console.log('Hide facility with value: ', event.data.content[self.minMax.medicine]);
-                    event.data.visible = false;
+                        //console.log('Hide facility with value: ', event.data.content[self.minMax.medicine]);
+                        event.data.visible = false;
+                    }
                 }
-
             }
 
             if (_.keys(this.filters.hide).length === 0 && this.filters.survey) {

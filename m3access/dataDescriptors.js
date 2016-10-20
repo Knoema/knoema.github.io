@@ -1,5 +1,56 @@
 window.dataDescriptors = {
-    drugPrice: {
+    min: {
+        "Header": [
+            {
+                "DimensionId": "Time",
+                "Members": [],
+                "DimensionName": "Time",
+                "DatasetId": "dqbawu",
+                "Order": "0",
+                "UiMode": "range",
+                "DateFields": [
+                    {
+                        "DateColumn": "0",
+                        "DatasetId": "dqbawu"
+                    }
+                ]
+            }
+        ],
+        "Stub": [
+            {
+                "DimensionId": "name-of-facility",
+                "Members": [],
+                "DimensionName": "Name of facility",
+                "DatasetId": "dqbawu",
+                "Order": "0"
+            }
+        ],
+        "Filter": [
+            {
+                "DimensionId": "measure",
+                "Members": [
+                    {
+                        "Key": -715,
+                        "Name": "Sum(PMetformin)",
+                        "Formula": [
+                            "5881390",
+                            "sum"
+                        ],
+                        "Transform": null
+                    }
+                ],
+                "DimensionName": "Measure",
+                "DatasetId": "dqbawu",
+                "Order": "0"
+            }
+        ],
+        "Frequencies": [],
+        "Dataset": "dqbawu",
+        "Segments": null,
+        "MeasureAggregations": null,
+        "Calendar": 0
+    },
+    max: {
         "Header": [
             {
                 "DimensionId": "Time",
