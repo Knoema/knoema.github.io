@@ -15,6 +15,7 @@ function App() {
 	this.geoPlaygroundId = 'zabecdg';
 	this._layers = {};
     this.infoWindow = new google.maps.InfoWindow();
+    this._fonctionnairesDetails = null;
 
     this._visibleStyle = {
         strokeColor: 'white',
@@ -52,46 +53,6 @@ function App() {
     this._regionsComponent = null;
     this._dataLayers = {};
     this._layerTitles = {};
-
-    //new-regions.json -> proper structured mauritania-regions.json
-    // $.ajax({
-    //     dataType: "json",
-    //     url: 'new-regions.json',
-    //     success: function(data) {
-    //         var ddd = _.map(data.regions, function(r) {
-    //             var spl = r.split(',');
-    //
-    //             var regionIdSplitted = spl[1].split('-');
-    //
-    //             var level = 0;
-    //
-    //             // data-name="${region.name}"
-    //             // data-region-id="${region.fields.regionid}"
-    //             // value="${region.key}"
-    //
-    //             if (spl[1].length == 5) {
-    //                 level = 1;
-    //             }
-    //
-    //             if (spl[1].length == 8) {
-    //                 level = 2;
-    //             }
-    //
-    //             if (spl[1].length == 11) {
-    //                 level = 3;
-    //             }
-    //             return {
-    //                 name: spl[0],
-    //                 level: level ? level : 0,
-    //                 fields: {
-    //                     regionid: spl[1]
-    //                 }
-    //             }
-    //         });
-    //     }, error: function (d) {
-    //     }
-    // });
-
 };
 
 App.prototype.init = function () {
@@ -113,10 +74,6 @@ App.prototype.init = function () {
         var url = '//explorim.knoema.com/api/1.0/meta/dataset/ftqbdwb/dimension/region?access_token=' + access_token ;
 
         $.getJSON(url).then(function(data) {
-
-            // var regions = _.filter(data.items, function(item) {
-            //     return item.level > 0 && item.key < 1000660 && !_.isUndefined(item.fields.regionid);
-            // });
 
             $.getJSON('mauritania-regions.json').then(function(regions) {
 
@@ -1008,6 +965,35 @@ App.prototype.selectRegion = function (e) {
     });
 };
 
+App.prototype.loadFonctionnaires = function () {
+    var loadedDeferred = $.Deferred();
+    var self = this;
+    var url = '//explorim.knoema.com/api/1.0/meta/dataset/hfydzlc/dimension/region?access_token=' + access_token ;
+    if (!this._fonctionnairesDetails) {
+        $.getJSON(url).then(function (data) {
+            self._fonctionnairesDetails = data;
+            loadedDeferred.resolve(self._fonctionnairesDetails);
+        });
+    } else {
+        loadedDeferred.resolve(this._fonctionnairesDetails);
+    }
+    return loadedDeferred;
+};
+
+App.prototype.showFonctionnaires = function (regionId) {
+    var self = this;
+    this.loadFonctionnaires().then(function (data) {
+        var region = _.find(data.items, function (d) {
+            return d.fields.regionid === regionId;
+        });
+        if (region) {
+            //TODO Show
+        } else {
+            alert(regionId + ' missing in dataset');
+        }
+    });
+};
+
 App.prototype.bindEvents = function () {
 	var self = this;
 
@@ -1282,13 +1268,14 @@ App.prototype.loadLayer = function (layerId, layerType) {
 						var content = _.chain(_.keys(this.content))
 							.map(function(key) {
 								return {
-									key: key,
+								    originalKey: key,
+									key: self._layers[layerData.layerId].layer.tooltip[key].text,
 									value: _.isNaN(parseFloat(this.content[key])) ? this.content[key] : Globalize.format(parseFloat(this.content[key]))
 								};
 							}.bind(this))
 							.value()
 							.filter(function(entry) {
-								return entry.value.toString() !== '' && propsToDisplay.indexOf(entry.key) > -1;
+								return propsToDisplay.indexOf(entry.originalKey) > -1;
 							});
 
 						var $infoWindowContent = $.tmpl('info-window.html', {
@@ -1306,10 +1293,19 @@ App.prototype.loadLayer = function (layerId, layerType) {
 
                 layerData.layer.dataLayer.addListener('click', function (e) {
                     var data = e.feature.getProperty('tooltipData');
+
+                    var regionId = [
+                        '7ab7d08d-1a08-7ec3-86be-ff15252e833b',
+                        '5193eea1-dce5-aaac-b158-bc3e0e178920',
+                        '2dc15f7d-21c3-f600-39a2-2dc6efb19233'
+                    ].indexOf(layerData.layerId) > -1 ? e.feature.getId() : null;
+
                     var $infoWindowContent = $.tmpl('info-window.html', {
                         title: data.name,
+                        regionId: regionId,
                         content: Globalize.format(parseFloat(data.value))
                     });
+
                     self.infoWindow.setContent($infoWindowContent[0].outerHTML);
                     self.infoWindow.setPosition(e.latLng);
                     self.infoWindow.open(self._map);

@@ -190,9 +190,17 @@ body {
 }
 
 .title-section .clear-filters {
-    background-color: #245b13;
-    color: #fff;
-    text-transform: uppercase;
+    /*background-color: #245b13;*/
+    /*color: #fff;*/
+    /*text-transform: uppercase;*/
+    padding: 6px;
+}
+
+.clear-filters > div {
+    width: 18px;
+    height: 18px;
+    background-image: url("../img/icon-clean-x2.png");
+    background-size: contain;
 }
 
 .tooltip {
@@ -611,7 +619,6 @@ table tr:nth-of-type(even) {
 }
 
 #profile-modal-2 .close-modal-2 {
-    padding: 5px 10px;
     cursor: pointer;
     padding: 10px;
 }
@@ -681,7 +688,9 @@ table tr:nth-of-type(even) {
     font-size: 13pt;
 }
 
-
+.show-fonctionnaires {
+    display: block;
+}
 
 .bootstrap-select {
     text-transform: lowercase;

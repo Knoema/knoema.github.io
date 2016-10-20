@@ -16,4 +16,10 @@
         {{/each}}
     {{/if}}
 
+    {{if regionId}}
+        <a href="#" class="show-fonctionnaires" data-region-id="${regionId}" onclick="app.showFonctionnaires('${regionId}')">
+            Montrent les fonctionnaires
+        </a>
+    {{/if}}
+
 </div>
