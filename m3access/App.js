@@ -233,45 +233,6 @@
                 }
             ];
 
-            // //Old medicine list
-            // var medicineList = [
-            //     {
-            //         disease: 'Diabetes',
-            //         drugs: [
-            //             "Metformin, cap/tab",
-            //             "Insulin, injection",
-            //             "Glibenclamide, 5 mg cap/tab"
-            //         ]
-            //     },
-            //     {
-            //         disease: 'Cardiovascular',
-            //         drugs: [
-            //             "Nifedipine, cap/tab",
-            //             "ACE inhibitor (e.g. enalapril, lisinopril, captopril)",
-            //             "Simvastatin, 20 mg cap/tab",
-            //
-            //             //measureDimension.items[9].name[0], measureDimension.items[9].name[9], measureDimension.items[9].name[11]
-            //             //-> measureDimension.items[9].name.charCodeAt(0), (9), (11) -> 8203
-            //             //http://www.fileformat.info/info/unicode/char/200b/index.htm
-            //             //Invisible symbols! measureDimension.items[9].name != "Atenolol, 50mg cap/tab" (different length)
-            //             measureDimension.items[9].name
-            //         ]
-            //     },
-            //     {
-            //         disease: 'COPD/Asthma',
-            //         drugs: [
-            //             "Beclomethasone inhaler",
-            //             "Salbutamol, 0.1mg/dose inhaler"
-            //         ]
-            //     },
-            //     {
-            //         disease: 'Depression/Anexiety',
-            //         drugs: [
-            //             "Amitriptyline, 25mg cap/tab"
-            //         ]
-            //     }
-            // ];
-
             _.each(medicineList, function(item) {
                 item.drugs = _.map(item.drugs, function(drugName) {
                     return {
@@ -296,7 +257,7 @@
             $('#select-medicine').on('change', function() {
                 self.filters.medicine = $(this).val();
 
-                if (_.isArray(self.filters.medicine) && self.filters.medicine.length > 1) {
+                if (_.isArray(self.filters.medicine) && self.filters.medicine.length > 1 || self.filters.medicine == null) {
                     $('#min').val('').prop('disabled', true);
                     $('#max').val('').prop('disabled', true);
                     $( "#slider" ).slider({
