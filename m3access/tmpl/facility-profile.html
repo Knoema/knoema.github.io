@@ -12,6 +12,7 @@
             </div>
             <div class="col-xs-10">
                 <!--<pre>${JSON.stringify(data, null, 2)}</pre>-->
+                <pre>${JSON.stringify(data, null, 2)}</pre>
                 <dl class="dl-horizontal facility-general-info">
                     <dt>Facility name:</dt>
                     <dd>${data['Name of facility']}</dd>
@@ -27,6 +28,11 @@
 
                     <dt>Sector:</dt>
                     <dd>${data['Sector']}</dd>
+
+                    {{if layerId !== 'dc3bfd66-3fc5-34dd-9523-704ba9f8df03'}}
+                    {{else}}
+                        Layer 2016
+                    {{/if}}
 
                     {{if layerId !== 'dc3bfd66-3fc5-34dd-9523-704ba9f8df03'}}
                         <dt>NCD-SARA Composite<br />Score 2013:</dt>

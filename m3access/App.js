@@ -128,49 +128,152 @@
             }
         });
 
-        Knoema.Helpers.get('//yale.knoema.com/api/1.0/meta/dataset/pvbple/dimension/measure', function(measureDimension) {
+        //TODO Get dataset id from geoplayground
+        Knoema.Helpers.get('//yale.knoema.com/api/1.0/meta/dataset/dqbawu/dimension/measure', function(measureDimension) {
+
+            //["Medicine Availability Score Value", "NCD-SARA 2013 Score", "PMetformin", "PGlibenclamide", "PInsulin_soluble",
+            // "PInsulin_isophane", "PInsulin_Mixtard", "PNifedipine", "PAtenolol", "PPropranolol", "PCaptopril", "PEnalapril", "PLisinopril", "PLosartan",
+            // "PSimvastatin", "PBeclomethasone_inhaler", "PSalbutamol_inhaler", "PSalbutamol_tablet", "PFluoxetine", "PAmitriptyline",
+            // "PDiazepam", "PCodeine", "PParacetamol", "PAmoxicillin", "PArtemether_Lumefantrine", "POral_rehydration_solution"]
+
+            var properMapping = {
+                "PMetformin": "Metformin 500mg per tablet",
+                "PGlibenclamide": "Glibenclamide 5mg per tablet",
+                "PInsulin_soluble": "Insulin soluble (regular) 100IU/mL per unit vial",
+                "PInsulin_isophane": "Insulin isophane (NPH) 100IU/mL per unit vial",
+                "PInsulin_Mixtard": "Insulin Mixtard (30% soluble/70% isophane) 100IU/mL per unit vial",
+                "PNifedipine": "Nifedipine 20mg per tablet",
+                "PAtenolol": "Atenolol 100mg per tablet",
+                "PPropranolol": "Propranolol 40 mg per tablet",
+                "PCaptopril": "Captopril 25mg per tablet",
+                "PEnalapril": "Enalapril 5mg per tablet",
+                "PLisinopril": "Lisinopril 10mg per tablet",
+                "PLosartan": "Losartan 50mg per tablet",
+                "PSimvastatin": "Simvastatin 20mg per tablet",
+                "PBeclomethasone_inhaler": "Beclomethasone inhaler per item",
+                "PSalbutamol_inhaler": "Salbutamol inhaler per item",
+                "PSalbutamol_tablet": "Salbutamol 4mg per tablet",
+                "PFluoxetine": "Fluoxetine 20mg per tablet",
+                "PAmitriptyline": "Amitriptyline 25mg per tablet",
+                "PDiazepam": "Diazepam 5mg per tablet",
+                "PCodeine": "Codeine 30mg per tablet",
+                "PParacetamol": "Paracetamol 500mg per tablet",
+                "PAmoxicillin": "Amoxicillin 250mg per tablet",
+                "PArtemether_Lumefantrine": "Artemether 20mg/Lumefantrine 120mg per tablet",
+                "POral_rehydration_solution": "Oral rehydration solution packets"
+            };
+
             var medicineList = [
                 {
                     disease: 'Diabetes',
                     drugs: [
-                        "Metformin, cap/tab",
-                        "Insulin, injection",
-                        "Glibenclamide, 5 mg cap/tab"
+                        "PMetformin",
+                        "PGlibenclamide",
+                        "PInsulin_soluble",
+                        "PInsulin_isophane",
+                        "PInsulin_Mixtard"
                     ]
                 },
                 {
-                    disease: 'Cardiovascular',
+                    disease: 'Cardiovascular Disease',
                     drugs: [
-                        "Nifedipine, cap/tab",
-                        "ACE inhibitor (e.g. enalapril, lisinopril, captopril)",
-                        "Simvastatin, 20 mg cap/tab",
-
-                        //measureDimension.items[9].name[0], measureDimension.items[9].name[9], measureDimension.items[9].name[11]
-                        //-> measureDimension.items[9].name.charCodeAt(0), (9), (11) -> 8203
-                        //http://www.fileformat.info/info/unicode/char/200b/index.htm
-                        //Invisible symbols! measureDimension.items[9].name != "Atenolol, 50mg cap/tab" (different length)
-                        measureDimension.items[9].name
+                        "PNifedipine",
+                        "PAtenolol",
+                        "PPropranolol",
+                        "PCaptopril",
+                        "PEnalapril",
+                        "PLisinopril",
+                        "PLosartan",
+                        "PSimvastatin"
                     ]
                 },
                 {
                     disease: 'COPD/Asthma',
                     drugs: [
-                        "Beclomethasone inhaler",
-                        "Salbutamol, 0.1mg/dose inhaler"
+                        "PBeclomethasone_inhaler",
+                        "PSalbutamol_inhaler",
+                        "PSalbutamol_tablet"
                     ]
                 },
                 {
-                    disease: 'Depression/Anexiety',
+                    disease: 'Mental Health',
                     drugs: [
-                        "Amitriptyline, 25mg cap/tab"
+                        "PFluoxetine",
+                        "PAmitriptyline",
+                        "PDiazepam"
+                    ]
+                },
+                {
+                    disease: 'Pain/Fever',
+                    drugs: [
+                        "PCodeine",
+                        "PParacetamol"
+                    ]
+                },
+                {
+                    disease: 'Antibiotic',
+                    drugs: [
+                        "PAmoxicillin"
+                    ]
+                },
+                {
+                    disease: 'Malaria',
+                    drugs: [
+                        "PArtemether_Lumefantrine"
+                    ]
+                },
+                {
+                    disease: 'Dehydration',
+                    drugs: [
+                        "POral_rehydration_solution"
                     ]
                 }
             ];
+
+            // //Old medicine list
+            // var medicineList = [
+            //     {
+            //         disease: 'Diabetes',
+            //         drugs: [
+            //             "Metformin, cap/tab",
+            //             "Insulin, injection",
+            //             "Glibenclamide, 5 mg cap/tab"
+            //         ]
+            //     },
+            //     {
+            //         disease: 'Cardiovascular',
+            //         drugs: [
+            //             "Nifedipine, cap/tab",
+            //             "ACE inhibitor (e.g. enalapril, lisinopril, captopril)",
+            //             "Simvastatin, 20 mg cap/tab",
+            //
+            //             //measureDimension.items[9].name[0], measureDimension.items[9].name[9], measureDimension.items[9].name[11]
+            //             //-> measureDimension.items[9].name.charCodeAt(0), (9), (11) -> 8203
+            //             //http://www.fileformat.info/info/unicode/char/200b/index.htm
+            //             //Invisible symbols! measureDimension.items[9].name != "Atenolol, 50mg cap/tab" (different length)
+            //             measureDimension.items[9].name
+            //         ]
+            //     },
+            //     {
+            //         disease: 'COPD/Asthma',
+            //         drugs: [
+            //             "Beclomethasone inhaler",
+            //             "Salbutamol, 0.1mg/dose inhaler"
+            //         ]
+            //     },
+            //     {
+            //         disease: 'Depression/Anexiety',
+            //         drugs: [
+            //             "Amitriptyline, 25mg cap/tab"
+            //         ]
+            //     }
+            // ];
 
             _.each(medicineList, function(item) {
                 item.drugs = _.map(item.drugs, function(drugName) {
                     return {
                         drugName: drugName,
+                        displayName: properMapping[drugName],
                         key: _.find(measureDimension.items, function (item) {
                             return item.name === drugName;
                             //return item.name === drugName || measureDimension.items[9].name.indexOf('Atenolol') > -1;
@@ -250,9 +353,9 @@
             });
         }
 
-        if (event.data.visible && !_.isEmpty(this.filters.medicine)) {
+        if (event.data.visible && !_.isEmpty(this.filters.medicine) && this.layers[event.layerId].layer.name === 'Layer 2016') {
             var visible = _.reduce(this.filters.medicine, function(visible, nextFilter) {
-                return visible && Boolean(event.data.content[nextFilter]);
+                return visible && !_.isNaN(parseInt(event.data.content[nextFilter]));
             }, event.data.visible);
             event.data.visible = event.data.visible && visible;
         }

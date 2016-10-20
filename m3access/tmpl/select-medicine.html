@@ -1,7 +1,7 @@
 {{each(i, listItem) drugSelectList}}
 <optgroup label="${listItem.disease}">
     {{each(j, drug) listItem.drugs}}
-        <option data-key="${drug.key}" value="${drug.drugName}">${drug.drugName}</option>
+        <option data-key="${drug.key}" value="${drug.drugName}">${drug.displayName}</option>
     {{/each}}
 </optgroup>
 {{/each}}
