@@ -166,6 +166,44 @@
             values: [ 0, 500 ]
         });
 
+        // var medicineListOLD = [
+        //     {
+        //         disease: 'Diabetes',
+        //         drugs: [
+        //             "Metformin, cap/tab",
+        //             "Insulin, injection",
+        //             "Glibenclamide, 5 mg cap/tab"
+        //         ]
+        //     },
+        //     {
+        //         disease: 'Cardiovascular',
+        //         drugs: [
+        //             "Nifedipine, cap/tab",
+        //             "ACE inhibitor (e.g. enalapril, lisinopril, captopril)",
+        //             "Simvastatin, 20 mg cap/tab",
+        //
+        //             //measureDimension.items[9].name[0], measureDimension.items[9].name[9], measureDimension.items[9].name[11]
+        //             //-> measureDimension.items[9].name.charCodeAt(0), (9), (11) -> 8203
+        //             //http://www.fileformat.info/info/unicode/char/200b/index.htm
+        //             //Invisible symbols! measureDimension.items[9].name != "Atenolol, 50mg cap/tab" (different length)
+        //             measureDimension.items[9].name
+        //         ]
+        //     },
+        //     {
+        //         disease: 'COPD/Asthma',
+        //         drugs: [
+        //             "Beclomethasone inhaler",
+        //             "Salbutamol, 0.1mg/dose inhaler"
+        //         ]
+        //     },
+        //     {
+        //         disease: 'Depression/Anexiety',
+        //         drugs: [
+        //             "Amitriptyline, 25mg cap/tab"
+        //         ]
+        //     }
+        // ];
+
         //TODO Get dataset id from geoplayground
         Knoema.Helpers.get('//yale.knoema.com/api/1.0/meta/dataset/dqbawu/dimension/measure', function(measureDimension) {
 
@@ -379,6 +417,7 @@
     };
 
     App.prototype.showPricesComparison = function () {
+        $('#week-of').html(Globalize.format(new Date(Date.parse(this.timePoint)), 'd MMMM', 'en'));
         $('#right-panel').animate({
             right: 0
         });
@@ -603,42 +642,105 @@
     App.prototype.markerClickHandler = function(event) {
         var self = this;
         self.hidePricesComparison();
-        var drugList = _.clone(self.drugSelectList);
-        var nameOfFacility = event.data.tooltip['Name of facility'];
+        var drugList = [];
 
+        Knoema.Helpers.get('//yale.knoema.com/api/1.0/meta/dataset/pvbple/dimension/measure', function(measureDimension) {
 
+            if (event.layer.name === "Layer 2016") {
+                drugList = _.clone(self.drugSelectList);
+            } else {
+                var medicineList = [
+                    {
+                        disease: 'Diabetes',
+                        drugs: [
+                            "Metformin, cap/tab",
+                            "Insulin, injection",
+                            "Glibenclamide, 5 mg cap/tab"
+                        ]
+                    },
+                    {
+                        disease: 'Cardiovascular',
+                        drugs: [
+                            "Nifedipine, cap/tab",
+                            "ACE inhibitor (e.g. enalapril, lisinopril, captopril)",
+                            "Simvastatin, 20 mg cap/tab",
 
-        _.each(drugList, function(listItem, i) {
-            listItem.drugs = _.map(listItem.drugs, function(drug) {
-                var dataToDisplay = event.layer.dataToDisplay;
-                // var facilityData = _.find(dataToDisplay, function(d) {
-                //     return d.data['Name of facility']
-                // });
+                            //measureDimension.items[9].name[0], measureDimension.items[9].name[9], measureDimension.items[9].name[11]
+                            //-> measureDimension.items[9].name.charCodeAt(0), (9), (11) -> 8203
+                            //http://www.fileformat.info/info/unicode/char/200b/index.htm
+                            //Invisible symbols! measureDimension.items[9].name != "Atenolol, 50mg cap/tab" (different length)
+                            measureDimension.items[9].name
+                        ]
+                    },
+                    {
+                        disease: 'COPD/Asthma',
+                        drugs: [
+                            "Beclomethasone inhaler",
+                            "Salbutamol, 0.1mg/dose inhaler"
+                        ]
+                    },
+                    {
+                        disease: 'Depression/Anexiety',
+                        drugs: [
+                            "Amitriptyline, 25mg cap/tab"
+                        ]
+                    }
+                ];
 
-                var isAvailable = Boolean(event.data.tooltip[drug.drugName]);
+                _.each(medicineList, function(item) {
+                    item.drugs = _.map(item.drugs, function(drugName) {
+                        return {
+                            drugName: drugName,
+                            displayName: drugName,
+                            key: _.find(measureDimension.items, function (item) {
+                                return item.name === drugName;
+                                //return item.name === drugName || measureDimension.items[9].name.indexOf('Atenolol') > -1;
+                            }).key
+                        }
+                    });
+                    drugList.push(item);
+                });
+            }
 
-                if (event.layer.name === "Layer 2016") {
-                    //isAvailable = typeof facilityData.data[drug.drugName] !== 'undefined'
-                    isAvailable = typeof event.data.tooltip[drug.drugName] !== 'undefined'
-                }
+            //===========================================================
+            var nameOfFacility = event.data.tooltip['Name of facility'];
 
-                return _.assign(drug, {
-                    isAvailable: isAvailable,
-                    //price: facilityData.data[drug.drugName]
-                    price: event.data.tooltip[drug.drugName]
+            _.each(drugList, function(listItem, i) {
+                listItem.drugs = _.map(listItem.drugs, function(drug) {
+                    var dataToDisplay = event.layer.dataToDisplay;
+                    var facilityData = _.find(dataToDisplay, function(d) {
+                        return d.data['Name of facility'] === nameOfFacility;
+                    });
+
+                    var isAvailable = Boolean(event.data.tooltip[drug.drugName]);
+
+                    //debugger;
+
+                    if (event.layer.name === "Layer 2016") {
+                        isAvailable = typeof facilityData.data[drug.drugName] !== 'undefined'
+                        //isAvailable = typeof event.data.tooltip[drug.drugName] !== 'undefined'
+                    }
+
+                    return _.assign(drug, {
+                        isAvailable: isAvailable,
+                        price: facilityData.data[drug.drugName]
+                        //price: event.data.tooltip[drug.drugName]
+                    });
                 });
             });
+
+            $('#modal-dialog-holder')
+                .html($.tmpl('facility-profile.html', {
+                    data: event.data.tooltip,
+                    drugList: drugList,
+                    //TODO Find nearest hospital: google.maps.geometry.spherical.computeDistanceBetween (latLngA, latLngB);
+                    distance: '5km',
+                    layerId: event.layerId
+                }))
+                .modal('show');
+
         });
 
-        $('#modal-dialog-holder')
-            .html($.tmpl('facility-profile.html', {
-                data: event.data.tooltip,
-                drugList: drugList,
-                //TODO Find nearest hospital: google.maps.geometry.spherical.computeDistanceBetween (latLngA, latLngB);
-                distance: '5km',
-                layerId: event.layerId
-            }))
-            .modal('show');
     };
 
     App.prototype.initSideBar = function () {
