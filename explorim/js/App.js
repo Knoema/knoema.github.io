@@ -867,10 +867,23 @@ App.prototype.selectRegion = function (e) {
         economics1.resolve(pivotResponse);
     });
 
-    //yqjhdag dataset used
+    //jflytqc dataset used (need find proper key)
     var politics0 = $.Deferred();
-    Knoema.Helpers.post('//explorim.knoema.com/api/1.0/data/details', dataDescriptors.politics0, function(pivotResponse) {
-        politics0.resolve(pivotResponse);
+    Knoema.Helpers.get('//explorim.knoema.com/api/1.0/meta/dataset/jflytqc/dimension/region', function(data) {
+
+        var item = _.find(data.items, function(it) {
+            return it.fields.regionid === regionId;
+        });
+
+        if (item) {
+            dataDescriptors.politics0.Filter[0].Members[0] = item.key.toString();
+            Knoema.Helpers.post('//explorim.knoema.com/api/1.0/data/details', dataDescriptors.politics0, function(pivotResponse) {
+                politics0.resolve(pivotResponse);
+            });
+        } else {
+            politics0.resolve(null);
+        }
+
     });
 
     //ftqbdwb dataset used
@@ -879,19 +892,31 @@ App.prototype.selectRegion = function (e) {
         politics1.resolve(pivotResponse);
     });
 
-    ////explorim.knoema.com/api/1.0/meta/dataset/CDIACTACHIINDUSAA/dimension/Location
+    var zone0 = $.Deferred();
+    Knoema.Helpers.get('//explorim.knoema.com/api/1.0/meta/dataset/kymrtcc/dimension/region', function(data) {
 
-    // var pjsnuj = $.Deferred();
-    // Knoema.Helpers.get('//explorim.knoema.com/api/1.0/data/pivot', dataDescriptors.politics1, function(pivotResponse) {
-    //     pjsnuj.resolve(pivotResponse);
-    // });
+        var item = _.find(data.items, function(it) {
+            return it.fields.regionid === regionId;
+        });
+
+        if (item) {
+            dataDescriptors.zone0.Filter[0].Members[0] = item.key.toString();
+            Knoema.Helpers.post('//explorim.knoema.com/api/1.0/data/pivot', dataDescriptors.zone0, function(pivotResponse) {
+                zone0.resolve(pivotResponse);
+            });
+        } else {
+            zone0.resolve(null);
+        }
+
+    });
 
     $.when.apply(null, [
         economics0,
         economics1,
         politics0,
-        politics1
-    ]).done(function onPivotRequestsFinished(economics0, economics1, politics0, politics1) {
+        politics1,
+        zone0
+    ]).done(function onPivotRequestsFinished(economics0, economics1, politics0, politics1, zone0Resp) {
 
         //$table1
         var $table1 = $.tmpl('simple-table.html', {
@@ -922,34 +947,30 @@ App.prototype.selectRegion = function (e) {
 
         var $sideBarContent = $('#right-side-bar').find('.side-bar-content');
 
-        //$sideBarContent.mCustomScrollbar('destroy');
-
         $sideBarContent.empty();
 
         $sideBarContent.append('<h4>Economique et social</h4>');
-
         $sideBarContent.append($table1);
         $sideBarContent.append('<hr />');
         $sideBarContent.append($table2);
 
         $sideBarContent.append($.tmpl('zone-de-vie.html'));
 
+        if (zone0Resp != null) {
+            //TODO Add one more table based on zone0Resp
+            //debugger;
+        }
+
+
         $sideBarContent.append('<h4>Politique</h4>');
 
-        $sideBarContent.append('<h5>Tribus</h5>');
-
-        var ddd = _.chunk(politics0.data, politics0.columns.length);
-
-        //TODO Replace with new table
-        $sideBarContent.append('<table><tbody><tr><td>EWLAD NASSER</td></tr><tr><td>IDAWALY</td></tr><tr><td>IDEYBOUSSATT</td></tr><tr><td>KOUNTER</td></tr><tr><td>LAGHLAL</td></tr><tr><td>OULAD BILLE</td></tr><tr><td>TENWAJIW</td></tr></tbody></table>');
-
-        // var rows1 = [_.map(ddd, function(d) {
-        //     return {
-        //         Value: d[2]
-        //     };
-        // })];
-        //
-        // $sideBarContent.append('<table>' + _.map(rows1[0], function(r) {return '<tr><td>' + r.Value + '</td></tr>'}).join('') + '</table>');
+        if (politics0 != null) {
+            $sideBarContent.append('<h5>Tribus</h5>');
+            var table = '<table>' + _.map(_.chunk(politics0.data, politics0.columns.length), function(d) {
+                return '<tr><td>' + d[1] + '</td></tr>';
+            }).join('') + '</table>';
+            $sideBarContent.append(table);
+        }
 
         $sideBarContent.append('<h5>Élections</h5>');
 
@@ -957,10 +978,6 @@ App.prototype.selectRegion = function (e) {
             headerMembers: politics1.header[0].members,
             rows: _.chunk(politics1.data, politics1.header[0].members.length)
         }));
-
-        // $sideBarContent.mCustomScrollbar({
-        //     theme: 'dark'
-        // });
 
     });
 };
@@ -987,7 +1004,51 @@ App.prototype.showFonctionnaires = function (regionId) {
             return d.fields.regionid === regionId;
         });
         if (region) {
-            //TODO Show
+            dataDescriptors.fonctionnaires.Filter[2].Members[0] = region.key.toString();
+            Knoema.Helpers.post('//explorim.knoema.com/api/1.0/data/details', dataDescriptors.fonctionnaires, function(details) {
+                var ddd = _.chunk(details.data, details.columns.length);
+
+                var columns = ["NNI", "NOM", "PRÉNOM", "Date De Naissance", "Code Naissance", "Fonction", "Minister", "Code Inscription"];
+
+                var table = '<table class="display" cellspacing="0" width="100%"><thead><tr>' + _.map(columns, function(column) {
+                        return '<th>' + column + '</th>'
+                    }).join('') + '</tr></thead>';
+
+                var tt = _.map(ddd, function(row) {
+
+                    var rowContent = '<tr>';
+
+                    _.each(columns, function(column, index) {
+                        if (columns.indexOf(column) > -1) {
+                            rowContent = rowContent + '<td>' + row[index] + '</td>';
+                        }
+                    });
+
+                    rowContent = rowContent + '</tr>';
+
+                    return rowContent;
+
+                }).join('');
+
+                table = table + '<tbody>' + tt + '</tbody></table>';
+
+                $('#profile-modal').find('.modal-body').css({
+                    //"max-height": "90%"
+                }).html(table);
+
+                $('#profile-modal').find('.modal-body').find('table').css({
+                    "font-size": "0.9em"
+                });
+
+                $('#profile-modal').find('.modal-header').append('<strong>Fonctionnaires</strong>');
+
+                $('#profile-modal').find('.modal-body').find('table').DataTable();
+
+                $('#profile-modal').modal({
+                    open: true
+                });
+
+            });
         } else {
             alert(regionId + ' missing in dataset');
         }
@@ -1032,6 +1093,8 @@ App.prototype.bindEvents = function () {
                 this.loadLayer(layerId, 'point');
             } else {
 
+                $(event.target).closest('.item-content').find('input[data-layer-type="region"]').prop('disabled', true);
+
                 if (this._activeAreaLayerId) {
                     $('[data-layer-id="' + this._activeAreaLayerId + '"]').prop('checked', false);
                 }
@@ -1043,7 +1106,9 @@ App.prototype.bindEvents = function () {
                     //Simple region layer (no sublayers like Regionale, Department, Communale)
 
                     if ($target.is(':checked')) {
-                        this.loadLayer(layerId, 'region');
+                        this.loadLayer(layerId, 'region', function() {
+                            $(event.target).closest('.item-content').find('input[data-layer-type="region"]').prop('disabled', false);
+                        });
                     } else {
                         this._layers[layerId].clean();
                         this.hideLegend();
@@ -1214,7 +1279,7 @@ App.prototype.hideLegend = function () {
     this._dataLayers[this._activeRegionalDivision].setStyle(this._visibleStyle);
 };
 
-App.prototype.loadLayer = function (layerId, layerType) {
+App.prototype.loadLayer = function (layerId, layerType, callback) {
 	var self = this;
 
 	if (this._layers[layerId]) {
@@ -1321,13 +1386,17 @@ App.prototype.loadLayer = function (layerId, layerType) {
                 this._activeAreaLayerId = layerData.layerId;
 			}
 
-            //TODO Add check if it is regional layer or not
             $('input[data-layer-id="' + layerData.layerId + '"]').prop('disabled', false);
+
+            if ($.isFunction(callback)) {
+                callback();
+            }
 
         }, this));
 
 		layer.load();
 		this._layers[layerId] = layer;
+
 	}
 };
 

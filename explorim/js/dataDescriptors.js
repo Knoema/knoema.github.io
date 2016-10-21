@@ -132,134 +132,73 @@ var dataDescriptors = {
         "Dataset": "ftqbdwb"
     },
 
-    zoneDeVille0: {
+    zone0: {
         "Header": [
             {
                 "DimensionId": "Time",
                 "Members": [],
                 "DimensionName": "Time",
-                "UiMode": "range",
-                "DateFields": [
-                    {
-                        "DateColumn": "0",
-                        "DatasetId": "pjsnuj"
-                    }
-                ]
+                "UiMode": "allData"
             }
         ],
         "Stub": [
             {
-                "DimensionId": "event-type",
+                "DimensionId": "indicator",
                 "Members": [
-                    "1000170",
                     {
-                        "Key": -3696,
-                        "Name": "Incidents de terrorisme",
+                        "Name": "Zone écologique: pluviale",
+                        "Key": "-1000100",
                         "Formula": [
-                            "1000090",
-                            "1000100",
-                            "+",
-                            "1000110",
-                            "+",
-                            "1000130",
-                            "+",
-                            "1000150",
-                            "+"
+                            "1000100"
+                        ]
+                    },
+                    {
+                        "Name": "Zone écologique: recessional",
+                        "Key": "-1000110",
+                        "Formula": [
+                            "1000110"
+                        ]
+                    },
+                    {
+                        "Name": "Zone écologique: oasis",
+                        "Key": "-1000120",
+                        "Formula": [
+                            "1000120"
+                        ]
+                    },
+                    {
+                        "Name": "Zone écologique: irrigué",
+                        "Key": "-1000130",
+                        "Formula": [
+                            "1000130"
+                        ]
+                    },
+                    {
+                        "Name": "Potentiel agricole total (1.000 hectares)",
+                        "Key": "-1000140",
+                        "Formula": [
+                            "1000140"
                         ]
                     }
                 ],
-                "DimensionName": "EVENT_TYPE"
+                "DimensionName": "Indicator"
             }
         ],
         "Filter": [
             {
-                "DimensionId": "country",
+                "DimensionId": "region",
                 "Members": [
-                    "1000790"
+                    "1000010"
                 ],
-                "DimensionName": "COUNTRY"
-            },
-            {
-                "DimensionId": "measure",
-                "Members": [
-                    {
-                        "Key": -2037,
-                        "Name": "Sum(FATALITIES)",
-                        "Formula": [
-                            "4373380",
-                            "sum"
-                        ],
-                        "Transform": null
-                    }
-                ],
-                "DimensionName": "Measure"
+                "DimensionName": "Region"
             }
         ],
         "Frequencies": [
+            "A",
             "D"
         ],
         "Calendar": 0,
-        "Dataset": "pjsnuj"
-    },
-
-    zoneDeVille1: {
-        "Header": [
-            {
-                "DimensionId": "Time",
-                "Members": [],
-                "DimensionName": "Time",
-                "UiMode": "range",
-                "DateFields": [
-                    {
-                        "DateColumn": "0",
-                        "DatasetId": "tklplkf"
-                    }
-                ]
-            },
-            {
-                "DimensionId": "measure",
-                "Members": [
-                    {
-                        "Key": -2813,
-                        "Name": "Sum(Injuries)",
-                        "Formula": [
-                            "4842580",
-                            "sum"
-                        ]
-                    },
-                    {
-                        "Key": -788,
-                        "Name": "Sum(Fatalities)",
-                        "Formula": [
-                            "4842590",
-                            "sum"
-                        ]
-                    }
-                ],
-                "DimensionName": "Measure"
-            }
-        ],
-        "Stub": [
-            {
-                "DimensionId": "country",
-                "Members": [
-                    {
-                        "Key": -1845,
-                        "Name": "Incidents de terrorisme",
-                        "Formula": [
-                            "1001170"
-                        ]
-                    }
-                ],
-                "DimensionName": "Location"
-            }
-        ],
-        "Filter": [],
-        "Frequencies": [
-            "D"
-        ],
-        "Calendar": 0,
-        "Dataset": "tklplkf"
+        "Dataset": "kymrtcc"
     },
 
     politics0: {
@@ -267,163 +206,25 @@ var dataDescriptors = {
         "Stub": [],
         "Filter": [
             {
-                "DimensionId": "données-démographiques",
-                "Members": [
-                    "1000000",
-                    "1000010",
-                    "1000020",
-                    "1000030",
-                    "1000040",
-                    "1000050",
-                    "1000060",
-                    "1000070",
-                    "1000080",
-                    "1000090",
-                    "1000100",
-                    "1000110",
-                    "1000120",
-                    "1000130",
-                    "1000140",
-                    "1000150",
-                    "1000160",
-                    "1000170",
-                    "1000180",
-                    "1000190",
-                    "1000200",
-                    "1000210",
-                    "1000220",
-                    "1000230",
-                    "1000240",
-                    "1000250",
-                    "1000260",
-                    "1000270",
-                    "1000280",
-                    "1000290",
-                    "1000300",
-                    "1000310",
-                    "1000320",
-                    "1000330",
-                    "1000340",
-                    "1000350",
-                    "1000360",
-                    "1000370",
-                    "1000380",
-                    "1000390",
-                    "1000400",
-                    "1000410",
-                    "1000420",
-                    "1000430",
-                    "1000440",
-                    "1000450",
-                    "1000460",
-                    "1000470",
-                    "1000480",
-                    "1000490",
-                    "1000500",
-                    "1000510",
-                    "1000520",
-                    "1000530",
-                    "1000540",
-                    "1000550",
-                    "1000560",
-                    "1000570",
-                    "1000580",
-                    "1000590",
-                    "1000600",
-                    "1000610",
-                    "1000620",
-                    "1000630",
-                    "1000640",
-                    "1000650",
-                    "1000660",
-                    "1000670",
-                    "1000680",
-                    "1000690",
-                    "1000700",
-                    "1000710",
-                    "1000720",
-                    "1000730",
-                    "1000740",
-                    "1000750",
-                    "1000760",
-                    "1000770",
-                    "1000780",
-                    "1000790",
-                    "1000800",
-                    "1000810",
-                    "1000820",
-                    "1000830",
-                    "1000840",
-                    "1000850",
-                    "1000860",
-                    "1000870",
-                    "1000880",
-                    "1000890",
-                    "1000900",
-                    "1000910",
-                    "1000920",
-                    "1000930",
-                    "1000940",
-                    "1000950",
-                    "1000960",
-                    "1000970",
-                    "1000980",
-                    "1000990",
-                    "1001000",
-                    "1001010",
-                    "1001020",
-                    "1001030",
-                    "1001040",
-                    "1001050",
-                    "1001060",
-                    "1001070",
-                    "1001080"
-                ],
-                "DimensionName": "Données démographiques",
-                "DatasetId": "yqjhdag",
-                "Order": "0"
-            },
-            {
-                "DimensionId": "subregion",
+                "DimensionId": "region",
                 "Members": [
                     "1000000"
                 ],
-                "DimensionName": "SubRegion",
-                "DatasetId": "yqjhdag",
-                "Order": "1"
-            },
-            {
-                "DimensionId": "region",
-                "Members": [
-                    "1000000",
-                    "1000010",
-                    "1000020",
-                    "1000030",
-                    "1000040",
-                    "1000050",
-                    "1000060",
-                    "1000070",
-                    "1000080",
-                    "1000090",
-                    "1000100",
-                    "1000110"
-                ],
                 "DimensionName": "Region",
-                "DatasetId": "yqjhdag",
-                "Order": "2",
+                "DatasetId": "jflytqc",
+                "Order": "0",
                 "isGeo": true
             }
         ],
-        "Frequencies": [
-            "A"
-        ],
-        "Dataset": "yqjhdag",
+        "Frequencies": [],
+        "Dataset": "jflytqc",
         "Segments": null,
         "MeasureAggregations": null,
         "Calendar": 0,
         "RegionIdsRequired": true,
         "RegionDimensionId": "region"
     },
+
     politics1:   {
         "Header": [
             {
