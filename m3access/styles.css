@@ -583,3 +583,22 @@ only screen and (                min-resolution: 2dppx) {
     overflow: visible;
     background-size: contain;
 }
+
+#right-panel {
+    background-color: #d9dee2;
+    width: 400px;
+    right: 0;
+    bottom: 0;
+    top: 120px;
+    position: absolute;
+    z-index: 1000000;
+    padding: 10px;
+}
+#right-panel h3 {
+    margin-top: 0;
+}
+
+.week-button {
+    background-color: #3588f5;
+    color: white;
+}
