@@ -134,11 +134,6 @@
         //TODO Get dataset id from geoplayground
         Knoema.Helpers.get('//yale.knoema.com/api/1.0/meta/dataset/dqbawu/dimension/measure', function(measureDimension) {
 
-            //["Medicine Availability Score Value", "NCD-SARA 2013 Score", "PMetformin", "PGlibenclamide", "PInsulin_soluble",
-            // "PInsulin_isophane", "PInsulin_Mixtard", "PNifedipine", "PAtenolol", "PPropranolol", "PCaptopril", "PEnalapril", "PLisinopril", "PLosartan",
-            // "PSimvastatin", "PBeclomethasone_inhaler", "PSalbutamol_inhaler", "PSalbutamol_tablet", "PFluoxetine", "PAmitriptyline",
-            // "PDiazepam", "PCodeine", "PParacetamol", "PAmoxicillin", "PArtemether_Lumefantrine", "POral_rehydration_solution"]
-
             var properMapping = {
                 "PMetformin": "Metformin 500mg per tablet",
                 "PGlibenclamide": "Glibenclamide 5mg per tablet",
@@ -240,7 +235,6 @@
                         displayName: properMapping[drugName],
                         key: _.find(measureDimension.items, function (item) {
                             return item.name === drugName;
-                            //return item.name === drugName || measureDimension.items[9].name.indexOf('Atenolol') > -1;
                         }).key
                     }
                 });
@@ -282,7 +276,8 @@
                             "Key": -715,
                             "Name": "Sum(PMetformin)",
                             "Formula": [
-                                drug.key.toString(),//Doesn't work without toString()
+                                //Doesn't work without toString()
+                                drug.key.toString(),
                                 "min"
                             ],
                             "Transform": null
@@ -319,7 +314,6 @@
                             $('#min').val(min);
                             $('#max').val(max);
 
-                            //TODO Populate with proper min/max values
                             $( "#slider" ).slider({
                                 disabled: false,
                                 range: true,
@@ -408,10 +402,6 @@
             });
         }
 
-        // if (event.data.content["Name of facility"] === "JINJA REGIONAL REFERRAL HOSPITAL") {
-        //     debugger;
-        // }
-
         if (event.data.visible && !_.isEmpty(this.filters.medicine) && this.layers[event.layerId].layer.name === 'Layer 2016') {
             var visible = _.reduce(this.filters.medicine, function(visible, nextFilter) {
                 return visible && !_.isNaN(parseInt(event.data.content[nextFilter]));
@@ -426,8 +416,6 @@
         var availability = event.data.content['Medicine Availability'];
 
         if (this.layers[event.layerId].layer.name === 'Layer 2016') {
-
-            //self.minMax
 
             if (self.minMax) {
                 if (event.data.content[self.minMax.medicine] != 0) {
@@ -485,45 +473,6 @@
                 // anchor: new google.maps.Point(width / 2, height)
             };
         }
-
-        // var url;
-        // if (event.data.visible) {
-        //     event.data.visible = false;
-        //
-        //
-        //
-        //     if (this.layers[layerId].layer.name === 'Layer 2016') {
-        //         if (availability === 'High') {
-        //             url = 'img/marker-green.png';
-        //         } else if (availability === 'Medium')  {
-        //             url = 'img/marker-yellow.png';
-        //         } else if (availability === 'Low') {
-        //             url = 'img/marker-red.png';
-        //         }
-        //     } else {
-        //         if (availability === 'High') {
-        //             url = 'img/map_marker_mini_green.png';
-        //         } else if (availability === 'Medium')  {
-        //             url = 'img/map_marker_mini_yellow.png';
-        //         } else if (availability === 'Low') {
-        //             url = 'img/map_marker_mini_red.png';
-        //         }
-        //     }
-        //
-        //     var marker = new google.maps.Marker({
-        //         title: event.data.content['Name of facility'],
-        //         position: event.data.position,
-        //         map: self.map,
-        //         icon: url,
-        //         layerId: layerId
-        //     });
-        //
-        //     marker.addListener('click', function() {
-        //         self.markerClickHandler(event);
-        //     });
-        //
-        //     self.markers.push(marker);
-        // }
 
         callback(event.data);
 
@@ -601,7 +550,13 @@
                 $('#heatmap-legend').show();
             }
         } else {
-            layer.load();
+            //Layer 2016 depends on timeline
+            if (layer.layerId === 'dc3bfd66-3fc5-34dd-9523-704ba9f8df03') {
+                layer.load(null, self.timePoint);
+            } else {
+                layer.load();
+            }
+
         }
 
     };
@@ -628,12 +583,7 @@
             $('#timeline').find('.active').removeClass('active');
             $a.addClass('active');
 
-            //This is the right way to implement
-            self.layers[self.layerId2016].load(previousTimePoint, self.timePoint);
-
-            //self.layers[self.layerId2016].load('09/26/2016', '09/12/2016');
-
-            //self.reloadLayers();
+            self.reloadLayers();
         });
 
         $('#timeline').find('.scroll-content').mCustomScrollbar({
@@ -671,13 +621,6 @@
 
     App.prototype.initSideBar = function () {
         function createFilterSectionMarkup(data) {
-            //debugger;
-            //Content for NCD
-
-            //Old
-            //var tooltipContent = 'Total number of selected chronic disease medications available at a facility when surveyed.';
-
-            //New
             var tooltipContent = 'Availability of essential medicines for facilities surveyed under the M3 Access Pilot 2016 program are coded as: green (17-24 medicines), yellow (9-16), red (0-8). The selected NCDs from SARA 2013 are coded: green (7-10 medicines), yellow (3-6), red (0-2).';
 
             if (data.id === 'facility-type') {
@@ -791,13 +734,7 @@
             width: timepointWidth
         });
 
-        //TODO If scrollbar is not visible increase height of the map
-        if (!$timeline.find('.mCSB_scrollTools').is(':visible')) {
-            //Move timeline to bottom (~10-20px)
-        }
-
         $timeline.find('.scroll-content').css({
-            //'background-color': 'goldenrod',
             'width': mapCanvasWidth,
             'max-width': mapCanvasWidth
         });
