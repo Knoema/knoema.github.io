@@ -342,15 +342,19 @@ only screen and (                min-resolution: 2dppx) {
     margin-top: 10px;
 }
 
-.available-drugs li {
-    padding: 5px;
-}
-
-.available-drugs ul, .available-drugs li {
+.available-drugs ul {
     list-style-type: none;
     margin-left: 0;
     padding-left: 0;
     /*white-space: nowrap;*/
+}
+
+.available-drugs li {
+    padding: 5px;
+}
+
+.available-drugs li:nth-child(odd) {
+    background-color: #e0eaf4;
 }
 
 .drug-price {

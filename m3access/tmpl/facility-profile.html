@@ -29,9 +29,9 @@
                     <dd>${data['Sector']}</dd>
 
                     {{if layerId == 'dc3bfd66-3fc5-34dd-9523-704ba9f8df03'}}
-                        <dt>Medicine Availability</dt>
+                        <dt>Medicine Availability:</dt>
                         <dd>
-                            <span class="circle ${data['Medicine Availability']}">&#x25cf;&nbsp;</span>
+                            <span class="circle ${data['Medicine Availability']}">&#x25cf;&nbsp;</span> ${data['Medicine Availability']}
                         </dd>
                     {{/if}}
 
@@ -82,7 +82,7 @@
                                     {{if layerId == 'dc3bfd66-3fc5-34dd-9523-704ba9f8df03'}}
                                         <li>
                                             <i class="glyphicon ${drug.isAvailable ? 'glyphicon-ok' : 'glyphicon-remove'}"></i> ${drug.displayName}
-                                            <span class="drug-price">${typeof drug.price !== 'undefined' ? (drug.price == 0 ? 'Free' : drug.price + 'USh') : ''}</span>
+                                            <span class="drug-price pull-right">${typeof drug.price !== 'undefined' ? (drug.price == 0 ? 'Free' : drug.price + 'USh') : ''}</span>
                                         </li>
                                     {{else}}
                                         <li>
@@ -109,7 +109,10 @@
                         Metformin, cost for 100 tablets, roughly a 3-month course, excluding inhalers: 42,000 USh
                     </p>
                     <p class="notice">
-                        For more details see <a href="#">Pharmacy Prices Datasheet</a>. To compare prices in th region use <a href="#" class="prices-comparison-tool" data-dismiss="modal">Prices Comparison Tool</a>
+                        {{if layerId != 'dc3bfd66-3fc5-34dd-9523-704ba9f8df03'}}
+                            For more details see <a href="#">Pharmacy Prices Datasheet</a>.
+                        {{/if}}
+                        To compare prices in th region use <a href="#" class="prices-comparison-tool" data-dismiss="modal">Prices Comparison Tool</a>
                     </p>
                 </div>
             </div>
