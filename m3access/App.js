@@ -611,19 +611,21 @@
         _.each(drugList, function(listItem, i) {
             listItem.drugs = _.map(listItem.drugs, function(drug) {
                 var dataToDisplay = event.layer.dataToDisplay;
-                var facilityData = _.find(dataToDisplay, function(d) {
-                    return d.data['Name of facility']
-                });
+                // var facilityData = _.find(dataToDisplay, function(d) {
+                //     return d.data['Name of facility']
+                // });
 
                 var isAvailable = Boolean(event.data.tooltip[drug.drugName]);
 
                 if (event.layer.name === "Layer 2016") {
-                    isAvailable = typeof facilityData.data[drug.drugName] !== 'undefined'
+                    //isAvailable = typeof facilityData.data[drug.drugName] !== 'undefined'
+                    isAvailable = typeof event.data.tooltip[drug.drugName] !== 'undefined'
                 }
 
                 return _.assign(drug, {
                     isAvailable: isAvailable,
-                    price: facilityData.data[drug.drugName]
+                    //price: facilityData.data[drug.drugName]
+                    price: event.data.tooltip[drug.drugName]
                 });
             });
         });
