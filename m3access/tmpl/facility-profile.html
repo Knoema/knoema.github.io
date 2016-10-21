@@ -12,7 +12,6 @@
             </div>
             <div class="col-xs-10">
                 <!--<pre>${JSON.stringify(data, null, 2)}</pre>-->
-                <pre>${JSON.stringify(data, null, 2)}</pre>
                 <dl class="dl-horizontal facility-general-info">
                     <dt>Facility name:</dt>
                     <dd>${data['Name of facility']}</dd>
@@ -29,13 +28,21 @@
                     <dt>Sector:</dt>
                     <dd>${data['Sector']}</dd>
 
-                    {{if layerId !== 'dc3bfd66-3fc5-34dd-9523-704ba9f8df03'}}
-                    {{else}}
-                        Layer 2016
+                    {{if layerId == 'dc3bfd66-3fc5-34dd-9523-704ba9f8df03'}}
+                        <dt>Medicine Availability</dt>
+                        <dd>
+                            <span class="circle ${data['Medicine Availability']}">&#x25cf;&nbsp;</span>
+                        </dd>
                     {{/if}}
 
-                    {{if layerId !== 'dc3bfd66-3fc5-34dd-9523-704ba9f8df03'}}
-                        <dt>NCD-SARA Composite<br />Score 2013:</dt>
+                    <dt>NCD-SARA Composite<br />Score 2013:</dt>
+                    {{if layerId == 'dc3bfd66-3fc5-34dd-9523-704ba9f8df03'}}
+                        <dd>
+                            <br />
+                            <!--0-2 red(#DC040A), 3-6 yellow (#EFC607), 7-10 green(#12A80D)-->
+                            <span class="circle" style="color: ${(data['NCD-SARA 2013 Score'] >= 7 ? 'green' : (data['NCD-SARA 2013 Score'] >= 3 ? '#EFC607' : 'red'))}">&#x25cf;&nbsp;</span>${data['NCD-SARA 2013 Score']}
+                        </dd>
+                    {{else}}
                         <dd>
                             <br />
                             <span class="circle ${data['Medicine Availability']}">&#x25cf;&nbsp;</span>${data['NCD-SARA Composite Score Value unchanged']}
@@ -49,7 +56,16 @@
         </div>
         <div class="row available-drugs">
             <div class="col-xs-12">
-                <h5>Available NCD essential medicine inventory</h5>
+                {{if layerId == 'dc3bfd66-3fc5-34dd-9523-704ba9f8df03'}}
+                    <h5>
+                        Available Inventory and Prices
+                    </h5>
+                {{else}}
+                    <h5>
+                        Available NCD essential medicine inventory
+                    </h5>
+                {{/if}}
+
                 <div class="row">
                     <div class="col-xs-12">
                         <hr />
@@ -57,15 +73,22 @@
                 </div>
                 <div class="row">
                     {{each(i, listItem) drugList}}
-                        <div class="col-xs-3">
+                        <div class="col-xs-4">
                             <strong>
                                 ${listItem.disease}
                             </strong>
                             <ul>
                                 {{each(j, drug) listItem.drugs}}
-                                    <li>
-                                        <i class="glyphicon ${drug.isAvailable ? 'glyphicon-ok' : 'glyphicon-remove'}"></i> ${drug.drugName}
-                                    </li>
+                                    {{if layerId == 'dc3bfd66-3fc5-34dd-9523-704ba9f8df03'}}
+                                        <li>
+                                            <i class="glyphicon ${drug.isAvailable ? 'glyphicon-ok' : 'glyphicon-remove'}"></i> ${drug.displayName}
+                                            <span class="drug-price">${typeof drug.price !== 'undefined' ? (drug.price == 0 ? 'Free' : drug.price + 'USh') : ''}</span>
+                                        </li>
+                                    {{else}}
+                                        <li>
+                                            <i class="glyphicon ${drug.isAvailable ? 'glyphicon-ok' : 'glyphicon-remove'}"></i> ${drug.displayName}
+                                        </li>
+                                    {{/if}}
                                 {{/each}}
                             </ul>
                         </div>

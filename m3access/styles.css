@@ -4,6 +4,7 @@
 
 body {
     background-color: #c2d6e9;
+    overflow: hidden;
 }
 
 header {
@@ -280,7 +281,7 @@ only screen and (                min-resolution: 2dppx) {
 
 #modal-dialog-holder {
     margin: 5% auto 0 auto;
-    max-width: 70%;
+    max-width: 80%;
 }
 
 .modal-header button:focus {
@@ -294,28 +295,6 @@ only screen and (                min-resolution: 2dppx) {
 .separator {
     clear: both;
     margin-top: 20px;
-}
-
-#prices-comparison-tool {
-    position: absolute;
-    width: 0;
-    z-index: 2000;
-    right: 0;
-    top: 0;
-    overflow: hidden;
-    /*background-color: #F7F7F7;*/
-    background-color: #e6eef6;
-}
-
-#prices-comparison-tool .glyphicon-remove {
-    padding: 10px;
-    cursor: pointer;
-    position: absolute;
-    right: 0;
-}
-
-#prices-comparison-tool .glyphicon-remove:hover {
-    color: #dd0000;
 }
 
 .comparison-content {
@@ -371,6 +350,11 @@ only screen and (                min-resolution: 2dppx) {
     list-style-type: none;
     margin-left: 0;
     padding-left: 0;
+    /*white-space: nowrap;*/
+}
+
+.drug-price {
+    text-align: right;
 }
 
 .available-drugs hr {
@@ -586,8 +570,8 @@ only screen and (                min-resolution: 2dppx) {
 
 #right-panel {
     background-color: #d9dee2;
-    width: 400px;
-    right: 0;
+    width: 450px;
+    right: -450px;
     bottom: 0;
     top: 120px;
     position: absolute;
@@ -598,7 +582,39 @@ only screen and (                min-resolution: 2dppx) {
     margin-top: 0;
 }
 
+.right-panel-info p {
+    margin: 0 0 5px;
+}
+
 .week-button {
     background-color: #3588f5;
     color: white;
+    padding-left: 40px;
+    background-image: url('./img/ico-date-x2.png');
+    background-repeat: no-repeat;
+    background-size: 18px;
+    background-position: 10px center;
+    margin-bottom: 10px;
+}
+
+.week-button.btn.focus, .week-button.btn:focus, .week-button.btn:hover {
+    color: white;
+    text-decoration: none;
+}
+
+.table-holder {
+    overflow: hidden;
+    height: 200px;
+}
+
+.table-holder td {
+    white-space: nowrap;
+}
+
+.table-holder td.header {
+    font-weight: bold;
+}
+
+.modal-header {
+    background-color: #e0eaf4;
 }

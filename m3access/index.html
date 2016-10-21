@@ -8,20 +8,8 @@
     <link rel="stylesheet" type="text/css" href="deps/bootstrap-select.min.css">
     <link rel="stylesheet" type="text/css" href="deps/jquery-ui.min.css">
     <link rel="stylesheet" type="text/css" href="deps/malihu-custom-scrollbar-plugin-3.1.3/jquery.mCustomScrollbar.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,700" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="styles.css">
-    <!--<script type="text/javascript">-->
-        <!--WebFontConfig = {-->
-            <!--google: { families: [ 'Roboto:400,700:latin' ] }-->
-        <!--};-->
-        <!--(function() {-->
-            <!--var wf = document.createElement('script');-->
-            <!--wf.src = 'https://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';-->
-            <!--wf.type = 'text/javascript';-->
-            <!--wf.async = 'true';-->
-            <!--var s = document.getElementsByTagName('script')[0];-->
-            <!--s.parentNode.insertBefore(wf, s);-->
-        <!--})();-->
-    <!--</script>-->
 </head>
 <body>
 
@@ -54,33 +42,247 @@
             <button type="button" class="close pull-right" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             <h3>Prices Comparison Tool</h3>
             <button class="btn week-button">
-                Week of XXX
+                Week of <span id="week-of">TODO Paste real data here</span>
             </button>
-            <p>Prices in USh</p>
-            <p>Total Urban facilities: 19</p>
-            <p>Total Rural facilities: 4</p>
 
-            <table class="table table-condensed table-stripped">
-                <thead>
+            <div class="right-panel-info">
+                <p>Prices in USh</p>
+                <p>Total Urban facilities: 19</p>
+                <p>Total Rural facilities: 4</p>
+            </div>
+
+            <div class="table-holder">
+
+                <table class="table table-condensed table-striped">
                     <tr>
-                        <th>Diabetes</th>
-                        <th>Urban</th>
-                        <th>Rural</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Metformin 500mg per tablet</td>
-                        <td>19/44.500</td>
-                        <td>4/45.500</td>
+                        <td class="header">
+                            Diabetes</td>
+                        <td>Urban</td>
+                        <td>Rural</td>
                     </tr>
                     <tr>
-                        <td>Metformin 500mg per tablet</td>
-                        <td>19/44.500</td>
-                        <td>4/45.500</td>
+                        <td>Metformin
+                            500mg per tablet
+                        </td>
+                        <td>4 / 325</td>
+                        <td>NA</td>
                     </tr>
-                </tbody>
-            </table>
+                    <tr>
+                        <td>Glibenclamide
+                            5mg per tablet
+                        </td>
+                        <td>4 / 283</td>
+                        <td>1 / 50</td>
+                    </tr>
+                    <tr>
+                        <td>Insulin soluble (regular)
+                            <br />
+                            100IU/mL per unit vial
+                        </td>
+                        <td>4 / 10,750</td>
+                        <td>NA</td>
+                    </tr>
+                    <tr>
+                        <td>Insulin isophane (NPH)
+                            <br />
+                            100IU/mL per unit vial
+                        </td>
+                        <td>3 / 20,000</td>
+                        <td>NA</td>
+                    </tr>
+                    <tr>
+                        <td>Insulin Mixtard
+                            <br />
+                            (30% soluble/70% isophane)
+                            <br />
+                            100IU/mL per unit vial
+                        </td>
+                        <td>4 / 10,750</td>
+                        <td>NA</td>
+                    </tr>
+
+                    <tr>
+                        <td class="header">
+                            Cardiovascular Disease
+                        </td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Nifedipine
+                            20mg per tablet
+                        </td>
+                        <td>12 / 371</td>
+                        <td>NA</td>
+                    </tr>
+                    <tr>
+                        <td>Atenolol
+                            100mg per tablet
+                        </td>
+                        <td>5 / 260</td>
+                        <td>1 / 100</td>
+                    </tr>
+                    <tr>
+                        <td>Propranolol
+                            40 mg per tablet
+                        </td>
+                        <td>6 / 158</td>
+                        <td>1 / 50</td>
+                    </tr>
+                    <tr>
+                        <td>Captopril
+                            25mg per tablet
+                        </td>
+                        <td>2 / 150</td>
+                        <td>NA</td>
+                    </tr>
+                    <tr>
+                        <td>Enalapril
+                            5mg per tablet
+                        </td>
+                        <td>NA</td>
+                        <td>NA</td>
+                    </tr>
+                    <tr>
+                        <td>Lisinopril
+                            10mg per tablet
+                        </td>
+                        <td>1 / Free</td>
+                        <td>NA</td>
+                    </tr>
+                    <tr>
+                        <td>Losartan
+                            50mg per tablet
+                        </td>
+                        <td>5 / 960</td>
+                        <td>1 / 1,000</td>
+                    </tr>
+                    <tr>
+                        <td>Simvastatin
+                            20mg per tablet
+                        </td>
+                        <td>2 / 1,500</td>
+                        <td>NA</td>
+                    </tr>
+
+                    <tr>
+                        <td class="header">COPD/Asthma</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Beclomethasone
+                            inhaler per item
+                        </td>
+                        <td>NA</td>
+                        <td>NA</td>
+                    </tr>
+                    <tr>
+                        <td>Salbutamol
+                            inhaler per item
+                        </td>
+                        <td>5 / 12,600</td>
+                        <td>1 / 13,500</td>
+                    </tr>
+                    <tr>
+                        <td>Salbutamol
+                            4mg per tablet
+                        </td>
+                        <td>8 / 130</td>
+                        <td>1 / 100</td>
+                    </tr>
+
+                    <tr>
+                        <td class="header">Mental
+                            Health
+                        </td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Fluoxetine
+                            20mg per tablet
+                        </td>
+                        <td>4 / 225</td>
+                        <td>NA</td>
+                    </tr>
+                    <tr>
+                        <td>Amitriptyline
+                            25mg per tablet
+                        </td>
+                        <td>8 / 400</td>
+                        <td>1 / 200</td>
+                    </tr>
+                    <tr>
+                        <td>Diazepam
+                            5mg per tablet
+                        </td>
+                        <td>11 / 193</td>
+                        <td>1 / 150</td>
+                    </tr>
+
+                    <tr>
+                        <td class="header">Pain/Fever</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Codeine
+                            30mg per tablet
+                        </td>
+                        <td>2 / 1,100</td>
+                        <td>NA</td>
+                    </tr>
+                    <tr>
+                        <td>Paracetamol
+                            500mg per tablet
+                        </td>
+                        <td>10 / 117</td>
+                        <td>1 / 100</td>
+                    </tr>
+
+                    <tr>
+                        <td class="header">Antibiotic</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Amoxicillin
+                            250mg per tablet
+                        </td>
+                        <td>11 / 236</td>
+                        <td>1 / 100</td>
+                    </tr>
+
+                    <tr>
+                        <td class="header">Malaria</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Artemether
+                            <br />
+                            20mg/Lumefantrine 120mg per tablet
+                        </td>
+                        <td>10 / 1,160</td>
+                        <td>1 / 200</td>
+                    </tr>
+
+                    <tr>
+                        <td class="header">Dehydration</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Oral
+                            rehydration solution packets
+                        </td>
+                        <td>11 / 786</td>
+                        <td>1 / 600</td>
+                    </tr>
+                </table>
+
+            </div><!--.table-holder-->
 
         </div>
 
@@ -153,115 +355,6 @@
                         <div class="scroll-content">
                         </div>
                     </div>
-                </div>
-
-                <div id="prices-comparison-tool">
-                    <i class="glyphicon glyphicon-remove pull-right"></i>
-
-                    <div class="comparison-content">
-                        <h4>Availability comparison</h4>
-                        <strong style="font-size: 0.9em;">
-                            Prices in USh.<br />
-                            Total Urban Facilities: 30<br />
-                            Total Peri-urban Facilities: 25<br />
-                            Total Rural Facilities: 20<br />
-                        </strong>
-                        <table class="table table-condensed">
-                            <thead>
-                                <tr class="main-header">
-                                    <th>Medicine</th>
-                                    <th colspan="3" style="text-align: center">Facilities / AVG price</th>
-                                </tr>
-                                <tr>
-                                    <th>&nbsp;</th>
-                                    <th>Urban</th>
-                                    <th>Peri-urban</th>
-                                    <th>Rural</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>Metformin, cap/tab</td>
-                                    <td>23 / 44,500</td>
-                                    <td>18 / 45,000</td>
-                                    <td>12 / 48,000</td>
-                                </tr>
-                                <tr>
-                                    <td>Glibenclamide, 5 mg cap/tab</td>
-                                    <td>21 / 10,500</td>
-                                    <td>20 / 13,000</td>
-                                    <td>10 / 15,000</td>
-                                </tr>
-                                <tr>
-                                    <td>Insulin, injection</td>
-                                    <td>25 / 12,500</td>
-                                    <td>21 / 14,000</td>
-                                    <td>9 / 16,000</td>
-                                </tr>
-                                <tr>
-                                    <td>Nifedipine, cap/tab</td>
-                                    <td>20 / 13,500</td>
-                                    <td>15 / 15,000</td>
-                                    <td>8 / 17,000</td>
-                                </tr>
-                                <tr>
-                                    <td>ACE inhibitor<br/>(e.g. enalapril, lisinopril, captopril)</td>
-                                    <td>22 / 14,500</td>
-                                    <td>18 / 16,000</td>
-                                    <td>12 / 18,000</td>
-                                </tr>
-                                <tr>
-                                    <td>Simvastatin, 20 mg cap/tab</td>
-                                    <td>23 / 15,500</td>
-                                    <td>19 / 17,000</td>
-                                    <td>13 / 19,000</td>
-                                </tr>
-                                <tr>
-                                    <td>Beclomethasone inhaler</td>
-                                    <td>18 / 16,500</td>
-                                    <td>9 / 18,000</td>
-                                    <td>2 / 23,000</td>
-                                </tr>
-                                <tr>
-                                    <td>Salbutamol, 0.1mg/dose inhaler</td>
-                                    <td>17&nbsp;/ 17,500</td>
-                                    <td>10&nbsp;/ 19,000</td>
-                                    <td>1&nbsp;/ 25,000</td>
-                                </tr>
-                                <tr>
-                                    <td>Fluoxetine</td>
-                                    <td>19 / 18,500</td>
-                                    <td>14 / 20,000</td>
-                                    <td>4 / 24,000</td>
-                                </tr>
-                                <tr>
-                                    <td colspan="4">
-                                        <hr />
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Amoxicillin tab</td>
-                                    <td>30 / 18,000</td>
-                                    <td>25 / 17,500</td>
-                                    <td>15 / 20,000</td>
-                                </tr>
-                                <tr>
-                                    <td>First-line tuberculosis<br/>regimen</td>
-                                    <td>28 / 56,000</td>
-                                    <td>18 / 62,000</td>
-                                    <td>12 / 65,000</td>
-                                </tr>
-                                <tr>
-                                    <td>3 first-line antiretroviral<br/>(ARV) regimens</td>
-                                    <td>12 / 78,000</td>
-                                    <td>10 / 80,000</td>
-                                    <td>2 / 84,500</td>
-                                </tr>
-                            </tbody>
-                        </table>
-
-                    </div>
-
                 </div>
 
             </div>

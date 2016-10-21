@@ -29,6 +29,33 @@
 
         this.drugPrices = null;
 
+        this.properMapping = {
+            "PMetformin": "Metformin 500mg per tablet",
+            "PGlibenclamide": "Glibenclamide 5mg per tablet",
+            "PInsulin_soluble": "Insulin soluble (regular) 100IU/mL per unit vial",
+            "PInsulin_isophane": "Insulin isophane (NPH) 100IU/mL per unit vial",
+            "PInsulin_Mixtard": "Insulin Mixtard (30% soluble/70% isophane) 100IU/mL per unit vial",
+            "PNifedipine": "Nifedipine 20mg per tablet",
+            "PAtenolol": "Atenolol 100mg per tablet",
+            "PPropranolol": "Propranolol 40 mg per tablet",
+            "PCaptopril": "Captopril 25mg per tablet",
+            "PEnalapril": "Enalapril 5mg per tablet",
+            "PLisinopril": "Lisinopril 10mg per tablet",
+            "PLosartan": "Losartan 50mg per tablet",
+            "PSimvastatin": "Simvastatin 20mg per tablet",
+            "PBeclomethasone_inhaler": "Beclomethasone inhaler per item",
+            "PSalbutamol_inhaler": "Salbutamol inhaler per item",
+            "PSalbutamol_tablet": "Salbutamol 4mg per tablet",
+            "PFluoxetine": "Fluoxetine 20mg per tablet",
+            "PAmitriptyline": "Amitriptyline 25mg per tablet",
+            "PDiazepam": "Diazepam 5mg per tablet",
+            "PCodeine": "Codeine 30mg per tablet",
+            "PParacetamol": "Paracetamol 500mg per tablet",
+            "PAmoxicillin": "Amoxicillin 250mg per tablet",
+            "PArtemether_Lumefantrine": "Artemether 20mg/Lumefantrine 120mg per tablet",
+            "POral_rehydration_solution": "Oral rehydration solution packets"
+        };
+
     };
 
     App.prototype.run = function() {
@@ -38,6 +65,14 @@
         $('#map-canvas').height($(window).height() - this.topBarHeight - this.timelineHeight);
         $('#timeline').css({
             visibility: 'visible'
+        });
+
+        $('#right-panel').find('.table-holder').mCustomScrollbar({
+            theme: 'dark'
+        });
+
+        $('#right-panel').on('click', '.close', function() {
+            self.hidePricesComparison();
         });
 
         this.loadTemplates(function() {
@@ -134,33 +169,6 @@
         //TODO Get dataset id from geoplayground
         Knoema.Helpers.get('//yale.knoema.com/api/1.0/meta/dataset/dqbawu/dimension/measure', function(measureDimension) {
 
-            var properMapping = {
-                "PMetformin": "Metformin 500mg per tablet",
-                "PGlibenclamide": "Glibenclamide 5mg per tablet",
-                "PInsulin_soluble": "Insulin soluble (regular) 100IU/mL per unit vial",
-                "PInsulin_isophane": "Insulin isophane (NPH) 100IU/mL per unit vial",
-                "PInsulin_Mixtard": "Insulin Mixtard (30% soluble/70% isophane) 100IU/mL per unit vial",
-                "PNifedipine": "Nifedipine 20mg per tablet",
-                "PAtenolol": "Atenolol 100mg per tablet",
-                "PPropranolol": "Propranolol 40 mg per tablet",
-                "PCaptopril": "Captopril 25mg per tablet",
-                "PEnalapril": "Enalapril 5mg per tablet",
-                "PLisinopril": "Lisinopril 10mg per tablet",
-                "PLosartan": "Losartan 50mg per tablet",
-                "PSimvastatin": "Simvastatin 20mg per tablet",
-                "PBeclomethasone_inhaler": "Beclomethasone inhaler per item",
-                "PSalbutamol_inhaler": "Salbutamol inhaler per item",
-                "PSalbutamol_tablet": "Salbutamol 4mg per tablet",
-                "PFluoxetine": "Fluoxetine 20mg per tablet",
-                "PAmitriptyline": "Amitriptyline 25mg per tablet",
-                "PDiazepam": "Diazepam 5mg per tablet",
-                "PCodeine": "Codeine 30mg per tablet",
-                "PParacetamol": "Paracetamol 500mg per tablet",
-                "PAmoxicillin": "Amoxicillin 250mg per tablet",
-                "PArtemether_Lumefantrine": "Artemether 20mg/Lumefantrine 120mg per tablet",
-                "POral_rehydration_solution": "Oral rehydration solution packets"
-            };
-
             var medicineList = [
                 {
                     disease: 'Diabetes',
@@ -230,12 +238,14 @@
 
             _.each(medicineList, function(item) {
                 item.drugs = _.map(item.drugs, function(drugName) {
+                    var drug = _.find(measureDimension.items, function (item) {
+                        return item.name === drugName;
+                    });
                     return {
                         drugName: drugName,
-                        displayName: properMapping[drugName],
-                        key: _.find(measureDimension.items, function (item) {
-                            return item.name === drugName;
-                        }).key
+                        displayName: self.properMapping[drugName] || drugName,
+
+                        key: drug.key
                     }
                 });
                 self.drugSelectList.push(item);
@@ -351,10 +361,6 @@
             self.showPricesComparison();
         });
 
-        $('#prices-comparison-tool').on('click', '.glyphicon-remove', function() {
-            self.hidePricesComparison();
-        });
-
         $(window).trigger('resize');
     };
 
@@ -367,14 +373,14 @@
     };
 
     App.prototype.hidePricesComparison = function () {
-        $('#prices-comparison-tool').animate({
-            width: 0
+        $('#right-panel').animate({
+            right: -450
         });
     };
 
     App.prototype.showPricesComparison = function () {
-        $('#prices-comparison-tool').animate({
-            width: 470
+        $('#right-panel').animate({
+            right: 0
         });
     };
 
@@ -423,7 +429,6 @@
                         event.data.content[self.minMax.medicine] < self.minMax.min ||
                         event.data.content[self.minMax.medicine] > self.minMax.max) {
 
-                        //console.log('Hide facility with value: ', event.data.content[self.minMax.medicine]);
                         event.data.visible = false;
                     }
                 }
@@ -599,11 +604,26 @@
         var self = this;
         self.hidePricesComparison();
         var drugList = _.clone(self.drugSelectList);
+        var nameOfFacility = event.data.tooltip['Name of facility'];
+
+
 
         _.each(drugList, function(listItem, i) {
             listItem.drugs = _.map(listItem.drugs, function(drug) {
+                var dataToDisplay = event.layer.dataToDisplay;
+                var facilityData = _.find(dataToDisplay, function(d) {
+                    return d.data['Name of facility']
+                });
+
+                var isAvailable = Boolean(event.data.tooltip[drug.drugName]);
+
+                if (event.layer.name === "Layer 2016") {
+                    isAvailable = typeof facilityData.data[drug.drugName] !== 'undefined'
+                }
+
                 return _.assign(drug, {
-                    isAvailable: Boolean(event.data.tooltip[drug.drugName])
+                    isAvailable: isAvailable,
+                    price: facilityData.data[drug.drugName]
                 });
             });
         });
@@ -722,7 +742,9 @@
         var $mapCanvas = $('#map-canvas');
         var $timeline = $('#timeline');
 
-        var mapCanvasWidth = $mapCanvas.width() - 80;
+        var mapCanvasWidth = $mapCanvas.width() - 10;//TODO Consider play button width
+
+        $('#right-panel').find('.table-holder').height($('#right-panel').height() - 160);
 
         $('#side-bar').css({
             'height': sideBarHeight,
@@ -737,11 +759,6 @@
         $timeline.find('.scroll-content').css({
             'width': mapCanvasWidth,
             'max-width': mapCanvasWidth
-        });
-
-        $('#prices-comparison-tool').css({
-            'height': sideBarHeight + 20,
-            'min-height': sideBarHeight + 20
         });
 
         $mapCanvas.height(newHeight - this.topBarHeight - this.timelineHeight);
