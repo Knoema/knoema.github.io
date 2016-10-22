@@ -67,10 +67,6 @@
             visibility: 'visible'
         });
 
-        $('#right-panel').find('.table-holder').mCustomScrollbar({
-            theme: 'dark'
-        });
-
         $('#right-panel').on('click', '.close', function() {
             self.hidePricesComparison();
         });
@@ -131,23 +127,24 @@
 
                 if (filterValue === 'populationDensity') {
                     self.filters.populationDensity = isChecked;
+                } else {
+                    if (isChecked) {
+                        if (_.isUndefined(self.filters.hide[dimension])) {
+                            self.filters.hide[dimension] = [];
+                        }
+                        self.filters.hide[dimension].push(filterValue);
+                    } else {
+                        _.remove(self.filters.hide[dimension], function(item) {
+                            return item === filterValue;
+                        });
+                    }
+                    if (dimension) {
+                        if (self.filters.hide[dimension].length === 0) {
+                            delete self.filters.hide[dimension];
+                        }
+                    }
                 }
 
-                if (isChecked) {
-                    if (_.isUndefined(self.filters.hide[dimension])) {
-                        self.filters.hide[dimension] = [];
-                    }
-                    self.filters.hide[dimension].push(filterValue);
-                } else {
-                    _.remove(self.filters.hide[dimension], function(item) {
-                        return item === filterValue;
-                    });
-                }
-                if (dimension) {
-                    if (self.filters.hide[dimension].length === 0) {
-                        delete self.filters.hide[dimension];
-                    }
-                }
             } else {
                 if ($(this).data('survey') === 'survey2013') {
                     self.filters.survey = isChecked;
@@ -158,51 +155,7 @@
             self.reloadLayers();
         });
 
-        $( "#slider" ).slider({
-            disabled: true,
-            range: true,
-            min: 0,
-            max: 500,
-            values: [ 0, 500 ]
-        });
-
-        // var medicineListOLD = [
-        //     {
-        //         disease: 'Diabetes',
-        //         drugs: [
-        //             "Metformin, cap/tab",
-        //             "Insulin, injection",
-        //             "Glibenclamide, 5 mg cap/tab"
-        //         ]
-        //     },
-        //     {
-        //         disease: 'Cardiovascular',
-        //         drugs: [
-        //             "Nifedipine, cap/tab",
-        //             "ACE inhibitor (e.g. enalapril, lisinopril, captopril)",
-        //             "Simvastatin, 20 mg cap/tab",
-        //
-        //             //measureDimension.items[9].name[0], measureDimension.items[9].name[9], measureDimension.items[9].name[11]
-        //             //-> measureDimension.items[9].name.charCodeAt(0), (9), (11) -> 8203
-        //             //http://www.fileformat.info/info/unicode/char/200b/index.htm
-        //             //Invisible symbols! measureDimension.items[9].name != "Atenolol, 50mg cap/tab" (different length)
-        //             measureDimension.items[9].name
-        //         ]
-        //     },
-        //     {
-        //         disease: 'COPD/Asthma',
-        //         drugs: [
-        //             "Beclomethasone inhaler",
-        //             "Salbutamol, 0.1mg/dose inhaler"
-        //         ]
-        //     },
-        //     {
-        //         disease: 'Depression/Anexiety',
-        //         drugs: [
-        //             "Amitriptyline, 25mg cap/tab"
-        //         ]
-        //     }
-        // ];
+        self.disableSlider();
 
         //TODO Get dataset id from geoplayground
         Knoema.Helpers.get('//yale.knoema.com/api/1.0/meta/dataset/dqbawu/dimension/measure', function(measureDimension) {
@@ -300,12 +253,7 @@
                 self.filters.medicine = $(this).val();
 
                 if (_.isArray(self.filters.medicine) && self.filters.medicine.length > 1 || self.filters.medicine == null) {
-                    $('#min').val('').prop('disabled', true);
-                    $('#max').val('').prop('disabled', true);
-                    $( "#slider" ).slider({
-                        disabled: true
-                    });
-                    self.minMax = null;
+                    self.disableSlider();
                 } else {
 
                     var medicine = self.filters.medicine[0];
@@ -359,28 +307,8 @@
                             var min = _.min(_.filter(_.map(minResp.data, 'Value')));
                             var max = maxResp.data[0].Value;
 
-                            $('#min').val(min);
-                            $('#max').val(max);
+                            self.initSlider(min, max, medicine);
 
-                            $( "#slider" ).slider({
-                                disabled: false,
-                                range: true,
-                                min: min,
-                                max: max,
-                                values: [min, max],
-                                slide: _.debounce(function( event, ui ) {
-                                    $('#min').val(ui.values[0]);
-                                    $('#max').val(ui.values[1]);
-
-                                    self.minMax = {
-                                        medicine: medicine,
-                                        min: ui.values[0],
-                                        max: ui.values[1]
-                                    };
-
-                                    self.layers[self.layerId2016].load(null, self.timePoint);
-                                }, 200)
-                            });
                         });
 
                     }
@@ -402,6 +330,77 @@
         $(window).trigger('resize');
     };
 
+    App.prototype.disableSlider = function () {
+        var self = this;
+        $('#min').val('').off().prop('disabled', true);
+        $('#max').val('').off().prop('disabled', true);
+        $( "#slider" ).slider({
+            disabled: true,
+            range: true,
+            min: 0,
+            max: 500,
+            values: [ 0, 500 ]
+        });
+        self.minMax = null;
+    };
+
+    App.prototype.initSlider = function (min, max, medicine) {
+        var self = this;
+
+        $('#min').val(min);
+        $('#max').val(max);
+
+        $('.slider-limit').on('keydown blur', _.debounce(function(event) {
+            if (
+                //prevent second change event after $input.val('')
+            event.type === 'blur' ||
+
+            //backspace, delete, tab, escape preseed
+            //event.keyCode==46||event.keyCode==8||event.keyCode==9||event.keyCode==27||
+            [46, 8, 9, 27].indexOf(event.keyCode) > -1 ||
+
+            //ctrl + A pressed
+            (event.keyCode === 65 && event.ctrlKey) ||
+
+            //home, end, left, right pressed
+            (event.keyCode >= 35 && event.keyCode <= 39)
+            ) {
+
+                return;
+
+            } else {
+                var value = $(event.target).val();
+                if (event.target.id === 'min') {
+                    $("#slider").slider('values', 0, value);
+                } else {
+                    $("#slider").slider('values', 1, value);
+                }
+                $(event.target).val(value);
+                self.layers[self.layerId2016].load(null, self.timePoint);
+            }
+        }, 200));
+
+        $( "#slider" ).slider({
+            disabled: false,
+            range: true,
+            min: min,
+            max: max,
+            values: [min, max],
+            slide: _.debounce(function( event, ui ) {
+                $('#min').val(ui.values[0]);
+                $('#max').val(ui.values[1]);
+
+                self.minMax = {
+                    medicine: medicine,
+                    min: ui.values[0],
+                    max: ui.values[1]
+                };
+
+                self.layers[self.layerId2016].load(null, self.timePoint);
+            }, 200)
+        });
+    };
+
     App.prototype.reloadLayers = function () {
         var self = this;
         self.infoWindow.close();
@@ -414,10 +413,22 @@
         $('#right-panel').animate({
             right: -450
         });
+        $('#right-panel').find('.table-holder').mCustomScrollbar('destroy');
     };
 
     App.prototype.showPricesComparison = function () {
         $('#week-of').html(Globalize.format(new Date(Date.parse(this.timePoint)), 'd MMMM', 'en'));
+        var $tables = $.tmpl('price-comparison-tool.html');
+
+        $('#right-panel').find('.table-holder').empty().append(
+            $tables.find('[data-time-point="' + this.timePoint + '"]').clone()
+            //$tables
+        );
+
+        $('#right-panel').find('.table-holder').mCustomScrollbar({
+            theme: 'dark'
+        });
+
         $('#right-panel').animate({
             right: 0
         });
@@ -627,16 +638,19 @@
             $('#timeline').find('.active').removeClass('active');
             $a.addClass('active');
 
+            self.hidePricesComparison();
             self.reloadLayers();
         });
 
         $('#timeline').find('.scroll-content').mCustomScrollbar({
             theme: "dark",
             axis:"x",
+            setLeft: 0,
             advanced:{
                 autoExpandHorizontalScroll:true
             }
         });
+        $('#timeline').find('.scroll-content').mCustomScrollbar('scrollTo', 'right');
     };
 
     App.prototype.markerClickHandler = function(event) {
@@ -772,7 +786,7 @@
                 header: data.name,
                 items: data.items,
                 tooltipContent: tooltipContent,
-                datasetUrl: '//yale.knoema.com/pvbple/sara-uganda-2013-selected-data'
+                datasetUrl: '//yale.knoema.com/dqbawu/m3access-pilot-study'
             });
         }
 
@@ -875,6 +889,7 @@
             $.template(templateId, templateSrc);
         }
         var templates = [
+            $.get('tmpl/price-comparison-tool.html', compileTemplate),
             $.get('tmpl/side-bar-checkbox-section.html', compileTemplate),
             $.get('tmpl/side-bar-radio-section.html', compileTemplate),
             $.get('tmpl/info-window-content.html', compileTemplate),

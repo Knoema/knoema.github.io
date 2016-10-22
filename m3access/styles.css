@@ -359,6 +359,8 @@ only screen and (                min-resolution: 2dppx) {
 
 .drug-price {
     text-align: right;
+    font-weight: bold;
+    color: #1b3768;
 }
 
 .available-drugs hr {

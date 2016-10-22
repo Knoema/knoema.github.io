@@ -62,7 +62,7 @@
                     </h5>
                 {{else}}
                     <h5>
-                        Available NCD essential medicine inventory
+                        AVAILABLE ESSENTIAL MEDICINE INVENTORY
                     </h5>
                 {{/if}}
 
@@ -82,7 +82,7 @@
                                     {{if layerId == 'dc3bfd66-3fc5-34dd-9523-704ba9f8df03'}}
                                         <li>
                                             <i class="glyphicon ${drug.isAvailable ? 'glyphicon-ok' : 'glyphicon-remove'}"></i> ${drug.displayName}
-                                            <span class="drug-price pull-right">${typeof drug.price !== 'undefined' ? (drug.price == 0 ? 'Free' : drug.price + 'USh') : ''}</span>
+                                            <span class="drug-price pull-right">${typeof drug.price !== 'undefined' ? (drug.price == 0 ? 'Free' : drug.price + ' USh') : ''}</span>
                                         </li>
                                     {{else}}
                                         <li>
