@@ -1,4 +1,5 @@
 var access_token = '';
+var access_token = '';
 
 var params = Knoema.Helpers.parseHashParams();
 if (params == null) {
@@ -396,12 +397,11 @@ App.prototype.init = function () {
                         {
                             title: "Pluies",
                             className: "climate",
+                            //children: groupedLayers['Précipitation']
                             children: [
                                 {
-                                    title: "Pluies #0"
-                                },
-                                {
-                                    title: "Pluies #1"
+                                    title: 'Précipitation',
+                                    children: groupedLayers['Précipitation']
                                 }
                             ]
                         },
@@ -918,11 +918,13 @@ App.prototype.selectRegion = function (e) {
         zone0
     ]).done(function onPivotRequestsFinished(economics0, economics1, politics0, politics1, zone0Resp) {
 
-        //$table1
-        var $table1 = $.tmpl('simple-table.html', {
-            headerMembers: economics0.header[0].members,
-            rows: _.chunk(economics0.data, economics0.header[0].members.length)
-        });
+        if (economics0.data.length) {
+            //$table1
+            var $table1 = $.tmpl('simple-table.html', {
+                headerMembers: economics0.header[0].members,
+                rows: _.chunk(economics0.data, economics0.header[0].members.length)
+            });
+        }
 
         //$table2
         var rows = _.chunk(economics1.data, 2);
@@ -950,8 +952,12 @@ App.prototype.selectRegion = function (e) {
         $sideBarContent.empty();
 
         $sideBarContent.append('<h4>Economique et social</h4>');
-        $sideBarContent.append($table1);
-        $sideBarContent.append('<hr />');
+
+        if ($table1) {
+            $sideBarContent.append($table1);
+            $sideBarContent.append('<hr />');
+        }
+
         $sideBarContent.append($table2);
 
         $sideBarContent.append($.tmpl('zone-de-vie.html'));
@@ -1000,10 +1006,18 @@ App.prototype.loadFonctionnaires = function () {
 App.prototype.showFonctionnaires = function (regionId) {
     var self = this;
     this.loadFonctionnaires().then(function (data) {
+
         var region = _.find(data.items, function (d) {
             return d.fields.regionid === regionId;
         });
         if (region) {
+
+            $('#fonctionnaires-modal')
+                .find('.modal-body')
+                .html('<span class="glyphicon glyphicon-cog fa-spin" aria-hidden="true" title="Loading..."></span>');
+
+            $('#fonctionnaires-modal').show();
+
             dataDescriptors.fonctionnaires.Filter[2].Members[0] = region.key.toString();
             Knoema.Helpers.post('//explorim.knoema.com/api/1.0/data/details', dataDescriptors.fonctionnaires, function(details) {
                 var ddd = _.chunk(details.data, details.columns.length);
@@ -1018,11 +1032,11 @@ App.prototype.showFonctionnaires = function (regionId) {
 
                     var rowContent = '<tr>';
 
-                    _.each(columns, function(column, index) {
-                        if (columns.indexOf(column) > -1) {
-                            rowContent = rowContent + '<td>' + row[index] + '</td>';
+                    for (var i = 0; i < details.columns.length; i++) {
+                        if (columns.indexOf(details.columns[i].name) > -1) {
+                            rowContent = rowContent + '<td>' + row[i] + '</td>';
                         }
-                    });
+                    }
 
                     rowContent = rowContent + '</tr>';
 
@@ -1032,25 +1046,16 @@ App.prototype.showFonctionnaires = function (regionId) {
 
                 table = table + '<tbody>' + tt + '</tbody></table>';
 
-                $('#profile-modal').find('.modal-body').css({
-                    //"max-height": "90%"
-                }).html(table);
-
-                $('#profile-modal').find('.modal-body').find('table').css({
-                    "font-size": "0.9em"
-                });
-
-                $('#profile-modal').find('.modal-header').append('<strong>Fonctionnaires</strong>');
-
-                $('#profile-modal').find('.modal-body').find('table').DataTable();
-
-                $('#profile-modal').modal({
-                    open: true
+                $('#fonctionnaires-modal').find('.modal-body').html(table);
+                $('#fonctionnaires-modal').find('.modal-body').find('table').DataTable({
+                    "language": {
+                        "url": "js/vendor/French.json"
+                    }
                 });
 
             });
         } else {
-            alert(regionId + ' missing in dataset');
+            //alert(regionId + ' missing in dataset');
         }
     });
 };
@@ -1217,26 +1222,21 @@ App.prototype.bindEvents = function () {
 
     }, this));
 
-    //$('#select-region').on('hidden.bs.select', this.selectRegion.bind(this));
-
-
     $('#profile-modal-2').on('click', '.close-modal-2', function() {
         $('#profile-modal-2').hide();
     });
 
-    $('#right-side-bar').on('click', '#view-profile', function() {
+    $('#fonctionnaires-modal').on('click', '.close-modal-2', function() {
+        $('#fonctionnaires-modal').hide();
+    });
 
+    $('#right-side-bar').on('click', '#view-profile', function() {
         $('#profile-modal-2').css({
             "top": 10,
             "bottom": $('#timeline').height() + 51, //for padding of .close button
             "width": $('#map-container').width() - 20,
             "left": 10
         }).show();
-
-        //Old version
-        // $('#profile-modal').modal({
-        //     open: true
-        // });
     });
 
     $('#right-side-bar').on('click', '.export-button', function() {

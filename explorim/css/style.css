@@ -545,7 +545,7 @@ table tr:nth-of-type(even) {
     background-color: #ebebeb;
 }
 
-#right-side-bar .fa-spin {
+.fa-spin {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -609,6 +609,7 @@ table tr:nth-of-type(even) {
     background-image: url(../img/ico-pdf.png);
 }
 
+
 #profile-modal .modal-dialog {
     margin: 30px auto;
     width: 80%!important;
@@ -622,16 +623,16 @@ table tr:nth-of-type(even) {
     background-color: white;
 }
 
-#profile-modal-2 .close-modal-2 {
+.custom-modal .close-modal-2 {
     cursor: pointer;
     padding: 10px;
 }
 
-#profile-modal-2 .close-modal-2:hover {
+.custom-modal .close-modal-2:hover {
     color: #cecece;
 }
 
-#profile-modal-2 .header {
+.custom-modal .header {
     background-color: #245b13;
     color: white;
     height: 40px;
@@ -639,6 +640,43 @@ table tr:nth-of-type(even) {
     padding-left: 10px;
     font-size: 1.3em;
 }
+
+.custom-modal .modal-body {
+    position: absolute;
+    top: 40px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+#fonctionnaires-modal {
+    display: none;
+    background-color: white;
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    right: 10px;
+    bottom: 70px;
+    z-index: 100000000;
+}
+
+#fonctionnaires-modal .modal-body {
+    padding: 10px;
+}
+
+#fonctionnaires-modal table {
+    font-size: 12px;
+}
+
+
+
+
+
+
+
+
+
+
 
 #map-legend-holder {
     position: absolute;

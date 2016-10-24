@@ -40,8 +40,6 @@ var dataDescriptors = {
                     "2013-2015"
                 ],
                 "DimensionName": "Time",
-                "DatasetId": "ftqbdwb",
-                "Order": "0",
                 "UiMode": "range"
             }
         ],
@@ -49,17 +47,22 @@ var dataDescriptors = {
             {
                 "DimensionId": "indicator",
                 "Members": [
-                    "1000010",
-                    "1002570",
-                    "1000140",
-                    "1001860",
-                    "1001850",
-                    "1001840",
-                    "1001830"
+                    {
+                        "Name": "Population totale (nombre)",
+                        "Key": "-1000140",
+                        "Formula": [
+                            "1000140"
+                        ]
+                    },
+                    {
+                        "Name": "Ménages avec Internet (nombre)",
+                        "Key": "-1002570",
+                        "Formula": [
+                            "1002570"
+                        ]
+                    }
                 ],
-                "DimensionName": "Indicator",
-                "DatasetId": "ftqbdwb",
-                "Order": "0"
+                "DimensionName": "Indicator"
             }
         ],
         "Filter": [
@@ -68,21 +71,14 @@ var dataDescriptors = {
                 "Members": [
                     "1000030"
                 ],
-                "DimensionName": "Region",
-                "DatasetId": "ftqbdwb",
-                "Order": "0",
-                "isGeo": true
+                "DimensionName": "Region"
             }
         ],
         "Frequencies": [
             "A"
         ],
-        "Dataset": "ftqbdwb",
-        "Segments": null,
-        "MeasureAggregations": null,
         "Calendar": 0,
-        "RegionIdsRequired": true,
-        "RegionDimensionId": "region"
+        "Dataset": "ftqbdwb"
     },
 
     economics1: {
