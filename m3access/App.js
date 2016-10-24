@@ -621,7 +621,7 @@
 
         _.each(weeks2016, function(w) {
             if (w.isNewMonth) {
-                w.month = new Date(w.weekStart).toLocaleString('en-us', {"month": "short"});
+                w.month = Globalize.format(new Date(Date.parse(w.weekStart)), 'MMM', 'en');
             }
         });
 
@@ -747,6 +747,7 @@
                 .html($.tmpl('facility-profile.html', {
                     data: event.data.tooltip,
                     drugList: drugList,
+                    weekOf: Globalize.format(new Date(Date.parse(self.timePoint)), 'd MMMM', 'en'),
                     //TODO Find nearest hospital: google.maps.geometry.spherical.computeDistanceBetween (latLngA, latLngB);
                     distance: '5km',
                     layerId: event.layerId

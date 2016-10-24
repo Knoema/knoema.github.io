@@ -3,6 +3,12 @@
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <h4 class="modal-title">
             ${data['Name of facility']}
+            {{if layerId == 'dc3bfd66-3fc5-34dd-9523-704ba9f8df03'}}
+            &nbsp;&nbsp;
+            <button class="btn week-button" style="margin-bottom: 0;">
+                Week of <span id="week-of">${weekOf}</span>
+            </button>
+            {{/if}}
         </h4>
     </div>
     <div class="modal-body">
