@@ -1,5 +1,4 @@
 var access_token = '';
-var access_token = '';
 
 var params = Knoema.Helpers.parseHashParams();
 if (params == null) {
@@ -17,6 +16,8 @@ function App() {
 	this._layers = {};
     this.infoWindow = new google.maps.InfoWindow();
     this._fonctionnairesDetails = null;
+
+    this.content = null;
 
     this._visibleStyle = {
         strokeColor: 'white',
@@ -163,6 +164,8 @@ App.prototype.init = function () {
                 });
 
 				$.get('//knoema.com/api/1.0/frontend/resource/' + self.geoPlaygroundId + '/content', function(content) {
+
+                    self.content = content;
 
 				    _.each(content.layers, function(layer, layerId) {
 				        layer.layerId = layerId;
@@ -427,7 +430,16 @@ App.prototype.init = function () {
                                         },
                                         {
                                             title: "Fonctionnaires",
-                                            children: groupedLayers["Fonctionnaires"]
+                                            children: [
+                                                {
+                                                    title: "Fonctionnaires par lieu de inscription",
+                                                    children: groupedLayers["Fonctionnaires. Code Inscription"]
+                                                },
+                                                {
+                                                    title: "Fonctionnaires par lieu de naissance",
+                                                    children: groupedLayers["Fonctionnaires. Code Naissance"]
+                                                }
+                                            ]
                                         },
                                         {
                                             title: "Hommes d'affaires"
@@ -1003,7 +1015,7 @@ App.prototype.loadFonctionnaires = function () {
     return loadedDeferred;
 };
 
-App.prototype.showFonctionnaires = function (regionId) {
+App.prototype.showFonctionnaires = function (regionId, layerId) {
     var self = this;
     this.loadFonctionnaires().then(function (data) {
 
@@ -1022,7 +1034,34 @@ App.prototype.showFonctionnaires = function (regionId) {
             Knoema.Helpers.post('//explorim.knoema.com/api/1.0/data/details', dataDescriptors.fonctionnaires, function(details) {
                 var ddd = _.chunk(details.data, details.columns.length);
 
-                var columns = ["NNI", "NOM", "PRÉNOM", "Date De Naissance", "Code Naissance", "Fonction", "Minister", "Code Inscription"];
+                var columns;
+
+                //Previous version
+                //var columns = ["NNI", "NOM", "PRÉNOM", "Date De Naissance", "Code Naissance", "Fonction", "Minister", "Code Inscription"];
+
+                if (self.content.layers[layerId].groupping.groupName === 'Fonctionnaires. Code Naissance') {
+                    columns = [
+                        "NNI",
+                        "NOM",
+                        "PRÉNOM",
+                        "Date De Naissance",
+                        "Commune De Naissance",
+                        "Fonction",
+                        "Minister"
+                        //"Commune Inscription"
+                    ];
+                } else if (self.content.layers[layerId].groupping.groupName === 'Fonctionnaires. Code Inscription') {
+                    columns = [
+                        "NNI",
+                        "NOM",
+                        "PRÉNOM",
+                        "Date De Naissance",
+                        //"Commune De Naissance",
+                        "Fonction",
+                        "Minister",
+                        "Commune Inscription"
+                    ];
+                }
 
                 var table = '<table class="display" cellspacing="0" width="100%"><thead><tr>' + _.map(columns, function(column) {
                         return '<th>' + column + '</th>'
@@ -1046,6 +1085,7 @@ App.prototype.showFonctionnaires = function (regionId) {
 
                 table = table + '<tbody>' + tt + '</tbody></table>';
 
+                $('#fonctionnaires-modal').find('.header').html(self.content.layers[layerId].groupping.groupName);
                 $('#fonctionnaires-modal').find('.modal-body').html(table);
                 $('#fonctionnaires-modal').find('.modal-body').find('table').DataTable({
                     "language": {
@@ -1332,19 +1372,21 @@ App.prototype.loadLayer = function (layerId, layerType, callback) {
 					marker.addListener('click', function() {
 						var content = _.chain(_.keys(this.content))
 							.map(function(key) {
-								return {
-								    originalKey: key,
-									key: self._layers[layerData.layerId].layer.tooltip[key].text,
-									value: _.isNaN(parseFloat(this.content[key])) ? this.content[key] : Globalize.format(parseFloat(this.content[key]))
-								};
+							    if (self._layers[layerData.layerId].layer.tooltip[key]) {
+                                    return {
+                                        originalKey: key,
+                                        key: self._layers[layerData.layerId].layer.tooltip[key].text,
+                                        value: _.isNaN(parseFloat(this.content[key])) ? this.content[key] : Globalize.format(parseFloat(this.content[key]))
+                                    };
+                                }
 							}.bind(this))
 							.value()
 							.filter(function(entry) {
-								return propsToDisplay.indexOf(entry.originalKey) > -1;
+                                return entry && propsToDisplay.indexOf(entry.originalKey) > -1;
 							});
 
 						var $infoWindowContent = $.tmpl('info-window.html', {
-							title: this.content[self._layerTitles[layerData.layerId]],
+							title: 'Fonctionnaires',//this.content[self._layerTitles[layerData.layerId]]
 							content: content
 						});
 						self.infoWindow.setContent($infoWindowContent[0].outerHTML);
@@ -1359,15 +1401,20 @@ App.prototype.loadLayer = function (layerId, layerType, callback) {
                 layerData.layer.dataLayer.addListener('click', function (e) {
                     var data = e.feature.getProperty('tooltipData');
 
+                    //Layers under "Fonctionnaires"
                     var regionId = [
-                        '7ab7d08d-1a08-7ec3-86be-ff15252e833b',
-                        '5193eea1-dce5-aaac-b158-bc3e0e178920',
-                        '2dc15f7d-21c3-f600-39a2-2dc6efb19233'
+                        "fc3a4fa6-66b2-a30a-c83f-0adbfe8805d7",
+                        "0a9c5e6a-9562-3866-7261-741c96999e79",
+                        "36d5d01c-4772-9056-37f3-dd005e894cff",
+                        "45c2b643-a200-1b64-d8c0-9094472c415d",
+                        "c5a695b4-05c0-9e51-2288-9187885da5e3",
+                        "0a0afddd-db7c-b810-1a86-ecfaa67ddb21"
                     ].indexOf(layerData.layerId) > -1 ? e.feature.getId() : null;
 
                     var $infoWindowContent = $.tmpl('info-window.html', {
                         title: data.name,
                         regionId: regionId,
+                        layerId: layerData.layerId,
                         content: Globalize.format(parseFloat(data.value))
                     });
 
@@ -1375,13 +1422,6 @@ App.prototype.loadLayer = function (layerId, layerType, callback) {
                     self.infoWindow.setPosition(e.latLng);
                     self.infoWindow.open(self._map);
                 });
-
-			    //TODO Implement timeline
-				//layerData.layer.data is pivotResponse
-				// this.byTime = _.groupBy(layerData.layer.data, function(tuple) {
-				// 	//TODO Format using Knoema.Utils & our custom frequencies
-				// 	return tuple.Time.substring(0, 4);
-				// });
 
                 this._activeAreaLayerId = layerData.layerId;
 			}
