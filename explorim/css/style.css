@@ -524,12 +524,9 @@ table {
 table td, table th {
     padding: 10px;
     white-space: nowrap;
+    text-align: left;
 }
 
-table td, table th {
-    text-align: right;
-    padding: 10px;
-}
 table td:first-child, table th:first-child {
     text-align: left;
 }

@@ -1078,9 +1078,11 @@ App.prototype.showFonctionnaires = function (regionId, layerId) {
 
                 table = table + '<tbody>' + tt + '</tbody></table>';
 
-                $('#fonctionnaires-modal').find('.header').html(self.content.layers[layerId].groupping.groupName);
+                //$('#fonctionnaires-modal').find('.header').html('Fonctionnaires');
                 $('#fonctionnaires-modal').find('.modal-body').html(table);
                 $('#fonctionnaires-modal').find('.modal-body').find('table').DataTable({
+                    "lengthChange": false,
+                    "paging": false,
                     "language": {
                         "url": "js/vendor/French.json"
                     }
@@ -1150,6 +1152,7 @@ App.prototype.bindEvents = function () {
                     } else {
                         this._layers[layerId].clean();
                         this.hideLegend();
+                        $(event.target).closest('.item-content').find('input[data-layer-type="region"]').prop('disabled', false);
                     }
 
                 } else {
@@ -1276,6 +1279,28 @@ App.prototype.bindEvents = function () {
         self.export();
     });
 
+    $('#fonctionnaires-modal').on('click', '.export-button', function(e) {
+        var $a = $(e.target);
+
+        var $form = $('#export-form');
+
+        $.get('css/style.css').then(function(css) {
+
+            var $content = $('<html></html>');
+
+            var $head = $('<head><style>' + css + '</style></head>');
+
+            $content.append($head);
+
+            $content.append($a.closest('.custom-modal').find('table')[0].outerHTML);
+
+            $form.find('.content').val($content[0].outerHTML);
+            $form.find('.fileName').val('fonctionnaires');
+            $('#export-form [name=landscape]').val('False');
+            $form.submit();
+        });
+    });
+
     $('#right-side-bar').on('click', '.close', function() {
         $('#map-container').css({
             "width": $(window).width() - 400
@@ -1366,10 +1391,18 @@ App.prototype.loadLayer = function (layerId, layerType, callback) {
 						var content = _.chain(_.keys(this.content))
 							.map(function(key) {
 							    if (self._layers[layerData.layerId].layer.tooltip[key]) {
+                                    var value;
+                                    if (key === 'YEAR') {
+                                        value = Globalize.format(new Date(Date.parse(this.content[key])), 'yyyy');
+                                    } else if (key === 'Time' || self._layers[layerData.layerId].layer.tooltip[key].text === 'EVENT DATE') {
+                                        value = Globalize.format(new Date(Date.parse(this.content[key])), 'd MMMM yyyy');
+                                    } else {
+                                        value = _.isNaN(parseFloat(this.content[key])) ? this.content[key] : Globalize.format(parseFloat(this.content[key]));
+                                    }
                                     return {
                                         originalKey: key,
                                         key: self._layers[layerData.layerId].layer.tooltip[key].text || key,
-                                        value: _.isNaN(parseFloat(this.content[key])) ? this.content[key] : Globalize.format(parseFloat(this.content[key]))
+                                        value: value
                                     };
                                 }
 							}.bind(this))
