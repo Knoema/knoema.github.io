@@ -974,12 +974,6 @@ App.prototype.selectRegion = function (e) {
 
         $sideBarContent.append($.tmpl('zone-de-vie.html'));
 
-        if (zone0Resp != null) {
-            //TODO Add one more table based on zone0Resp
-            //debugger;
-        }
-
-
         $sideBarContent.append('<h4>Politique</h4>');
 
         if (politics0 != null) {
@@ -1045,10 +1039,10 @@ App.prototype.showFonctionnaires = function (regionId, layerId) {
                         "NOM",
                         "PRÉNOM",
                         "Date De Naissance",
-                        "Commune De Naissance",
+                        //"Commune De Naissance",
                         "Fonction",
-                        "Minister"
-                        //"Commune Inscription"
+                        "Minister",
+                        "Commune Inscription"
                     ];
                 } else if (self.content.layers[layerId].groupping.groupName === 'Fonctionnaires. Code Inscription') {
                     columns = [
@@ -1056,10 +1050,9 @@ App.prototype.showFonctionnaires = function (regionId, layerId) {
                         "NOM",
                         "PRÉNOM",
                         "Date De Naissance",
-                        //"Commune De Naissance",
+                        "Commune De Naissance",
                         "Fonction",
-                        "Minister",
-                        "Commune Inscription"
+                        "Minister"
                     ];
                 }
 
@@ -1375,7 +1368,7 @@ App.prototype.loadLayer = function (layerId, layerType, callback) {
 							    if (self._layers[layerData.layerId].layer.tooltip[key]) {
                                     return {
                                         originalKey: key,
-                                        key: self._layers[layerData.layerId].layer.tooltip[key].text,
+                                        key: self._layers[layerData.layerId].layer.tooltip[key].text || key,
                                         value: _.isNaN(parseFloat(this.content[key])) ? this.content[key] : Globalize.format(parseFloat(this.content[key]))
                                     };
                                 }
@@ -1386,7 +1379,7 @@ App.prototype.loadLayer = function (layerId, layerType, callback) {
 							});
 
 						var $infoWindowContent = $.tmpl('info-window.html', {
-							title: 'Fonctionnaires',//this.content[self._layerTitles[layerData.layerId]]
+							title: this.content[self._layerTitles[layerData.layerId]],
 							content: content
 						});
 						self.infoWindow.setContent($infoWindowContent[0].outerHTML);
