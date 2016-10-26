@@ -19,6 +19,8 @@ function App() {
 
     this.content = null;
 
+    this.timePoint = null;
+
     this._visibleStyle = {
         strokeColor: 'white',
         strokeWeight: 1,
@@ -383,14 +385,6 @@ App.prototype.init = function () {
                                 {
                                     title: "Terrorisme et les conflits",
                                     children: groupedLayers["Terrorisme et les conflits"]
-                                    // children: [
-                                    //     {
-                                    //         title: "Incidents de terrorisme"
-                                    //     },
-                                    //     {
-                                    //         title: "Les conflits armés"
-                                    //     }
-                                    // ]
                                 }
                             ]
                         },
@@ -708,7 +702,9 @@ App.prototype.export = function () {
 
 App.prototype.onResize = function () {
 
-    var timelineHeight = $('#timeline').height();
+    var $timeline = $('#timeline');
+
+    var timelineHeight = $timeline.is(':visible') ? $timeline.height() : 0;
 
 	var windowHeight = $(window).height();
 	var $sideBar = $('#side-bar');
@@ -727,7 +723,7 @@ App.prototype.onResize = function () {
     }
 
     $('#map-container').css({
-        "height": windowHeight - $('#timeline').height(),
+        "height": windowHeight - timelineHeight,
         "width": mapAndTimelineWidth
     });
 
@@ -735,7 +731,11 @@ App.prototype.onResize = function () {
         "width": mapAndTimelineWidth - 20
     });
 
-    $('.time-members-holder').width(mapAndTimelineWidth - 50); //50 width of slide-control
+    $timeline.find('.scroll-content').css({
+        "width": mapAndTimelineWidth
+    });
+
+    //$('.time-members-holder').width(mapAndTimelineWidth - 50); //50 width of slide-control
 
     var panelHeadingHeight = $sideBar.find('.panel-heading').first().height();
     var topLevelSectionHeight = filtersHolderHeight - $sideBar.find('.panel-heading').length * panelHeadingHeight - 26;//26 for margin/padding
@@ -1132,7 +1132,11 @@ App.prototype.bindEvents = function () {
                 layerId = $target.data('layerId');
                 $target.prop('disabled', true);
                 this.loadLayer(layerId, 'point');
-            } else {
+            } else if (layerType === 'shape') {
+                layerId = $target.data('layerId');
+                this.loadLayer(layerId, 'shape');
+            }
+            else {
 
                 $(event.target).closest('.item-content').find('input[data-layer-type="region"]').prop('disabled', true);
 
@@ -1217,49 +1221,49 @@ App.prototype.bindEvents = function () {
         });
     });
 
-    var $timeline = $('#timeline');
+    //var $timeline = $('#timeline');
 
-    $timeline.on('click', '.time-member', $.proxy(function(e) {
-		var $timeMember = $(e.target);
-		$timeMember.siblings().removeClass('active');
-		$timeMember.addClass('active');
-		this._activeDate = $timeMember.data('timeMember');
-	}, this));
-
-    $timeline.on('click', '.slide-control', $.proxy(function(e) {
-        var $this = $(e.target);
-        var $timeMembers = $('#timeline').find('.time-members');
-        var pos = $timeMembers.position();
-
-        if ($this.hasClass('slide-control-left') || $this.parent().hasClass('slide-control-left')) {
-            // if (pos.left < 50) {
-            // }
-            //TODO Add check for width & count of cells
-
-            var mapAndTimelineWidth = $(window).width() - $('#side-bar').width();
-            var visibleTimeMembersWIdth = mapAndTimelineWidth - 100;
-
-            //TODO Allow move if one of members hidden (just count how much members can fit to given width)
-
-            if (visibleTimeMembersWIdth + pos.left > 200) {
-                $timeMembers.animate({
-                    left: pos.left - 100
-                });
-            } else {
-                //TODO Apply shake
-            }
-
-        } else if ($this.hasClass('slide-control-right') || $this.parent().hasClass('slide-control-right')) {
-            if (pos.left < 50) {
-				$timeMembers.animate({
-					left: pos.left + 100
-				});
-            } else {
-				//TODO Apply shake
-			}
-        }
-
-    }, this));
+    // $timeline.on('click', '.time-member', $.proxy(function(e) {
+		// var $timeMember = $(e.target);
+		// $timeMember.siblings().removeClass('active');
+		// $timeMember.addClass('active');
+		// this._activeDate = $timeMember.data('timeMember');
+    // }, this));
+    //
+    // $timeline.on('click', '.slide-control', $.proxy(function(e) {
+    //     var $this = $(e.target);
+    //     var $timeMembers = $('#timeline').find('.time-members');
+    //     var pos = $timeMembers.position();
+    //
+    //     if ($this.hasClass('slide-control-left') || $this.parent().hasClass('slide-control-left')) {
+    //         // if (pos.left < 50) {
+    //         // }
+    //         //TODO Add check for width & count of cells
+    //
+    //         var mapAndTimelineWidth = $(window).width() - $('#side-bar').width();
+    //         var visibleTimeMembersWIdth = mapAndTimelineWidth - 100;
+    //
+    //         //TODO Allow move if one of members hidden (just count how much members can fit to given width)
+    //
+    //         if (visibleTimeMembersWIdth + pos.left > 200) {
+    //             $timeMembers.animate({
+    //                 left: pos.left - 100
+    //             });
+    //         } else {
+    //             //TODO Apply shake
+    //         }
+    //
+    //     } else if ($this.hasClass('slide-control-right') || $this.parent().hasClass('slide-control-right')) {
+    //         if (pos.left < 50) {
+		// 		$timeMembers.animate({
+		// 			left: pos.left + 100
+		// 		});
+    //         } else {
+		// 		//TODO Apply shake
+		// 	}
+    //     }
+    //
+    // }, this));
 
     $('#profile-modal-2').on('click', '.close-modal-2', function() {
         $('#profile-modal-2').hide();
@@ -1388,17 +1392,17 @@ App.prototype.loadLayer = function (layerId, layerType, callback) {
 
 			if (layerData.layer.layerType === 'point') {
 
-                var propsToDisplay = _.filter(_.keys(this._layers[layerData.layerId].layer.tooltip), function(key) {
+                var propsToDisplay = _.filter(_.keys(this._layers[layerData.layerId].layer.tooltip), function (key) {
                     return self._layers[layerData.layerId].layer.tooltip[key].state === "visible";
                 });
 
                 var markers = this._layers[layerData.layerId].layer.markerClusterer ? this._layers[layerData.layerId].layer.markerClusterer.markers_ : this._layers[layerData.layerId].layer.markers;
 
-				_.each(markers, function(marker) {
-					marker.addListener('click', function() {
-						var content = _.chain(_.keys(this.content))
-							.map(function(key) {
-							    if (self._layers[layerData.layerId].layer.tooltip[key]) {
+                _.each(markers, function (marker) {
+                    marker.addListener('click', function () {
+                        var content = _.chain(_.keys(this.content))
+                            .map(function (key) {
+                                if (self._layers[layerData.layerId].layer.tooltip[key]) {
                                     var value;
                                     if (key === 'YEAR' || key === 'Year') {
                                         value = Globalize.format(new Date(Date.parse(this.content[key])), 'yyyy');
@@ -1413,21 +1417,47 @@ App.prototype.loadLayer = function (layerId, layerType, callback) {
                                         value: value
                                     };
                                 }
-							}.bind(this))
-							.value()
-							.filter(function(entry) {
+                            }.bind(this))
+                            .value()
+                            .filter(function (entry) {
                                 return entry && propsToDisplay.indexOf(entry.originalKey) > -1;
-							});
+                            });
 
-						var $infoWindowContent = $.tmpl('info-window.html', {
-							title: this.content[self._layerTitles[layerData.layerId]],
-							content: content
-						});
-						self.infoWindow.setContent($infoWindowContent[0].outerHTML);
-						self.infoWindow.setPosition(this.position);
-						self.infoWindow.open(self._map);
-					});
-				});
+                        var $infoWindowContent = $.tmpl('info-window.html', {
+                            title: this.content[self._layerTitles[layerData.layerId]],
+                            content: content
+                        });
+                        self.infoWindow.setContent($infoWindowContent[0].outerHTML);
+                        self.infoWindow.setPosition(this.position);
+                        self.infoWindow.open(self._map);
+                    });
+                });
+            } else if (layerData.layer.layerType === 'shape') {
+                this.hideLegend();
+                if ($('[data-layer-id="' + layerData.layerId + '"]').is(':checked')) {
+                    var month = null;
+                    var isMonthStart = true;
+                    var timeMembers = _.map(layerData.layer.data.data, function(entry, index) {
+                        var newMonth = Globalize.format(new Date(Date.parse(entry.date.value)), 'MMM');
+                        var timeMember = {
+                            "timePoint": entry.date.value
+                        };
+                        if (newMonth != month) {
+                            month = newMonth;
+                            timeMember.month = month;
+                        }
+                        if (layerData.layer.dataToDisplay[0].data.Date === entry.date.value) {
+                            timeMember.isActive = true;
+                        }
+                        return timeMember;
+                    });
+
+                    self.createTimeline(timeMembers, layerData.layerId);
+
+                } else {
+                    self._layers[layerData.layerId].clean();
+                    self.hideTimeline();
+                }
 			} else {
 
                 this.showLegend(this._layers[layerId].layer.ranges);
@@ -1474,6 +1504,53 @@ App.prototype.loadLayer = function (layerId, layerType, callback) {
 	}
 };
 
+App.prototype.hideTimeline = function () {
+    $('#timeline').find('.scroll-content').mCustomScrollbar('destroy');
+    $('#timeline').find('.scroll-content').empty();
+    $('#timeline').hide();
+
+    //This causes some wierd error in google maps:
+    //js?key=AIzaSyDW5mB0UdDWi7EdcoH3eE-IunlT7nISRuA&v=3&libraries=drawing,geometry:94 Uncaught TypeError: Cannot read property '__e3_' of null(…)
+    //this.onResize();
+    $(window).trigger('resize');
+};
+
+App.prototype.createTimeline = function (timeMembers, layerId, scrollToRight) {
+    var $scrollContent = $('#timeline').find('.scroll-content');
+
+    if ($scrollContent.html() === '') {
+        $scrollContent.mCustomScrollbar('destroy');
+
+        $scrollContent.empty().append($.tmpl('time-members.html', {
+            timeMembers: timeMembers
+        }));
+
+        $scrollContent.mCustomScrollbar({
+            theme: "dark",
+            axis:"x",
+            advanced:{
+                autoExpandHorizontalScroll:true
+            }
+        });
+
+        $scrollContent.on('click', 'a.timepoint', function(e) {
+            this._layers[layerId].load(null, $(e.target).data('timePoint'));
+        }.bind(this));
+
+        $('#timeline').show();
+
+        setTimeout(function() {
+            $scrollContent.mCustomScrollbar('scrollTo', 'right');
+        }, 100);
+
+    } else {
+        $scrollContent.find('.active').removeClass('active');
+        $scrollContent.find('[data-time-point="' + _.find(timeMembers, function(d) {return d.isActive}).timePoint + '"]').addClass('active');
+    }
+
+    this.onResize();
+};
+
 App.prototype.loadTemplates = function (callback) {
 	var self = this;
 	function compileTemplate(templateSrc) {
@@ -1487,8 +1564,9 @@ App.prototype.loadTemplates = function (callback) {
         $.get('tmpl/region-details.html?random=' + Math.random(), compileTemplate),
         $.get('tmpl/complex-table.html?random=' + Math.random(), compileTemplate),
 		$.get('tmpl/filters-tree.html?random=' + Math.random(), compileTemplate),
-        $.get('tmpl/info-window.html?random=' + Math.random(), compileTemplate),
         $.get('tmpl/simple-table.html?random=' + Math.random(), compileTemplate),
+        $.get('tmpl/time-members.html?random=' + Math.random(), compileTemplate),
+        $.get('tmpl/info-window.html?random=' + Math.random(), compileTemplate),
         $.get('tmpl/zone-de-vie.html?random=' + Math.random(), compileTemplate),
         $.get('tmpl/map-legend.html?random=' + Math.random(), compileTemplate)
 	];

@@ -4,7 +4,7 @@
             <input id="${cuid()}" data-layers="${JSON.stringify(item.children)}" type="checkbox" /> ${item.title}
         </label>
         <a href="//explorim.knoema.com/${item.children[0].datasetId}" class="dataset-link" target="_blank" title="View data">
-            <span class="glyphicon glyphicon-new-window" aria-hidden="true" data-ddd="${JSON.stringify(item)}"></span>
+            <span class="glyphicon glyphicon-new-window" aria-hidden="true"></span>
         </a>
     </div>
 {{else}}
@@ -21,6 +21,13 @@
     {{else}}
         <div class="item-holder">
             {{if item.layerType == 'region'}}
+                <label>
+                    <input data-layer-id="${item.layerId}" data-layer-type="${item.layerType}" type="checkbox" /> ${item.title || item.name}
+                </label>
+                <a href="//explorim.knoema.com/${item.datasetId}" class="dataset-link" target="_blank" title="View data">
+                    <span class="glyphicon glyphicon-new-window" aria-hidden="true"></span>
+                </a>
+            {{else item.layerType == 'shape'}}
                 <label>
                     <input data-layer-id="${item.layerId}" data-layer-type="${item.layerType}" type="checkbox" /> ${item.title || item.name}
                 </label>

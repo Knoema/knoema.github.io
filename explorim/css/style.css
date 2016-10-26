@@ -20,76 +20,10 @@ body {
 #map-container {
     position: absolute;
     top: 0;
-    bottom: 60px;
+    bottom: 0;
     left: 0;
     right: 0;
     background-color: #efefef;
-}
-
-#timeline {
-    height: 60px;
-    background-color: #245b13;
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    width: 100%;
-}
-
-.time-members-holder {
-    width: 0;/*Will be changed in onResize method*/
-    overflow: hidden;
-    height: 60px;
-}
-.time-members {
-    background-color: #245b13;
-    font-weight: bold;
-    position: relative;
-    left: 50px;
-}
-.time-member {
-    text-align: center;
-    line-height: 60px;
-    text-decoration: none;
-    color: white;
-    background-color: #36861e;
-
-    -webkit-box-shadow: inset 0px 0px 26px -5px rgba(0,0,0,0.75);
-    -moz-box-shadow: inset 0px 0px 26px -5px rgba(0,0,0,0.75);
-    box-shadow: inset 0px 0px 26px -5px rgba(0,0,0,0.75);
-
-    display: table-cell;
-    min-width: 100px;
-    width: 100px;
-}
-
-.time-member.active {
-    background-color: white;
-    color: #245b13;
-}
-
-.time-member:hover {
-    background-color: #efefef;
-    color: #245b13;
-}
-.time-member:first-child {
-    margin-left: 50px;
-}
-.time-member:hover, .time-member:active, .time-member:focus {
-    text-decoration: none;
-}
-
-.slide-control {
-    width: 50px;
-    position: absolute;
-    text-align: center;
-    line-height: 60px;
-    text-decoration: none;
-    z-index: 1000;
-}
-
-.slide-control:hover, .slide-control:focus, .slide-control:active {
-    text-decoration: none;
-    color: #efefef;
 }
 
 @keyframes shake {
@@ -807,4 +741,127 @@ table tr:nth-of-type(even) {
     background-color: #efefef;
     text-decoration: none;
     border: 1px solid #cecece;
+}
+
+/*===============================================================================*/
+/*===============================================================================
+#timeline {
+    height: 60px;
+    background-color: #a9c5a0;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+}
+#timeline {
+    height: 60px;
+    width: 100%;
+    margin: 0 -15px;
+    visibility: hidden;
+    position: absolute;
+    bottom: -60px;
+    background-color: #C8D2E6;
+    display: table-row;
+}
+
+#timeline a {
+    text-align: center;
+    height: 30px;
+    width: 30px;
+    min-width: 30px;
+    line-height: 30px;
+    text-decoration: none;
+    vertical-align: middle;
+    white-space: nowrap;
+    display: table-cell;
+}
+===============================================================================*/
+/*===============================================================================*/
+
+#timeline {
+    height: 90px;
+    width: 100%;
+    position: absolute;
+    display: none;
+    left: 0;
+    bottom: 0;
+}
+
+#timeline a {
+    text-align: center;
+    height: 30px;
+    width: 30px;
+    min-width: 30px;
+    line-height: 30px;
+    text-decoration: none;
+    vertical-align: middle;
+    white-space: nowrap;
+    display: table-cell;
+}
+
+.time-members {
+    background-color: #e0e0e0;
+    font-weight: bold;
+    position: relative;
+}
+
+#timeline a.timepoint {
+    padding: 0 7px;
+    border-left: 1px solid #245b13;
+    box-sizing: border-box;
+    color: #245b13;
+}
+
+#timeline a.timepoint:hover {
+    background-color: white;
+}
+
+#timeline a.timepoint.active:hover {
+    background-color: #277813;
+}
+
+#timeline a.active {
+    background-color: #245b13;
+    color: white;
+}
+
+div.time-member {
+    display: table-cell;
+    height: 60px;
+    width: 60px;
+    max-width: 60px;
+}
+
+.time-member.new-month .timepoint {
+    border-left: none;
+}
+
+.time-member.new-month {
+    border-left: 1px solid #245b13;
+    width: 60px;
+    max-width: 60px;
+    box-sizing: border-box;
+}
+
+#timeline .new-month a.timepoint {
+    border-left: none;
+}
+
+.time-member.new-month .month {
+    font-weight: bold;
+}
+
+.month-name {
+    position: relative;
+    padding-left: 5px;
+    padding-top: 10px;
+}
+
+#timeline .time-members .scroll-content {
+    height: 80px;
+    display: inline-block;
+    vertical-align: bottom;
+    margin-top: 10px;
+    overflow: auto;
+    width: 0;
 }

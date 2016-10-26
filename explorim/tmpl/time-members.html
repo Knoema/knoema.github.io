@@ -1,0 +1,14 @@
+{{each(i, timeMember) timeMembers}}
+    <div class="time-member {{if timeMember.month}}new-month{{/if}}">
+        <a href="javascript:void(0)" class="timepoint {{if timeMember.isActive}}active{{/if}} {{if timeMember.hasData}}has-data{{/if}}"
+           data-time-point="${timeMember.timePoint}"
+           title="Week ${timeMember.timePoint}">
+            ${timeMember.timePoint.split('/')[1]}
+        </a>
+        {{if timeMember.month}}
+            <div class="month-name">
+                ${timeMember.month}
+            </div>
+        {{/if}}
+    </div>
+{{/each}}
