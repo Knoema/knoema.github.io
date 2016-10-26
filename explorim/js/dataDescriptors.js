@@ -49,9 +49,9 @@ var dataDescriptors = {
                 "Members": [
                     {
                         "Name": "Population totale (nombre)",
-                        "Key": "-1000140",
+                        "Key": "-1000120",
                         "Formula": [
-                            "1000140"
+                            "1000120"
                         ]
                     },
                     {
@@ -69,7 +69,7 @@ var dataDescriptors = {
             {
                 "DimensionId": "region",
                 "Members": [
-                    "1000030"
+                    "1000020"
                 ],
                 "DimensionName": "Region"
             }

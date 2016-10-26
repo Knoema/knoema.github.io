@@ -623,6 +623,7 @@ table tr:nth-of-type(even) {
 .custom-modal .close-modal-2 {
     cursor: pointer;
     padding: 10px;
+    color: white;
 }
 
 .custom-modal .close-modal-2:hover {

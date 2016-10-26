@@ -138,6 +138,7 @@ App.prototype.init = function () {
                     $.getJSON('mauritaniaGovernorates.json')
                 ]).done(function onGeoJsonLoaded(communes, departments, governorates) {
 
+                    //White layers
                     self._dataLayers['Région'] = new google.maps.Data();
                     self._dataLayers['Région'].setMap(self._map);
                     self._dataLayers['Région'].addGeoJson(governorates[0]);
@@ -154,13 +155,9 @@ App.prototype.init = function () {
                     self._dataLayers['Communale'].addGeoJson(communes[0]);
                     self._dataLayers['Communale'].setStyle(self._invisibleStyle);
 
-                    //TODO Add same handler as in
-                    //$('#select-region').on('hidden.bs.select', this.selectRegion.bind(this));
-
                     self._dataLayers['Région'].addListener('click', self.selectRegion.bind(self));
                     self._dataLayers['Département'].addListener('click', self.selectRegion.bind(self));
                     self._dataLayers['Communale'].addListener('click', self.selectRegion.bind(self));
-
                 });
 
 				$.get('//knoema.com/api/1.0/frontend/resource/' + self.geoPlaygroundId + '/content', function(content) {
@@ -748,11 +745,13 @@ App.prototype.onResize = function () {
         'height': topLevelSectionHeight
     });
 
-    $('#right-side-bar').css({
+    var $rightSideBar = $('#right-side-bar');
+
+    $rightSideBar.css({
         "height": windowHeight - timelineHeight
     });
 
-    $('#right-side-bar').find('.side-bar-content').css({
+    $rightSideBar.find('.side-bar-content').css({
         "height": windowHeight - timelineHeight - 110
     });
 
@@ -821,19 +820,21 @@ App.prototype.switchDivision = function (division, reloadLayer, layerId, availab
 
 App.prototype.selectRegion = function (e) {
 
-    var $selected = $('#select-region').find(':selected');
+    var $selectRegion = $('#select-region');
+
+    var $selected = $selectRegion.find(':selected');
 
     var regionId, regionName, key;
 
     if (e.feature) {
         regionId = e.feature.getId();
         regionName = e.feature.getProperty('name');
-        key = $('#select-region').find('[data-region-id="' + regionId + '"]').val();
-        $('#select-region').selectpicker('val', key);
+        key = $selectRegion.find('[data-region-id="' + regionId + '"]').val();
+        $selectRegion.selectpicker('val', key);
     } else {
         regionId = $selected.data('regionId');
         regionName = $selected.data('name');
-        key = $('#select-region').val();
+        key = $selectRegion.val();
     }
 
     if (!regionId) {
@@ -850,12 +851,12 @@ App.prototype.selectRegion = function (e) {
 
     this._regionsComponent.select(regionId);
 
-    $('#right-side-bar').find('.header').html(regionName);
-    $('#right-side-bar').find('.header').append('<a href="javascript:void 0;" class="export-button" title="Export to PDF"></a><div style="text-align: center"><a style="margin-top: 10px;" href="#" class="btn" id="view-profile">     Voir le profil régional </a></div>');
+    var $rightSideBar = $('#right-side-bar');
 
-    $('#right-side-bar').find('.side-bar-content').empty().append($('<span class="glyphicon glyphicon-cog fa-spin" aria-hidden="true" title="Loading..."></span>'));
-
-    $('#right-side-bar').animate({
+    $rightSideBar.find('.header').html(regionName);
+    $rightSideBar.find('.header').append('<a href="javascript:void 0;" class="export-button" title="Export to PDF"></a><div style="text-align: center"><a style="margin-top: 10px;" href="#" class="btn" id="view-profile">     Voir le profil régional </a></div>');
+    $rightSideBar.find('.side-bar-content').empty().append($('<span class="glyphicon glyphicon-cog fa-spin" aria-hidden="true" title="Loading..."></span>'));
+    $rightSideBar.animate({
         "right": 0
     });
 
@@ -1018,11 +1019,10 @@ App.prototype.showFonctionnaires = function (regionId, layerId) {
         });
         if (region) {
 
-            $('#fonctionnaires-modal')
-                .find('.modal-body')
-                .html('<span class="glyphicon glyphicon-cog fa-spin" aria-hidden="true" title="Loading..."></span>');
+            var $modal = $('#fonctionnaires-modal');
 
-            $('#fonctionnaires-modal').show();
+            $modal.find('.modal-body').html('<span class="glyphicon glyphicon-cog fa-spin" aria-hidden="true" title="Loading..."></span>');
+            $modal.show();
 
             dataDescriptors.fonctionnaires.Filter[2].Members[0] = region.key.toString();
             Knoema.Helpers.post('//explorim.knoema.com/api/1.0/data/details', dataDescriptors.fonctionnaires, function(details) {
@@ -1078,9 +1078,8 @@ App.prototype.showFonctionnaires = function (regionId, layerId) {
 
                 table = table + '<tbody>' + tt + '</tbody></table>';
 
-                //$('#fonctionnaires-modal').find('.header').html('Fonctionnaires');
-                $('#fonctionnaires-modal').find('.modal-body').html(table);
-                $('#fonctionnaires-modal').find('.modal-body').find('table').DataTable({
+                $modal.find('.modal-body').html(table);
+                $modal.find('.modal-body').find('table').DataTable({
                     "lengthChange": false,
                     "paging": false,
                     "language": {
@@ -1100,7 +1099,7 @@ App.prototype.bindEvents = function () {
 
     $('#zoom-to-country').on('click', function() {
         this._map.setZoom(Math.min(6, this._map.getZoom()));
-    }.bind(this))
+    }.bind(this));
 
 	$('#regional-division-map-switcher').on('click', 'a', function(event) {
 		self.switchDivision($(event.target).data('division'), true, $(event.target).data('layerId'));
@@ -1119,7 +1118,9 @@ App.prototype.bindEvents = function () {
         $('#side-bar').find('input').prop('checked', false);
     }, this));
 
-    $('#filters-tree').on('click', 'label', $.proxy(function(event) {
+    var $filtersTree = $('#filters-tree');
+
+    $filtersTree.on('click', 'label', $.proxy(function(event) {
 
         if (event.target.tagName === 'INPUT') {
 
@@ -1205,25 +1206,27 @@ App.prototype.bindEvents = function () {
 
     // show.bs.collapse	This event fires immediately when the show instance method is called.
     // hide.bs.collapse	This event is fired immediately when the hide method has been called.
-    $('#filters-tree').find('.item-content').on('show.bs.collapse hide.bs.collapse', function() {
+    $filtersTree.find('.item-content').on('show.bs.collapse hide.bs.collapse', function() {
         $(this).closest('.item-content-level-0').find('.scroll-content').mCustomScrollbar('destroy');
     });
 
     // shown.bs.collapse	This event is fired when a collapse element has been made visible to the user (will wait for CSS transitions to complete).
-    $('#filters-tree').find('.item-content').on('shown.bs.collapse', function() {
+    $filtersTree.find('.item-content').on('shown.bs.collapse', function() {
         $(this).closest('.item-content-level-0').find('.scroll-content').mCustomScrollbar({
             theme: 'dark'
         });
     });
 
-	$('#timeline').on('click', '.time-member', $.proxy(function(e) {
+    var $timeline = $('#timeline');
+
+    $timeline.on('click', '.time-member', $.proxy(function(e) {
 		var $timeMember = $(e.target);
 		$timeMember.siblings().removeClass('active');
 		$timeMember.addClass('active');
 		this._activeDate = $timeMember.data('timeMember');
 	}, this));
 
-    $('#timeline').on('click', '.slide-control', $.proxy(function(e) {
+    $timeline.on('click', '.slide-control', $.proxy(function(e) {
         var $this = $(e.target);
         var $timeMembers = $('#timeline').find('.time-members');
         var pos = $timeMembers.position();
@@ -1262,24 +1265,12 @@ App.prototype.bindEvents = function () {
         $('#profile-modal-2').hide();
     });
 
-    $('#fonctionnaires-modal').on('click', '.close-modal-2', function() {
+    var $modal = $('#fonctionnaires-modal');
+
+    $modal.on('click', '.close-modal-2', function() {
         $('#fonctionnaires-modal').hide();
     });
-
-    $('#right-side-bar').on('click', '#view-profile', function() {
-        $('#profile-modal-2').css({
-            "top": 10,
-            "bottom": $('#timeline').height() + 51, //for padding of .close button
-            "width": $('#map-container').width() - 20,
-            "left": 10
-        }).show();
-    });
-
-    $('#right-side-bar').on('click', '.export-button', function() {
-        self.export();
-    });
-
-    $('#fonctionnaires-modal').on('click', '.export-button', function(e) {
+    $modal.on('click', '.export-button', function(e) {
         var $a = $(e.target);
 
         var $form = $('#export-form');
@@ -1296,12 +1287,27 @@ App.prototype.bindEvents = function () {
 
             $form.find('.content').val($content[0].outerHTML);
             $form.find('.fileName').val('fonctionnaires');
-            $('#export-form [name=landscape]').val('False');
+            $('#export-form').find('[name=landscape]').val('False');
             $form.submit();
         });
     });
 
-    $('#right-side-bar').on('click', '.close', function() {
+    var $rightSideBar = $('#right-side-bar');
+
+    $rightSideBar.on('click', '#view-profile', function() {
+        $('#profile-modal-2').css({
+            "top": 10,
+            "bottom": $('#timeline').height() + 51, //for padding of .close button
+            "width": $('#map-container').width() - 20,
+            "left": 10
+        }).show();
+    });
+
+    $rightSideBar.on('click', '.export-button', function() {
+        self.export();
+    });
+
+    $rightSideBar.on('click', '.close', function() {
         $('#map-container').css({
             "width": $(window).width() - 400
         });
@@ -1309,8 +1315,8 @@ App.prototype.bindEvents = function () {
 
         $('#profile-modal-2').hide();
 
-        $('#right-side-bar').animate({
-            "right": -1 * ($('#right-side-bar').width() + 20)
+        $rightSideBar.animate({
+            "right": -1 * ($rightSideBar.width() + 20)
         }, function() {
             $('#select-region').selectpicker('val', 'not-selected');
             self._regionsComponent.select(null);
@@ -1386,13 +1392,15 @@ App.prototype.loadLayer = function (layerId, layerType, callback) {
                     return self._layers[layerData.layerId].layer.tooltip[key].state === "visible";
                 });
 
-				_.each(this._layers[layerData.layerId].layer.markerClusterer.markers_, function(marker) {
+                var markers = this._layers[layerData.layerId].layer.markerClusterer ? this._layers[layerData.layerId].layer.markerClusterer.markers_ : this._layers[layerData.layerId].layer.markers;
+
+				_.each(markers, function(marker) {
 					marker.addListener('click', function() {
 						var content = _.chain(_.keys(this.content))
 							.map(function(key) {
 							    if (self._layers[layerData.layerId].layer.tooltip[key]) {
                                     var value;
-                                    if (key === 'YEAR') {
+                                    if (key === 'YEAR' || key === 'Year') {
                                         value = Globalize.format(new Date(Date.parse(this.content[key])), 'yyyy');
                                     } else if (key === 'Time' || self._layers[layerData.layerId].layer.tooltip[key].text === 'EVENT DATE') {
                                         value = Globalize.format(new Date(Date.parse(this.content[key])), 'd MMMM yyyy');
