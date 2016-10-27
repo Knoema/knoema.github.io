@@ -391,11 +391,22 @@ App.prototype.init = function () {
                         {
                             title: "Pluies",
                             className: "climate",
-                            //children: groupedLayers['Précipitation']
                             children: [
                                 {
-                                    title: 'Précipitation',
-                                    children: groupedLayers['Précipitation']
+                                    title: 'Stations de pluie',
+                                    children: groupedLayers['Stations de pluie']
+                                },
+                                {
+                                    title: 'Historique',
+                                    children: groupedLayers['Historique']
+                                },
+                                {
+                                    title: "Prévoir",
+                                    children: [
+                                        {
+                                            title: "Prévision des précipitations de 10 jours (mm)"
+                                        }
+                                    ]
                                 }
                             ]
                         },
@@ -718,7 +729,7 @@ App.prototype.onResize = function () {
 
     var rightSideBarPosition = $('#right-side-bar').position();
 
-    if (rightSideBarPosition.left <= $(window).width()) {
+    if ((rightSideBarPosition.left) <= $(window).width()) {
         mapAndTimelineWidth = mapAndTimelineWidth - $('#right-side-bar').width() - 20;
     }
 
@@ -1221,50 +1232,6 @@ App.prototype.bindEvents = function () {
         });
     });
 
-    //var $timeline = $('#timeline');
-
-    // $timeline.on('click', '.time-member', $.proxy(function(e) {
-		// var $timeMember = $(e.target);
-		// $timeMember.siblings().removeClass('active');
-		// $timeMember.addClass('active');
-		// this._activeDate = $timeMember.data('timeMember');
-    // }, this));
-    //
-    // $timeline.on('click', '.slide-control', $.proxy(function(e) {
-    //     var $this = $(e.target);
-    //     var $timeMembers = $('#timeline').find('.time-members');
-    //     var pos = $timeMembers.position();
-    //
-    //     if ($this.hasClass('slide-control-left') || $this.parent().hasClass('slide-control-left')) {
-    //         // if (pos.left < 50) {
-    //         // }
-    //         //TODO Add check for width & count of cells
-    //
-    //         var mapAndTimelineWidth = $(window).width() - $('#side-bar').width();
-    //         var visibleTimeMembersWIdth = mapAndTimelineWidth - 100;
-    //
-    //         //TODO Allow move if one of members hidden (just count how much members can fit to given width)
-    //
-    //         if (visibleTimeMembersWIdth + pos.left > 200) {
-    //             $timeMembers.animate({
-    //                 left: pos.left - 100
-    //             });
-    //         } else {
-    //             //TODO Apply shake
-    //         }
-    //
-    //     } else if ($this.hasClass('slide-control-right') || $this.parent().hasClass('slide-control-right')) {
-    //         if (pos.left < 50) {
-		// 		$timeMembers.animate({
-		// 			left: pos.left + 100
-		// 		});
-    //         } else {
-		// 		//TODO Apply shake
-		// 	}
-    //     }
-    //
-    // }, this));
-
     $('#profile-modal-2').on('click', '.close-modal-2', function() {
         $('#profile-modal-2').hide();
     });
@@ -1320,7 +1287,7 @@ App.prototype.bindEvents = function () {
         $('#profile-modal-2').hide();
 
         $rightSideBar.animate({
-            "right": -1 * ($rightSideBar.width() + 20)
+            "right": -1 * ($rightSideBar.width() + 30)
         }, function() {
             $('#select-region').selectpicker('val', 'not-selected');
             self._regionsComponent.select(null);
@@ -1406,7 +1373,7 @@ App.prototype.loadLayer = function (layerId, layerType, callback) {
                                     var value;
                                     if (key === 'YEAR' || key === 'Year') {
                                         value = Globalize.format(new Date(Date.parse(this.content[key])), 'yyyy');
-                                    } else if (key === 'Time' || self._layers[layerData.layerId].layer.tooltip[key].text === 'EVENT DATE') {
+                                    } else if (key === 'Time' || self._layers[layerData.layerId].layer.tooltip[key].text === 'EVENT DATE' || key === 'Date of realisation') {
                                         value = Globalize.format(new Date(Date.parse(this.content[key])), 'd MMMM yyyy');
                                     } else {
                                         value = _.isNaN(parseFloat(this.content[key])) ? this.content[key] : Globalize.format(parseFloat(this.content[key]));
