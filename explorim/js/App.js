@@ -1302,6 +1302,8 @@ App.prototype.showLegend = function (ranges) {
         .append($.tmpl('map-legend.html', { ranges: ranges }))
         .show();
 
+    $('#map-legend-holder').css('bottom', $('#timeline').is(':visible') ? 100 : 30);
+
     _.each(this._dataLayers, function(dataLayer) {
         dataLayer.setStyle(this._invisibleStyle);
     }.bind(this));
@@ -1402,13 +1404,13 @@ App.prototype.loadLayer = function (layerId, layerType, callback) {
             } else if (layerData.layer.layerType === 'shape') {
                 this.hideLegend();
 
+                //Hide data layer if it is enabled
                 if (this._activeAreaLayerId != null) {
                     this.hideLegend();
                     this._layers[this._activeAreaLayerId].clean();
                 }
 
                 if ($('[data-layer-id="' + layerData.layerId + '"]').is(':checked')) {
-                    this._activeAreaLayerId = layerData.layerId;
                     var month = null;
                     var isMonthStart = true;
                     var timeMembers = _.map(layerData.layer.data.data, function(entry, index) {
@@ -1429,11 +1431,20 @@ App.prototype.loadLayer = function (layerId, layerType, callback) {
                     self.createTimeline(timeMembers, layerData.layerId);
 
                 } else {
-                    this._activeAreaLayerId = null;
                     self._layers[layerData.layerId].clean();
                     self.hideTimeline();
                 }
 			} else {
+
+			    this.hideTimeline();
+
+                var rainsLayerId = $('[data-layer-type="shape"]').data('layerId');
+
+                if (rainsLayerId && this._layers[rainsLayerId]) {
+                    this._layers[rainsLayerId].clean();
+                    $('[data-layer-type="shape"]').prop('checked', false);
+                    this.hideTimeline();
+                }
 
                 this.showLegend(this._layers[layerId].layer.ranges);
 
@@ -1520,7 +1531,9 @@ App.prototype.createTimeline = function (timeMembers, layerId, scrollToRight) {
         $scrollContent.find('.active').removeClass('active');
         $scrollContent.find('[data-time-point="' + _.find(timeMembers, function(d) {return d.isActive}).timePoint + '"]').addClass('active');
     }
-    $('#map-legend-holder').html('<img src="img/rains-legend.png">').show();
+    $('#map-legend-holder')
+        .css('bottom', 100)
+        .html('<img src="img/rains-legend.png">').show();
     this.onResize();
 };
 
