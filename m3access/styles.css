@@ -624,3 +624,17 @@ only screen and (                min-resolution: 2dppx) {
 .modal-header {
     background-color: #e0eaf4;
 }
+
+tr.table-header {
+    background-color: #d9dee2 !important;
+}
+
+.table>tbody>tr.table-header>td {
+    border-top: 1px solid #90a1af;
+    border-bottom: 1px solid #90a1af;
+    line-height: 2em;
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: bold;
+    color: #1b3768;
+}
