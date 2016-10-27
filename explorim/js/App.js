@@ -1401,7 +1401,14 @@ App.prototype.loadLayer = function (layerId, layerType, callback) {
                 });
             } else if (layerData.layer.layerType === 'shape') {
                 this.hideLegend();
+
+                if (this._activeAreaLayerId != null) {
+                    this.hideLegend();
+                    this._layers[this._activeAreaLayerId].clean();
+                }
+
                 if ($('[data-layer-id="' + layerData.layerId + '"]').is(':checked')) {
+                    this._activeAreaLayerId = layerData.layerId;
                     var month = null;
                     var isMonthStart = true;
                     var timeMembers = _.map(layerData.layer.data.data, function(entry, index) {
@@ -1422,6 +1429,7 @@ App.prototype.loadLayer = function (layerId, layerType, callback) {
                     self.createTimeline(timeMembers, layerData.layerId);
 
                 } else {
+                    this._activeAreaLayerId = null;
                     self._layers[layerData.layerId].clean();
                     self.hideTimeline();
                 }
@@ -1476,10 +1484,8 @@ App.prototype.hideTimeline = function () {
     $('#timeline').find('.scroll-content').empty();
     $('#timeline').hide();
 
-    //This causes some wierd error in google maps:
-    //js?key=AIzaSyDW5mB0UdDWi7EdcoH3eE-IunlT7nISRuA&v=3&libraries=drawing,geometry:94 Uncaught TypeError: Cannot read property '__e3_' of null(…)
-    //this.onResize();
-    $(window).trigger('resize');
+    $('#map-legend-holder').empty().hide();
+    this.onResize();
 };
 
 App.prototype.createTimeline = function (timeMembers, layerId, scrollToRight) {
@@ -1514,7 +1520,7 @@ App.prototype.createTimeline = function (timeMembers, layerId, scrollToRight) {
         $scrollContent.find('.active').removeClass('active');
         $scrollContent.find('[data-time-point="' + _.find(timeMembers, function(d) {return d.isActive}).timePoint + '"]').addClass('active');
     }
-
+    $('#map-legend-holder').html('<img src="img/rains-legend.png">').show();
     this.onResize();
 };
 
