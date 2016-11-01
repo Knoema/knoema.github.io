@@ -1565,7 +1565,7 @@ var Infrastructure;
 
         	var regionId = event.feature.getId();
         	var value = this.layerDataForTooltip[this.currentLayerName][regionId].toString().replace(/(\d{1,3}(?=(\d{3})+(?:\.\d|\b)))/g, "\$1 ");
-        	var content = '<b>Region:&nbsp;</b>' + event.feature.getProperty('Name') + '<br /><b>Value:&nbsp;</b>' + value;
+        	var content = '<b>Region:&nbsp;</b>' + event.feature.getProperty('name') + '<br /><b>Value:&nbsp;</b>' + value;
 
         	this.infoWindow = new google.maps.InfoWindow({
         		content: content,
