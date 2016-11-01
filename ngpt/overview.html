@@ -48,12 +48,12 @@
 				</a>
 			</li><!--
     		--><li>
-				<a href="sectorMonitor.html" class="s1" title="Global Standing">
+				<a href="sectorMonitor.html" class="s1" title="Main Indicators Monitoring">
 					<img src="./img/icons-banner-04-x2.png" />
 				</a>
 			</li><!--
     		--><li>
-				<a href="globalStanding.html" class="s1" title="Ranking and regional">
+				<a href="globalStanding.html" class="s1" title="Global Standing">
 					<img src="./img/icons-banner-05-x2.png" />
 				</a>
 			</li><!--
@@ -128,11 +128,11 @@
 				<label class="status"><input type="checkbox" name="status" value="Operational"/><img src="./img/status/05.png" class="status" />Operational</label>
 
 				<h2>Global indicators</h2>
-				<label><input type="radio" name="layer" value="none" checked> Indéfini</label>
-				<label><input type="radio" name="layer" value="population" /> Population, Total (2013)</label>
-				<label><input type="radio" name="layer" value="urbanization" /> Taux d'urbanisation (2011)</label>
-				<label><input type="radio" name="layer" value="school" /> Taux net de fréquentation scolaire, primaire (2011)</label>
-				<label><input type="radio" name="layer" value="poverty" /> Incidence de la pauvreté (2002)</label>
+				<label><input type="radio" name="layer" value="none" checked> None</label>
+				<label><input type="radio" name="layer" value="population" /> Population, Total</label>
+				<label><input type="radio" name="layer" value="area" /> Area in sq.km</label>
+				<label><input type="radio" name="layer" value="density" /> Population Density</label>
+				<label><input type="radio" name="layer" value="houshold" /> Average Household size</label>
 
 				<div id="legend" style="display: none;">
 					<img src="img/legend.png">
@@ -344,7 +344,7 @@
 				<div class="panel-title">
 					<h2 class="region-name">Namibia</h2>
 					<img src="./img/right-panel/icon-pdf.png" class="export"/>
-					<div class="close-button"><img src="./img/icon-close.png"/>CLose</div>
+					<div class="close-button"><img src="./img/icon-close.png"/>Close</div>
 				</div>
 
 				<table class="global-indicators">
@@ -354,23 +354,23 @@
 				<table class="realisation-indicators">
 					<thead>
 						<tr>
-							<th colspan="3">Indicateurs Globaux</th>
+							<th colspan="3">Global Indicators</th>
 						</tr>
 						<tr>
-							<th>Indicateur Name</th>
-							<th>Valeur en 2015</th>
-							<th>Variation en Pourcentage</th>
+							<th>Indicator Name</th>
+							<th>Value in 2012</th>
+							<th>Percentage change</th>
 						</tr>
 					</thead>
 					<tbody></tbody>
 				</table>
 
-				<h3>Sélectionnez une région pour une liste détaillée des projets.</h3>
+				<h3>Select a region for a detailed list of projects.</h3>
 
 				<table class="axe-summ">
 					<thead>
 						<tr>
-							<th colspan="2">Nombre de projets par Stratégique de la Vision 2035</th>
+							<th colspan="2">Number of projects by the Strategic Vision</th>
 						</tr>
 					</thead>
 					<tbody></tbody>
@@ -379,11 +379,11 @@
 				<table class="pp-summ" style="width: 100%">
 					<thead>
 						<tr>
-							<th colspan="4">Nombre de projets et le budget total</th>
+							<th colspan="4">Number of projects and total budget</th>
 						</tr>
 						<tr>
 							<th colspan="2">PP</th>
-							<th>Projets</th>
+							<th>Projects</th>
 							<th>Budget</th>
 						</tr>
 					</thead>
@@ -393,7 +393,7 @@
 				<table class="reforms-groups">
 					<thead>
 						<tr>
-							<th>Résumé des réformes</th>
+							<th>Summary of Reforms</th>
 						</tr>
 					</thead>
 					<tbody></tbody>
@@ -452,65 +452,69 @@
 	</script>
 
 	<script id="new-object-budgetting" type="text/x-handlebars-template">
-		<iframe src="http://pspp.knoema.com/resource/embed/togswgc?nom-projet={{=it.name}}" frameborder="0" height="100%" width="100%"></iframe>
+		<img src="./img/budgeting-x2.png" width="1421" />
 	</script>
 
 	<script id="region-profile" type="text/x-handlebars-template">
 
-		<table>
+		<table style="width: 100%">
 			<thead>
 				<tr>
-					<th colspan="3">Développement économique</th>
+					<th colspan="3">Employment Statistics</th>
 					<th></th>
 				</tr>
 			</thead>
 			<tbody>
 				<tr>
-					<td>GDP per capita</td>
-					<td>{{=it.indicatorData["GDP per capita"]}}</td>
+					<td>Households</td>
+					<td>{{=it.indicatorData["Households"]}}</td>
 				</tr>
 				<tr>
-					<td>Non-farm economy, weight</td>
-					<td>{{=it.indicatorData["Non-farm economy, weight"]}}</td>
+					<td>Economically inactive population</td>
+					<td>{{=it.indicatorData["Economically inactive population"]}}</td>
 				</tr>
 				<tr>
-					<td>GDP growth (2005-2011)</td>
-					<td>{{=it.indicatorData["GDP growth (2005-2011)"]}}</td>
+					<td>Unemployed (UE), Broad</td>
+					<td>{{=it.indicatorData["Unemployed (UE), Broad"]}}</td>
 				</tr>
 				<tr>
-					<td>Share in GDP Growth (2005-2011)</td>
-					<td>{{=it.indicatorData["Share in GDP Growth (2005-2011)"]}}</td>
+					<td>Employed (E)</td>
+					<td>{{=it.indicatorData["Employed (E)"]}}</td>
 				</tr>
 				<tr>
-					<td>Deviation from average of economic development</td>
-					<td>{{=it.indicatorData["Deviation from average of economic development"]}}</td>
+					<td>Labour force, Broad</td>
+					<td>{{=it.indicatorData["Labour force, Broad"]}}</td>
 				</tr>
 			</tbody>
 		</table>
 
-		<table>
+		<table style="width: 100%">
 			<thead>
 				<tr>
-					<th colspan="3">Développement humain</th>
+					<th colspan="3">Demography Statistics</th>
 					<th></th>
 				</tr>
 			</thead>
 			<tbody>
 				<tr>
-					<td>Literacy</td>
-					<td>{{=it.indicatorData["Literacy"]}}</td>
+					<td>Population, Total</td>
+					<td>{{=it.indicatorData["Population, Total"]}}</td>
 				</tr>
 				<tr>
-					<td>Life expectancy</td>
-					<td>{{=it.indicatorData["Life expectancy"]}}</td>
+					<td>Population, Female</td>
+					<td>{{=it.indicatorData["Population, Female"]}}</td>
 				</tr>
 				<tr>
-					<td>Population above the poverty line</td>
-					<td>{{=it.indicatorData["Population above the poverty line"]}}</td>
+					<td>Population, Male</td>
+					<td>{{=it.indicatorData["Population, Male"]}}</td>
 				</tr>
 				<tr>
-					<td>Deviation from average of human development</td>
-					<td>{{=it.indicatorData["Deviation from average of human development"]}}</td>
+					<td>Area in sq.km</td>
+					<td>{{=it.indicatorData["Area in sq.km"]}}</td>
+				</tr>
+				<tr>
+					<td>Population Density</td>
+					<td>{{=it.indicatorData["Population Density"]}}</td>
 				</tr>
 			</tbody>
 		</table>
@@ -917,7 +921,7 @@
 	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDW5mB0UdDWi7EdcoH3eE-IunlT7nISRuA&v=3.exp&libraries=visualization,drawing"></script>
 	<script src="http://code.jquery.com/ui/1.11.4/jquery-ui.min.js" type="text/javascript"></script>
 	<script src="http://code.highcharts.com/highcharts.js"></script>
-	<script src="https://pspp.knoema.com/app-script?version=2.0" type="text/javascript" ></script>
+	<script src="https://namibiagpt.knoema.com/app-script?version=2.0" type="text/javascript" ></script>
 	<script src="Scripts/marketwithlabel.js"></script>
 	<script src="Scripts/doT.min.js"></script>
 	<script src="Scripts/auth.js"></script>

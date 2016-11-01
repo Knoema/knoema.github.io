@@ -757,7 +757,7 @@ body.loading > .ajax-loader {
 	padding-bottom: 13px;
 	border-bottom: none;
 	background-color: #fff;
-	color: #472001;
+	color: #000;
 }
 .passport__content__new, .passport__content__new__b
 {
@@ -1242,7 +1242,7 @@ p.value
 	top: 0;
 	bottom: 45px;
 	width: 350px;
-	background-color: #f4ece1;
+	background-color: #fafafa;
 	padding: 5px 10px;
 	font-family: 'Roboto', sans-serif;
 	font-size: 12px;
@@ -1260,7 +1260,7 @@ p.value
 }
 .panel-title .close-button
 {
-	color: #472001;
+	color: #000;
 	margin: 20px 10px 0 0;
 	float: right;
 	cursor: pointer;
@@ -1272,7 +1272,7 @@ p.value
 }
 .panel-title
 {
-	border-bottom: 1px solid #9b7c4f;
+	border-bottom: 1px solid #000;
 }
 
 #right-hand-panel table,
@@ -1301,7 +1301,7 @@ img.pp-image-small
 #right-hand-panel table tbody tr:nth-child(2n),
 #senegal-right-hand-panel table tbody tr:nth-child(2n)
 {
-	background-color: #f3f0ec;
+	background-color: #eceff3;
 }
 
 #right-hand-panel table tbody tr,
@@ -1445,8 +1445,8 @@ img.pp-image-small
 	color: #fff;
 	font-size: 11pt;
 	display: block;
-	margin-left: 140px;
-	width: 230px;
+	margin-left: 200px;
+	width: 170px;
 }
 
 .map-tooltip .general-block
@@ -1551,7 +1551,7 @@ img.pp-image-small
     font-size: 13pt;
     height: 60px;
     padding: 6px 5px 6px 15px;
-    width: 410px;
+    width: 420px;
     cursor: pointer;
 	text-transform: uppercase;
 	border-top: 1px solid #DEDEDE;
@@ -1806,11 +1806,11 @@ ul.subtopic-content li a
 }
 .reforms-table .right-part table.period thead th.uoi
 {
-	background-color: #d8f8d0;
+	background-color: #3B8DA2;
 }
 .reforms-table .right-part table.period thead th.non
 {
-	background-color: #f8f0d0;
+	background-color: #5A86A1;
 }
 .reforms-table .right-part table.period thead th img
 {
@@ -1828,19 +1828,19 @@ ul.subtopic-content li a
 }
 .reforms-table .right-part table.period tbody tr td.uoi
 {
-	background-color: #d8f8d0;
+	background-color: #DFFFD8;
 }
 .reforms-table .right-part table.period tbody tr:nth-child(2n) td.uoi
 {
-	background-color: #d8f8d0;
+	background-color: #D8F8CF;
 }
 .reforms-table .right-part table.period tbody tr td.non
 {
-	background-color: #f8f0d0;
+	background-color: #FEF8D8;
 }
 .reforms-table .right-part table.period tbody tr:nth-child(2n) td.non
 {
-	background-color: #f8f0d0;
+	background-color: #F9F0D1;
 }
 .reforms-table .right-part table.period tbody tr:nth-child(2n)
 {

@@ -189,7 +189,7 @@
 						continue;
 
 					var reformName = _this.projectData[offset + _this.nameIndex];
-					var specialReform = reformName == "Intégration de l'apprentissage et le stage dans le code du travail";
+					var specialReform = false;//reformName == "Intégration de l'apprentissage et le stage dans le code du travail";
 					var data = [
 						reformName,
 						_this.projectData[offset + _this.deadlineIndex],

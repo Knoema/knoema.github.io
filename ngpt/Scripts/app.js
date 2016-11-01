@@ -28,9 +28,9 @@ var Infrastructure;
 	var budgetIndex = -1;
 
 	var axes = {
-		'1': 'Axe 1. Transformation structurelle de l’économie et croissance',
-		'2': 'Axe 2. Capital humain, Protection sociale et Développement durable',
-		'3': 'Axe 3. Gouvernance, Institutions, Paix et Sécurité'
+		'1': 'Axis 1. Structural Transformation of the economy and growth',
+		'2': 'Axis 2. Human capital, social protection and sustainable development',
+		'3': 'Axis 3. Governance, Institutions, Peace and Security'
 	};
 
 	var sectors = {
@@ -148,7 +148,6 @@ var Infrastructure;
             this.markers = [];
             this.infoWindow = new google.maps.InfoWindow();
             this.regionData = [];
-            this.regionAverageData = {};
             this.senegalData = {};
             this.layerData = {};
             this.layerDataForTooltip = {};
@@ -463,25 +462,25 @@ var Infrastructure;
             						case 'population':
             							dataLoader = _this.getDataLayerPopulation();
             							break;
-            						case 'urbanization':
-            							dataLoader = _this.getDataLayerUrbanization();
+            						case 'area':
+            							dataLoader = _this.getDataLayerArea();
             							break;
-            						case 'school':
-            							dataLoader = _this.getDataLayerSchool();
+            						case 'density':
+            							dataLoader = _this.getDataLayerDensity();
             							break;
-            						case 'poverty':
-            							dataLoader = _this.getDataLayerPoverty();
+            						case 'houshold':
+            							dataLoader = _this.getDataLayerHoushold();
             							break;
             					}
 
             					if (_this.layerData[layerName]) {
-            						_this.displayLayerData(layerName, _this.layerData[layerName], layerName == 'population');
+            						_this.displayLayerData(layerName, _this.layerData[layerName], true);
             					}
             					else {
             						dataLoader.done(function (data) {
 
             							_this.layerData[layerName] = data;
-            							_this.displayLayerData(layerName, data, layerName == 'population');
+            							_this.displayLayerData(layerName, data, true);
             						});
             					}
 
@@ -689,7 +688,7 @@ var Infrastructure;
 
         		html += '</div>';
 
-        		html += '<a href="#" data-data="' + encodeURI(JSON.stringify(tooltipData)) + '" class="opp-button">Passeport projet ouvert</a>';
+        		html += '<a href="#" data-data="' + encodeURI(JSON.stringify(tooltipData)) + '" class="opp-button">Project Passport</a>';
 
         		html += '</div>';
 
@@ -792,17 +791,16 @@ var Infrastructure;
         	};
 
         	if (self.regionData.length == 0) {
-        		self.getRegionsData().done(function (data) {
+        		$.when(self.getRegionsData(), self.getRegionsData2()).done(function (regionData1, regionData2) {
 
-        			self.loop(data.data, data.columns, null, function (i, item) {
+        			self.loop(regionData1[0].data, regionData1[0].columns, null, function (i, item) {
 
-        				var ind = item[3];
-        				if (!self.regionAverageData[ind])
-        					self.regionAverageData[ind] = 0;
+        				self.regionData.push({ regionId: item[1], indicator: item[5], value: item[13] * 1 });
+        			});
 
-        				self.regionAverageData[ind] += item[6] * 1 / 14;
+        			self.loop(regionData2[0].data, regionData2[0].columns, null, function (i, item) {
 
-        				self.regionData.push({ regionId: item[1], indicator: ind, value: item[6] * 1 });
+        				self.regionData.push({ regionId: item[1], indicator: item[5], value: item[6] * 1 });
         			});
         			
         			callback(filterByRegion(regionId));
@@ -814,29 +812,56 @@ var Infrastructure;
         };
 
         Application.prototype.getRegionsData = function () {
-        	var url = 'http://knoema.com/api/1.0/data/details?client_id=EZj54KGFo3rzIvnLczrElvAitEyU28DGw9R73tif&page_id=SNDED2016';
-        	var data = {
-        		"Header": [],
-        		"Stub": [],
-        		"Filter": [{
-        			"DimensionId": "location",
-        			"Members": [],
-        			"DimensionName": "Location",
-        			"DatasetId": "SNDED2016"
-        		},
-        		{
-        			"DimensionId": "indicator",
-        			"Members": ['1000010', '1000020', '1000030', '1000040', '1000050', '1000070', '1000080', '1000090', '1000100'],
-        			"DimensionName": "Indicator",
-        			"DatasetId": "SNDED2016"
-        		}],
-        		"Frequencies": [],
-        		"Dataset": "SNDED2016",
-        		"Segments": null,
-        		"MeasureAggregations": null
-        	};
 
-        	return $.post(url, data);
+        	return $.post('http://knoema.com/api/1.0/data/details?client_id=EZj54KGFo3rzIvnLczrElvAitEyU28DGw9R73tif', {
+        		"Header": [{
+        			"DimensionId": "Time",
+        			"Members": ["2012"],
+        			"UiMode": "individualMembers"
+        		}],
+        		"Stub": [{
+        			"DimensionId": "indicator",
+        			"Members": ["1001180", "1001060", "1000880", "1000210", "1000050"]
+        		}, {
+        			"DimensionId": "region",
+        			"Members": ["1000010", "1000020", "1000030", "1000040", "1000050", "1000060", "1000070", "1000080", "1000090", "1000100", "1000110", "1000120", "1000130"]
+        		}, {
+        			"DimensionId": "zone",
+        			"Members": ["1000000"]
+        		}, {
+        			"DimensionId": "sex",
+        			"Members": ["1000000"]
+        		}, {
+        			"DimensionId": "age-group",
+        			"Members": ["1000000"]
+        		}, {
+        			"DimensionId": "measure",
+        			"Members": ["1000000"]
+        		}],
+        		"Filter": [],
+        		"Frequencies": ["A"],
+        		"Dataset": "NLFSD2015"
+        	});
+        };
+        Application.prototype.getRegionsData2 = function () {
+
+        	return $.post('http://knoema.com/api/1.0/data/details?client_id=EZj54KGFo3rzIvnLczrElvAitEyU28DGw9R73tif', {
+        		"Header": [{
+        			"DimensionId": "Time",
+        			"Members": ["2011"],
+        			"UiMode": "individualMembers"
+        		}],
+        		"Stub": [{
+        			"DimensionId": "region",
+        			"Members": ["1000010", "1000080", "1000160", "1000230", "1000300", "1000400", "1000510", "1000580", "1000700", "1000780", "1000910", "1001020", "1001130"]
+        		}, {
+        			"DimensionId": "variable",
+        			"Members": ["1000010", "1000040", "1000050", "1000060", "1000070"]
+        		}],
+        		"Filter": [],
+        		"Frequencies": ["A"],
+        		"Dataset": "dcrhbbb"
+        	});
         };
 
         Application.prototype.getObjects = function () {
@@ -880,114 +905,86 @@ var Infrastructure;
 		
         Application.prototype.getDataLayerPopulation = function () {
 
-        	var url = 'https://knoema.com' + '/api/1.0/data/details?client_id=EZj54KGFo3rzIvnLczrElvAitEyU28DGw9R73tif&page_id=SERSSD2011';
-
-        	var descriptor = {
-        		"Header": [
-				   {
-				   	"DimensionId": "Time",
-				   	"Members": ["2013"],
-				   	"UiMode": "individualMembers"
-				   }
-        		],
-        		"Stub": [
-				   {
-				   	"DimensionId": "location",
-				   	"Members": ["1000010", "1000020", "1000030", "1000040", "1000050", "1000060", "1000070", "1000080", "1000090", "1000100", "1000110", "1000120", "1000130", "1000140"]
-				   }
-        		],
-        		"Filter": [
-				   {
-				   	"DimensionId": "variable",
-				   	"Members": ["1000040"]
-				   }
-        		],
-        		"Frequencies": ["A"],
-        		"Dataset": "SERSSD2011"
-        	};
-
-        	return $.post(url, descriptor);
-        };
-
-        Application.prototype.getDataLayerUrbanization = function () {
-
-        	var url = 'https://knoema.com' + '/api/1.0/data/details?client_id=EZj54KGFo3rzIvnLczrElvAitEyU28DGw9R73tif&page_id=SERSSD2011';
-
-        	var descriptor = {
-        		"Header": [{
-        			"DimensionId": "Time",
-        			"Members": ["2011"],
-					"UiMode": "individualMembers"
-        		}],
-				"Stub": [{
-					"DimensionId": "location",
-					"Members": []
-				}],
-				"Filter": [{
-					"DimensionId": "variable",
-					"Members": ["1000550"]
-				}, {
-					"DimensionId": "sex",
-					"Members": ["1000020"]
-				}],
-				"Frequencies": ["A"],
-				"Dataset": "SEPFS2011"
-        };
-
-        	return $.post(url, descriptor);
-        };
-
-        Application.prototype.getDataLayerSchool = function () {
-
-        	var url = 'https://knoema.com' + '/api/1.0/data/details?client_id=EZj54KGFo3rzIvnLczrElvAitEyU28DGw9R73tif&page_id=SEDHSMI2011';
-
-        	var description = {
+        	return $.post('https://knoema.com' + '/api/1.0/data/details?client_id=EZj54KGFo3rzIvnLczrElvAitEyU28DGw9R73tif&page_id=SERSSD2011', {
         		"Header": [{
         			"DimensionId": "Time",
         			"Members": ["2011"],
         			"UiMode": "individualMembers"
         		}],
         		"Stub": [{
-        			"DimensionId": "location",
-        			"Members": []
+        			"DimensionId": "region",
+        			"Members": ["1000010", "1000080", "1000160", "1000230", "1000300", "1000400", "1000510", "1000580", "1000700", "1000780", "1000910", "1001020", "1001130"]
         		}],
         		"Filter": [{
         			"DimensionId": "variable",
-        			"Members": ["1002820"]
-        		}, {
-        			"DimensionId": "sex",
-        			"Members": ["1000020"]
+        			"Members": ["1000010"]
         		}],
         		"Frequencies": ["A"],
-        		"Dataset": "SEDHSMI2011"
-        	};
-
-        	return $.post(url, description);
+        		"Dataset": "dcrhbbb"
+        	});
         };
 
-        Application.prototype.getDataLayerPoverty = function () {
+        Application.prototype.getDataLayerArea = function () {
 
-        	var url = 'https://knoema.com' + '/api/1.0/data/details?client_id=EZj54KGFo3rzIvnLczrElvAitEyU28DGw9R73tif&page_id=SEIPC2006';
-
-        	var description = {
+        	return $.post('https://knoema.com' + '/api/1.0/data/details?client_id=EZj54KGFo3rzIvnLczrElvAitEyU28DGw9R73tif&page_id=SERSSD2011', {
         		"Header": [{
         			"DimensionId": "Time",
-        			"Members": ["2002"],
+        			"Members": ["2011"],
         			"UiMode": "individualMembers"
         		}],
         		"Stub": [{
-        			"DimensionId": "location",
-        			"Members": [],
+        			"DimensionId": "region",
+        			"Members": ["1000010", "1000080", "1000160", "1000230", "1000300", "1000400", "1000510", "1000580", "1000700", "1000780", "1000910", "1001020", "1001130"]
         		}],
         		"Filter": [{
         			"DimensionId": "variable",
-        			"Members": ["1000000"]
+        			"Members": ["1000060"]
         		}],
         		"Frequencies": ["A"],
-        		"Dataset": "SEIPC2006",
-        	};
+        		"Dataset": "dcrhbbb"
+        	});
+        };
 
-        	return $.post(url, description);
+        Application.prototype.getDataLayerDensity = function () {
+
+        	return $.post('https://knoema.com' + '/api/1.0/data/details?client_id=EZj54KGFo3rzIvnLczrElvAitEyU28DGw9R73tif&page_id=SEDHSMI2011', {
+        		"Header": [{
+        			"DimensionId": "Time",
+        			"Members": ["2011"],
+        			"UiMode": "individualMembers"
+        		}],
+        		"Stub": [{
+        			"DimensionId": "region",
+        			"Members": ["1000010", "1000080", "1000160", "1000230", "1000300", "1000400", "1000510", "1000580", "1000700", "1000780", "1000910", "1001020", "1001130"]
+        		}],
+        		"Filter": [{
+        			"DimensionId": "variable",
+        			"Members": ["1000070"]
+        		}],
+        		"Frequencies": ["A"],
+        		"Dataset": "dcrhbbb"
+        	});
+        };
+
+        Application.prototype.getDataLayerHoushold = function () {
+
+        	return $.post('https://knoema.com' + '/api/1.0/data/details?client_id=EZj54KGFo3rzIvnLczrElvAitEyU28DGw9R73tif&page_id=SEIPC2006', {
+        		"Header": [{
+        			"DimensionId": "Time",
+        			"Members": ["2011"],
+        			"UiMode": "individualMembers"
+        		}],
+        		"Stub": [{
+        			"DimensionId": "region",
+        			"Members": ["1000010", "1000080", "1000160", "1000230", "1000300", "1000400", "1000510", "1000580", "1000700", "1000780", "1000910", "1001020", "1001130"]
+        		}],
+        		"Filter": [{
+        			"DimensionId": "variable",
+        			"Members": ["1000130"]
+        		}],
+        		"Frequencies": ["A"],
+        		"Dataset": "dcrhbbb"
+        	});
         };
 
         Application.prototype.displayLayerData = function (layer, data, needToNorm) {
@@ -1102,26 +1099,20 @@ var Infrastructure;
 
         Application.prototype.getDataSenegalRealisation = function () {
 
-        	var url = 'http://pspp.knoema.com/api/1.0/data/details?client_id=EZj54KGFo3rzIvnLczrElvAitEyU28DGw9R73tif&page_id=PSEIDS2016V1';
-        	var description = {
+        	return $.post('http://namibia.opendataforafrica.org/api/1.0/data/details?client_id=EZj54KGFo3rzIvnLczrElvAitEyU28DGw9R73tif&page_id=PSEIDS2016V1', {
         		"Header": [{
         			"DimensionId": "Time",
-        			"Members": ["2014", "2015"],
+        			"Members": ["2011", "2012"],
         			"UiMode": "individualMembers"
         		}],
         		"Stub": [{
-        			"DimensionId": "indicateur",
-        			"Members": ["1002690", "1002730", "1002760", "1002800"]//"1000020", "1000030", "1000070", "1000080", "1000180", "1000200", "1000210", "1000220", "1000230", "1000240", "1000360", "1000370", "1000380", "1000420", "1000430", "1000440", "1000460", "1000470", "1000480", "1000490", "1000510", "1000620", "1000630", "1000640", "1000650", "1000660", "1000670", "1000680", "1000710", "1000720", "1000730", "1000740", "1000850", "1000860", "1000870", "1000880", "1000890", "1000900", "1000910", "1001000", "1001070", "1001080", "1001100", "1001160", "1001170", "1001190", "1001200", "1001210", "1001230", "1001240", "1001250", "1001260", "1001270", "1001280", "1001290", "1001310", "1001320", "1001330", "1001360", "1001390", "1001400", "1001410", "1001420", "1001430", "1001450", "1001460", "1001470", "1001480", "1001490", "1001500", "1001510", "1001520", "1001530", "1001540", "1001550", "1001560", "1001570", "1001580", "1001590", "1001600", "1001630", "1001650", "1001660", "1001670", "1001680", "1001690", "1001700", "1001710", "1001720", "1001730", "1001750", "1001760", "1001770", "1001780", "1001790", "1001800", "1001810", "1001820", "1001840", "1001850", "1001860", "1001870", "1001880", "1001890", "1002560", "1002530", "1002500", "1001900", "1001910", "1001920", "1001930", "1001950", "1002030", "1002080", "1002110", "1002120", "1002270", "1002280", "1002290", "1002300", "1002310", "1002320", "1002330", "1002340", "1002350", "1002360", "1002370", "1002380", "1002390", "1002400", "1002410", "1002420", "1002430", "1002440", "1002450", "1002460", "1002470", "1002480", "1002490", "1002500", "1002530", "1002540", "1002560", "1002570", "1002580", "1002590", "1002600", "1002610", "1002630", "1002670", "1002680", "1002690", "1002700", "1002710", "1002720", "1002730", "1002740", "1002750", "1002760", "1002770", "1002780", "1002790", "1002800", "1002810", "1002820", "1002830", "1002840"]
+        			"DimensionId": "indicator",
+        			"Members": ["1003690", "1000290", "1000100", "1001000"]
         		}],
-        		"Filter": [{
-        			"DimensionId": "mesure",
-        			"Members": ["1000010"]
-        		}],
+        		"Filter": [],
         		"Frequencies": ["A"],
-        		"Dataset": "PSEIDS2016V1"
-        	};
-
-        	return $.post(url, description);
+        		"Dataset": "NANA2015"
+        	});
         };
 
         Application.prototype.getProjectByRegion = function(regionId) {
@@ -1257,7 +1248,7 @@ var Infrastructure;
         		var dateIndex = -1;
 
         		for (var i = 0; i < _this.realizeData.columns.length; i++) {
-        			if (_this.realizeData.columns[i].dimensionId == 'indicateur' && _this.realizeData.columns[i].name == 'Indicateur')
+        			if (_this.realizeData.columns[i].dimensionId == 'indicator' && _this.realizeData.columns[i].name == 'Indicator')
         				nameIndex = i;
 
         			if (_this.realizeData.columns[i].name == 'Value')
@@ -1280,11 +1271,11 @@ var Infrastructure;
 
         		var realizeTData = [];
         		for (var indicator in realizeData) {
-        			var coeff = (((parseFloat(realizeData[indicator]['2015']) - parseFloat(realizeData[indicator]['2014'])) / parseFloat(realizeData[indicator]['2015'])) * 100).toFixed(2);
+        			var coeff = (((parseFloat(realizeData[indicator]['2012']) - parseFloat(realizeData[indicator]['2011'])) / parseFloat(realizeData[indicator]['2012'])) * 100).toFixed(2);
 
         			realizeTData.push($('<tr>')
 						.append($('<td>', { text: indicator }))
-						.append($('<td>', { text: realizeData[indicator]['2015'] }))
+						.append($('<td>', { text: realizeData[indicator]['2012'].toFixed(2) }))
 						.append($('<td>', { text: coeff }))
         			);
         		}
@@ -1356,11 +1347,11 @@ var Infrastructure;
 
 
         		var reformsData = {
-        			'Environnement des affaires et régulation': 0,
+        			'Business environment and regulation': 0,
         			'Infrastructures': 0,
-        			'Capital Humain': 0,
-        			'Economie numérique': 0,
-        			'Financement de l’économie': 0
+        			'Human capital': 0,
+        			'Digital economy': 0,
+        			'Financing of the economy': 0
         		};
         		_this.loop(_this.projectData, _this.projectColumns, null, function(i, item){
         			if (item[_this.objectTypeIndex] != 'R')
@@ -1375,7 +1366,7 @@ var Infrastructure;
 
         		$('#senegal-right-hand-panel .reforms-groups tbody').empty().append(reformTrs);
 
-        		_this.pushRightPanelContentToExportForm($('#senegal-right-hand-panel'), 'Senegal');
+        		_this.pushRightPanelContentToExportForm($('#senegal-right-hand-panel'), 'Namibia');
         	});
         };
 
@@ -1485,7 +1476,7 @@ var Infrastructure;
         	clone.wrap('<div></div>')
 
         	var content = clone.parent().html();
-        	content = content.split('./').join(location.protocol + '//' + location.host + '/pspp/');
+        	content = content.split('./').join(location.protocol + '//' + location.host + '/ngpt/');
 
         	var template = doT.template($('#export-content').html());
         	$('#export-form [name=content]').val(template({
@@ -1503,7 +1494,7 @@ var Infrastructure;
         	firstPage.find('.status-button').remove();
 
         	var content = firstPage.html();// + '<div style="page-break-before: always"></div>' + secondPage.html();
-        	content = content.split('./').join(location.protocol + '//' + location.host + '/pspp/');
+        	content = content.split('./').join(location.protocol + '//' + location.host + '/ngpt/');
 
         	var template = doT.template($('#export-content').html());
         	$('#export-form [name=content]').val(template({
@@ -1572,7 +1563,7 @@ var Infrastructure;
         	if (this.infoWindow != null)
         		this.infoWindow.close();
 
-        	var regionId = event.feature.getProperty('Id');
+        	var regionId = event.feature.getId();
         	var value = this.layerDataForTooltip[this.currentLayerName][regionId].toString().replace(/(\d{1,3}(?=(\d{3})+(?:\.\d|\b)))/g, "\$1 ");
         	var content = '<b>Region:&nbsp;</b>' + event.feature.getProperty('Name') + '<br /><b>Value:&nbsp;</b>' + value;
 

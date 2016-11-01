@@ -4,7 +4,7 @@
 	var host = 'http://pspp.knoema.com';
 
 	var projectsDataset = 'hmunucb';
-	var dashboardUrl = 'http://pspp.knoema.com/resource/embed/cwxobyf?projects=';
+	var dashboardUrl = 'http://pspp.knoema.com/resource/embed/gzlsfq?projects=';
 
 	var projectData = [];
 	var projectColumns = [];

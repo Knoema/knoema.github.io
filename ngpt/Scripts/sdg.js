@@ -2,9 +2,9 @@
 
 $(function () {
 	/*modify this start*/
-	var host = 'http://senegal.opendataforafrica.org';
-	var structureCustomDsId = 'sxfafz';
-	var structureLightDsId = 'hxurvob';
+	var host = 'http://namibia.opendataforafrica.org';
+	var structureCustomDsId = 'qmmqiqc';
+	var structureLightDsId = 'yyvtunf';
 	/*modify this end*/
 
 
@@ -111,14 +111,14 @@ $(function () {
 	var browseText = "Parcourir les données ";
 	var metadataText = "Métadonnées";
 	var sdmxText = "SDMXURL";
-	var collapseAllText = "Réduire Tout";
-	var expandAllText = "Développer Tout";
+	var collapseAllText = "Collapse all";
+	var expandAllText = "Expand all";
 
-	var editPageTextInFrench = "Modifier la page"; //en - edit page
-	var backTextInFrench = "Retour"; //en - back
+	var editPageTextInFrench = "Edit page"; //en - edit page
+	var backTextInFrench = "Back"; //en - back
 
 	function isFrenchLocale() {
-		return true;
+		return false;
 	}
 
 	if (isFrenchLocale()) {
@@ -191,12 +191,10 @@ $(function () {
 							break;
 					}
 
-					var frName = goal.fields['goal-name-fr-goal-name'];
-
 					$ele.data('goal-key', goal.key);
-					$ele.data('goal-name', frName);
+					$ele.data('goal-name', goal.name);
 					$ele.data('goal-no', goalNo);
-					$ele.find('.hover-text').text(frName);
+					$ele.find('.hover-text').text(goal.name);
 				});
 
 				$('#sdg .tile .image').empty();
