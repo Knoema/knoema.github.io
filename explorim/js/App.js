@@ -17,6 +17,8 @@ function App() {
     this.infoWindow = new google.maps.InfoWindow();
     this._fonctionnairesDetails = null;
 
+    this._activeRegionId = null;
+
     this.content = null;
 
     this.timePoint = null;
@@ -29,8 +31,8 @@ function App() {
     };
 
     this._invisibleStyle = {
+        strokeWeight: 0,
         strokeColor: 'transparent',
-        strokeWeight: 1,
         fillColor: 'transparent',
         clickable: false
     };
@@ -57,7 +59,7 @@ function App() {
     this._regionsComponent = null;
     this._dataLayers = {};
     this._layerTitles = {};
-};
+}
 
 App.prototype.init = function () {
 
@@ -112,7 +114,9 @@ App.prototype.init = function () {
                 });
 
                 $('#top-map-buttons').find('.dropdown-holder').append($regionsDropdown);
-                $regionsDropdown.selectpicker();
+                $regionsDropdown.selectpicker({
+                    liveSearch: true
+                });
 
                 $('#select-region').on('hidden.bs.select', this.selectRegion.bind(this));
 
@@ -830,27 +834,31 @@ App.prototype.switchDivision = function (division, reloadLayer, layerId, availab
 };
 
 App.prototype.selectRegion = function (e) {
+    var self = this;
+    var regionId, regionName, key, level;
 
     var $selectRegion = $('#select-region');
-
     var $selected = $selectRegion.find(':selected');
-
-    var regionId, regionName, key;
 
     if (e.feature) {
         regionId = e.feature.getId();
         regionName = e.feature.getProperty('name');
         key = $selectRegion.find('[data-region-id="' + regionId + '"]').val();
+        level = $selectRegion.find('[data-region-id="' + regionId + '"]').data('level');
         $selectRegion.selectpicker('val', key);
     } else {
         regionId = $selected.data('regionId');
         regionName = $selected.data('name');
+        level = $selected.data('level');
         key = $selectRegion.val();
     }
 
     if (!regionId) {
+        this._activeRegionId = null;
         return;
     }
+
+    this._activeRegionId = regionId;
 
     this.infoWindow.close();
 
@@ -861,6 +869,13 @@ App.prototype.selectRegion = function (e) {
     google.maps.event.trigger(this._map, "resize");
 
     this._regionsComponent.select(regionId);
+
+    _.each(this._dataLayers, function(dataLayer, key) {
+        dataLayer.forEach(function(feature) {
+            var featureRegionId = feature.getId();
+            dataLayer.overrideStyle(feature, featureRegionId && featureRegionId.startsWith(regionId) ? self._visibleStyle : self._invisibleStyle);
+        });
+    });
 
     var $rightSideBar = $('#right-side-bar');
 
@@ -1112,6 +1127,13 @@ App.prototype.bindEvents = function () {
         this._map.setZoom(Math.min(6, this._map.getZoom()));
     }.bind(this));
 
+    $('#jump-to-parent-region').on('click', function() {
+        var regionId = this._activeRegionId.substr(0, _.lastIndexOf(this._activeRegionId, '-'));
+        var regionName = $('#select-region').find('[data-region-id="' + regionId + '"]').val();
+        $('#select-region').selectpicker('val', regionName);
+        $('#select-region').trigger('hidden.bs.select');
+    }.bind(this));
+
 	$('#regional-division-map-switcher').on('click', 'a', function(event) {
 		self.switchDivision($(event.target).data('division'), true, $(event.target).data('layerId'));
 	});
@@ -1268,7 +1290,7 @@ App.prototype.bindEvents = function () {
     $rightSideBar.on('click', '#view-profile', function() {
         $('#profile-modal-2').css({
             "top": 10,
-            "bottom": $('#timeline').height() + 51, //for padding of .close button
+            "bottom":  $('#timeline').is(':visible') ? $('#timeline').height() + 51 : 51, //for padding of .close button
             "width": $('#map-container').width() - 20,
             "left": 10
         }).show();
@@ -1448,30 +1470,37 @@ App.prototype.loadLayer = function (layerId, layerType, callback) {
 
                 this.showLegend(this._layers[layerId].layer.ranges);
 
-                layerData.layer.dataLayer.addListener('click', function (e) {
-                    var data = e.feature.getProperty('tooltipData');
+                layerData.layer.dataLayer.addListener('click', $.proxy(this.selectRegion, this));
 
-                    //Layers under "Fonctionnaires"
-                    var regionId = [
-                        "fc3a4fa6-66b2-a30a-c83f-0adbfe8805d7",
-                        "0a9c5e6a-9562-3866-7261-741c96999e79",
-                        "36d5d01c-4772-9056-37f3-dd005e894cff",
-                        "45c2b643-a200-1b64-d8c0-9094472c415d",
-                        "c5a695b4-05c0-9e51-2288-9187885da5e3",
-                        "0a0afddd-db7c-b810-1a86-ecfaa67ddb21"
-                    ].indexOf(layerData.layerId) > -1 ? e.feature.getId() : null;
-
-                    var $infoWindowContent = $.tmpl('info-window.html', {
-                        title: data.name,
-                        regionId: regionId,
-                        layerId: layerData.layerId,
-                        content: Globalize.format(parseFloat(data.value))
-                    });
-
-                    self.infoWindow.setContent($infoWindowContent[0].outerHTML);
-                    self.infoWindow.setPosition(e.latLng);
-                    self.infoWindow.open(self._map);
-                });
+                // layerData.layer.dataLayer.addListener('click', function (e) {
+                //     var data = e.feature.getProperty('tooltipData');
+                //
+                //     var showFonctionnairesLink = [
+                //             //Layers under "Fonctionnaires"
+                //             "fc3a4fa6-66b2-a30a-c83f-0adbfe8805d7",
+                //             "0a9c5e6a-9562-3866-7261-741c96999e79",
+                //             "36d5d01c-4772-9056-37f3-dd005e894cff",
+                //             "45c2b643-a200-1b64-d8c0-9094472c415d",
+                //             "c5a695b4-05c0-9e51-2288-9187885da5e3",
+                //             "0a0afddd-db7c-b810-1a86-ecfaa67ddb21"
+                //         ].indexOf(layerData.layerId) > -1;
+                //
+                //     var regionId = e.feature.getId();
+                //
+                //     var $infoWindowContent = $.tmpl('info-window.html', {
+                //         title: data.name,
+                //         regionId: regionId,
+                //
+                //         showFonctionnairesLink: showFonctionnairesLink,
+                //
+                //         layerId: layerData.layerId,
+                //         content: Globalize.format(parseFloat(data.value))
+                //     });
+                //
+                //     self.infoWindow.setContent($infoWindowContent[0].outerHTML);
+                //     self.infoWindow.setPosition(e.latLng);
+                //     self.infoWindow.open(self._map);
+                // });
 
                 this._activeAreaLayerId = layerData.layerId;
 			}

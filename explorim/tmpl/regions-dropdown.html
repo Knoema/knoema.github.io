@@ -6,6 +6,7 @@
     <option
             data-name="${region.name}"
             data-region-id="${region.fields.regionid}"
+            data-level="${region.level}"
             value="${region.key}"
             style="padding-left: ${region.level * 10 + 5}px; {{if region.level == 0 || region.level == 1}}background-color: rgb(230, 230, 230);{{/if}}{{if region.level < 3}}font-weight: bold;{{/if}}"
     >
