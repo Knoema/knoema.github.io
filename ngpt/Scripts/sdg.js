@@ -108,8 +108,8 @@ $(function () {
 	}
 
 	var editText = "Edit";
-	var browseText = "Parcourir les données ";
-	var metadataText = "Métadonnées";
+	var browseText = "Browse Data";
+	var metadataText = "Metadata";
 	var sdmxText = "SDMXURL";
 	var collapseAllText = "Collapse all";
 	var expandAllText = "Expand all";

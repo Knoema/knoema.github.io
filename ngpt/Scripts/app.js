@@ -1201,9 +1201,13 @@ var Infrastructure;
 
         	this.getRegionData(regionId, function (data) {
 
+        		var dataForDisplay = {};
+        		for (var indicator in data)
+        			dataForDisplay[indicator] = _this.formatNumberUS(data[indicator]);
+
         		var regionData = doT.template($('#region-profile').html());
         		$('#region-data').empty().append(regionData({
-        			indicatorData: data
+        			indicatorData: dataForDisplay
         		}));
 
         		_this.pushRightPanelContentToExportForm($rhp, regionName);
@@ -1275,8 +1279,8 @@ var Infrastructure;
 
         			realizeTData.push($('<tr>')
 						.append($('<td>', { text: indicator }))
-						.append($('<td>', { text: realizeData[indicator]['2012'].toFixed(2) }))
-						.append($('<td>', { text: coeff }))
+						.append($('<td>', { text: _this.formatNumberUS(realizeData[indicator]['2012'].toFixed(2)) }))
+						.append($('<td>', { text: _this.formatNumberUS(coeff) }))
         			);
         		}
         		$('#senegal-right-hand-panel .realisation-indicators tbody').empty().append(realizeTData);
@@ -1340,7 +1344,7 @@ var Infrastructure;
 						.append($('<td>').append($('<img src="./img/right-panel/icons-' + PPSortedData[i][3] + '.png" class="pp-image-small">')))
 						.append($('<td>', { text: PPSortedData[i][0] }))
 						.append($('<td>', { text: PPSortedData[i][1] }))
-						.append($('<td>', { text: PPSortedData[i][2].toString().replace(/(\d{1,3}(?=(\d{3})+(?:\.\d|\b)))/g,"\$1 ") }))
+						.append($('<td>', { text: _this.formatNumberUS(PPSortedData[i][2]) }))
 					);
         		}
         		$('#senegal-right-hand-panel .pp-summ tbody').empty().append(ppTrs);
@@ -1564,7 +1568,7 @@ var Infrastructure;
         		this.infoWindow.close();
 
         	var regionId = event.feature.getId();
-        	var value = this.layerDataForTooltip[this.currentLayerName][regionId].toString().replace(/(\d{1,3}(?=(\d{3})+(?:\.\d|\b)))/g, "\$1 ");
+        	var value = this.formatNumberUS(this.layerDataForTooltip[this.currentLayerName][regionId]);
         	var content = '<b>Region:&nbsp;</b>' + event.feature.getProperty('name') + '<br /><b>Value:&nbsp;</b>' + value;
 
         	this.infoWindow = new google.maps.InfoWindow({
@@ -1573,6 +1577,11 @@ var Infrastructure;
         	});
 
         	this.infoWindow.open(this.map);
+        };
+
+        Application.prototype.formatNumberUS = function (number) {
+
+        	return number.toString().replace(/(\d{1,3}(?=(\d{3})+(?:\.\d|\b)))/g, "\$1,")
         };
 
         return Application;
