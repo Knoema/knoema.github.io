@@ -1480,7 +1480,7 @@ var Infrastructure;
         	clone.wrap('<div></div>')
 
         	var content = clone.parent().html();
-        	content = content.split('./').join(location.protocol + '//' + location.host + '/ngpt/');
+        	content = content.split('./').join(location.protocol + '//' + location.host + '/nnamibiagpt/');
 
         	var template = doT.template($('#export-content').html());
         	$('#export-form [name=content]').val(template({
@@ -1498,7 +1498,7 @@ var Infrastructure;
         	firstPage.find('.status-button').remove();
 
         	var content = firstPage.html();// + '<div style="page-break-before: always"></div>' + secondPage.html();
-        	content = content.split('./').join(location.protocol + '//' + location.host + '/ngpt/');
+        	content = content.split('./').join(location.protocol + '//' + location.host + '/namibiagpt/');
 
         	var template = doT.template($('#export-content').html());
         	$('#export-form [name=content]').val(template({

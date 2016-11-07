@@ -1,9 +1,9 @@
 ﻿/// <reference path="typings/jquery.d.ts"/>
 
 (function () {
-	var host = 'http://pspp.knoema.com';
+	var host = 'http://namibiagpt.knoema.com';
 
-	var projectsDataset = 'hmunucb';
+	var projectsDataset = 'voqoeh';
 
 	var projectData = [];
 	var projectColumns = [];
@@ -206,32 +206,32 @@
 						"Technical",
 						"Policy",
 
-						"Complétement exécuté?",
-						(_this.projectData[offset + _this.pForOuiNon] == '1' ? 'Oui' : (_this.projectData[offset + _this.pForOuiNon] == '0' ? 'Non' : '')),
-						(_this.projectData[offset + _this.pTecOuiNon] == '1' ? 'Oui' : (_this.projectData[offset + _this.pTecOuiNon] == '0' ? 'Non' : '')),
-						(_this.projectData[offset + _this.pPolOuiNon] == '1' ? 'Oui' : (_this.projectData[offset + _this.pPolOuiNon] == '0' ? 'Non' : '')),
+						"Fully executed?",
+						(_this.projectData[offset + _this.pForOuiNon] == '1' ? 'Yes' : (_this.projectData[offset + _this.pForOuiNon] == '0' ? 'No' : '')),
+						(_this.projectData[offset + _this.pTecOuiNon] == '1' ? 'Yes' : (_this.projectData[offset + _this.pTecOuiNon] == '0' ? 'No' : '')),
+						(_this.projectData[offset + _this.pPolOuiNon] == '1' ? 'Yes' : (_this.projectData[offset + _this.pPolOuiNon] == '0' ? 'No' : '')),
 
-						"Jour de démarrage",
+						"Start day",
 						_this.projectData[offset + _this.pForJouDem],
 						_this.projectData[offset + _this.pTecJouDem],
 						_this.projectData[offset + _this.pPolJouDem],
 
-						"Jour de finalisation",
+						"Day finalized",
 						_this.projectData[offset + _this.pForJouFin],
 						_this.projectData[offset + _this.pTecJourFin],
 						_this.projectData[offset + _this.pPolJouFin],
 
-						"Duree critiques (mois)",
+						"Critical duration (months)",
 						_this.projectData[offset + _this.pForDurCri],
 						_this.projectData[offset + _this.pTecDurCri],
 						_this.projectData[offset + _this.pPolDurCri],
 
-						"Principal Responsable",
+						"Senior Manager",
 						_this.projectData[offset + _this.pPrincResPre],
 						_this.projectData[offset + _this.pPrincResTec],
 						_this.projectData[offset + _this.pPrincResPol],
 
-						"Livrables",
+						"Deliverables",
 						_this.projectData[offset + _this.pForLiv],
 						_this.projectData[offset + _this.pTecLiv],
 						_this.projectData[offset + _this.pPolLiv],

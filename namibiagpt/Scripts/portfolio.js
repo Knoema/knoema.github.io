@@ -1,10 +1,10 @@
 ﻿/// <reference path="typings/jquery.d.ts"/>
 
 (function () {
-	var host = 'http://pspp.knoema.com';
+	var host = 'http://namibiagpt.knoema.com';
 
 	var projectsDataset = 'hmunucb';
-	var dashboardUrl = 'http://pspp.knoema.com/resource/embed/gzlsfq?projects=';
+	var dashboardUrl = 'http://namibiagpt.knoema.com/resource/embed/gzlsfq?projects=';
 
 	var projectData = [];
 	var projectColumns = [];
