@@ -1138,7 +1138,7 @@ App.prototype.bindEvents = function () {
 		self.switchDivision($(event.target).data('division'), true, $(event.target).data('layerId'));
 	});
 
-	$('#regional-division-modal-switcher').on('click', '.regional-division-type', function() {
+	$('#regional-division-modal-switcher').on('click', '.regional-division-type', function(event) {
 		self.switchDivision($(event.target).data('division'), false);
 	});
 
