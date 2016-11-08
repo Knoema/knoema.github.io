@@ -3,7 +3,7 @@
 (function () {
 	var host = 'http://namibiagpt.knoema.com';
 
-	var projectsDataset = 'hmunucb';
+	var projectsDataset = 'voqoeh';
 	var dashboardUrl = 'http://namibiagpt.knoema.com/resource/embed/gzlsfq?projects=';
 
 	var projectData = [];
