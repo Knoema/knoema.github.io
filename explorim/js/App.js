@@ -855,8 +855,6 @@ App.prototype.selectRegionFromDataLayer = function (e) {
         google.maps.event.trigger(this._map, "resize");
     }
 
-    //this._map.setCenter(e.latLng);
-
     var division = this._activeRegionalDivision;
 
     var newDivision;
@@ -928,14 +926,37 @@ App.prototype.selectRegion = function (e, isRegion) {
 
     if (!isRegion) {
         this._regionsComponent.select(regionId);
+
+        var division = this._activeRegionalDivision;
+
+        var newDivision;
+
+        switch (division) {
+            case 'Région':
+                newDivision = 'Département';
+                break;
+            case 'Département':
+                newDivision = 'Communale';
+                break;
+            case 'Communale':
+                newDivision = 'Communale';
+                break;
+        }
+
+        this.selectRegion(e, true);
+
+        this.switchDivision(newDivision, false);
+
         _.each(this._dataLayers, function(dataLayer, key) {
             dataLayer.forEach(function(feature) {
                 var featureRegionId = feature.getId();
                 dataLayer.overrideStyle(feature, featureRegionId && featureRegionId.startsWith(regionId) ? self._visibleStyle : self._invisibleStyle);
             });
         });
+
     } else {
         var f;
+
         if (e.feature) {
             f = e.feature;
         } else {
@@ -948,9 +969,26 @@ App.prototype.selectRegion = function (e, isRegion) {
                 });
             });
         }
+
         var bounds = new google.maps.LatLngBounds();
         this._extendBoundsByGeometry(bounds, f.getGeometry());
         this._map.fitBounds(bounds);
+
+        _.each(this._dataLayers, function(dataLayer, key) {
+            dataLayer.forEach(function(feature) {
+                dataLayer.overrideStyle(feature, self._invisibleStyle);
+            });
+        });
+
+        // var newLevelFeatureId = f.getId();
+        // _.each(this._dataLayers, function(dataLayer, key) {
+        //     dataLayer.forEach(function(feature) {
+        //         var featureRegionId = feature.getId();
+        //         //dataLayer.overrideStyle(feature, featureRegionId && featureRegionId.startsWith(newLevelFeatureId) ? self._visibleStyle : self._invisibleStyle);
+        //         dataLayer.overrideStyle(feature, self._invisibleStyle);
+        //     });
+        // });
+
     }
 
     var $rightSideBar = $('#right-side-bar');
