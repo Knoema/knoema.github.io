@@ -712,7 +712,10 @@ App.prototype.export = function () {
         $('#export-form [name=landscape]').val('False');
         $form.submit();
     });
+};
 
+App.prototype.isRightSideBarVisible = function () {
+    return $('#right-side-bar').position().left <= $(window).width();
 };
 
 App.prototype.onResize = function () {
@@ -731,9 +734,7 @@ App.prototype.onResize = function () {
 
     var mapAndTimelineWidth = $(window).width() - $sideBar.width();
 
-    var rightSideBarPosition = $('#right-side-bar').position();
-
-    if ((rightSideBarPosition.left) <= $(window).width()) {
+    if (this.isRightSideBarVisible()) {
         mapAndTimelineWidth = mapAndTimelineWidth - $('#right-side-bar').width() - 20;
     }
 
@@ -825,15 +826,49 @@ App.prototype.switchDivision = function (division, reloadLayer, layerId, availab
 
             if (layer) {
                 this.loadLayer(layer.layerId, 'region');
-            } else {
-                //this.loadLayer(layer.layerId, 'region');
             }
-
         }
     }
 };
 
-App.prototype.selectRegion = function (e) {
+App.prototype.selectRegionFromDataLayer = function (e) {
+    var description = e.feature.getProperty('description');
+
+    if (!this.isRightSideBarVisible()) {
+        var mapAndTimelineWidth = $(window).width() - $('#side-bar').width() - $('#right-side-bar').width() - 20;
+        $('.map-and-timeline').width(mapAndTimelineWidth);
+        google.maps.event.trigger(this._map, "resize");
+    }
+
+    if (!description) {
+        this.selectRegion(e, true);
+        return false;
+    }
+
+    this._map.setCenter(e.latLng);
+
+    var division = description.substr(e.feature.getProperty('description').indexOf('|') + 1);
+
+    var newDivision;
+
+    switch (division) {
+        case 'Région':
+            newDivision = 'Département';
+            break;
+        case 'Département':
+            newDivision = 'Communale';
+            break;
+        case 'Communale':
+            newDivision = 'Communale';
+            break;
+    }
+
+    this.selectRegion(e, true);
+
+    this.switchDivision(newDivision, true, this._activeAreaLayerId);
+};
+
+App.prototype.selectRegion = function (e, isRegion) {
     var self = this;
     var regionId, regionName, key, level;
 
@@ -868,14 +903,15 @@ App.prototype.selectRegion = function (e) {
 
     google.maps.event.trigger(this._map, "resize");
 
-    this._regionsComponent.select(regionId);
-
-    _.each(this._dataLayers, function(dataLayer, key) {
-        dataLayer.forEach(function(feature) {
-            var featureRegionId = feature.getId();
-            dataLayer.overrideStyle(feature, featureRegionId && featureRegionId.startsWith(regionId) ? self._visibleStyle : self._invisibleStyle);
+    if (!isRegion) {
+        this._regionsComponent.select(regionId);
+        _.each(this._dataLayers, function(dataLayer, key) {
+            dataLayer.forEach(function(feature) {
+                var featureRegionId = feature.getId();
+                dataLayer.overrideStyle(feature, featureRegionId && featureRegionId.startsWith(regionId) ? self._visibleStyle : self._invisibleStyle);
+            });
         });
-    });
+    }
 
     var $rightSideBar = $('#right-side-bar');
 
@@ -1470,7 +1506,7 @@ App.prototype.loadLayer = function (layerId, layerType, callback) {
 
                 this.showLegend(this._layers[layerId].layer.ranges);
 
-                layerData.layer.dataLayer.addListener('click', $.proxy(this.selectRegion, this));
+                layerData.layer.dataLayer.addListener('click', $.proxy(this.selectRegionFromDataLayer, this));
 
                 // layerData.layer.dataLayer.addListener('click', function (e) {
                 //     var data = e.feature.getProperty('tooltipData');
