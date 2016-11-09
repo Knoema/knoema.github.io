@@ -118,7 +118,24 @@ App.prototype.init = function () {
                     liveSearch: true
                 });
 
-                $('#select-region').on('hidden.bs.select', this.selectRegion.bind(this));
+                $('#select-region').on('hidden.bs.select', $.proxy(function(event, isRegion) {
+                    if (isRegion) {
+                        var newDivision;
+                        switch ($('#regional-division-map-switcher').find('.active').data('division')) {
+                            case 'Région':
+                                newDivision = 'Région';
+                                break;
+                            case 'Département':
+                                newDivision = 'Région';
+                                break;
+                            case 'Communale':
+                                newDivision = 'Département';
+                                break;
+                        }
+                        this.switchDivision(newDivision, true, this._activeAreaLayerId);
+                    }
+                    this.selectRegion(event, isRegion);
+                }, this));
 
             }.bind(this));
 
@@ -832,22 +849,15 @@ App.prototype.switchDivision = function (division, reloadLayer, layerId, availab
 };
 
 App.prototype.selectRegionFromDataLayer = function (e) {
-    var description = e.feature.getProperty('description');
-
     if (!this.isRightSideBarVisible()) {
         var mapAndTimelineWidth = $(window).width() - $('#side-bar').width() - $('#right-side-bar').width() - 20;
         $('.map-and-timeline').width(mapAndTimelineWidth);
         google.maps.event.trigger(this._map, "resize");
     }
 
-    if (!description) {
-        this.selectRegion(e, true);
-        return false;
-    }
+    //this._map.setCenter(e.latLng);
 
-    this._map.setCenter(e.latLng);
-
-    var division = description.substr(e.feature.getProperty('description').indexOf('|') + 1);
+    var division = this._activeRegionalDivision;
 
     var newDivision;
 
@@ -866,6 +876,19 @@ App.prototype.selectRegionFromDataLayer = function (e) {
     this.selectRegion(e, true);
 
     this.switchDivision(newDivision, true, this._activeAreaLayerId);
+};
+
+App.prototype._extendBoundsByGeometry = function (bounds, geometry) {
+    var arr = geometry.getArray();
+    for (var i = 0; i < arr.length; i++) {
+        var childArr = arr[i];
+        if ($.isFunction(childArr.getArray)) {
+            this._extendBoundsByGeometry(bounds, childArr);
+        }
+        else {
+            bounds.extend(arr[i]);
+        }
+    }
 };
 
 App.prototype.selectRegion = function (e, isRegion) {
@@ -911,6 +934,23 @@ App.prototype.selectRegion = function (e, isRegion) {
                 dataLayer.overrideStyle(feature, featureRegionId && featureRegionId.startsWith(regionId) ? self._visibleStyle : self._invisibleStyle);
             });
         });
+    } else {
+        var f;
+        if (e.feature) {
+            f = e.feature;
+        } else {
+            _.each(this._dataLayers, function(dataLayer, key) {
+                dataLayer.forEach(function(feature) {
+                    var featureRegionId = feature.getId();
+                    if (featureRegionId === regionId) {
+                        f = feature;
+                    }
+                });
+            });
+        }
+        var bounds = new google.maps.LatLngBounds();
+        this._extendBoundsByGeometry(bounds, f.getGeometry());
+        this._map.fitBounds(bounds);
     }
 
     var $rightSideBar = $('#right-side-bar');
@@ -1167,7 +1207,7 @@ App.prototype.bindEvents = function () {
         var regionId = this._activeRegionId.substr(0, _.lastIndexOf(this._activeRegionId, '-'));
         var regionName = $('#select-region').find('[data-region-id="' + regionId + '"]').val();
         $('#select-region').selectpicker('val', regionName);
-        $('#select-region').trigger('hidden.bs.select');
+        $('#select-region').trigger('hidden.bs.select', true);
     }.bind(this));
 
 	$('#regional-division-map-switcher').on('click', 'a', function(event) {
