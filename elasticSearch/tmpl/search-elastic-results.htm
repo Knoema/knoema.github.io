@@ -1,0 +1,25 @@
+﻿{{each(i, item) hits}}
+	<div class="search-result-item">
+		<div class="search-timeseries">
+			<a target="_blank" class="dataset-result-title" id="${item._id}" href="//kpmg.knoema.com/${item._source.datasetId}?tsId=${item._source.key}" data-id="${item._id}">
+				{{each(d, dim) item._source.dimensions}}
+				<div class="dim-name">${dim.name}</div>
+				{{/each}}
+			</a>
+			<div class="dataset-result-description">
+				<span class="found-dimension black">
+					<span class="search-dataset-dim-elements">
+						<a title="Dataset" class="dataset" href="//kpmg.knoema.com/${item._source.datasetId}">${item._source.datasetName}</a>
+						&nbsp;&nbsp;<span class="dimension-name">Source:</span><span class="search-dataset-dim-elements">${item._source.sourceName}</span>
+					</span>
+				</span>
+				<br>
+				{{if (item._source.datasetDesc)}}
+				<span class="search-metadata-value black">
+					<span class="search-dataset-dim-elements">{{html item._source.datasetDesc}}</span>
+				</span>
+				{{/if}}
+			</div>
+		</div>
+	</div>
+{{/each}}

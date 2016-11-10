@@ -1,0 +1,67 @@
+﻿/* :L85 */
+/* :L87 */
+#site-search.elastic-search input#search-server {
+  background: url('../img/search_input_form2.png');
+  vertical-align: top;
+  border: 0;
+  height: 39px;
+  line-height: 39px;
+  font: normal 16pt 'PT Sans', sans-serif;
+  color: black;
+  padding: 0 10px;
+  width: 200px;
+}
+/* :L100 */
+#site-search.elastic-search input#search-query {
+  width: 570px;
+}
+/* :L105 */
+.dim-name {
+  display: inline-block;
+}
+/* :L107 */
+.dim-name:after {
+  content: ' — ';
+}
+/* :L111 */
+.dim-name:last-child:after {
+  content: none;
+}
+/* :L116 */
+span.found-dimension a.dataset {
+  max-width: none;
+}
+/* :L120 */
+.dataset-result-description .search-metadata-value {
+  max-height: 100px;
+  overflow: hidden;
+  position: relative;
+  display: block;
+}
+/* :L126 */
+.dataset-result-description .search-metadata-value:after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  margin: 0;
+  padding: 1.2em 0;
+  /* "transparent" only works here because == rgba(0,0,0,0) */
+  background-image: linear-gradient(to bottom, transparent, white);
+}
+
+#search-settings {
+	line-height: 1.8em;
+}
+
+#search-settings label {
+	margin-right: 1em;
+}
+
+#search-settings input {
+	vertical-align: baseline;
+	position: relative;
+	top: 1px;
+}
