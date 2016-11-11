@@ -1751,7 +1751,7 @@ span#more-keyword-search-datasets {
 }
 /* :L2072 */
 #search-results-with-filters {
-  margin-top: 25px;
+  margin-top: 0;
 }
 /* :L2076 */
 #search-results-with-filters:after {

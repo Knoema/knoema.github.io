@@ -10,6 +10,10 @@ $(function () {
 		$.template("Tmpl-search-elastic-results", markup);
 	});
 
+	$.get("tmpl/search-elastic-results-ds.htm", function (markup) {
+		$.template("Tmpl-search-elastic-results-ds", markup);
+	});
+
 	function runSearch(skipHistory) {
 		if (runningSearch) {
 			runningSearch.abort();
@@ -33,7 +37,65 @@ $(function () {
 
 		$("#search-progress").show();
 		runningSearch = $.post(url, rawQuery, function (result) {
-			$("#search-results").empty().append($.tmpl("Tmpl-search-elastic-results", result.hits));
+			if (result.hits.hits) {
+				for (var i = 0; i < result.hits.hits.length; i++) {
+					var item = result.hits.hits[i];
+
+					if (item._source.datasetDesc) {
+						var html = item._source.datasetDesc;
+						var div = document.createElement("div");
+						div.innerHTML = html;
+						var text = div.textContent || div.innerText || "";
+
+						if (text.length > 520) {
+							text = text.substring(0, 520) + "&#8230;";
+						}
+
+						item._source.datasetDesc = text;
+					}
+				}
+			}
+
+			if ($("#ds_mode").is(":checked")) {
+				var model = { "hits": {} };
+				if (result.hits.hits) {
+					var datasets = {};
+					for (var i = 0; i < result.hits.hits.length; i++) {
+						var item = result.hits.hits[i];
+
+						var ds = datasets[item._source.datasetId];
+						if (!ds) {
+							ds = {
+								"position": i,
+								"datasetId": item._source.datasetId,
+								"datasetName": item._source.datasetName,
+								"datasetDesc": item._source.datasetDesc,
+								"sourceName": item._source.sourceName,
+								"timeseries": []
+							};
+							datasets[item._source.datasetId] = ds;
+						}
+
+						ds.timeseries.push({
+							"id": item._id,
+							"key": item._source.key,
+							"dimensions": item._source.dimensions,
+							"unit": item._source.unit,
+							"frequency": item._source.frequency,
+							"position": i
+						});
+					}
+
+					for(var dsId in datasets) {
+						var ds = datasets[dsId];
+						model.hits[ds.position] = ds;
+					}
+				}
+				$("#search-results").empty().append($.tmpl("Tmpl-search-elastic-results-ds", model));
+			}
+			else {
+				$("#search-results").empty().append($.tmpl("Tmpl-search-elastic-results", result.hits));
+			}
 			$("#search-progress").hide();
 		});
 	}
@@ -66,6 +128,7 @@ $(function () {
 
 		$("input#search-query").change();
 		runSearch();
+		return false;
 	});
 
 	$("#search-query").on("change", function () {
@@ -108,5 +171,9 @@ $(function () {
 			$("#search-query-raw").val(JSON.stringify(query));
 			runSearch(skipHistory = true);
 		}
+	});
+
+	$("#ds_mode").on("change", function () {
+		runSearch(skipHistory = true);
 	});
 });

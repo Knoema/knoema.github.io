@@ -13,7 +13,7 @@
 }
 /* :L100 */
 #site-search.elastic-search input#search-query {
-  width: 570px;
+  width: 790px;
 }
 /* :L105 */
 .dim-name {
@@ -34,22 +34,10 @@ span.found-dimension a.dataset {
 /* :L120 */
 .dataset-result-description .search-metadata-value {
   max-height: 100px;
-  overflow: hidden;
+  text-overflow: ellipsis;
   position: relative;
   display: block;
-}
-/* :L126 */
-.dataset-result-description .search-metadata-value:after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  text-align: center;
-  margin: 0;
-  padding: 1.2em 0;
-  /* "transparent" only works here because == rgba(0,0,0,0) */
-  background-image: linear-gradient(to bottom, transparent, white);
+  margin-top: .2em;
 }
 
 #search-settings {
@@ -64,4 +52,20 @@ span.found-dimension a.dataset {
 	vertical-align: baseline;
 	position: relative;
 	top: 1px;
+}
+
+.search-result-item.ds {
+	padding-bottom: 0;
+}
+
+.search-result-item.ds ul {
+	margin-top: .5em;
+}
+
+.search-result-item.ds ul li {
+	margin-bottom: .2em;
+}
+
+div.search-result-item.ds div.dataset-result-description {
+    margin-top: 0;
 }
