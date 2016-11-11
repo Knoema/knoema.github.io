@@ -54,18 +54,30 @@ span.found-dimension a.dataset {
 	top: 1px;
 }
 
-.search-result-item.ds {
+.search-result-item {
 	padding-bottom: 0;
 }
 
-.search-result-item.ds ul {
+.search-result-item ul {
 	margin-top: .5em;
 }
 
-.search-result-item.ds ul li {
+.search-result-item ul li {
 	margin-bottom: .2em;
 }
 
-div.search-result-item.ds div.dataset-result-description {
-    margin-top: 0;
+div.search-result-item div.dataset-result-metadata {
+	line-height: 1.8em;
+}
+
+span.found-dimension.black a {
+	max-width: none;
+}
+
+span.found-dimension.black a>span {
+	text-decoration: underline;
+}
+
+div.search-result-item a.dataset-result-title:hover>span {
+	text-decoration: underline;
 }

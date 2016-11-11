@@ -1,31 +1,37 @@
 ﻿{{each(dsId, ds) hits}}
-	<div class="search-result-item ds">
-		<div class="search-timeseries">
-			<div class="dataset-result-description">
-				<span class="found-dimension black">
-					<span class="search-dataset-dim-elements">
-						<a title="Dataset" class="dataset" href="//kpmg.knoema.com/${ds.datasetId}">${ds.datasetName}</a>
-						&nbsp;&nbsp;<span class="dimension-name">Source:</span><span class="search-dataset-dim-elements">${ds.sourceName}</span>
-					</span>
-				</span>
-				<br>
-				{{if (ds.datasetDesc)}}
-				<span class="search-metadata-value black">
-					<span class="search-dataset-dim-elements">{{html ds.datasetDesc}}</span>
-				</span>
-				{{/if}}
-			</div>
-			<ul>
+<div class="search-result-item ds">
+	<div class="search-timeseries">
+		<a title="Dataset" class="dataset-result-title" href="//kpmg.knoema.com/${ds.datasetId}">${ds.datasetName}</a>
+
+
+
+		
+		<div class="dataset-result-metadata">
+			<span class="search-metadata-item-gray">Source:&nbsp;</span>
+			<span class="search-metadata-value-gray">${ds.sourceName}</span>
+		</div>
+		{{if (ds.datasetDesc)}}
+		<div class="dataset-result-description">
+			<span class="search-metadata-value black">
+				{{html ds.datasetDesc}}
+			</span>
+		</div>
+		{{/if}}
+		<div class="dataset-result-description">
+			<span class="found-dimension black">
 				{{each(tsKey, ts) ds.timeseries}}
-				<li>
-					<a target="_blank" class="dataset-result-title" id="${ts.id}" href="//kpmg.knoema.com/${ds.datasetId}?tsId=${ts.key}" data-id="${ts.id}" title="Position: ${ts.position+1}">
-						{{each(d, dim) ts.dimensions}}
-						<div class="dim-name">${dim.name}</div>
-						{{/each}}
-					</a>
-				</li>
+				<div>
+					<span class="search-dataset-dim-elements">
+						<a target="_blank" id="${ts.id}" href="//kpmg.knoema.com/${ds.datasetId}?tsId=${ts.key}" data-id="${ts.id}" title="Position: ${ts.position+1}">
+							{{each(d, dim) ts.dimensions}}
+							<span class="dim-name">${dim.name}</span>
+							{{/each}}
+						</a>
+					</span>
+				</div>
 				{{/each}}
-			</ul>
+			</span>
 		</div>
 	</div>
+</div>
 {{/each}}
