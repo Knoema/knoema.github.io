@@ -37,6 +37,10 @@ function App() {
         clickable: false
     };
 
+    this._selectedStyle = {
+        fillColor: 'red'
+    };
+
 	this._divisionTypes = [
         {
             name: 'Région',
@@ -51,14 +55,12 @@ function App() {
             className: 'communale'
         }
 	];
-	this._activeDate = null;
-	this.byTime = null;
 	this._activeRegionalDivision = null;
 	this._activeGroupCuid = null;
     this._activeAreaLayerId = null;
-    this._regionsComponent = null;
     this._dataLayers = {};
     this._layerTitles = {};
+    this._selectedFeature = null;
 }
 
 App.prototype.init = function () {
@@ -99,18 +101,6 @@ App.prototype.init = function () {
 
                 var $regionsDropdown = $.tmpl('regions-dropdown.html', {
                     regions: regions
-                });
-
-                this._regionsComponent = new GeoPlayground.Components.Regions({
-                    map: self._map,
-                    style: {
-                        strokeWeight: 1,
-                        strokeColor: 'white',
-                        fillColor: 'white',
-                        visible: true,
-                        clickable: false
-                    },
-                    geoJsonFile: 'mauritania.json'
                 });
 
                 $('#top-map-buttons').find('.dropdown-holder').append($regionsDropdown);
@@ -204,479 +194,7 @@ App.prototype.init = function () {
 
 					var groupedLayers = _.groupBy(_.values(content.layers), function(f) { return f.groupping.groupName });
 
-					var items = [
-                        {
-                            title: "Economique et social",
-                            className: "infrastructures",
-                            children: [
-                                {
-                                    title: "Infrastructures",
-                                    children: [
-                                        {
-                                            title: "Routes"
-                                        },
-                                        {
-                                            title: "Projets actuels",
-                                            children: [
-                                                {
-                                                    title: "Education, Anticipated",
-                                                    children: groupedLayers["Education, Anticipated"]
-                                                },
-                                                {
-                                                    title: "Education, Finalised",
-                                                    children: groupedLayers["Education, Finalised"]
-                                                },
-                                                {
-                                                    title: "Electricity, Anticipated",
-                                                    children: groupedLayers["Electricity, Anticipated"]
-                                                },
-                                                {
-                                                    title: "Electricity, Finalised",
-                                                    children: groupedLayers["Electricity, Finalised"]
-                                                },
-                                                {
-                                                    title: "Health, Anticipated",
-                                                    children: groupedLayers["Health, Anticipated"]
-                                                },
-                                                {
-                                                    title: "Health, Finalised",
-                                                    children: groupedLayers["Health, Finalised"]
-                                                },
-                                                {
-                                                    title: "Other, Anticipated",
-                                                    children: groupedLayers["Other, Anticipated"]
-                                                },
-                                                {
-                                                    title: "Other, Finalised",
-                                                    children: groupedLayers["Other, Finalised"]
-                                                },
-                                                {
-                                                    title: "Social (Boutique Emel), Anticipated",
-                                                    children: groupedLayers["Social (Boutique Emel), Anticipated"]
-                                                },
-                                                {
-                                                    title: "Social (Boutique Emel), Finalised",
-                                                    children: groupedLayers["Social (Boutique Emel), Finalised"]
-                                                },
-                                                {
-                                                    title: "Water, Anticipated",
-                                                    children: groupedLayers["Water, Anticipated"]
-                                                },
-                                                {
-                                                    title: "Water, Finalised",
-                                                    children: groupedLayers["Water, Finalised"]
-                                                }
-                                            ]
-                                        },
-                                        {
-                                            title: "Télécommunications"
-                                        },
-                                        {
-                                            title: "Electricité"
-                                        },
-                                        {
-                                            title: "Les écoles par la ville",
-                                            children: [
-                                                {
-                                                    title: "École Primaire",
-                                                    children: groupedLayers["Primary Schools"]
-                                                },
-                                                {
-                                                    title: "École Secondaire",
-                                                    children: groupedLayers["Secondary Schools"]
-                                                }
-                                            ]
-                                        },
-                                        {
-                                            title: "Les points d'eau",
-                                            children: groupedLayers["Water Wells"]
-                                        },
-                                        {
-                                            title: "Les centres de santé",
-                                            children: groupedLayers["Health Centers"]
-                                        },
-                                        {
-                                            title: "Autres services publics"
-                                        }
-                                    ]
-                                },
-                                {
-                                    title: "Population",
-                                    children: [
-                                        {
-                                            title: "Démographie",
-                                            children: [
-                                                {
-                                                    title: "Population, mâle",
-                                                    children: groupedLayers["Demography. Male Population"]
-                                                },
-                                                {
-                                                    title: "Population, femelle",
-                                                    children: groupedLayers["Demography. Female Population"]
-                                                },
-                                                {
-                                                    title: "Population totale",
-                                                    children: groupedLayers["Demography. Total Population"]
-                                                }
-                                            ]
-                                        },
-                                        {
-                                            //title: "RGPH",
-                                            title: "Recensement Général de la Population et de l'Habitat (RGPH)",
-                                            children: [
-                                                {
-                                                    title: "Habitat",
-                                                    children: groupedLayers["Habitat"]
-                                                },
-                                                {
-                                                    title: "Équipments de la maison",
-                                                    children: groupedLayers["Équipments de la maison"]
-                                                },
-                                                {
-                                                    title: "Cuisine eclairage eau",
-                                                    children: groupedLayers["Cuisine eclairage eau"]
-                                                },
-                                                {
-                                                    title: "Assainissement",
-                                                    children: groupedLayers["Assainissement"]
-                                                }
-                                            ]
-                                        },
-                                        {
-                                            title: "Éducation",
-                                            children: [
-                                                {
-                                                    name: "Bac résultats"
-                                                },
-                                                {
-                                                    name: "Bepc résultats"
-                                                }
-                                            ]
-                                        },
-                                        {
-                                            title: "Santé"
-                                        }
-                                    ]
-                                }
-                            ]
-                        },
-                        {
-                            title: "Zone de vie",
-                            className: "zone-de-ville",
-                            children: [
-                                {
-                                    title: "Pêches",
-                                    children: groupedLayers["Peches"]
-                                },
-                                {
-                                    title: "Immigration illégale"
-                                },
-                                {
-                                    title: "Zones agricoles",
-                                    children: groupedLayers['Agriculture potentielle']
-                                },
-                                {
-                                    title: "Elevage"
-                                },
-                                {
-                                    title: "Végétation"
-                                },
-                                {
-                                    title: "Trafic",
-                                    children: [
-                                        {
-                                            title: "Humains",
-                                            children: [
-                                                {
-                                                    title: "Esclavage, employé"
-                                                },
-                                                {
-                                                    title: "Esclavage, sexe"
-                                                }
-                                            ]
-                                        },
-                                        {
-                                            title: "Stupéfiants"
-                                        },
-                                        {
-                                            title: "Armes"
-                                        }
-                                    ]
-                                },
-                                {
-                                    title: "Terrorisme et les conflits",
-                                    children: groupedLayers["Terrorisme et les conflits"]
-                                }
-                            ]
-                        },
-                        {
-                            title: "Pluies",
-                            className: "climate",
-                            children: [
-                                {
-                                    title: 'Stations de pluie',
-                                    children: groupedLayers['Stations de pluie']
-                                },
-                                {
-                                    title: 'Historique',
-                                    children: groupedLayers['Historique']
-                                },
-                                {
-                                    title: "Prévoir",
-                                    children: [
-                                        {
-                                            title: "Prévision des précipitations de 10 jours (mm)"
-                                        }
-                                    ]
-                                }
-                            ]
-                        },
-                        {
-                            title: "Politique",
-                            className: "politics",
-                            children: [
-                                {
-                                  title: "Mahadras"
-                                },
-                                {
-                                    title: "Tribus",
-                                    children: groupedLayers["Tribus"]
-                                },
-                                {
-                                    title: "Social",
-                                    children: [
-                                        {
-                                            title: "Forces armées"
-                                        },
-                                        {
-                                            title: "Cadres"
-                                        },
-                                        {
-                                            title: "Fonctionnaires",
-                                            children: [
-                                                {
-                                                    title: "Fonctionnaires par lieu de inscription",
-                                                    children: groupedLayers["Fonctionnaires. Code Inscription"]
-                                                },
-                                                {
-                                                    title: "Fonctionnaires par lieu de naissance",
-                                                    children: groupedLayers["Fonctionnaires. Code Naissance"]
-                                                }
-                                            ]
-                                        },
-                                        {
-                                            title: "Hommes d'affaires"
-                                        },
-                                        {
-                                            title: "Acteurs politiques"
-                                        },
-                                        {
-                                            title: "Notable"
-                                        }
-                                    ]
-                                },
-                                {
-                                    title: "Élections",
-                                    children: [
-                                        {
-                                            title: "Résultats Elections",
-                                            children: [
-                                                {
-                                                    title: "Présidentielle 2014",
-                                                    children: [
-                                                        {
-                                                            title: "Mohamed Ould Abdel Aziz",
-                                                            children: groupedLayers["Presidential Election. Mohamed Ould Abdel Aziz"]
-                                                        },
-                                                        {
-                                                            title: "Boïdiel Ould Houmeit",
-                                                            children: groupedLayers["Presidential Election. Boïdiel Ould Houmeit"]
-                                                        },
-                                                        {
-                                                            title: "Laila Maryam Mint Moulaye Idriss",
-                                                            children: groupedLayers["Presidential Election. Laila Maryam Mint Moulaye Idriss"]
-                                                        },
-                                                        {
-                                                            title: "Biram Dah Abeid",
-                                                            children: groupedLayers["Presidential Election. Biram Dah Abeid"]
-                                                        },
-                                                        {
-                                                            title: "Ibrahima Moctar Sarr",
-                                                            children: groupedLayers["Presidential Election. Ibrahima Moctar Sarr"]
-                                                        },
-                                                        {
-                                                            title: "Votants Total",
-                                                            children: groupedLayers["Presidential Election. Votants Total"]
-                                                        },
-                                                        {
-                                                            title: "Inscrits Total",
-                                                            children: groupedLayers["Presidential Election. Votants Total"]
-                                                        }
-                                                        // {
-                                                        //     title: "Bulletins Blanc",
-                                                        //     children: groupedLayers["Presidential Election. Bulletins Blanc"]
-                                                        // },
-                                                        // {
-                                                        //     title: "Bulletins Nulls",
-                                                        //     children: groupedLayers["Presidential Election. Bulletins Nulls"]
-                                                        // }
-                                                    ]
-                                                },
-                                                {
-                                                    title: "2013 Parlementaire",
-                                                    children: [
-                                                        {
-                                                            title: "Total",
-                                                            children: groupedLayers["Parliamentary Election. Total"]
-                                                        },
-                                                        {
-                                                            title: "APP + Tawassul",
-                                                            children: groupedLayers["Parliamentary Election. APP + Tawassul"]
-                                                        },
-                                                        {
-                                                            title: "Alliance for Democracy in Mauritania (ADM)",
-                                                            children: groupedLayers["Parliamentary Election. Alliance for Democracy in Mauritania (ADM)"]
-                                                        },
-                                                        {
-                                                            title: "Alliance for Justice and Democracy / Movement for Renovation (AJD / MR)",
-                                                            children: groupedLayers["Parliamentary Election. Alliance for Justice and Democracy / Movement for Renovation (AJD / MR)"]
-                                                        },
-                                                        {
-                                                            title: "APP + Tawassul",
-                                                            children: groupedLayers["Parliamentary Election. APP + Tawassul"]
-                                                        },
-                                                        {
-                                                            title: "Popular Front (FP)",
-                                                            children: groupedLayers["Parliamentary Election. Popular Front (FP)"]
-                                                        },
-                                                        {
-                                                            title: "The People's Progressive Alliance (APP)",
-                                                            children: groupedLayers["Parliamentary Election. The People's Progressive Alliance (APP)"]
-                                                        },
-                                                        {
-                                                            title: "El Islah Party",
-                                                            children: groupedLayers["Parliamentary Election. El Islah Party"]
-                                                        },
-                                                        {
-                                                            title: "Ravah Party",
-                                                            children: groupedLayers["Parliamentary Election. Ravah Party"]
-                                                        },
-                                                        {
-                                                            title: "Party of Unity and Development (PUD)",
-                                                            children: groupedLayers["Parliamentary Election. Party of Unity and Development (PUD)"]
-                                                        },
-                                                        {
-                                                            title: "Party of the Union for the Republic (UPR)",
-                                                            children: groupedLayers["Parliamentary Election. Party of the Union for the Republic (UPR)"]
-                                                        },
-                                                        {
-                                                            title: "Dignity and Action Party (PDA)",
-                                                            children: groupedLayers["Parliamentary Election. Dignity and Action Party (PDA)"]
-                                                        },
-                                                        {
-                                                            title: "Democratic Party of the People (PPD)",
-                                                            children: groupedLayers["Parliamentary Election. Democratic Party of the People (PPD)"]
-                                                        },
-                                                        {
-                                                            title: "El Karam Party",
-                                                            children: groupedLayers["Parliamentary Election. El Karam Party"]
-                                                        },
-                                                        {
-                                                            title: "EL VADILA Party",
-                                                            children: groupedLayers["Parliamentary Election. EL VADILA Party"]
-                                                        },
-                                                        {
-                                                            title: "EL WIAM Party",
-                                                            children: groupedLayers["Parliamentary Election. EL WIAM Party"]
-                                                        },
-                                                        {
-                                                            title: "Rally for Unity Party (MAJD)",
-                                                            children: groupedLayers["Parliamentary Election. Rally for Unity Party (MAJD)"]
-                                                        },
-                                                        {
-                                                            title: "Republican Party for Democracy and Renewal (RDRP)",
-                                                            children: groupedLayers["Parliamentary Election. Republican Party for Democracy and Renewal (RDRP)"]
-                                                        },
-                                                        {
-                                                            title: "RibatDémocratique Party and Social (RDS)",
-                                                            children: groupedLayers["Parliamentary Election. RibatDémocratique Party and Social (RDS)"]
-                                                        },
-                                                        {
-                                                            title: "Sawab Party",
-                                                            children: groupedLayers["Parliamentary Election. Sawab Party"]
-                                                        },
-                                                        {
-                                                            title: "Third Generation Party (PTG)",
-                                                            children: groupedLayers["Parliamentary Election. Third Generation Party (PTG)"]
-                                                        },
-                                                        {
-                                                            title: "National Rally for Reform and Development (tawassul)",
-                                                            children: groupedLayers["Parliamentary Election. National Rally for Reform and Development (tawassul)"]
-                                                        },
-                                                        {
-                                                            title: "Democratic Renewal (RD)",
-                                                            children: groupedLayers["Parliamentary Election. Democratic Renewal (RD)"]
-                                                        },
-                                                        {
-                                                            title: "Sawab + WIAM",
-                                                            children: groupedLayers["Parliamentary Election. Sawab + WIAM"]
-                                                        },
-                                                        {
-                                                            title: "Startle Youth for the Nation (SURSAUT)",
-                                                            children: groupedLayers["Parliamentary Election. Startle Youth for the Nation (SURSAUT)"]
-                                                        },
-                                                        {
-                                                            title: "Union of the Democratic Centre (U.C.D)",
-                                                            children: groupedLayers["Parliamentary Election. Union of the Democratic Centre (U.C.D)"]
-                                                        },
-                                                        {
-                                                            title: "Union for Democracy and Progress (UDP)",
-                                                            children: groupedLayers["Parliamentary Election. Union for Democracy and Progress (UDP)"]
-                                                        }
-                                                    ]
-                                                },
-                                                {
-                                                    title: "2013 Municipale",
-                                                    children: [
-
-                                                    ]
-                                                }
-                                            ]
-                                        },
-                                        {
-                                            title: "Listes électorales",
-                                            children: [
-                                                {
-                                                    title: "Les députés",
-                                                    children: groupedLayers["Liste électorale. Number of MPs"]
-                                                },
-                                                {
-                                                    title: "Conseillers",
-                                                    children: groupedLayers["Liste électorale. Number of councilors"]
-                                                },
-                                                {
-                                                    title: "Maires",
-                                                    children: groupedLayers["Liste électorale. Number of mayors"]
-                                                },
-                                                {
-                                                    title: "Bureaux de vote",
-                                                    children: groupedLayers["Liste électorale. Number of polling stations"]
-                                                },
-                                                {
-                                                    title: "Électeurs",
-                                                    children: groupedLayers["Liste électorale. Number of voters"]
-                                                },
-                                                {
-                                                    title: "Poids",
-                                                    children: groupedLayers["Liste électorale. Weight"]
-                                                }
-                                            ]
-                                        }
-                                    ]
-                                }
-                            ]
-                        }
-					];
+					var items = getTreeItems(groupedLayers);
 
 					var $filtersTree = $.tmpl('filters-tree.html', {
 						items: items
@@ -896,6 +414,8 @@ App.prototype.selectRegion = function (e, isRegion) {
     var $selectRegion = $('#select-region');
     var $selected = $selectRegion.find(':selected');
 
+    this.resetDataLayers();
+
     if (e.feature) {
         regionId = e.feature.getId();
         regionName = e.feature.getProperty('name');
@@ -925,7 +445,6 @@ App.prototype.selectRegion = function (e, isRegion) {
     google.maps.event.trigger(this._map, "resize");
 
     if (!isRegion) {
-        this._regionsComponent.select(regionId);
 
         var division = this._activeRegionalDivision;
 
@@ -946,50 +465,39 @@ App.prototype.selectRegion = function (e, isRegion) {
         this.selectRegion(e, true);
 
         this.switchDivision(newDivision, false);
+    }
 
+    if (e.feature) {
+        this._selectedFeature = e.feature;
+    } else {
         _.each(this._dataLayers, function(dataLayer, key) {
             dataLayer.forEach(function(feature) {
                 var featureRegionId = feature.getId();
-                dataLayer.overrideStyle(feature, featureRegionId && featureRegionId.startsWith(regionId) ? self._visibleStyle : self._invisibleStyle);
+                if (featureRegionId === regionId) {
+                    self._selectedFeature = feature;
+                }
             });
         });
-
-    } else {
-        var f;
-
-        if (e.feature) {
-            f = e.feature;
-        } else {
-            _.each(this._dataLayers, function(dataLayer, key) {
-                dataLayer.forEach(function(feature) {
-                    var featureRegionId = feature.getId();
-                    if (featureRegionId === regionId) {
-                        f = feature;
-                    }
-                });
-            });
-        }
-
-        var bounds = new google.maps.LatLngBounds();
-        this._extendBoundsByGeometry(bounds, f.getGeometry());
-        this._map.fitBounds(bounds);
-
-        _.each(this._dataLayers, function(dataLayer, key) {
-            dataLayer.forEach(function(feature) {
-                dataLayer.overrideStyle(feature, self._invisibleStyle);
-            });
-        });
-
-        // var newLevelFeatureId = f.getId();
-        // _.each(this._dataLayers, function(dataLayer, key) {
-        //     dataLayer.forEach(function(feature) {
-        //         var featureRegionId = feature.getId();
-        //         //dataLayer.overrideStyle(feature, featureRegionId && featureRegionId.startsWith(newLevelFeatureId) ? self._visibleStyle : self._invisibleStyle);
-        //         dataLayer.overrideStyle(feature, self._invisibleStyle);
-        //     });
-        // });
-
     }
+
+    this._dataLayers[this._activeRegionalDivision].overrideStyle(this._selectedFeature, this._selectedStyle);
+
+    var bounds = new google.maps.LatLngBounds();
+    this._extendBoundsByGeometry(bounds, this._selectedFeature.getGeometry());
+    this._map.fitBounds(bounds);
+
+    this.populateSidebar(regionId);
+};
+
+App.prototype.populateSidebar = function(regionId) {
+
+    var regionName, key, level;
+
+    var $selected = $('#select-region').find(':selected');
+
+    regionName = $selected.data('name');
+    key = $selected.val();
+    level = $selected.data('level');
 
     var $rightSideBar = $('#right-side-bar');
 
@@ -1120,8 +628,8 @@ App.prototype.selectRegion = function (e, isRegion) {
         if (politics0 != null) {
             $sideBarContent.append('<h5>Tribus</h5>');
             var table = '<table>' + _.map(_.chunk(politics0.data, politics0.columns.length), function(d) {
-                return '<tr><td>' + d[1] + '</td></tr>';
-            }).join('') + '</table>';
+                    return '<tr><td>' + d[1] + '</td></tr>';
+                }).join('') + '</table>';
             $sideBarContent.append(table);
         }
 
@@ -1238,6 +746,10 @@ App.prototype.bindEvents = function () {
 	var self = this;
 
     $('#zoom-to-country').on('click', function() {
+        this._map.setCenter({
+            lat: 20.215167,
+            lng: -10.777588
+        });
         this._map.setZoom(Math.min(6, this._map.getZoom()));
     }.bind(this));
 
@@ -1296,7 +808,6 @@ App.prototype.bindEvents = function () {
 
                 if (layerId) {
                     //Simple region layer (no sublayers like Regionale, Department, Communale)
-
                     if ($target.is(':checked')) {
                         this.loadLayer(layerId, 'region', function() {
                             $(event.target).closest('.item-content').find('input[data-layer-type="region"]').prop('disabled', false);
@@ -1426,7 +937,7 @@ App.prototype.bindEvents = function () {
             "right": -1 * ($rightSideBar.width() + 30)
         }, function() {
             $('#select-region').selectpicker('val', 'not-selected');
-            self._regionsComponent.select(null);
+            self.resetDataLayers();
         });
     });
 
@@ -1678,6 +1189,14 @@ App.prototype.createTimeline = function (timeMembers, layerId, scrollToRight) {
         .css('bottom', 100)
         .html('<img src="img/rains-legend.png">').show();
     this.onResize();
+};
+
+App.prototype.resetDataLayers = function () {
+    if (this._selectedFeature) {
+        for (var regionType in this._dataLayers) {
+            this._dataLayers[regionType].overrideStyle(this._selectedFeature, this._invisibleStyle);
+        }
+    }
 };
 
 App.prototype.loadTemplates = function (callback) {
