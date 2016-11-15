@@ -32,7 +32,8 @@
 			<div id="site-search" class="elastic-search">
 				<form>
 					<div id="site-search-button">Search</div>
-					<input type="hidden" id="search-server" name="search-server" value="http://prm.knoema.org:9200" title="ElasticSearch Server" />
+					<input type="hidden" id="search-server" name="search-server" value="http://prm.knoema.org:9200/kpmg" title="ElasticSearch Server" />
+					<input type="hidden" id="search-server-consolidated" name="search-server-consolidated" value="http://prm.knoema.org:9200/kpmg_consolidated" title="ElasticSearch Server" />
 					<input type="hidden" id="search-query-raw" name="query-raw" value="" />
 					<input type="text" id="search-query" name="query" placeholder="" title="Search for data, statistics and visualizations" maxlength="300" />
 					<input type="hidden" id="search-pageindex" name="pageIndex" />
@@ -46,8 +47,9 @@
 			</div>
 			<div id="search-settings">
 				<label><input type="checkbox" id="ds_mode" name="ds_mode" checked="checked" /> Group by dataset</label>
-				<label><input type="checkbox" id="search_name" name="search_name" /> Search in DS names</label>
+				<label><input type="checkbox" id="search_consolidated" name="search_consolidated" checked="checked" /> Search in consolidated field</label>
 				<label><input type="checkbox" id="search_desc" name="search_desc" /> Search in DS descriptions</label>
+				<label style="display:none;"><input type="checkbox" id="search_name" name="search_name" /> Search in DS names</label>
 			</div>
 			<div id="full-search-results">
 				<form action="" name="explore-data" id="explore-data-form" method="post" target="_blank">

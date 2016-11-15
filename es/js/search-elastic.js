@@ -1,26 +1,19 @@
 $(function () {
 	var runningSearch;
 
-	window.onpopstate = function (event) {
-		$("#search-query").val(event.state).change();
-		runSearch(skipHistory = true);
-	};
-
-	$.get("tmpl/search-elastic-results.htm", function (markup) {
-		$.template("Tmpl-search-elastic-results", markup);
-	});
-
-	$.get("tmpl/search-elastic-results-ds.htm", function (markup) {
-		$.template("Tmpl-search-elastic-results-ds", markup);
-	});
-
 	function runSearch(skipHistory) {
 		if (runningSearch) {
 			runningSearch.abort();
 			runningSearch = null;
 		}
 
-		var url = $("#search-server").val() + "/_search";
+		var url;
+		if ($("#search_consolidated").is(":checked")) {
+			url = $("#search-server-consolidated").val() + "/_search";
+		}
+		else {
+			url = $("#search-server").val() + "/_search";
+		}
 
 		if (!skipHistory) {
 			var query = $("input#search-query").val();
@@ -100,25 +93,39 @@ $(function () {
 		});
 	}
 
-	var pars = $.deparam.querystring();
+	window.onpopstate = function (event) {
+		$("#search-query").val(event.state).change();
+		runSearch(skipHistory = true);
+	};
 
-	$("#search-query").val(pars.query);
-	$("#search-query").focus();
+	$.when(
+		$.get("tmpl/search-elastic-results.htm", function (markup) {
+			$.template("Tmpl-search-elastic-results", markup);
+		}),
+		$.get("tmpl/search-elastic-results-ds.htm", function (markup) {
+			$.template("Tmpl-search-elastic-results-ds", markup);
+		})
+	).done(function () {
+		var pars = $.deparam.querystring();
 
-	$("#search-query-raw").val(JSON.stringify({
-		"query": {
-			"multi_match": {
-				"query": $("#search-query").val(),
-				"fields": ["dimensions.name^2"],
-				"type": "most_fields"
-			}
-		},
-		"size": 100
-	}));
+		$("#search-query").val(pars.query);
+		$("#search-query").focus();
 
-	if ($("#search-query").val()) {
-		runSearch();
-	}
+		$("#search-query-raw").val(JSON.stringify({
+			"query": {
+				"multi_match": {
+					"query": $("#search-query").val(),
+					"fields": ["dimensionsWithName"],//["dimensions.name"],
+					"type": "most_fields"
+				}
+			},
+			"size": 100
+		}));
+
+		if ($("#search-query").val()) {
+			runSearch();
+		}
+	});
 
 	$("#site-search-button").on("click", runSearch);
 
@@ -169,6 +176,36 @@ $(function () {
 			}
 
 			$("#search-query-raw").val(JSON.stringify(query));
+			runSearch(skipHistory = true);
+		}
+	});
+
+	$("#search_consolidated").on("change", function () {
+		var query = JSON.parse($("#search-query-raw").val());
+		if (query && query.query && query.query.multi_match && query.query.multi_match.fields) {
+			var fields = query.query.multi_match.fields;
+
+			if ($("#search_consolidated").is(":checked") && fields.indexOf("dimensionsWithName") < 0) {
+				fields.push("dimensionsWithName");
+				if (fields.indexOf("dimensions.name") >= 0) {
+					fields.splice(fields.indexOf("dimensions.name"), 1);
+				}
+				if (fields.indexOf("datasetName") >= 0) {
+					fields.splice(fields.indexOf("datasetName"), 1);
+				}
+			}
+			else if (!$("#search_consolidated").is(":checked") && fields.indexOf("dimensionsWithName") >= 0) {
+				fields.splice(fields.indexOf("dimensionsWithName"), 1);
+				if (fields.indexOf("dimensions.name") < 0) {
+					fields.push("dimensions.name");
+				}
+				if ($("#search_name").is(":checked") && fields.indexOf("datasetName") < 0) {
+					fields.push("datasetName");
+				}
+			}
+
+			$("#search-query-raw").val(JSON.stringify(query));				
+			$("#search_name").closest("label").toggle(!$("#search_consolidated").is(":checked"));
 			runSearch(skipHistory = true);
 		}
 	});
