@@ -28,9 +28,11 @@ var Infrastructure;
 	var budgetIndex = -1;
 
 	var axes = {
-		'1': 'Axis 1. Structural Transformation of the economy and growth',
-		'2': 'Axis 2. Human capital, social protection and sustainable development',
-		'3': 'Axis 3. Governance, Institutions, Peace and Security'
+		'1': 'Pillar 1. Effective Governance and Service Delivery',
+		'2': 'Pillar 2. Economic Advancement',
+		'3': 'Pillar 3. Social Progression',
+		'4': 'Pillar 4. Infrastructure Development',
+		'5': 'Pillar 5. International Relations and Cooperation',
 	};
 
 	var sectors = {
@@ -672,15 +674,15 @@ var Infrastructure;
 
         		html += '<div><label>Coordinates:</label><br />' + tooltipData['locales'] + '</div>';
         		html += '<div><label>Total Planned Budget:</label><br />' + (tooltipData['Budget Total Prévu: Dépenses Prévues'] == null ? '0' : tooltipData['Budget Total Prévu: Dépenses Prévues']) + '</div>';
-        		html += "<div><label>The Strategy Vision code:</label><br />" + (tooltipData["Code de l'axe stratégique de la vision 2035"] == null ? '' : tooltipData["Code de l'axe stratégique de la vision 2035"]) + '</div>';
+        		html += "<div><label>Harambee Prosperity Plan Pillar:</label><br />" + (tooltipData["Code de l'axe stratégique de la vision 2035"] == null ? '' : tooltipData["Code de l'axe stratégique de la vision 2035"]) + '</div>';
 
         		html += '</div>';
 
         		html += '<div class="data-block col2">';
 
-        		html += '<div><label>Sub Sector:</label><br />' + (tooltipData['Code du Sous-Secteur (voir feuille Read me pour avoir les codes)'] == null ? '' : tooltipData['Code du Sous-Secteur (voir feuille Read me pour avoir les codes)']) + '</div>';
-        		html += '<div><label>Namibia Government Plan:</label><br />' + (tooltipData['Numéro du projet phare / numéro de la réforme phare. (PP# / RP#)'] == null ? '' : tooltipData['Numéro du projet phare / numéro de la réforme phare. (PP# / RP#)']) + '</div>';
-        		html += '<div><label>Code PTIP:</label><br />' + (tooltipData['Code PTIP'] == null ? '' : tooltipData['Code PTIP']) + '</div>';
+        		html += '<div><label>HARAMBEE TARGET:</label><br />' + (tooltipData['Code du Sous-Secteur (voir feuille Read me pour avoir les codes)'] == null ? '' : tooltipData['Code du Sous-Secteur (voir feuille Read me pour avoir les codes)']) + '</div>';
+        		html += '<div><label>Harambee Prosperity Plan:</label><br />' + (tooltipData['Numéro du projet phare / numéro de la réforme phare. (PP# / RP#)'] == null ? '' : tooltipData['Numéro du projet phare / numéro de la réforme phare. (PP# / RP#)']) + '</div>';
+        		html += '<div><label>Code HPP:</label><br />' + (tooltipData['Code PTIP'] == null ? '' : tooltipData['Code PTIP']) + '</div>';
         		html += '<div><label>Expenses Incurred:</label><br />' + (tooltipData['Budget Total Prévu: Dépenses Prévues'] == null ? '0' : tooltipData['Budget Total Prévu: Dépenses Prévues']) + '</div>';
         		
 
@@ -1169,13 +1171,13 @@ var Infrastructure;
         		for (var i = 0; i < projects.length; i++) {
 
         			var ppNumber = '00';
-        			if (projects[i].pp.length == 4)
-        				ppNumber = projects[i].pp.substr(2, 3);
-        			else if (projects[i].pp.length == 3)
-        				ppNumber = '0' + projects[i].pp.substr(2, 3);
+        			if (projects[i].pp.length == 5)
+        				ppNumber = projects[i].pp.substr(3, 4);
+        			else if (projects[i].pp.length == 4)
+        				ppNumber = '0' + projects[i].pp.substr(3, 4);
 
         			$trs.push($('<tr>', { 'data-name': projects[i].name })
-						.append($('<td>').append($('<img>', { src: './img/right-panel/icons-' + ppNumber + '.png', 'class': 'pp-image-small' })))
+						.append($('<td>').append($('<img>', { src: './img/right-panel/' + ppNumber + '.png', 'class': 'pp-image-small' })))
 						.append($('<td>', { text: projects[i].pp }))
 						.append($('<td>', { text: projects[i].name }))
 						.append($('<td>', { text: projects[i].status }))
@@ -1286,7 +1288,7 @@ var Infrastructure;
         		$('#senegal-right-hand-panel .realisation-indicators tbody').empty().append(realizeTData);
 
 
-        		var axeData = { '1': 0, '2': 0, '3': 0 };
+        		var axeData = { '1': 0, '2': 0, '3': 0, '4': 0, '5': 0 };
         		var unicNames = [];
         		_this.loop(_this.projectData, _this.projectColumns, null, function (i, item) {
 
@@ -1303,6 +1305,8 @@ var Infrastructure;
         		axeTrs.push($('<tr>').append($('<td>', { text: axes['1'] })).append($('<td>', { text: axeData['1'] })));
         		axeTrs.push($('<tr>').append($('<td>', { text: axes['2'] })).append($('<td>', { text: axeData['2'] })));
         		axeTrs.push($('<tr>').append($('<td>', { text: axes['3'] })).append($('<td>', { text: axeData['3'] })));
+        		axeTrs.push($('<tr>').append($('<td>', { text: axes['4'] })).append($('<td>', { text: axeData['4'] })));
+        		axeTrs.push($('<tr>').append($('<td>', { text: axes['5'] })).append($('<td>', { text: axeData['5'] })));
         		$('#senegal-right-hand-panel .axe-summ tbody').empty().append(axeTrs);
 
 				
