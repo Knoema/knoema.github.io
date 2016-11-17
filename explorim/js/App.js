@@ -34,7 +34,7 @@ function App() {
         strokeWeight: 0,
         strokeColor: 'transparent',
         fillColor: 'transparent',
-        zIndex: 100,
+        zIndex: 0,
         clickable: false
     };
 
@@ -42,7 +42,7 @@ function App() {
         strokeWeight: 0,
         strokeColor: 'transparent',
         fillColor: 'transparent',
-        zIndex: 1000,
+        //zIndex: 1000,
         clickable: true
     };
 
@@ -50,7 +50,7 @@ function App() {
         strokeWeight: 1,
         fillColor: 'white',
         strokeColor: 'white',
-        fillOpacity: 0.5,
+        clickable: true,
         zIndex: 100
     };
 
@@ -90,6 +90,7 @@ function App() {
 
 
 App.prototype.init = function () {
+    var self = this;
 
     $('[data-toggle="tooltip"]').tooltip();
 
@@ -123,7 +124,6 @@ App.prototype.init = function () {
                         return r.fields.regionid === region.fields.regionid;
                     });
                     if (sameRegion) {
-                        //TODO Find key in regionsWithKeys by region Id
                         region.key = sameRegion.key;
                     }
                 }.bind(this));
@@ -140,21 +140,6 @@ App.prototype.init = function () {
                 });
 
                 $('#select-region').on('hidden.bs.select', $.proxy(function(event, isRegion) {
-                    if (isRegion) {
-                        var newDivision;
-                        switch ($('#regional-division-map-switcher').find('.active').data('division')) {
-                            case 'Région':
-                                newDivision = 'Région';
-                                break;
-                            case 'Département':
-                                newDivision = 'Région';
-                                break;
-                            case 'Communale':
-                                newDivision = 'Département';
-                                break;
-                        }
-                        this.switchDivision(newDivision, true, this._activeAreaLayerId);
-                    }
                     this.selectRegion(event, isRegion);
                 }, this));
 
@@ -172,27 +157,37 @@ App.prototype.init = function () {
 			}
 		});
 
-		google.maps.event.addListenerOnce(this._map, 'idle', function () {
+    	google.maps.event.addListenerOnce(this._map, 'idle', function () {
 
 			var idleTimeout = window.setTimeout(function () {
 
                 $.when.apply(null, [
-                    $.getJSON('mauritaniaCommunes.json'),
+                    $.getJSON('mauritaniaGovernorates.json'),
                     $.getJSON('mauritaniaDepartments.json'),
-                    $.getJSON('mauritaniaGovernorates.json')
-                ]).done(function onGeoJsonLoaded(communes, departments, governorates) {
+                    $.getJSON('mauritaniaCommunes.json')
+                ]).done(function onGeoJsonLoaded(governorates, departments, communes) {
 
-                    //White layers
+                    // _.each(governorates[0].features, function(f) {
+                    //     f.properties.level = 1;
+                    // });
+
                     self._dataLayers['Région'] = new google.maps.Data();
                     self._dataLayers['Région'].setMap(self._map);
                     self._dataLayers['Région'].addGeoJson(governorates[0]);
                     self._dataLayers['Région'].setStyle(self._invisibleStyle);
 
+                    // _.each(departments[0].features, function(f) {
+                    //     f.properties.level = 2;
+                    // });
 
                     self._dataLayers['Département'] = new google.maps.Data();
                     self._dataLayers['Département'].setMap(self._map);
                     self._dataLayers['Département'].addGeoJson(departments[0]);
                     self._dataLayers['Département'].setStyle(self._invisibleStyle);
+
+                    // _.each(communes[0].features, function(f) {
+                    //     f.properties.level = 3;
+                    // });
 
                     self._dataLayers['Communale'] = new google.maps.Data();
                     self._dataLayers['Communale'].setMap(self._map);
@@ -357,8 +352,6 @@ App.prototype.onResize = function () {
         "width": mapAndTimelineWidth
     });
 
-    //$('.time-members-holder').width(mapAndTimelineWidth - 50); //50 width of slide-control
-
     var panelHeadingHeight = $sideBar.find('.panel-heading').first().height();
     var topLevelSectionHeight = filtersHolderHeight - $sideBar.find('.panel-heading').length * panelHeadingHeight - 26;//26 for margin/padding
 
@@ -387,12 +380,7 @@ App.prototype.switchDivision = function (division, reloadLayer, layerId, availab
 
     $('#filters').html(division);
 
-    for (var d in this._dataLayers) {
-        var style = d === division ? this._visibleStyle : this._invisibleStyle;
-        this._dataLayers[d].forEach(function(feature) {
-            self._dataLayers[d].overrideStyle(feature, style);
-        });
-    }
+    this.resetDataLayers();
 
 	var $switcher = $('#regional-division-map-switcher');
 
@@ -424,6 +412,7 @@ App.prototype.switchDivision = function (division, reloadLayer, layerId, availab
 	}
 
 	if (reloadLayer) {
+        this.hideRightSideBar();
         var $activeGroup = $('#' + this._activeGroupCuid);
         if ($activeGroup.length) {
             var layer = _.find($activeGroup.data().layers, $.proxy(function(layer) {
@@ -435,34 +424,6 @@ App.prototype.switchDivision = function (division, reloadLayer, layerId, availab
             }
         }
     }
-};
-
-App.prototype.selectRegionFromDataLayer = function (e) {
-    if (!this.isRightSideBarVisible()) {
-        var mapAndTimelineWidth = $(window).width() - $('#side-bar').width() - $('#right-side-bar').width() - 20;
-        $('.map-and-timeline').width(mapAndTimelineWidth);
-        google.maps.event.trigger(this._map, "resize");
-    }
-
-    //TODO Replace with this:
-    //var newDivision = this.getDivisionByRegionId(regionId);
-    var newDivision;
-    var division = this._activeRegionalDivision;
-    switch (division) {
-        case 'Région':
-            newDivision = 'Département';
-            break;
-        case 'Département':
-            newDivision = 'Communale';
-            break;
-        case 'Communale':
-            newDivision = 'Communale';
-            break;
-    }
-
-    this.selectRegion(e, true);
-
-    this.switchDivision(newDivision, true, this._activeAreaLayerId);
 };
 
 App.prototype._extendBoundsByGeometry = function (bounds, geometry) {
@@ -539,6 +500,7 @@ App.prototype.selectRegion = function (e, isRegion) {
 
     this.highlightFeature();
 
+    //console.log('%cTODO Restore fitBounds', 'color:red;font-size:200%;');
     var bounds = new google.maps.LatLngBounds();
     this._extendBoundsByGeometry(bounds, this._selectedFeature.getGeometry());
     this._map.fitBounds(bounds);
@@ -548,20 +510,29 @@ App.prototype.selectRegion = function (e, isRegion) {
 
 App.prototype.highlightFeature = function () {
     var self = this;
-    this._dataLayers[this._activeRegionalDivision].overrideStyle(this._selectedFeature, this._selectedStyle);
+
+    self._dataLayers[self._activeRegionalDivision].forEach(function(feature) {
+        self._dataLayers[self._activeRegionalDivision].overrideStyle(feature, self._clickableStyle);
+    });
+
+    self._dataLayers[self._activeRegionalDivision].overrideStyle(self._selectedFeature, {
+        strokeWeight: 1,
+        fillColor: 'white',
+        strokeColor: 'white',
+        zIndex: 0,
+        clickable: false
+    });
+
     var childRegionIds = this.getChildRegions(this._selectedFeature.getId()) || [];
-    childRegionIds.push(this._selectedFeature.getId());
+
     _.forIn(this._dataLayers, function (dataLayer) {
         dataLayer.forEach(function(feature) {
             var featureId = feature.getId();
-            var style = _.includes(childRegionIds, feature.getId()) ? self._selectedStyle : self._clickableStyle;
-            if (featureId === self._selectedFeature.getId()) {
-                style = _.extend({}, style);
-                //style.fillColor = 'blue';
-                style.zIndex = -1;
-                style.clickable = false;
+            if (_.includes(childRegionIds, featureId)) {
+                var style = self._selectedStyle;
+                style.zIndex = 1000;
+                dataLayer.overrideStyle(feature, style);
             }
-            dataLayer.overrideStyle(feature, style);
         });
     });
 };
@@ -755,9 +726,6 @@ App.prototype.showFonctionnaires = function (regionId, layerId) {
 
                 var columns;
 
-                //Previous version
-                //var columns = ["NNI", "NOM", "PRÉNOM", "Date De Naissance", "Code Naissance", "Fonction", "Minister", "Code Inscription"];
-
                 if (self.content.layers[layerId].groupping.groupName === 'Fonctionnaires. Code Naissance') {
                     columns = [
                         "NNI",
@@ -813,8 +781,6 @@ App.prototype.showFonctionnaires = function (regionId, layerId) {
                 });
 
             });
-        } else {
-            //alert(regionId + ' missing in dataset');
         }
     });
 };
@@ -835,8 +801,8 @@ App.prototype.bindEvents = function () {
     $('#jump-to-parent-region').on('click', function() {
         if (this._activeRegionId) {
             var parentRegionId = this.getParentRegionId(this._activeRegionId);
-            var regionName = parentRegionId == null ? 'not-selected' : $('#select-region').find('[data-region-id="' + parentRegionId + '"]').val();
-            $('#select-region').selectpicker('val', regionName);
+            var regionKey = parentRegionId == null ? 'not-selected' : $('#select-region').find('[data-region-id="' + parentRegionId + '"]').val();
+            $('#select-region').selectpicker('val', regionKey);
             $('#select-region').trigger('hidden.bs.select', true);
         }
     }.bind(this));
@@ -886,6 +852,9 @@ App.prototype.bindEvents = function () {
 
                 layerId = $target.data('layerId');
                 var layers = $target.data('layers');
+
+                $('#select-region').selectpicker('val', 'not-selected');
+                $('#select-region').trigger('hidden.bs.select', true);
 
                 if (layerId) {
                     //Simple region layer (no sublayers like Regionale, Department, Communale)
@@ -1184,7 +1153,8 @@ App.prototype.loadLayer = function (layerId, layerType, callback) {
 
                 this.showLegend(this._layers[layerId].layer.ranges);
 
-                layerData.layer.dataLayer.addListener('click', $.proxy(this.selectRegionFromDataLayer, this));
+                //No click handlers for layers from tree
+                //layerData.layer.dataLayer.addListener('click', $.proxy(this.selectRegionFromDataLayer, this));
 
                 // layerData.layer.dataLayer.addListener('click', function (e) {
                 //     var data = e.feature.getProperty('tooltipData');
@@ -1282,15 +1252,12 @@ App.prototype.createTimeline = function (timeMembers, layerId, scrollToRight) {
 
 App.prototype.resetDataLayers = function () {
     var self = this;
-    for (var regionType in this._dataLayers) {
-        this._dataLayers[regionType].forEach(function(feature) {
-            var style = self._clickableStyle;
-            if (regionType === self._activeRegionalDivision) {
-                style = self._visibleStyle;
-            }
-            self._dataLayers[regionType].overrideStyle(feature, style);
+    _.forIn(this._dataLayers, function (dataLayer, division) {
+        var style = division === self._activeRegionalDivision ? self._visibleStyle : self._invisibleStyle;
+        dataLayer.forEach(function(feature) {
+            dataLayer.overrideStyle(feature, style);
         });
-    }
+    });
 };
 
 App.prototype.loadTemplates = function (callback) {

@@ -670,6 +670,10 @@ table tr:nth-of-type(even) {
     text-transform: uppercase;
 }
 
+.bootstrap-select.btn-group .dropdown-menu li.selected.active a {
+    color: #777;
+}
+
 .side-bar-content {
     overflow-x: auto;
     font-size: 0.8em;
