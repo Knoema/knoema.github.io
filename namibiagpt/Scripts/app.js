@@ -1329,8 +1329,8 @@ var Infrastructure;
         		});
 
         		var PPSortedData = [];
-        		for (var i = 1; i <= 27; i++) {
-        			var pp = 'PP' + i;
+        		for (var i = 1; i <= 15; i++) {
+        			var pp = 'HPP' + i;
 
         			if (!PPData[pp] && !budgetData[pp])
         				continue;
@@ -1345,7 +1345,7 @@ var Infrastructure;
         		var ppTrs = [];
         		for (var i = 0; i < PPSortedData.length; i++) {
         			ppTrs.push($('<tr>')
-						.append($('<td>').append($('<img src="./img/right-panel/icons-' + PPSortedData[i][3] + '.png" class="pp-image-small">')))
+						.append($('<td>').append($('<img src="./img/right-panel/' + PPSortedData[i][3] + '.png" class="pp-image-small">')))
 						.append($('<td>', { text: PPSortedData[i][0] }))
 						.append($('<td>', { text: PPSortedData[i][1] }))
 						.append($('<td>', { text: _this.formatNumberUS(PPSortedData[i][2]) }))

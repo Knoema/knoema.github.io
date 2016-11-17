@@ -10,21 +10,37 @@ body.landing
 {
 	background: url(./img/bg.jpg) no-repeat;
 	background-size: 100%;
-	padding-top: 200px;
+	padding-top: 150px;
+}
+.logo-container {
+	width: 720px;
+	margin: 0 auto 100px;
+}
+.left-part {
+	display: inline-block;
+	padding: 0 50px;
 }
 #logo
 {
 	display: block;
-	margin: 0 auto 50px;
+	margin: -25px auto 40px;
 	width: 100px;
 	height: 105px;
 }
 #logo-title
 {
 	display: block;
-	margin: 0 auto 100px;
 	width: 250px;
 	height: 50px;
+}
+img.v-line {
+	width: 1px;
+	vertical-align: top;
+}
+.right-title {
+	width: 300px;
+	vertical-align: top;
+	margin: 10px 0 0 50px;
 }
 .menu
 {
@@ -135,6 +151,16 @@ body.loading > .ajax-loader {
 	float: left;
 	height: 45px;
 	margin: 12px 0 0 15px;
+}
+.main-menu .head-v-line {
+	float: left;
+    width: 1px;
+    margin: 10px 20px 0 20px;
+}
+.main-menu .logo-hpp {
+	width: 100px;
+    float: left;
+    margin: 10px 0 0 0;
 }
 .main-menu .items
 {
@@ -1291,12 +1317,10 @@ p.value
 #senegal-right-hand-panel table tbody tr td
 {
 	padding: 7px 5px;
-	vertical-align: top;
 }
 img.pp-image-small
 {
 	height: 18px;
-	margin-top: -7px;
 }
 #right-hand-panel table tbody tr:nth-child(2n),
 #senegal-right-hand-panel table tbody tr:nth-child(2n)
