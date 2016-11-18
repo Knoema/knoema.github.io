@@ -16,7 +16,7 @@ body.landing
 	width: 720px;
 	margin: 0 auto 100px;
 }
-.left-part {
+.logo-container .left-part {
 	display: inline-block;
 	padding: 0 50px;
 }
@@ -37,7 +37,7 @@ img.v-line {
 	width: 1px;
 	vertical-align: top;
 }
-.right-title {
+.logo-container .right-title {
 	width: 300px;
 	vertical-align: top;
 	margin: 10px 0 0 50px;
@@ -2672,7 +2672,7 @@ ul.subtopic-content li a
 .content-container .right-part
 {
 	width: 940px;
-	height: 570px;
+	height: 610px;
 	margin-left: 90px;
 	display: inline-block;
 	vertical-align: top;
