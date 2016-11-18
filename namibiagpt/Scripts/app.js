@@ -34,19 +34,26 @@ var Infrastructure;
 		'4': 'Pillar 4. Infrastructure Development',
 		'5': 'Pillar 5. International Relations and Cooperation',
 	};
+	var axes_2 = {
+		'1': 'Effective Governance and Service Delivery',
+		'2': 'Economic Advancement',
+		'3': 'Social Progression',
+		'4': 'Infrastructure Development',
+		'5': 'International Relations and Cooperation',
+	};
 
 	var sectors = {
-		'100': 'Agriculture and Food Safety',
+		'100': 'Ensure sufficient water supply reserves for business activity, including industrialisation, residential land servicing and housing development during the Harambee period',
 		'101': 'Craft',
 		'102': 'Trade',
 		'103': 'Communication, Infrastructure and Telecommunications services',
 		'104': 'International Cooperation, Regional Integration and SE',
 		'105': 'Culture',
 		'106': 'Breeding',
-		'107': 'Industry and Food processing',
+		'107': 'Increase access to finance by Micro, Small and Medium Enterprises from 22 percent to 50 percent by 2020',
 		'108': 'Financial Infrastructure and Financial Services',
-		'109': 'Transport',
-		'110': 'Energy Infrastructure and Services',
+		'109': 'Twenty six thousand (26,000) new residential plots will be serviced country wide during the Harambee period',
+		'110': 'Economic empowerment leading to higher inclusion of disadvantaged groups into formal economy',
 		'111': 'Mining and quarrying',
 		'112': 'Fisheries and aquaculture',
 		'113': 'Private Sector and SMEs',
@@ -59,7 +66,7 @@ var Infrastructure;
 		'204': 'Environment and Sustainable Development',
 		'205': 'Vocational and technical training',
 		'206': 'Risk Management and Disaster',
-		'207': 'Housing and Living Environment',
+		'207': 'There will be a significant reduction in infant and maternal mortality rate by 2020',
 		'208': 'Social Protection',
 		'209': 'Health and Nutrition',
 		'300': 'Public Administration and State Reform',
@@ -162,6 +169,7 @@ var Infrastructure;
             this.year = 2016;
 
             this.axes = axes;
+            this.axes_2 = axes_2;
             this.sectors = sectors;
 
             $('#slider-range').slider({
@@ -504,8 +512,8 @@ var Infrastructure;
             		if (addObject) {
             			var tooltipData = {};
             			tooltipData[columns[_this.nameIndex]] = item[_this.nameIndex];
-            			tooltipData[columns[_this.pseIndex]] = item[_this.pseIndex] + ' - ' + _this.axes[item[_this.pseIndex]];
-            			tooltipData[columns[_this.sectorIndex]] = item[_this.sectorIndex] + ' - ' + _this.sectors[item[_this.sectorIndex]];
+            			tooltipData[columns[_this.pseIndex]] = _this.axes_2[item[_this.pseIndex]];
+            			tooltipData[columns[_this.sectorIndex]] = _this.sectors[item[_this.sectorIndex]];
             			tooltipData[columns[_this.statusIndex]] = item[_this.statusIndex];
             			tooltipData[columns[_this.ppIndex]] = $('#ppp-projects').find('option[value=' + item[_this.ppIndex] + ']').text();;
             			tooltipData[columns[_this.ptipIndex]] = item[_this.ptipIndex];
