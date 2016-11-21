@@ -671,6 +671,7 @@ table tr:nth-of-type(even) {
 }
 
 .bootstrap-select.btn-group .dropdown-menu li.selected.active a {
+    background-color: #efefef;
     color: #777;
 }
 

@@ -1058,14 +1058,14 @@
   },
   {
     "name": "DAR EL AVIYE",
-    "level": 0,
+    "level": 3,
     "fields": {
       "regionid": "MR-05-BO-DEA"
     }
   },
   {
     "name": "DAR EL BARKE",
-    "level": 0,
+    "level": 3,
     "fields": {
       "regionid": "MR-05-BO-DEB"
     }
@@ -1135,7 +1135,7 @@
   },
   {
     "name": "EDEBAYE EL HEJJAJ",
-    "level": 0,
+    "level": 3,
     "fields": {
       "regionid": "MR-05-MB-ED"
     }
