@@ -82,10 +82,21 @@ function App() {
 
 	this._activeRegionalDivision = null;
 	this._activeGroupCuid = null;
-    this._activeAreaLayerId = null;
+
+	this._activeAreaLayerId = null;
+    this._layerData = {};
+
     this._dataLayers = {};
     this._layerTitles = {};
     this._selectedFeature = null;
+    this._fonctionnaires = [
+        "fc3a4fa6-66b2-a30a-c83f-0adbfe8805d7",
+        "0a9c5e6a-9562-3866-7261-741c96999e79",
+        "36d5d01c-4772-9056-37f3-dd005e894cff",
+        "45c2b643-a200-1b64-d8c0-9094472c415d",
+        "c5a695b4-05c0-9e51-2288-9187885da5e3",
+        "0a0afddd-db7c-b810-1a86-ecfaa67ddb21"
+    ];
 }
 
 
@@ -502,10 +513,15 @@ App.prototype.selectRegion = function (e, isRegion) {
 
     //console.log('%cTODO Restore fitBounds', 'color:red;font-size:200%;');
     var bounds = new google.maps.LatLngBounds();
-    this._extendBoundsByGeometry(bounds, this._selectedFeature.getGeometry());
-    this._map.fitBounds(bounds);
 
-    this.populateSidebar(regionId);
+    if (this._selectedFeature) {
+        this._extendBoundsByGeometry(bounds, this._selectedFeature.getGeometry());
+        this._map.fitBounds(bounds);
+
+        this.populateSidebar(regionId);
+    } else {
+        this.hideRightSideBar();
+    }
 };
 
 App.prototype.highlightFeature = function () {
@@ -523,22 +539,24 @@ App.prototype.highlightFeature = function () {
         clickable: false
     });
 
-    var childRegionIds = this.getChildRegions(this._selectedFeature.getId()) || [];
+    if (this._selectedFeature) {
+        var childRegionIds = this.getChildRegions(this._selectedFeature.getId()) || [];
 
-    _.forIn(this._dataLayers, function (dataLayer) {
-        dataLayer.forEach(function(feature) {
-            var featureId = feature.getId();
-            if (_.includes(childRegionIds, featureId)) {
-                var style = self._selectedStyle;
-                style.zIndex = 1000;
-                dataLayer.overrideStyle(feature, style);
-            }
+        _.forIn(this._dataLayers, function (dataLayer) {
+            dataLayer.forEach(function(feature) {
+                var featureId = feature.getId();
+                if (_.includes(childRegionIds, featureId)) {
+                    var style = self._selectedStyle;
+                    style.zIndex = 1000;
+                    dataLayer.overrideStyle(feature, style);
+                }
+            });
         });
-    });
+    }
 };
 
 App.prototype.populateSidebar = function(regionId) {
-
+    var self = this;
     var regionName, key, level;
 
     var $selected = $('#select-region').find(':selected');
@@ -549,146 +567,168 @@ App.prototype.populateSidebar = function(regionId) {
 
     var $rightSideBar = $('#right-side-bar');
 
-    $rightSideBar.find('.header').html(regionName);
-    $rightSideBar.find('.header').append('<a href="javascript:void 0;" class="export-button" title="Export to PDF"></a><div style="text-align: center"><a style="margin-top: 10px;" href="#" class="btn" id="view-profile">     Voir le profil régional </a></div>');
-    $rightSideBar.find('.side-bar-content').empty().append($('<span class="glyphicon glyphicon-cog fa-spin" aria-hidden="true" title="Loading..."></span>'));
-    $rightSideBar.animate({
-        "right": 0
-    });
+    console.log('_activeAreaLayerId', this._activeAreaLayerId);
 
-    dataDescriptors.old.Filter[0].Members = [key];
 
-    dataDescriptors.economics0.Filter[0].Members = [key];
-    dataDescriptors.economics1.Filter[0].Members = [key];
 
-    //TODO Set proper key (find by regionId)
-    dataDescriptors.politics0.Filter[0].Members = [key];
-    dataDescriptors.politics1.Filter[0].Members = [key];
+    //TODO Add
+    if (this._activeAreaLayerId) {
+        this._layerData[this._activeAreaLayerId].then(function(layerData) {
 
-    //ftqbdwb dataset used
-    //Economique et social
-    var economics0 = $.Deferred();
-    Knoema.Helpers.post('//explorim.knoema.com/api/1.0/data/pivot', dataDescriptors.economics0, function(pivotResponse) {
-        economics0.resolve(pivotResponse);
-    });
-    var economics1 = $.Deferred();
-    Knoema.Helpers.post('//explorim.knoema.com/api/1.0/data/pivot', dataDescriptors.economics1, function(pivotResponse) {
-        economics1.resolve(pivotResponse);
-    });
-
-    //jflytqc dataset used (need find proper key)
-    var politics0 = $.Deferred();
-    Knoema.Helpers.get('//explorim.knoema.com/api/1.0/meta/dataset/jflytqc/dimension/region', function(data) {
-
-        var item = _.find(data.items, function(it) {
-            return it.fields.regionid === regionId;
-        });
-
-        if (item) {
-            dataDescriptors.politics0.Filter[0].Members[0] = item.key.toString();
-            Knoema.Helpers.post('//explorim.knoema.com/api/1.0/data/details', dataDescriptors.politics0, function(pivotResponse) {
-                politics0.resolve(pivotResponse);
+            $rightSideBar.find('.header').html(regionName);
+            $rightSideBar.find('.header').append('<a href="javascript:void 0;" class="export-button" title="Export to PDF"></a><div style="text-align: center"><a style="margin-top: 10px;" href="#" class="btn" id="view-profile">     Voir le profil régional </a></div>');
+            $rightSideBar.find('.side-bar-content').empty().append($('<span class="glyphicon glyphicon-cog fa-spin" aria-hidden="true" title="Loading..."></span>'));
+            $rightSideBar.animate({
+                "right": 0
             });
-        } else {
-            politics0.resolve(null);
-        }
 
-    });
+            dataDescriptors.old.Filter[0].Members = [key];
 
-    //ftqbdwb dataset used
-    var politics1 = $.Deferred();
-    Knoema.Helpers.post('//explorim.knoema.com/api/1.0/data/pivot', dataDescriptors.politics1, function(pivotResponse) {
-        politics1.resolve(pivotResponse);
-    });
+            dataDescriptors.economics0.Filter[0].Members = [key];
+            dataDescriptors.economics1.Filter[0].Members = [key];
 
-    var zone0 = $.Deferred();
-    Knoema.Helpers.get('//explorim.knoema.com/api/1.0/meta/dataset/kymrtcc/dimension/region', function(data) {
+            //TODO Set proper key (find by regionId)
+            dataDescriptors.politics0.Filter[0].Members = [key];
+            dataDescriptors.politics1.Filter[0].Members = [key];
 
-        var item = _.find(data.items, function(it) {
-            return it.fields.regionid === regionId;
-        });
-
-        if (item) {
-            dataDescriptors.zone0.Filter[0].Members[0] = item.key.toString();
-            Knoema.Helpers.post('//explorim.knoema.com/api/1.0/data/pivot', dataDescriptors.zone0, function(pivotResponse) {
-                zone0.resolve(pivotResponse);
+            //ftqbdwb dataset used
+            //Economique et social
+            var economics0 = $.Deferred();
+            Knoema.Helpers.post('//explorim.knoema.com/api/1.0/data/pivot', dataDescriptors.economics0, function(pivotResponse) {
+                economics0.resolve(pivotResponse);
             });
-        } else {
-            zone0.resolve(null);
-        }
-
-    });
-
-    $.when.apply(null, [
-        economics0,
-        economics1,
-        politics0,
-        politics1,
-        zone0
-    ]).done(function onPivotRequestsFinished(economics0, economics1, politics0, politics1, zone0Resp) {
-
-        if (economics0.data.length) {
-            //$table1
-            var $table1 = $.tmpl('simple-table.html', {
-                headerMembers: economics0.header[0].members,
-                rows: _.chunk(economics0.data, economics0.header[0].members.length)
+            var economics1 = $.Deferred();
+            Knoema.Helpers.post('//explorim.knoema.com/api/1.0/data/pivot', dataDescriptors.economics1, function(pivotResponse) {
+                economics1.resolve(pivotResponse);
             });
-        }
 
-        //$table2
-        var rows = _.chunk(economics1.data, 2);
-        rows.unshift([
-            {
-                indicator: '',
-                Value: 'Anticipé'
-            },
-            {
-                indicator: '',
-                Value: 'Finalisé'
-            }
-        ]);
-        if (rows[rows.length - 1].length == 1) {
-            rows[rows.length - 1].push({
-                Value: ''
+            //jflytqc dataset used (need find proper key)
+            var politics0 = $.Deferred();
+            Knoema.Helpers.get('//explorim.knoema.com/api/1.0/meta/dataset/jflytqc/dimension/region', function(data) {
+
+                var item = _.find(data.items, function(it) {
+                    return it.fields.regionid === regionId;
+                });
+
+                if (item) {
+                    dataDescriptors.politics0.Filter[0].Members[0] = item.key.toString();
+                    Knoema.Helpers.post('//explorim.knoema.com/api/1.0/data/details', dataDescriptors.politics0, function(pivotResponse) {
+                        politics0.resolve(pivotResponse);
+                    });
+                } else {
+                    politics0.resolve(null);
+                }
+
             });
-        }
-        var $table2 = $.tmpl('complex-table.html', {
-            rows: rows
-        });
 
-        var $sideBarContent = $('#right-side-bar').find('.side-bar-content');
+            //ftqbdwb dataset used
+            var politics1 = $.Deferred();
+            Knoema.Helpers.post('//explorim.knoema.com/api/1.0/data/pivot', dataDescriptors.politics1, function(pivotResponse) {
+                politics1.resolve(pivotResponse);
+            });
 
-        $sideBarContent.empty();
+            var zone0 = $.Deferred();
+            Knoema.Helpers.get('//explorim.knoema.com/api/1.0/meta/dataset/kymrtcc/dimension/region', function(data) {
 
-        $sideBarContent.append('<h4>Economique et social</h4>');
+                var item = _.find(data.items, function(it) {
+                    return it.fields.regionid === regionId;
+                });
 
-        if ($table1) {
-            $sideBarContent.append($table1);
-            $sideBarContent.append('<hr />');
-        }
+                if (item) {
+                    dataDescriptors.zone0.Filter[0].Members[0] = item.key.toString();
+                    Knoema.Helpers.post('//explorim.knoema.com/api/1.0/data/pivot', dataDescriptors.zone0, function(pivotResponse) {
+                        zone0.resolve(pivotResponse);
+                    });
+                } else {
+                    zone0.resolve(null);
+                }
 
-        $sideBarContent.append($table2);
+            });
 
-        $sideBarContent.append($.tmpl('zone-de-vie.html'));
+            $.when.apply(null, [
+                economics0,
+                economics1,
+                politics0,
+                politics1,
+                zone0
+            ]).done(function onPivotRequestsFinished(economics0, economics1, politics0, politics1, zone0Resp) {
 
-        $sideBarContent.append('<h4>Politique</h4>');
+                if (economics0.data.length) {
+                    //$table1
+                    var $table1 = $.tmpl('simple-table.html', {
+                        headerMembers: economics0.header[0].members,
+                        rows: _.chunk(economics0.data, economics0.header[0].members.length)
+                    });
+                }
 
-        if (politics0 != null) {
-            $sideBarContent.append('<h5>Tribus</h5>');
-            var table = '<table>' + _.map(_.chunk(politics0.data, politics0.columns.length), function(d) {
-                    return '<tr><td>' + d[1] + '</td></tr>';
-                }).join('') + '</table>';
-            $sideBarContent.append(table);
-        }
+                //$table2
+                var rows = _.chunk(economics1.data, 2);
+                rows.unshift([
+                    {
+                        indicator: '',
+                        Value: 'Anticipé'
+                    },
+                    {
+                        indicator: '',
+                        Value: 'Finalisé'
+                    }
+                ]);
+                if (rows[rows.length - 1].length == 1) {
+                    rows[rows.length - 1].push({
+                        Value: ''
+                    });
+                }
+                var $table2 = $.tmpl('complex-table.html', {
+                    rows: rows
+                });
 
-        $sideBarContent.append('<h5>Élections</h5>');
+                var $sideBarContent = $('#right-side-bar').find('.side-bar-content');
 
-        $sideBarContent.append($.tmpl('simple-table.html', {
-            headerMembers: politics1.header[0].members,
-            rows: _.chunk(politics1.data, politics1.header[0].members.length)
-        }));
+                $sideBarContent.empty();
 
-    });
+                var regionData = _.find(layerData.layer.data.data, function(d) { return d.RegionId === regionId });
+                if (regionData) {
+                    var $passport = $('<div>');
+                    $passport.append('<h4>Passeport</h4>');
+                    $passport.append($('<table border="0"><tbody><tr><td>' + (layerData.layer.data.filter[0] ? layerData.layer.data.filter[0].members[0] : layerData.layer.groupping.groupName) + '</td><td>' + Globalize.format(parseFloat(regionData.Value)) + '</td></tr></tbody></table>'));
+                    if (this._fonctionnaires.indexOf(this._activeAreaLayerId) > -1) {
+                        $passport.find('tbody').append($('<tr><td><a href="javascript:void(0)" onclick="app.showFonctionnaires(\'' + regionId + '\', \'' + layerData.layerId + '\')">Montrent les fonctionnaires</a></td><td>&nbsp;</td></tr>'));
+                    }
+                    $rightSideBar.find('.side-bar-content').prepend($passport);
+                }
+
+                $sideBarContent.append('<h4>Economique et social</h4>');
+
+                if ($table1) {
+                    $sideBarContent.append($table1);
+                    $sideBarContent.append('<hr />');
+                }
+
+                $sideBarContent.append($table2);
+
+                $sideBarContent.append($.tmpl('zone-de-vie.html'));
+
+                $sideBarContent.append('<h4>Politique</h4>');
+
+                if (politics0 != null) {
+                    $sideBarContent.append('<h5>Tribus</h5>');
+                    var table = '<table>' + _.map(_.chunk(politics0.data, politics0.columns.length), function(d) {
+                            return '<tr><td>' + d[1] + '</td></tr>';
+                        }).join('') + '</table>';
+                    $sideBarContent.append(table);
+                }
+
+                $sideBarContent.append('<h5>Élections</h5>');
+
+                $sideBarContent.append($.tmpl('simple-table.html', {
+                    headerMembers: politics1.header[0].members,
+                    rows: _.chunk(politics1.data, politics1.header[0].members.length)
+                }));
+
+            }.bind(this));
+
+        }.bind(this));
+    }
 };
 
 App.prototype.loadFonctionnaires = function () {
@@ -1022,6 +1062,8 @@ App.prototype.hideLegend = function () {
 App.prototype.loadLayer = function (layerId, layerType, callback) {
 	var self = this;
 
+    this._layerData[layerId] = $.Deferred();
+
 	if (this._layers[layerId]) {
 
         if (layerType && layerType === 'region' && this._activeAreaLayerId != null) {
@@ -1153,6 +1195,10 @@ App.prototype.loadLayer = function (layerId, layerType, callback) {
 
                 this.showLegend(this._layers[layerId].layer.ranges);
 
+                this._activeAreaLayerId = layerData.layerId;
+
+                this._layerData[this._activeAreaLayerId].resolve(layerData);
+
                 //No click handlers for layers from tree
                 //layerData.layer.dataLayer.addListener('click', $.proxy(this.selectRegionFromDataLayer, this));
 
@@ -1186,7 +1232,7 @@ App.prototype.loadLayer = function (layerId, layerType, callback) {
                 //     self.infoWindow.open(self._map);
                 // });
 
-                this._activeAreaLayerId = layerData.layerId;
+
 			}
 
             $('input[data-layer-id="' + layerData.layerId + '"]').prop('disabled', false);
