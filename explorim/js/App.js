@@ -60,11 +60,11 @@ function App() {
             className: 'region'
         },
         {
-            name: 'Département',
+            name: 'Moughataa',
             className: 'department'
         },
         {
-            name: 'Communale',
+            name: 'Commune',
             className: 'communale'
         }
 	];
@@ -568,7 +568,7 @@ App.prototype.populateSidebar2 = function(regionId, layerData) {
     var $rightSideBar = $('#right-side-bar');
 
     $rightSideBar.find('.header').html(regionName);
-    $rightSideBar.find('.header').append('<a href="javascript:void 0;" class="export-button" title="Export to PDF"></a><div style="text-align: center"><a style="margin-top: 10px;" href="#" class="btn" id="view-profile">     Voir le profil régional </a></div>');
+    $rightSideBar.find('.header').append('<a href="javascript:void 0;" class="export-button" title="Export to PDF"></a><a style="margin-top: 10px;" href="#" class="btn profile-button" id="view-profile">     Voir le profil régional </a>');
     $rightSideBar.find('.side-bar-content').empty().append($('<span class="glyphicon glyphicon-cog fa-spin" aria-hidden="true" title="Loading..."></span>'));
     $rightSideBar.animate({
         "right": 0
@@ -712,12 +712,19 @@ App.prototype.populateSidebar2 = function(regionId, layerData) {
             $sideBarContent.append(table);
         }
 
-        $sideBarContent.append('<h5>Élections</h5>');
+        var $button = $('<a href="#" class="btn profile-button" id="elections">Élections</a>');
 
-        $sideBarContent.append($.tmpl('simple-table.html', {
-            headerMembers: politics1.header[0].members,
-            rows: _.chunk(politics1.data, politics1.header[0].members.length)
-        }));
+        $button.on('click', function() {
+            console.log('%cTODO Implement click handler','font-size:200%;color:red;');
+        });
+
+        $sideBarContent.append($button);
+
+        // $sideBarContent.append('<h5>Élections</h5>');
+        // $sideBarContent.append($.tmpl('simple-table.html', {
+        //     headerMembers: politics1.header[0].members,
+        //     rows: _.chunk(politics1.data, politics1.header[0].members.length)
+        // }));
 
     }.bind(this));
 };

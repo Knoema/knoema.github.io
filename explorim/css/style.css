@@ -641,11 +641,13 @@ table tr:nth-of-type(even) {
 }
 
 
-#view-profile {
+.profile-button {
     background-color: #245b13;
     color: white;
     margin: 0 auto;
     border-color: #245b13;
+    display: block;
+    width: 50%;
 }
 
 .info-window {
