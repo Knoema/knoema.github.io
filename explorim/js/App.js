@@ -178,36 +178,24 @@ App.prototype.init = function () {
                     $.getJSON('mauritaniaCommunes.json')
                 ]).done(function onGeoJsonLoaded(governorates, departments, communes) {
 
-                    // _.each(governorates[0].features, function(f) {
-                    //     f.properties.level = 1;
-                    // });
-
                     self._dataLayers['Région'] = new google.maps.Data();
                     self._dataLayers['Région'].setMap(self._map);
                     self._dataLayers['Région'].addGeoJson(governorates[0]);
                     self._dataLayers['Région'].setStyle(self._invisibleStyle);
 
-                    // _.each(departments[0].features, function(f) {
-                    //     f.properties.level = 2;
-                    // });
+                    self._dataLayers['Moughataa'] = new google.maps.Data();
+                    self._dataLayers['Moughataa'].setMap(self._map);
+                    self._dataLayers['Moughataa'].addGeoJson(departments[0]);
+                    self._dataLayers['Moughataa'].setStyle(self._invisibleStyle);
 
-                    self._dataLayers['Département'] = new google.maps.Data();
-                    self._dataLayers['Département'].setMap(self._map);
-                    self._dataLayers['Département'].addGeoJson(departments[0]);
-                    self._dataLayers['Département'].setStyle(self._invisibleStyle);
-
-                    // _.each(communes[0].features, function(f) {
-                    //     f.properties.level = 3;
-                    // });
-
-                    self._dataLayers['Communale'] = new google.maps.Data();
-                    self._dataLayers['Communale'].setMap(self._map);
-                    self._dataLayers['Communale'].addGeoJson(communes[0]);
-                    self._dataLayers['Communale'].setStyle(self._invisibleStyle);
+                    self._dataLayers['Commune'] = new google.maps.Data();
+                    self._dataLayers['Commune'].setMap(self._map);
+                    self._dataLayers['Commune'].addGeoJson(communes[0]);
+                    self._dataLayers['Commune'].setStyle(self._invisibleStyle);
 
                     self._dataLayers['Région'].addListener('click', self.selectRegion.bind(self));
-                    self._dataLayers['Département'].addListener('click', self.selectRegion.bind(self));
-                    self._dataLayers['Communale'].addListener('click', self.selectRegion.bind(self));
+                    self._dataLayers['Moughataa'].addListener('click', self.selectRegion.bind(self));
+                    self._dataLayers['Commune'].addListener('click', self.selectRegion.bind(self));
                 });
 
 				$.get('//knoema.com/api/1.0/frontend/resource/' + self.geoPlaygroundId + '/content', function(content) {

@@ -1,4 +1,4 @@
-{{if item.children && item.children.length && _.every(item.children, function(layer) { return $.inArray(layer.name, ['Région', 'Département', 'Communale']) > -1 && layer.layerType == 'region'; })}}
+{{if item.children && item.children.length && _.every(item.children, function(layer) { return $.inArray(layer.name, ['Région', 'Moughataa', 'Commune']) > -1 && layer.layerType == 'region'; })}}
     <div class="item-holder">
         <label>
             <input id="${cuid()}" data-layers="${JSON.stringify(item.children)}" type="checkbox" /> ${item.title}
