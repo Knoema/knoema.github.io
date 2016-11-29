@@ -97,8 +97,7 @@ function App() {
         "c5a695b4-05c0-9e51-2288-9187885da5e3",
         "0a0afddd-db7c-b810-1a86-ecfaa67ddb21"
     ];
-}
-
+};
 
 App.prototype.init = function () {
     var self = this;
@@ -667,11 +666,28 @@ App.prototype.populateSidebar2 = function(regionId, layerData) {
         $sideBarContent.empty();
 
         if (layerData) {
-            var regionData = _.find(layerData.layer.data.data, function(d) { return d.RegionId === regionId });
-            if (regionData) {
+
+            //this._regions[this._regionIndexByRegionId[regionId]].name -> TINTANE
+            // var regionName = this._regions[this._regionIndexByRegionId[regionId]].name;
+            // var regionDimensionId = layerData.layer.dataDescriptor.RegionDimensionId;
+
+            //layerData.layer.dataDescriptor.RegionDimensionId -> moughatta
+            // var regionData = _.find(layerData.layer.data.data, function(d) { return d[regionDimensionId] === regionName });
+
+            var feature;
+            layerData.layer.dataLayer.forEach(function(f) {
+                if (f.getId() === regionId) {
+                    feature = f;
+                }
+            });
+
+            if (feature) {
                 var $passport = $('<div>');
                 $passport.append('<h4>Passeport</h4>');
-                $passport.append($('<table border="0"><tbody><tr><td>' + (layerData.layer.data.filter[0] ? layerData.layer.data.filter[0].members[0] : layerData.layer.groupping.groupName) + '</td><td>' + Globalize.format(parseFloat(regionData.Value)) + '</td></tr></tbody></table>'));
+                $passport.append($('<table border="0"><tbody></tbody></table>'));
+                if (feature.getProperty('tooltipData').value) {
+                    $passport.find('tbody').append($('<tr><td>' + layerData.layer.groupping.groupName + '</td><td>' + Globalize.format(parseFloat(feature.getProperty('tooltipData').value)) + '</td></tr>'));
+                }
                 if (this._fonctionnaires.indexOf(this._activeAreaLayerId) > -1) {
                     $passport.find('tbody').append($('<tr><td><a href="javascript:void(0)" onclick="app.showFonctionnaires(\'' + regionId + '\', \'' + layerData.layerId + '\')">Montrent les fonctionnaires</a></td><td>&nbsp;</td></tr>'));
                 }
@@ -700,19 +716,17 @@ App.prototype.populateSidebar2 = function(regionId, layerData) {
             $sideBarContent.append(table);
         }
 
-        var $button = $('<a href="#" class="btn profile-button" id="elections">Élections</a>');
+        // var $button = $('<a href="#" class="btn profile-button" id="elections">Élections</a>');
+        // $button.on('click', function() {
+        //     console.log('%cTODO Implement click handler','font-size:200%;color:red;');
+        // });
+        // $sideBarContent.append($button);
 
-        $button.on('click', function() {
-            console.log('%cTODO Implement click handler','font-size:200%;color:red;');
-        });
-
-        $sideBarContent.append($button);
-
-        // $sideBarContent.append('<h5>Élections</h5>');
-        // $sideBarContent.append($.tmpl('simple-table.html', {
-        //     headerMembers: politics1.header[0].members,
-        //     rows: _.chunk(politics1.data, politics1.header[0].members.length)
-        // }));
+        $sideBarContent.append('<h4>Élections</h4>');
+        $sideBarContent.append($.tmpl('simple-table.html', {
+            headerMembers: politics1.header[0].members,
+            rows: _.chunk(politics1.data, politics1.header[0].members.length)
+        }));
 
     }.bind(this));
 };
@@ -728,15 +742,31 @@ App.prototype.populateSidebar = function(regionId) {
 App.prototype.loadFonctionnaires = function () {
     var loadedDeferred = $.Deferred();
     var self = this;
-    var url = '//explorim.knoema.com/api/1.0/meta/dataset/hfydzlc/dimension/region?access_token=' + access_token ;
-    if (!this._fonctionnairesDetails) {
-        $.getJSON(url).then(function (data) {
-            self._fonctionnairesDetails = data;
-            loadedDeferred.resolve(self._fonctionnairesDetails);
-        });
-    } else {
-        loadedDeferred.resolve(this._fonctionnairesDetails);
+
+    var dimensionId = 'region';
+    if (this._activeRegionalDivision === 'Commune') {
+        dimensionId = 'commune';
+    } else if (this._activeRegionalDivision === 'Moughataa') {
+        dimensionId = 'mougataa';
     }
+
+    var datasetId = this._layers[this._activeAreaLayerId].layer.data.dataset;
+    var url = '//explorim.knoema.com/api/1.0/meta/dataset/' + datasetId + '/dimension/' + dimensionId + '?access_token=' + access_token ;
+
+    $.getJSON(url).then(function (data) {
+        self._fonctionnairesDetails = data;
+        loadedDeferred.resolve(self._fonctionnairesDetails);
+    });
+
+    // if (!this._fonctionnairesDetails) {
+    //     $.getJSON(url).then(function (data) {
+    //         self._fonctionnairesDetails = data;
+    //         loadedDeferred.resolve(self._fonctionnairesDetails);
+    //     });
+    // } else {
+    //     loadedDeferred.resolve(this._fonctionnairesDetails);
+    // }
+
     return loadedDeferred;
 };
 
@@ -751,11 +781,18 @@ App.prototype.showFonctionnaires = function (regionId, layerId) {
 
             var $modal = $('#fonctionnaires-modal');
 
+            $('#fonctionnaires-region').html(region.name);
+
             $modal.find('.modal-body').html('<span class="glyphicon glyphicon-cog fa-spin" aria-hidden="true" title="Loading..."></span>');
             $modal.show();
 
-            dataDescriptors.fonctionnaires.Filter[2].Members[0] = region.key.toString();
-            Knoema.Helpers.post('//explorim.knoema.com/api/1.0/data/details', dataDescriptors.fonctionnaires, function(details) {
+            var datasetId = self._layers[self._activeAreaLayerId].layer.data.dataset;
+            var dataDescriptor = dataDescriptors.fonctionnaires[datasetId];
+
+            dataDescriptor.Filter[0].Members = [region.key.toString()];
+            dataDescriptor.Filter[0].DimensionId = self._layers[layerId].layer.dataDescriptor.RegionDimensionId;
+
+            Knoema.Helpers.post('//explorim.knoema.com/api/1.0/data/details', dataDescriptor, function(details) {
                 var ddd = _.chunk(details.data, details.columns.length);
 
                 var columns;
@@ -766,10 +803,9 @@ App.prototype.showFonctionnaires = function (regionId, layerId) {
                         "NOM",
                         "PRÉNOM",
                         "Date De Naissance",
-                        //"Commune De Naissance",
+                        "Commune De Naissance",
                         "Fonction",
-                        "Minister",
-                        "Commune Inscription"
+                        "Minister"
                     ];
                 } else if (self.content.layers[layerId].groupping.groupName === 'Fonctionnaires. Code Inscription') {
                     columns = [
@@ -777,7 +813,7 @@ App.prototype.showFonctionnaires = function (regionId, layerId) {
                         "NOM",
                         "PRÉNOM",
                         "Date De Naissance",
-                        "Commune De Naissance",
+                        "Commune Inscription",
                         "Fonction",
                         "Minister"
                     ];
@@ -788,24 +824,28 @@ App.prototype.showFonctionnaires = function (regionId, layerId) {
                     }).join('') + '</tr></thead>';
 
                 var tt = _.map(ddd, function(row) {
-
                     var rowContent = '<tr>';
-
+                    var flag = false;//"Commune Inscription" comes twice in dataset "uvvmucg"
                     for (var i = 0; i < details.columns.length; i++) {
                         if (columns.indexOf(details.columns[i].name) > -1) {
-                            rowContent = rowContent + '<td>' + row[i] + '</td>';
+                            if (details.columns[i].name === "Commune Inscription" || details.columns[i].name === "Commune De Naissance") {
+                                if (!flag) {
+                                    flag = true;
+                                    rowContent = rowContent + '<td>' + row[i] + '</td>';
+                                }
+                            } else {
+                                rowContent = rowContent + '<td>' + row[i] + '</td>';
+                            }
                         }
                     }
-
                     rowContent = rowContent + '</tr>';
-
                     return rowContent;
-
                 }).join('');
 
                 table = table + '<tbody>' + tt + '</tbody></table>';
 
                 $modal.find('.modal-body').html(table);
+
                 $modal.find('.modal-body').find('table').DataTable({
                     "lengthChange": false,
                     "paging": false,
@@ -1097,6 +1137,9 @@ App.prototype.loadLayer = function (layerId, layerType, callback) {
             $('.map-and-timeline').find('.loading').css({
                 "z-index": 0
             });
+
+            // var TINTANE_DATA = _.find(layerData.layer.data.data, function(d) { return d.mougataa === 'TINTANE' });
+            // console.log('TINTANE_DATA', TINTANE_DATA);
 
 			if (layerData.layer.layerType === 'point') {
 

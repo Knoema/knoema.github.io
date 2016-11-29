@@ -250,12 +250,12 @@ function getTreeItems(groupedLayers) {
                             title: "Fonctionnaires",
                             children: [
                                 {
-                                    title: "Fonctionnaires par lieu de inscription",
-                                    children: groupedLayers["Fonctionnaires. Code Inscription"]
-                                },
-                                {
                                     title: "Fonctionnaires par lieu de naissance",
                                     children: groupedLayers["Fonctionnaires. Code Naissance"]
+                                },
+                                {
+                                    title: "Fonctionnaires par lieu de inscription",
+                                    children: groupedLayers["Fonctionnaires. Code Inscription"]
                                 }
                             ]
                         },
@@ -270,197 +270,197 @@ function getTreeItems(groupedLayers) {
                         }
                     ]
                 },
-                // {
-                //     title: "Élections",
-                //     children: [
-                //         {
-                //             title: "Résultats Elections",
-                //             children: [
-                //                 {
-                //                     title: "Présidentielle 2014",
-                //                     children: [
-                //                         {
-                //                             title: "Mohamed Ould Abdel Aziz",
-                //                             children: groupedLayers["Presidential Election. Mohamed Ould Abdel Aziz"]
-                //                         },
-                //                         {
-                //                             title: "Boïdiel Ould Houmeit",
-                //                             children: groupedLayers["Presidential Election. Boïdiel Ould Houmeit"]
-                //                         },
-                //                         {
-                //                             title: "Laila Maryam Mint Moulaye Idriss",
-                //                             children: groupedLayers["Presidential Election. Laila Maryam Mint Moulaye Idriss"]
-                //                         },
-                //                         {
-                //                             title: "Biram Dah Abeid",
-                //                             children: groupedLayers["Presidential Election. Biram Dah Abeid"]
-                //                         },
-                //                         {
-                //                             title: "Ibrahima Moctar Sarr",
-                //                             children: groupedLayers["Presidential Election. Ibrahima Moctar Sarr"]
-                //                         },
-                //                         {
-                //                             title: "Votants Total",
-                //                             children: groupedLayers["Presidential Election. Votants Total"]
-                //                         },
-                //                         {
-                //                             title: "Inscrits Total",
-                //                             children: groupedLayers["Presidential Election. Votants Total"]
-                //                         }
-                //                     ]
-                //                 },
-                //                 {
-                //                     title: "2013 Parlementaire",
-                //                     children: [
-                //                         {
-                //                             title: "Total",
-                //                             children: groupedLayers["Parliamentary Election. Total"]
-                //                         },
-                //                         {
-                //                             title: "APP + Tawassul",
-                //                             children: groupedLayers["Parliamentary Election. APP + Tawassul"]
-                //                         },
-                //                         {
-                //                             title: "Alliance for Democracy in Mauritania (ADM)",
-                //                             children: groupedLayers["Parliamentary Election. Alliance for Democracy in Mauritania (ADM)"]
-                //                         },
-                //                         {
-                //                             title: "Alliance for Justice and Democracy / Movement for Renovation (AJD / MR)",
-                //                             children: groupedLayers["Parliamentary Election. Alliance for Justice and Democracy / Movement for Renovation (AJD / MR)"]
-                //                         },
-                //                         {
-                //                             title: "APP + Tawassul",
-                //                             children: groupedLayers["Parliamentary Election. APP + Tawassul"]
-                //                         },
-                //                         {
-                //                             title: "Popular Front (FP)",
-                //                             children: groupedLayers["Parliamentary Election. Popular Front (FP)"]
-                //                         },
-                //                         {
-                //                             title: "The People's Progressive Alliance (APP)",
-                //                             children: groupedLayers["Parliamentary Election. The People's Progressive Alliance (APP)"]
-                //                         },
-                //                         {
-                //                             title: "El Islah Party",
-                //                             children: groupedLayers["Parliamentary Election. El Islah Party"]
-                //                         },
-                //                         {
-                //                             title: "Ravah Party",
-                //                             children: groupedLayers["Parliamentary Election. Ravah Party"]
-                //                         },
-                //                         {
-                //                             title: "Party of Unity and Development (PUD)",
-                //                             children: groupedLayers["Parliamentary Election. Party of Unity and Development (PUD)"]
-                //                         },
-                //                         {
-                //                             title: "Party of the Union for the Republic (UPR)",
-                //                             children: groupedLayers["Parliamentary Election. Party of the Union for the Republic (UPR)"]
-                //                         },
-                //                         {
-                //                             title: "Dignity and Action Party (PDA)",
-                //                             children: groupedLayers["Parliamentary Election. Dignity and Action Party (PDA)"]
-                //                         },
-                //                         {
-                //                             title: "Democratic Party of the People (PPD)",
-                //                             children: groupedLayers["Parliamentary Election. Democratic Party of the People (PPD)"]
-                //                         },
-                //                         {
-                //                             title: "El Karam Party",
-                //                             children: groupedLayers["Parliamentary Election. El Karam Party"]
-                //                         },
-                //                         {
-                //                             title: "EL VADILA Party",
-                //                             children: groupedLayers["Parliamentary Election. EL VADILA Party"]
-                //                         },
-                //                         {
-                //                             title: "EL WIAM Party",
-                //                             children: groupedLayers["Parliamentary Election. EL WIAM Party"]
-                //                         },
-                //                         {
-                //                             title: "Rally for Unity Party (MAJD)",
-                //                             children: groupedLayers["Parliamentary Election. Rally for Unity Party (MAJD)"]
-                //                         },
-                //                         {
-                //                             title: "Republican Party for Democracy and Renewal (RDRP)",
-                //                             children: groupedLayers["Parliamentary Election. Republican Party for Democracy and Renewal (RDRP)"]
-                //                         },
-                //                         {
-                //                             title: "RibatDémocratique Party and Social (RDS)",
-                //                             children: groupedLayers["Parliamentary Election. RibatDémocratique Party and Social (RDS)"]
-                //                         },
-                //                         {
-                //                             title: "Sawab Party",
-                //                             children: groupedLayers["Parliamentary Election. Sawab Party"]
-                //                         },
-                //                         {
-                //                             title: "Third Generation Party (PTG)",
-                //                             children: groupedLayers["Parliamentary Election. Third Generation Party (PTG)"]
-                //                         },
-                //                         {
-                //                             title: "National Rally for Reform and Development (tawassul)",
-                //                             children: groupedLayers["Parliamentary Election. National Rally for Reform and Development (tawassul)"]
-                //                         },
-                //                         {
-                //                             title: "Democratic Renewal (RD)",
-                //                             children: groupedLayers["Parliamentary Election. Democratic Renewal (RD)"]
-                //                         },
-                //                         {
-                //                             title: "Sawab + WIAM",
-                //                             children: groupedLayers["Parliamentary Election. Sawab + WIAM"]
-                //                         },
-                //                         {
-                //                             title: "Startle Youth for the Nation (SURSAUT)",
-                //                             children: groupedLayers["Parliamentary Election. Startle Youth for the Nation (SURSAUT)"]
-                //                         },
-                //                         {
-                //                             title: "Union of the Democratic Centre (U.C.D)",
-                //                             children: groupedLayers["Parliamentary Election. Union of the Democratic Centre (U.C.D)"]
-                //                         },
-                //                         {
-                //                             title: "Union for Democracy and Progress (UDP)",
-                //                             children: groupedLayers["Parliamentary Election. Union for Democracy and Progress (UDP)"]
-                //                         }
-                //                     ]
-                //                 },
-                //                 {
-                //                     title: "2013 Municipale",
-                //                     children: [
-                //
-                //                     ]
-                //                 }
-                //             ]
-                //         },
-                //         {
-                //             title: "Listes électorales",
-                //             children: [
-                //                 {
-                //                     title: "Les députés",
-                //                     children: groupedLayers["Liste électorale. Number of MPs"]
-                //                 },
-                //                 {
-                //                     title: "Conseillers",
-                //                     children: groupedLayers["Liste électorale. Number of councilors"]
-                //                 },
-                //                 {
-                //                     title: "Maires",
-                //                     children: groupedLayers["Liste électorale. Number of mayors"]
-                //                 },
-                //                 {
-                //                     title: "Bureaux de vote",
-                //                     children: groupedLayers["Liste électorale. Number of polling stations"]
-                //                 },
-                //                 {
-                //                     title: "Électeurs",
-                //                     children: groupedLayers["Liste électorale. Number of voters"]
-                //                 },
-                //                 {
-                //                     title: "Poids",
-                //                     children: groupedLayers["Liste électorale. Weight"]
-                //                 }
-                //             ]
-                //         }
-                //     ]
-                // }
+                {
+                    title: "Élections",
+                    children: [
+                        {
+                            title: "Résultats Elections",
+                            children: [
+                                {
+                                    title: "Présidentielle 2014",
+                                    children: [
+                                        {
+                                            title: "Mohamed Ould Abdel Aziz",
+                                            children: groupedLayers["Presidential Election. Mohamed Ould Abdel Aziz"]
+                                        },
+                                        {
+                                            title: "Boïdiel Ould Houmeit",
+                                            children: groupedLayers["Presidential Election. Boïdiel Ould Houmeit"]
+                                        },
+                                        {
+                                            title: "Laila Maryam Mint Moulaye Idriss",
+                                            children: groupedLayers["Presidential Election. Laila Maryam Mint Moulaye Idriss"]
+                                        },
+                                        {
+                                            title: "Biram Dah Abeid",
+                                            children: groupedLayers["Presidential Election. Biram Dah Abeid"]
+                                        },
+                                        {
+                                            title: "Ibrahima Moctar Sarr",
+                                            children: groupedLayers["Presidential Election. Ibrahima Moctar Sarr"]
+                                        },
+                                        {
+                                            title: "Votants Total",
+                                            children: groupedLayers["Presidential Election. Votants Total"]
+                                        },
+                                        {
+                                            title: "Inscrits Total",
+                                            children: groupedLayers["Presidential Election. Votants Total"]
+                                        }
+                                    ]
+                                },
+                                {
+                                    title: "2013 Parlementaire",
+                                    children: [
+                                        {
+                                            title: "Total",
+                                            children: groupedLayers["Parliamentary Election. Total"]
+                                        },
+                                        {
+                                            title: "APP + Tawassul",
+                                            children: groupedLayers["Parliamentary Election. APP + Tawassul"]
+                                        },
+                                        {
+                                            title: "Alliance for Democracy in Mauritania (ADM)",
+                                            children: groupedLayers["Parliamentary Election. Alliance for Democracy in Mauritania (ADM)"]
+                                        },
+                                        {
+                                            title: "Alliance for Justice and Democracy / Movement for Renovation (AJD / MR)",
+                                            children: groupedLayers["Parliamentary Election. Alliance for Justice and Democracy / Movement for Renovation (AJD / MR)"]
+                                        },
+                                        {
+                                            title: "APP + Tawassul",
+                                            children: groupedLayers["Parliamentary Election. APP + Tawassul"]
+                                        },
+                                        {
+                                            title: "Popular Front (FP)",
+                                            children: groupedLayers["Parliamentary Election. Popular Front (FP)"]
+                                        },
+                                        {
+                                            title: "The People's Progressive Alliance (APP)",
+                                            children: groupedLayers["Parliamentary Election. The People's Progressive Alliance (APP)"]
+                                        },
+                                        {
+                                            title: "El Islah Party",
+                                            children: groupedLayers["Parliamentary Election. El Islah Party"]
+                                        },
+                                        {
+                                            title: "Ravah Party",
+                                            children: groupedLayers["Parliamentary Election. Ravah Party"]
+                                        },
+                                        {
+                                            title: "Party of Unity and Development (PUD)",
+                                            children: groupedLayers["Parliamentary Election. Party of Unity and Development (PUD)"]
+                                        },
+                                        {
+                                            title: "Party of the Union for the Republic (UPR)",
+                                            children: groupedLayers["Parliamentary Election. Party of the Union for the Republic (UPR)"]
+                                        },
+                                        {
+                                            title: "Dignity and Action Party (PDA)",
+                                            children: groupedLayers["Parliamentary Election. Dignity and Action Party (PDA)"]
+                                        },
+                                        {
+                                            title: "Democratic Party of the People (PPD)",
+                                            children: groupedLayers["Parliamentary Election. Democratic Party of the People (PPD)"]
+                                        },
+                                        {
+                                            title: "El Karam Party",
+                                            children: groupedLayers["Parliamentary Election. El Karam Party"]
+                                        },
+                                        {
+                                            title: "EL VADILA Party",
+                                            children: groupedLayers["Parliamentary Election. EL VADILA Party"]
+                                        },
+                                        {
+                                            title: "EL WIAM Party",
+                                            children: groupedLayers["Parliamentary Election. EL WIAM Party"]
+                                        },
+                                        {
+                                            title: "Rally for Unity Party (MAJD)",
+                                            children: groupedLayers["Parliamentary Election. Rally for Unity Party (MAJD)"]
+                                        },
+                                        {
+                                            title: "Republican Party for Democracy and Renewal (RDRP)",
+                                            children: groupedLayers["Parliamentary Election. Republican Party for Democracy and Renewal (RDRP)"]
+                                        },
+                                        {
+                                            title: "RibatDémocratique Party and Social (RDS)",
+                                            children: groupedLayers["Parliamentary Election. RibatDémocratique Party and Social (RDS)"]
+                                        },
+                                        {
+                                            title: "Sawab Party",
+                                            children: groupedLayers["Parliamentary Election. Sawab Party"]
+                                        },
+                                        {
+                                            title: "Third Generation Party (PTG)",
+                                            children: groupedLayers["Parliamentary Election. Third Generation Party (PTG)"]
+                                        },
+                                        {
+                                            title: "National Rally for Reform and Development (tawassul)",
+                                            children: groupedLayers["Parliamentary Election. National Rally for Reform and Development (tawassul)"]
+                                        },
+                                        {
+                                            title: "Democratic Renewal (RD)",
+                                            children: groupedLayers["Parliamentary Election. Democratic Renewal (RD)"]
+                                        },
+                                        {
+                                            title: "Sawab + WIAM",
+                                            children: groupedLayers["Parliamentary Election. Sawab + WIAM"]
+                                        },
+                                        {
+                                            title: "Startle Youth for the Nation (SURSAUT)",
+                                            children: groupedLayers["Parliamentary Election. Startle Youth for the Nation (SURSAUT)"]
+                                        },
+                                        {
+                                            title: "Union of the Democratic Centre (U.C.D)",
+                                            children: groupedLayers["Parliamentary Election. Union of the Democratic Centre (U.C.D)"]
+                                        },
+                                        {
+                                            title: "Union for Democracy and Progress (UDP)",
+                                            children: groupedLayers["Parliamentary Election. Union for Democracy and Progress (UDP)"]
+                                        }
+                                    ]
+                                },
+                                {
+                                    title: "2013 Municipale",
+                                    children: [
+
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            title: "Listes électorales",
+                            children: [
+                                {
+                                    title: "Les députés",
+                                    children: groupedLayers["Liste électorale. Number of MPs"]
+                                },
+                                {
+                                    title: "Conseillers",
+                                    children: groupedLayers["Liste électorale. Number of councilors"]
+                                },
+                                {
+                                    title: "Maires",
+                                    children: groupedLayers["Liste électorale. Number of mayors"]
+                                },
+                                {
+                                    title: "Bureaux de vote",
+                                    children: groupedLayers["Liste électorale. Number of polling stations"]
+                                },
+                                {
+                                    title: "Électeurs",
+                                    children: groupedLayers["Liste électorale. Number of voters"]
+                                },
+                                {
+                                    title: "Poids",
+                                    children: groupedLayers["Liste électorale. Weight"]
+                                }
+                            ]
+                        }
+                    ]
+                }
             ]
         }
     ];
