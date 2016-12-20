@@ -592,7 +592,13 @@ App.prototype.populateSidebar2 = function(regionId, layerData) {
         if (item) {
             dataDescriptors.politics0.Filter[0].Members[0] = item.key.toString();
             Knoema.Helpers.post('//explorim.knoema.com/api/1.0/data/details', dataDescriptors.politics0, function(pivotResponse) {
-                politics0.resolve(pivotResponse);
+                var sortedTribus = _.sortBy(_.chunk(pivotResponse.data, pivotResponse.columns.length), function(entry) {
+                    var index = _.findIndex(data.items, function(dataEntry) {
+                        return dataEntry.fields['regionid-region'] === entry[2];
+                    });
+                    return index;
+                });
+                politics0.resolve(sortedTribus);
             });
         } else {
             politics0.resolve(null);
@@ -699,8 +705,10 @@ App.prototype.populateSidebar2 = function(regionId, layerData) {
 
         if ($table1) {
             $sideBarContent.append($table1);
-            $sideBarContent.append('<hr />');
+            $sideBarContent.append('<br />');
         }
+
+        $sideBarContent.append($('<h4>Projets Actuels</h4>'));
 
         $sideBarContent.append($table2);
 
@@ -710,7 +718,14 @@ App.prototype.populateSidebar2 = function(regionId, layerData) {
 
         if (politics0 != null) {
             $sideBarContent.append('<h5>Tribus</h5>');
-            var table = '<table>' + _.map(_.chunk(politics0.data, politics0.columns.length), function(d) {
+
+            //before sorting
+            //var tableData = _.chunk(politics0.data, politics0.columns.length);
+
+            //already sorted
+            var tableData = politics0;
+
+            var table = '<table>' + _.map(tableData, function(d) {
                     return '<tr><td>' + d[1] + '</td></tr>';
                 }).join('') + '</table>';
             $sideBarContent.append(table);
@@ -896,6 +911,7 @@ App.prototype.bindEvents = function () {
         this._activeGroupCuid = null;
         this._activeAreaLayerId = null;
         $('#side-bar').find('input').prop('checked', false);
+        this.hideTimeline();
     }, this));
 
     var $filtersTree = $('#filters-tree');
@@ -1204,6 +1220,9 @@ App.prototype.loadLayer = function (layerId, layerType, callback) {
                         if (newMonth != month) {
                             month = newMonth;
                             timeMember.month = month;
+                            if (timeMember.month === 'Jan') {
+                                timeMember.month = Globalize.format(new Date(Date.parse(entry.date.value)), 'MMM yyyy');
+                            }
                         }
                         if (layerData.layer.dataToDisplay[0].data.Date === entry.date.value) {
                             timeMember.isActive = true;

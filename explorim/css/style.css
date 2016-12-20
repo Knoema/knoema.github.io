@@ -858,6 +858,7 @@ div.time-member {
     position: relative;
     padding-left: 5px;
     padding-top: 10px;
+    white-space: nowrap;
 }
 
 #timeline .time-members .scroll-content {
