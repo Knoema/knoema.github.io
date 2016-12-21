@@ -1,0 +1,869 @@
+﻿<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title> Namibia Government Projects Tracker</title>
+    <link rel='stylesheet' type='text/css' href='https://fonts.googleapis.com/css?family=Lato'>
+	<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.7.3/css/bootstrap-select.min.css"/>
+	<link rel="stylesheet" type="text/css" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+	<link rel="stylesheet" type="text/css" href="app.css"/>	
+</head>
+<body class="loading">
+
+	<form id="export-form" action="http://knoema.com/api/1.0/utils/export?client_id=EZj54KGFo3rzIvnLczrElvAitEyU28DGw9R73tif" method="POST">
+		<input type="hidden" name="content" value=""/>
+		<input type="hidden" name="fileName" value="" />
+		<input type="hidden" name="landscape" value="FALSE" />
+	</form>
+
+	<div class="ajax-loader"></div>
+
+	<div class="main-menu">
+		<a href="index.html">
+			<img src="./img/coat-x2.png" class="logo"/>
+			<img src="./img/logo-x2.png" class="logo-title"/>
+            <img src="./img/line-head-x2.png" class="head-v-line" />
+            <img src="./img/logo-hpp-head-x2.png" class="logo-hpp" />
+        </a>
+		<ul class="items">
+    		<li>
+    			<a href="index.html" class="s1">
+					<img src="./img/icons-banner-01-x2.png" />
+    			</a>
+    		</li><!--
+    		--><li class="active">
+				<a href="overview.html" class="s2" title="Country Overview">
+					<img src="./img/icons-banner-02-x2.png" />
+					Country Overview
+				</a>
+			</li><!--
+    		--><li>
+				<a href="portfolio.html" class="s1" title="Projects Portfolio">
+					<img src="./img/icons-banner-07-x2.png" />
+				</a>
+			</li><!--
+    		--><li>
+				<a href="reformsTracker.html" class="s1" title="Reforms Tracker" >
+					<img src="./img/icons-banner-03-x2.png"/>
+				</a>
+			</li><!--
+    		--><li>
+				<a href="sectorMonitor.html" class="s1" title="Main Indicators Monitoring">
+					<img src="./img/icons-banner-04-x2.png" />
+				</a>
+			</li><!--
+    		--><li>
+				<a href="globalStanding.html" class="s1" title="Global Standing">
+					<img src="./img/icons-banner-05-x2.png" />
+				</a>
+			</li><!--
+    		--><li>
+				<a href="sdg.html" class="s1" title="Monitoring Sustainable Development Goals">
+					<img src="./img/icons-banner-06-x2.png" />
+				</a>
+			</li><!--
+    --></ul>
+	</div>
+
+	<div class="tab-content">
+		<!-- COUNTRY OVERVIEW -->
+    	<div id="overview" class="tab-pane active">
+			<form id="overviewFilter" class="filter-form">
+				<h2>Pillar:</h2>
+				<label><input type="checkbox" name="pse" value="1"/>Effective Governance and Service Delivery</label>
+				<label><input type="checkbox" name="pse" value="2"/>Economic Advancement</label>
+				<label><input type="checkbox" name="pse" value="3"/>Social Progression</label>
+                <label><input type="checkbox" name="pse" value="4" />Infrastructure Development</label>
+                <label><input type="checkbox" name="pse" value="5" />International Relations and Cooperation</label>
+				
+				<h2>The 15 Harambee Goals:</h2>
+				<select class="form-control input-sm ppp-projects-container" id="ppp-projects" multiple title="Nothing selected">
+					<option value="HPP2">HPP1&nbsp;&nbsp;&nbsp;&nbsp;ACCOUNTABILITY AND TRANSPARENCY</option>
+					<option value="HPP3">HPP2&nbsp;&nbsp;&nbsp;&nbsp;IMPROVED PERFORMANCE AND SERVICE DELIVERY</option>
+					<option value="HPP4">HPP3&nbsp;&nbsp;&nbsp;&nbsp;MACRO-ECONOMIC SOVEREIGNTY</option>
+					<option value="HPP5">HPP4&nbsp;&nbsp;&nbsp;&nbsp;ECONOMIC TRANSFORMATION</option>
+					<option value="HPP6">HPP5&nbsp;&nbsp;&nbsp;&nbsp;YOUTH ENTERPRISE DEVELOPMENT</option>
+					<option value="HPP7">HPP6&nbsp;&nbsp;&nbsp;&nbsp;ECONOMIC COMPETITIVENESS</option>
+					<option value="HPP8">HPP7&nbsp;&nbsp;&nbsp;&nbsp;HUNGER POVERTY</option>
+					<option value="HPP9">HPP8&nbsp;&nbsp;&nbsp;&nbsp;RESIDENTIAL LAND DELIVERY, HOUSING AND SANITATION</option>
+					<option value="HPP10">HPP9&nbsp;&nbsp;&nbsp;&nbsp;INFANT AND MATERNAL MORTALITY</option>
+					<option value="HPP11">HPP10&nbsp;&nbsp;VOCATIONAL EDUCATION AND TRAINING</option>
+					<option value="HPP12">HPP11&nbsp;&nbsp;ENERGY</option>
+					<option value="HPP13">HPP12&nbsp;&nbsp;WATER</option>
+					<option value="HPP14">HPP13&nbsp;&nbsp;TRANSPORT</option>
+					<option value="HPP15">HPP14&nbsp;&nbsp;INFORMATION COMMUNICATION TECHNOLOGY</option>
+                    <option value="HPP15">HPP15&nbsp;&nbsp;INTERNATIONAL RELATIONS AND COOPERATION</option>
+				</select>
+				<button id="ppp-select-button">Select</button>
+
+				<!--<h2>PTIP "Three years investment plan"</h2>
+				<label><input type="checkbox" name="plan" value="yes" />Yes</label>
+				<label><input type="checkbox" name="plan" value="no" />No</label>-->
+
+				<h2>Budget total</h2>
+				<input type="text" name="budget-min" id="budget-min" class="budget-input" value="0" />
+				<input type="text" name="budget-max" id="budget-max" class="budget-input" value="100"/>
+				<div id="slider-range"></div>
+
+				<h2>Spending gap</h2>
+				<label><input type="checkbox" name="ecart" value="10"/><img src="./img/bullet-circle-green.png"/>10% or less of total</label>
+				<label><input type="checkbox" name="ecart" value="25"/><img src="./img/bullet-circle-yellow.png"/>25% to 11%</label>
+				<label><input type="checkbox" name="ecart" value="100"/><img src="./img/bullet-circle-red.png"/>exceeds 25%</label>
+
+				<h2>Status</h2>
+				<label class="status"><input type="checkbox" name="status" value="Announced"/><img src="./img/status/02.png" class="status" />Announced</label>
+				<label class="status"><input type="checkbox" name="status" value="In progress"/><img src="./img/status/04.png" class="status" />In progress</label>
+				<label class="status"><input type="checkbox" name="status" value="Complete"/><img src="./img/status/07.png" class="status" />Completed</label>
+				<label class="status"><input type="checkbox" name="status" value="Operational"/><img src="./img/status/05.png" class="status" />Operational</label>
+
+				<h2>Global indicators</h2>
+				<label><input type="radio" name="layer" value="none" checked> None</label>
+				<label><input type="radio" name="layer" value="population" /> Population, Total</label>
+				<label><input type="radio" name="layer" value="area" /> Area in sq.km</label>
+				<label><input type="radio" name="layer" value="density" /> Population Density</label>
+				<label><input type="radio" name="layer" value="houshold" /> Average Household size</label>
+
+				<div id="legend" style="display: none;">
+					<img src="img/legend.png">
+					<div id="legend_low">Low</div>
+					<div id="legend_high">High</div>
+                </div>
+			</form>
+    		<div id="map-canvas" class="filtered-content"></div>
+
+			<div id="regions-control" class="form-inline">
+				<div class="input-group">
+					<span class="input-group-addon">Regions:</span>
+					<select id="regions">
+						<option value="-1">Select a region</option>
+						<option value="NA">Namibia</option>
+						<option value="NA-CA">Zambezi</option>
+						<option value="NA-ER">Erongo</option>
+						<option value="NA-HA">Hardap</option>
+						<option value="NA-KA">Karas</option>
+						<option value="NA-KH">Khomas</option>
+						<option value="NA-KU">Kunene</option>
+						<option value="NA-OD">Otjozondjupa</option>
+						<option value="NA-OH">Omaheke</option>
+						<option value="NA-OK">Kavango</option>
+						<option value="NA-ON">Oshana</option>
+						<option value="NA-OS">Omusati</option>
+						<option value="NA-OT">Oshikoto</option>
+						<option value="NA-OW">Ohangwena</option>
+					</select>
+				</div>
+
+				<!--div class="input-group" style="background-color: transparent;">
+					<button class="region-profile-button">Voir le profil régional</button>
+				</div-->
+			</div>
+
+			<div id="pdf-frame-popup" class="passport-popup">
+    			<div class="passport__close"></div>
+    			<div class="passport__content"></div>
+		   </div>
+
+			<div id="senegal-frame-popup" class="passport-popup">
+    			<div class="passport__close"></div>
+    			<div class="passport__content"></div>
+		   </div>
+
+			<div id="new-project-passport" class="passport-popup-new">
+				<div class="passport__tabs__new">
+					<ul>
+						<li class="passport-tab active" data-name="passport">Passport</li>
+						<li class="passport-tab" data-name="budgetting">Budget</li>
+					</ul>
+				</div>
+				<div class="passport__close__new"><img src="./img/icon_close_hover.png"/>Close</div>
+    			<div class="passport__content__new"></div>
+				<div class="passport__content__new__b"></div>
+			</div>
+
+			<div id="ppp-frame-popup" class="passport2-popup">
+				<div class="inner-content">
+				<div class="passport__title" style="text-transform: uppercase;">THE 27 FLAFSHIP PROJECTS</div>
+				<div class="passport__close"></div>
+    			<div class="passport2__content">
+					<div class="ppp-item" data-value="HPP1">
+						<div class="pp-title"><div class="checkbox"></div>HPP1<div class="pp-icon i01"></div></div>
+						<div class="pp-name">ACCOUNTABILITY AND TRANSPARENCY</div>
+					</div>
+					<div class="ppp-item" data-value="HPP2">
+						<div class="pp-title"><div class="checkbox"></div>HPP2<div class="pp-icon i02"></div></div>
+						<div class="pp-name">IMPROVED PERFORMANCE AND SERVICE DELIVERY</div>
+					</div>
+                    <div class="ppp-item" data-value="HPP3">
+                        <div class="pp-title"><div class="checkbox"></div>HPP3<div class="pp-icon i03"></div></div>
+                        <div class="pp-name">MACRO-ECONOMIC SOVEREIGNTY</div>
+                    </div>
+                    <div class="ppp-item" data-value="HPP4">
+                        <div class="pp-title"><div class="checkbox"></div>HPP4<div class="pp-icon i04"></div></div>
+                        <div class="pp-name">ECONOMIC TRANSFORMATION</div>
+                    </div>
+                    <div class="ppp-item" data-value="HPP5">
+                        <div class="pp-title"><div class="checkbox"></div>HPP5<div class="pp-icon i05"></div></div>
+                        <div class="pp-name">YOUTH ENTERPRISE DEVELOPMENT</div>
+                    </div>
+                    <div class="ppp-item" data-value="HPP6">
+                        <div class="pp-title"><div class="checkbox"></div>HPP6<div class="pp-icon i06"></div></div>
+                        <div class="pp-name">ECONOMIC COMPETITIVENESS</div>
+                    </div>
+                    <div class="ppp-item" data-value="HPP7">
+                        <div class="pp-title"><div class="checkbox"></div>HPP7<div class="pp-icon i07"></div></div>
+                        <div class="pp-name">HUNGER POVERTY</div>
+                    </div>
+                    <div class="ppp-item" data-value="HPP8">
+                        <div class="pp-title"><div class="checkbox"></div>HPP8<div class="pp-icon i08"></div></div>
+                        <div class="pp-name">RESIDENTIAL LAND DELIVERY, HOUSING AND SANITATION</div>
+                    </div>
+                    <div class="ppp-item" data-value="HPP9">
+                        <div class="pp-title"><div class="checkbox"></div>HPP9<div class="pp-icon i09"></div></div>
+                        <div class="pp-name">INFANT AND MATERNAL MORTALITY</div>
+                    </div>
+                    <div class="ppp-item" data-value="HPP10">
+                        <div class="pp-title"><div class="checkbox"></div>HPP10<div class="pp-icon i10"></div></div>
+                        <div class="pp-name">VOCATIONAL EDUCATION AND TRAINING</div>
+                    </div>
+                    <div class="ppp-item" data-value="HPP11">
+                        <div class="pp-title"><div class="checkbox"></div>HPP11<div class="pp-icon i11"></div></div>
+                        <div class="pp-name">ENERGY</div>
+                    </div>
+                    <div class="ppp-item" data-value="HPP12">
+                        <div class="pp-title"><div class="checkbox"></div>HPP12<div class="pp-icon i12"></div></div>
+                        <div class="pp-name">WATER</div>
+                    </div>
+                    <div class="ppp-item" data-value="HPP13">
+                        <div class="pp-title"><div class="checkbox"></div>HPP13<div class="pp-icon i13"></div></div>
+                        <div class="pp-name">TRANSPORT</div>
+                    </div>
+                    <div class="ppp-item" data-value="HPP14">
+                        <div class="pp-title"><div class="checkbox"></div>HPP14<div class="pp-icon i14"></div></div>
+                        <div class="pp-name">INFORMATION COMMUNICATION TECHNOLOGY</div>
+                    </div>
+                    <div class="ppp-item" data-value="HPP15">
+                        <div class="pp-title"><div class="checkbox"></div>HPP15<div class="pp-icon i15"></div></div>
+                        <div class="pp-name">INTERNATIONAL RELATIONS AND COOPERATION</div>
+                    </div>
+    			</div>
+				<div class="passport__buttons">
+					<button class="pp-btn" id="pp-select-all">Select all</button>
+					<button class="pp-btn" id="pp-deselect-all">Deselect all</button>
+					<button class="pp-btn" id="pp-ok">Ok</button>
+					<button class="pp-btn" id="pp-cancel">Cancel</button>
+				</div>
+				</div>
+			</div>
+
+			<div id="right-hand-panel">
+				<div class="panel-title">
+					<h2 class="region-name"></h2>
+					<img src="./img/right-panel/icon-pdf.png" class="export"/>
+					<div class="close-button"><img src="./img/icon-close.png"/>Close</div>
+				</div>
+
+				<div id="region-data"></div>
+
+				<div class="table-container clicable">
+					<table>
+						<thead>
+							<tr>
+								<th colspan="3">Project</th>
+								<th>Status</th>
+							</tr>
+						</thead>
+						<tbody></tbody>
+					</table>
+				</div>
+			</div>
+
+			<div id="senegal-right-hand-panel">
+				<div class="panel-title">
+					<h2 class="region-name">Namibia</h2>
+					<img src="./img/right-panel/icon-pdf.png" class="export"/>
+					<div class="close-button"><img src="./img/icon-close.png"/>Close</div>
+				</div>
+
+				<table class="global-indicators">
+					<tbody></tbody>
+				</table>
+
+				<table class="realisation-indicators">
+					<thead>
+						<tr>
+							<th colspan="3">Global Indicators</th>
+						</tr>
+						<tr>
+							<th>Indicator Name</th>
+							<th>Value in 2012</th>
+							<th>Percentage change</th>
+						</tr>
+					</thead>
+					<tbody></tbody>
+				</table>
+
+				<h3>Select a region for a detailed list of projects.</h3>
+
+				<table class="axe-summ">
+					<thead>
+						<tr>
+							<th colspan="2">Number of projects by the Harambee Prosperity Plan Pillars</th>
+						</tr>
+					</thead>
+					<tbody></tbody>
+				</table>
+
+				<table class="pp-summ" style="width: 100%">
+					<thead>
+						<tr>
+							<th colspan="4">Number of projects and total budget</th>
+						</tr>
+						<tr>
+							<th colspan="2">HPP</th>
+							<th>Projects</th>
+							<th>Budget</th>
+						</tr>
+					</thead>
+					<tbody></tbody>
+				</table>
+
+				<table class="reforms-groups">
+					<thead>
+						<tr>
+							<th>Summary of Reforms</th>
+						</tr>
+					</thead>
+					<tbody></tbody>
+				</table>
+			</div>
+    	</div>
+    </div>
+
+	<div id="timeline">
+		<div class="play-btn"></div>
+		<div class="year-item" data-year="2014">
+			<p class="year">2014</p>
+		</div>
+		<div class="year-item" data-year="2015">
+			<p class="year">2015</p>
+		</div>
+		<div class="year-item active" data-year="2016">
+			<p class="year">2016</p>
+		</div>
+		<div class="v-arrow left"></div>
+	</div>
+
+	<div id="footer"></div>
+
+	<script id="new-object-passport" type="text/x-handlebars-template">
+		<div class="top-panel">
+			<table style="width: 100%">
+				<tbody>
+					<tr>
+						<td style="width: 20%"><p class="title">Project Name</p><p class="value">{{=it.name}}</p></td>
+						<td style="width: 20%"><p class="title">Coordinates</p><p class="value">{{=it.locale}}</p></td>
+						<td style="width: 30%"><p class="title">The Strategy Vision code</p><p class="value">{{=it.axe}}</p></td>
+						<td style="width: 30%"><p class="title">Harambee Prosperity Plan</p><p class="value">{{=it.number}}</p></td>
+					</tr>
+					<tr>
+						<td class="status"><img src="./img/status/{{=it.statusIcon}}-x2.png"/><div><p class="title">Status</p><p class="value">{{=it.status}}</p></div></td>
+						<td><p class="title">Total Planned Budget</p><p class="value">{{=it.budget}}</p></td>
+						<td><p class="title">HARAMBEE TARGET</p><p class="value">{{=it.sour}}</p></td>
+						<td><p class="title">Code HPP</p><p class="value">{{=it.ptip}}</p></td>
+						
+						<td></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<div class="g map-panel">
+			<img src="./img/map.jpg"/>
+		</div>
+		<div class="g carousel-panel">
+			<img src="./img/photos.jpg"/>
+		</div>
+		<div class="g chart-panel">
+			<img src="./img/score.png"/>
+			<div class="status-button">Status report</div>
+		</div>
+	</script>
+
+	<script id="new-object-budgetting" type="text/x-handlebars-template">
+		<img src="./img/budgeting-x2.png" width="1421" />
+	</script>
+
+	<script id="region-profile" type="text/x-handlebars-template">
+
+		<table style="width: 100%">
+			<thead>
+				<tr>
+					<th colspan="3">Employment Statistics</th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>Households</td>
+					<td>{{=it.indicatorData["Households"]}}</td>
+				</tr>
+				<tr>
+					<td>Economically inactive population</td>
+					<td>{{=it.indicatorData["Economically inactive population"]}}</td>
+				</tr>
+				<tr>
+					<td>Unemployed (UE), Broad</td>
+					<td>{{=it.indicatorData["Unemployed (UE), Broad"]}}</td>
+				</tr>
+				<tr>
+					<td>Employed (E)</td>
+					<td>{{=it.indicatorData["Employed (E)"]}}</td>
+				</tr>
+				<tr>
+					<td>Labour force, Broad</td>
+					<td>{{=it.indicatorData["Labour force, Broad"]}}</td>
+				</tr>
+			</tbody>
+		</table>
+
+		<table style="width: 100%">
+			<thead>
+				<tr>
+					<th colspan="3">Demography Statistics</th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>Population, Total</td>
+					<td>{{=it.indicatorData["Population, Total"]}}</td>
+				</tr>
+				<tr>
+					<td>Population, Female</td>
+					<td>{{=it.indicatorData["Population, Female"]}}</td>
+				</tr>
+				<tr>
+					<td>Population, Male</td>
+					<td>{{=it.indicatorData["Population, Male"]}}</td>
+				</tr>
+				<tr>
+					<td>Area in sq.km</td>
+					<td>{{=it.indicatorData["Area in sq.km"]}}</td>
+				</tr>
+				<tr>
+					<td>Population Density</td>
+					<td>{{=it.indicatorData["Population Density"]}}</td>
+				</tr>
+			</tbody>
+		</table>
+
+	</script>
+
+	<script id="senegal-profile" type="text/x-handlebars-template">
+		<tr><td colspan="3">Macroeconomic Framework</td></tr>
+		<tr><td>Real Gdp Growth Rate</td><td>{{=it["Real Gdp Growth Rate"]}}</td><td>%</td></tr>
+		<tr><td>Investment Rate (Gfcf)</td><td>{{=it["Investment Rate (Gfcf)"]}}</td><td>%</td></tr>
+		<tr><td>Inflation Rate (Hicp)</td><td>{{=it["Inflation Rate (Hicp)"]}}</td><td>%</td></tr>
+		<tr><td>Budget Deficit As% Of Gdp</td><td>{{=it["Budget Deficit As% Of Gdp"]}}</td><td>%</td></tr>
+		<tr><td>Current Account Deficit As% Of Gdp</td><td>{{=it["Current Account Deficit As% Of Gdp"]}}</td><td>%</td></tr>
+		<tr><td>Percentage Of Population Living Below The Absolute Poverty Line</td><td>{{=it["Percentage Of Population Living Below The Absolute Poverty Line (%)"]}}</td><td>%</td></tr>
+		<tr><td colspan="3">Trade</td></tr>
+		<tr><td>Growth In Export Values</td><td>{{=it["Growth In Export Values"]}}</td><td>%</td></tr>
+		<tr><td>Import Growth Rate Of Goods And Services</td><td>{{=it["Import Growth Rate Of Goods And Services"]}}</td><td>%</td></tr>
+		<tr><td>Of Coverage Of Imports By Exports</td><td>{{=it["Of Coverage Of Imports By Exports"]}}</td><td>%</td></tr></tr>
+		<tr><td colspan="3">Energy</td></tr>
+		<tr><td>Average Production Cost Per Kwh (Fcfa)</td><td>{{=it["Average Production Cost Per Kwh (Fcfa)"]}}</td><td>KWH</td></tr>
+		<tr><td>Number Of Megawatts Into Service (Installed Power)</td><td>{{=it["Number Of Megawatts Into Service (Installed Power)"]}}</td><td>number</td></tr>
+		<tr><td>Energy Not Distributed To Customers (Gwh)</td><td>{{=it["Energy Not Distributed To Customers (Gwh)"]}}</td><td>GWH</td></tr>
+		<tr><td>Rural Electrification Rate</td><td>{{=it["Rural Electrification Rate"]}}</td><td>%</td></tr></tr>
+		<tr><td colspan="3">National Education</td></tr>
+		<tr><td>Gross Intake Rate At Ci (Tba)</td><td>{{=it["Gross Intake Rate At Ci (Tba)"]}}</td><td>%</td></tr>
+		<tr><td>Gross Enrollment Rate In Elementary (Tbs)</td><td>{{=it["Gross Enrollment Rate In Elementary (Tbs)"]}}</td><td>%</td></tr>
+		<tr><td>Completion Rates At Primary (Tap)</td><td>{{=it["Completion Rates At Primary (Tap)"]}}</td><td>%</td></tr></tr>
+		<tr><td colspan="3">Health And Nutrition</td></tr>
+		<tr><td>Rate Of Births Attended By Trained Personnel</td><td>{{=it["Rate Of Births Attended By Trained Personnel"]}}</td><td>%</td></tr>
+		<tr><td>Contraceptive Prevalence Rate</td><td>{{=it["Contraceptive Prevalence Rate"]}}</td><td>%</td></tr>
+		<tr><td>Completion Rate (Adequate Coverage) In Eic</td><td>{{=it["Completion Rate (Adequate Coverage) In Eic"]}}</td><td>%</td></tr>
+		<tr><td>Child Mortality Rate</td><td>{{=it["Child Mortality Rate"]}}</td><td>%</td></tr>
+	</script>
+
+	<script id="senegal-region-profile" type="text/x-handlebars-template">
+		
+	</script>
+
+	<script id="pdf-frame" type="text/x-handlebars-template">
+		<iframe src="./pdf/{{=it.name}}.pdf" width="100%" height="100%"  />
+	</script>
+
+	<script id="area-profile-template" type="text/x-handlebars-template">
+		<div class="area-profile">
+			<h4>Area Profile</h4>
+			<div class="row">
+				<div class="col-md-6">
+					<div><label>Region:</label> {{=it.region}}</div>
+					<div><label>Village(s):</label> {{=it.village}}</div>
+				</div>
+				<div class="col-md-6">
+					<div><label>Population:</label> {{=it.population}}</div>
+					<div><label>Incidence of poverty:</label> {{=it.incidence}}</div>
+				</div>
+			</div>
+			<hr>
+			<div><label>Access to electricity:</label> {{=it.access}}</div>
+			<div><label>Electricity consumption (average per capita):</label> {{=it.consumption}}</div>
+			<div><label>Cost of electricity:</label> {{=it.cost}}</div>
+			<div><label>National grid connection:</label> {{=it.grid}}</div>
+			<div><label>Primary electricity source:</label> {{=it.source}}</div>
+			<br />
+			<div><label>Nearest hospital:</label> {{=it.hospital}}</div>
+			<div><label>Number of local shools:</label> {{=it.schools}}</div>
+			<br />
+			<div>
+				<label>Ongoing investment project:</label> 
+				<ul>
+					<li>Name: {{=it.investmentProject.name}}</li>
+					<li>Location: {{=it.investmentProject.location}}</li>
+					<li>End date: {{=it.investmentProject.endDate}}</li>
+				</ul>
+			</div>
+			<div><label>Investor:</label> {{=it.investor}}</div>
+		</div>
+	</script>
+
+	<script id="export-content" type="text/x-handlebars-template">
+		<html>
+			<head>
+				<title>Export</title>
+				<link rel='stylesheet' type='text/css' href='https://fonts.googleapis.com/css?family=Roboto'>
+				<link rel='stylesheet' type='text/css' href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,700'>
+			</head>
+			<body>
+				<style>#right-hand-panel, #senegal-right-hand-panel
+					{
+						width: 650px;
+						background-color: #f4ece1;
+						padding: 5px 10px;
+						font-family: 'Roboto', sans-serif;
+						font-size: 12px;
+					}
+					.panel-title img.export
+					{
+						margin: 0 0 5px 10px;
+					}
+					.panel-title .region-name
+					{
+						display: inline-block;
+					}
+					#senegal-right-hand-panel .panel-title .region-name
+					{
+						font-size: 15pt;
+					}
+					#senegal-right-hand-panel .panel-title img.export
+					{
+						float: right;
+					}
+					.panel-title .close-button
+					{
+						color: #472001;
+						margin: 20px 10px 0 0;
+						float: right;
+						cursor: pointer;
+					}
+					.panel-title .close-button img
+					{
+						margin-right: 5px;
+						vertical-align: baseline;
+					}
+					.panel-title
+					{
+						border-bottom: 1px solid #9b7c4f;
+					}
+					#right-hand-panel table,
+					#senegal-right-hand-panel table
+					{
+						width: 100%;
+						margin-top: 20px;
+					}
+					#right-hand-panel table thead tr th,
+					#senegal-right-hand-panel table thead tr th
+					{
+						padding: 2px 5px;
+						font-size: 10pt;
+						text-align: left;
+					}
+					#right-hand-panel table tbody tr td,
+					#senegal-right-hand-panel table tbody tr td
+					{
+						padding: 7px 5px;
+						vertical-align: top;
+					}
+					img.pp-image-small
+					{
+						height: 30px;
+						margin-top: -7px;
+					}
+					#right-hand-panel table tbody tr:nth-child(2n),
+					#senegal-right-hand-panel table tbody tr:nth-child(2n)
+					{
+						background-color: #f3f0ec;
+					}
+					#right-hand-panel table tbody tr,
+					#senegal-right-hand-panel table tbody tr
+					{
+						cursor: pointer;
+					}
+					#right-hand-panel h2
+					{
+						font-size: 15pt;
+						font-weight: bold;
+					}
+					#senegal-right-hand-panel h3
+					{
+						font-size: 10pt;
+						font-weight: bold;
+					}
+
+
+
+					.passport__content__new, .passport__content__new__b
+					{
+						padding: 20px;
+						background-color: #f3ece1;
+						border: solid 1px #9b7c4f;
+						width: 1200px;
+					}
+					.passport2__content {
+						position: absolute;
+						left: 10px;
+						right: 10px;
+						top: 50px;
+						bottom: 40px;
+						padding: 20px;
+						background-color: #f4ece1;
+						overflow: auto;
+					}
+					.passport__buttons
+					{
+						position: absolute;
+						left: 10px;
+						right: 10px;
+						bottom: 10px;
+						padding: 20px;
+						background-color: #f4ece1;
+						overflow: auto;
+					}
+					.passport__title
+					{
+						position: absolute;
+						top: 10px;
+						left: 10px;
+						right: 10px;
+						padding: 20px;
+						background-color: #f4ece1;
+						overflow: auto;
+					}
+					.passport__content hr {
+						margin: 20px 0;
+						border-top: 1px solid #e6e6e6;
+					}
+					.passport__close {
+						position: absolute;
+						right: 30px;
+						top: 30px;
+						width: 40px;
+						height: 40px;
+						background: #fff url(./img/icon_close.png) no-repeat center center;
+						cursor: pointer;
+						z-index: 1;
+						border-radius: 50%;
+						box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.15);
+					}
+					.passport__close__new {
+						padding: 10px 20px;
+						position: absolute;
+						right: 10px;
+						top: 10px;
+						width: 110px;
+						height: 40px;
+						background-color: #f4ece1;
+						cursor: pointer;
+						z-index: 5;
+
+						font-size: 11pt;
+						text-transform: uppercase;
+						color: #472001;
+					}
+					.passport__close__new img
+					{
+						margin-right: 10px;
+						margin-top: -3px;
+					}
+					.passport__close:hover {
+						background-image: url(./img/icon_close_hover.png);
+					}
+					.passport__map {
+						width: 240px;
+						height: 240px;
+						background-color: #e6e6e6;
+					}
+					.passport__title {
+						font-family: 'Roboto', sans-serif;
+						font-size: 18px;
+						font-weight: bold;
+						margin-bottom: 15px;
+					}
+					.passport__fields {
+					}
+					.passport__fields__column {
+						float: left;
+						width: 33%;
+					}
+					.passport__field__title {
+						display: block;
+						font-family: 'Roboto', sans-serif;
+						font-size: 11px;
+						font-weight: normal;
+						text-transform: uppercase;
+						color: #646e82;
+					}
+					.passport__field__value {
+						font-family: 'Roboto', sans-serif;
+						font-size: 16px;
+					}
+					.passport__images {
+						float: left;
+						width: 240px;
+					}
+					.passport__image {
+						width: 100%;
+					}
+					.passport__image_mini {
+						float: left;
+						width: 57px;
+						height: 57px;
+						margin: 4px 0 0 4px;
+						font-family: 'Roboto', sans-serif;
+						font-size: 12px;
+						color: #fff !important;
+						background-color: #0078c8;
+						text-decoration: none;
+						line-height: 1.2em;
+					}
+					.passport__image_mini.first {
+						margin-left: 0;
+					}
+					.passport__chart_left {
+						margin-left: 20px;
+						float: left;
+					}
+					.passport__chart_right {
+						float: left;
+					}
+
+					.top-panel
+					{
+						margin-top: 30px;
+					}
+					.top-panel table tr td
+					{
+						padding: 3px 10px;
+						vertical-align: top;
+					}
+					.top-panel table tr td.status img
+					{
+						display: inline-block;
+						vertical-align: top;
+						margin-right: 20px;
+					}
+					.top-panel table tr td.status div
+					{
+						display: inline-block;
+					}
+					p.title
+					{
+						font-family: 'Roboto', sans-serif;
+						font-size: 12pt;
+						color: #9b7c4f;
+						font-weight: bold;
+					}
+					p.value
+					{
+						font-family: 'Roboto', sans-serif;
+						font-size: 16pt;
+						color: #000;
+						margin-bottom: 20px;
+					}
+					.g
+					{
+						display: inline-block;
+					}
+					.map-panel
+					{
+						margin: 30px 20px 20px 0;
+					}
+					.carousel-panel
+					{
+						margin: 30px 200px 0 0;
+					}
+					.chart-panel
+					{
+						vertical-align: top;
+						margin: 30px 0;
+						padding-top: 30px;
+					}
+					.chart-panel img
+					{
+						vertical-align:top;
+					}
+					.status-button
+					{
+						font-family: 'Roboto', sans-serif;
+						font-size: 12pt;
+						color: #f4ece1;
+						font-weight: bold;
+						background-color: #472001;
+						padding: 10px 40px;
+						text-transform: uppercase;
+						margin-top: 50px;
+						margin-left: -20px;
+					}
+
+					.area-profile {
+						font-size: 12px;
+						width: 380px;
+						overflow: hidden;
+						line-height: 1.1em;
+					}
+					.area-profile ul > li {
+						line-height: 1.5em;
+					}
+					.area-profile hr {
+						margin: 17px 0;
+					}
+					.area-profile h4 {
+						font-size: 17px;
+					}
+					.area-profile label {
+						color: rgb(38, 174, 208);
+					}
+				</style>
+				{{=it.content}}
+			</body>
+		</html>
+	</script>
+
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+	<script src="bootstrap/js/bootstrap.min.js"></script>
+	<script src="bootstrap/js/bootstrap-select.js"></script>
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDW5mB0UdDWi7EdcoH3eE-IunlT7nISRuA&v=3.exp&libraries=visualization,drawing"></script>
+	<script src="http://code.jquery.com/ui/1.11.4/jquery-ui.min.js" type="text/javascript"></script>
+	<script src="http://code.highcharts.com/highcharts.js"></script>
+	<script src="https://namibiagpt.knoema.com/app-script?version=2.0" type="text/javascript" ></script>
+	<script src="Scripts/marketwithlabel.js"></script>
+	<script src="Scripts/doT.min.js"></script>
+	<script src="Scripts/auth.js"></script>
+	<script src="Scripts/app.js"></script>
+</body>
+</html>
