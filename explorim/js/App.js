@@ -566,8 +566,6 @@ App.prototype.populateSidebar2 = function(regionId, layerData) {
     dataDescriptors.economics0.Filter[0].Members = [key];
     dataDescriptors.economics1.Filter[0].Members = [key];
 
-    //TODO Set proper key (find by regionId)
-    dataDescriptors.politics0.Filter[0].Members = [key];
     dataDescriptors.politics1.Filter[0].Members = [key];
 
     //ftqbdwb dataset used
@@ -581,29 +579,18 @@ App.prototype.populateSidebar2 = function(regionId, layerData) {
         economics1.resolve(pivotResponse);
     });
 
-    //jflytqc dataset used (need find proper key)
-    var politics0 = $.Deferred();
-    Knoema.Helpers.get('//explorim.knoema.com/api/1.0/meta/dataset/jflytqc/dimension/region', function(data) {
-
-        var item = _.find(data.items, function(it) {
-            return it.fields.regionid === regionId;
+    var tribus = $.Deferred();
+    Knoema.Helpers.post('//explorim.knoema.com/api/1.0/data/details', dataDescriptors.tribus, function(details) {
+        var tribusByRegion = _.filter(_.chunk(details.data, details.columns.length), function(row) {
+            return row[2] === regionId;
         });
-
-        if (item) {
-            dataDescriptors.politics0.Filter[0].Members[0] = item.key.toString();
-            Knoema.Helpers.post('//explorim.knoema.com/api/1.0/data/details', dataDescriptors.politics0, function(pivotResponse) {
-                var sortedTribus = _.sortBy(_.chunk(pivotResponse.data, pivotResponse.columns.length), function(entry) {
-                    var index = _.findIndex(data.items, function(dataEntry) {
-                        return dataEntry.fields['regionid-region'] === entry[2];
-                    });
-                    return index;
-                });
-                politics0.resolve(sortedTribus);
-            });
-        } else {
-            politics0.resolve(null);
-        }
-
+        var sorted = _.sortBy(tribusByRegion, function(d) {
+            return d[3];
+        });
+        var tribusColumn = _.map(sorted, function(d) {
+            return d[1];
+        });
+        tribus.resolve(tribusColumn);
     });
 
     //ftqbdwb dataset used
@@ -633,10 +620,10 @@ App.prototype.populateSidebar2 = function(regionId, layerData) {
     $.when.apply(null, [
         economics0,
         economics1,
-        politics0,
         politics1,
-        zone0
-    ]).done(function onPivotRequestsFinished(economics0, economics1, politics0, politics1, zone0Resp) {
+        zone0,
+        tribus
+    ]).done(function onPivotRequestsFinished(economics0, economics1, politics1, zone0Resp, tribus) {
 
         if (economics0.data.length) {
             //$table1
@@ -716,26 +703,13 @@ App.prototype.populateSidebar2 = function(regionId, layerData) {
 
         $sideBarContent.append('<h4>Politique</h4>');
 
-        if (politics0 != null) {
+        if (tribus != null) {
             $sideBarContent.append('<h5>Tribus</h5>');
-
-            //before sorting
-            //var tableData = _.chunk(politics0.data, politics0.columns.length);
-
-            //already sorted
-            var tableData = politics0;
-
-            var table = '<table>' + _.map(tableData, function(d) {
-                    return '<tr><td>' + d[1] + '</td></tr>';
+            var table = '<table>' + _.map(tribus, function(t) {
+                    return '<tr><td>' + t + '</td></tr>';
                 }).join('') + '</table>';
             $sideBarContent.append(table);
         }
-
-        // var $button = $('<a href="#" class="btn profile-button" id="elections">Élections</a>');
-        // $button.on('click', function() {
-        //     console.log('%cTODO Implement click handler','font-size:200%;color:red;');
-        // });
-        // $sideBarContent.append($button);
 
         $sideBarContent.append('<h4>Élections</h4>');
         $sideBarContent.append($.tmpl('simple-table.html', {

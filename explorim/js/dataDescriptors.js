@@ -197,23 +197,12 @@ var dataDescriptors = {
         "Dataset": "kymrtcc"
     },
 
-    politics0: {
+    tribus: {
         "Header": [],
         "Stub": [],
-        "Filter": [
-            {
-                "DimensionId": "region",
-                "Members": [
-                    "1000000"
-                ],
-                "DimensionName": "Region",
-                "DatasetId": "jflytqc",
-                "Order": "0",
-                "isGeo": true
-            }
-        ],
+        "Filter": [],
         "Frequencies": [],
-        "Dataset": "jflytqc",
+        "Dataset": "clhnyl",
         "Segments": null,
         "MeasureAggregations": null,
         "Calendar": 0,
