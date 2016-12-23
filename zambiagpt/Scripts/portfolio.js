@@ -1,10 +1,10 @@
 ﻿/// <reference path="typings/jquery.d.ts"/>
 
 (function () {
-	var host = 'http://namibiagpt.knoema.com';
+	var host = 'http://zambiagpt.knoema.com';
 
-	var projectsDataset = 'voqoeh';
-	var dashboardUrl = 'http://namibiagpt.knoema.com/resource/embed/gzlsfq?projects=';
+	var projectsDataset = 'lrsnuag';
+	var dashboardUrl = 'http://zambiagpt.knoema.com/resource/embed/qlxwvq?projects=';
 
 	var projectData = [];
 	var projectColumns = [];
@@ -142,7 +142,7 @@
 					'DimensionId': 'measure',
 					'DimensionName': 'Measure',
 					'DatasetId': projectsDataset,
-					'Members': ['5679690', '5679700', '5679710']
+					'Members': ['6144510', '6144520', '6144530']
 				}],
 				'Frequencies': [],
 				'Dataset': projectsDataset,

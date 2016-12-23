@@ -1,9 +1,9 @@
 ﻿/// <reference path="typings/jquery.d.ts"/>
 
 (function () {
-	var host = 'http://namibiagpt.knoema.com';
+	var host = 'http://zambiagpt.knoema.com';
 
-	var projectsDataset = 'voqoeh';
+	var projectsDataset = 'lrsnuag';
 
 	var projectData = [];
 	var projectColumns = [];

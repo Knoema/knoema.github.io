@@ -19,7 +19,7 @@ $(function () {
 		$('.subtopic-content li').removeClass('active');
 		$(this).parent().parent().addClass('active');
 		var param = $(this).html();
-		$('.i-frame-content iframe').attr('src', 'http://knoema.com/resource/embed/jrmbggf?indicateur=' + param);
+		$('.i-frame-content iframe').attr('src', 'http://zambiagpt.knoema.com/resource/embed/ealyndd/?indicators=' + param);
 
 		var objectsCode = $(this).parents('.root-objects').data('objects');
 		var a = $('.botton-wrapper a');

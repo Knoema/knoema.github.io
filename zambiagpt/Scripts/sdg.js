@@ -1,21 +1,11 @@
 ﻿/// <reference path="typings/jquery.d.ts"/>
 
+
 $(function () {
-	/*modify this start*/
-	var host = 'http://namibia.opendataforafrica.org';
-	var structureCustomDsId = 'qmmqiqc';
-	var structureLightDsId = 'yyvtunf';
-	/*modify this end*/
-
-
-	var datasetName = 'SDG Structure FR';
-	var goalDimId = 'goal-name';
-	var goalOrderField = 'goal-order-goal-name';
-	var targetDimId = 'target-name';
-	var targetOrderField = 'target-order-target-name';
+	var baseDomain = "http://zambiagpt.knoema.com";
 
 	var indexOfGoalName = 0;
-	//var indexOfGoalNameFr = 0;
+	var indexOfGoalNameFr = 0;
 	var indexOfGoalOrderColumn = 1;
 
 	var indexOfTargetCode = 2;
@@ -36,7 +26,6 @@ $(function () {
 
 	var indexesInitialized = false;
 
-
 	function updateIndexesByDetailsColumns(columns) {
 
 		if (indexesInitialized)
@@ -50,11 +39,13 @@ $(function () {
 					indexOfGoalName = i;
 					break;
 
+				case 'goal-order':
 				case 'goal-order-goal-name':
 				case 'Goal - Order':
 					indexOfGoalOrderColumn = i;
 					break;
 
+				case 'target-code':
 				case 'target-code-target-name':
 				case 'Target - Code':
 					indexOfTargetCode = i;
@@ -64,19 +55,29 @@ $(function () {
 					indexOfTargetName = i;
 					break;
 
+				case 'target-fr-name':
 				case 'Target - FR Name':
 					indexOfTargetNameFr = i;
 					break;
 
+				case 'Goal - Name FR':
+					indexOfGoalNameFr = i;
+					break;
+
+				case 'target-order':
 				case 'target-order-target-name':
 				case 'Target - Order':
 					indexOfTargetOrder = i;
 					break;
+
 				case 'Target - Level':
+				case 'target-level':
 				case 'target-level-target-name':
 					indexOfTargetLevel = i;
 					break;
+
 				case 'Target - Source':
+				case 'target-source':
 				case 'target-source-target-name':
 					indexOfTargetSource = i;
 					break;
@@ -107,26 +108,24 @@ $(function () {
 		indexesInitialized = true;
 	}
 
-	var editText = "Edit";
-	var browseText = "Browse Data";
-	var metadataText = "Metadata";
-	var sdmxText = "SDMXURL";
-	var collapseAllText = "Collapse all";
-	var expandAllText = "Expand all";
-
-	var editPageTextInFrench = "Edit page"; //en - edit page
-	var backTextInFrench = "Back"; //en - back
+	var structureLightDsId = "ejjrjwd",
+	editText = "Edit",
+	browseText = "Browse Data",
+	metadataText = "Metadata",
+	sdmxText = "SDMXURL",
+	collapseAllText = "Collapse All",
+	expandAllText = "Expand All",
+	datasetName = "sdgstrfl2016links",
+	goalDimId = "goal-name",
+	goalOrderField = "goal-order",
+	groupByGoal,
+	detailsData,
+	sdgPageLink = "/sdg.html";
 
 	function isFrenchLocale() {
-		return false;
+		return $('.community-v2').hasClass('fr-FR')
+		|| $('html').attr('lang') == "fr-FR";
 	}
-
-	if (isFrenchLocale()) {
-		//change text of wiki buttons is better than making french page
-		$('#sdg .back').text(backTextInFrench);
-		$('#edit-wiki-button').text(editPageTextInFrench);
-	}
-
 
 	function populateTarget(items, goal, isEditor) {
 		items = items.sort(function (a, b) {
@@ -179,29 +178,40 @@ $(function () {
 
 	if ($('#sdg').length) {
 		$('#edit-wiki-button').hide();
-		$.get(host + '/api/1.0/meta/dataset/' + structureCustomDsId + '/dimension/' + goalDimId, function(response){
-			if (response) {
+
+		getAllDetailData(function (data) {
+			if (data) {
+				updateIndexesByDetailsColumns(data.columns);
+				detailsData = data;
+				var lists = _.groupBy(data.data, function (element, index) {
+					return Math.floor(index / data.columns.length);
+				});
+
+				groupByGoal = _.groupBy(lists, function (element, index) {
+					return element[indexOfGoalOrderColumn];
+				});
+
+				var nameIdx = isFrenchLocale() ? indexOfGoalNameFr : indexOfGoalName;
+
 				$('#sdg .tile').each(function (idx, ele) {
 					var $ele = $(ele);
 					var goalNo = idx + 1;
-					var goal = response.items[idx];
-					for (var i in response.items) {
-						goal = response.items[i];
-						if (goal.fields && goal.fields[goalOrderField] && goal.fields[goalOrderField] == goalNo)
-							break;
-					}
+					var row = groupByGoal[goalNo][0];
+					var goalName = row[nameIdx];
 
-					$ele.data('goal-key', goal.key);
-					$ele.data('goal-name', goal.name);
+					//$ele.data('goal-key', goal.key);
+					$ele.data('goal-name', goalName);
 					$ele.data('goal-no', goalNo);
-					$ele.find('.hover-text').text(goal.name);
+					$ele.find('.hover-text').text(goalName);
 				});
 
 				$('#sdg .tile .image').empty();
 			}
 		});
 
+
 		$('#sdg .back').on('click', function () {
+			$('#edit-wiki-button').hide();
 			$('#tile-page').show('slow');
 			$('#detail-page').hide('slow').attr('class', "")
 			$(this).hide();
@@ -228,7 +238,9 @@ $(function () {
 			$('#detail-page .goal-header .text').text(goal.name);
 			$('#detail-page .goal-header a').removeClass('collapse').addClass('expand').find('span.img-txt').text(expandAllText);
 
-			populateData($('#sdg'));
+			//populateData($('#sdg'));
+			populateTarget(groupByGoal[goal.no], goal, false);
+
 		});
 
 		$('#sdg .tile').hover(
@@ -286,26 +298,9 @@ $(function () {
 			localStorage.setItem("GoalDetails", JSON.stringify(goal));
 		}
 	});
-	var detailsData;
-	var groupByGoal;
-	function populateData($div, isEditor) {
-		var detailDesc = {
-			Dataset: structureLightDsId,
-			Frequencies: [],
-			Header: [],
-			MeasureAggregations: null,
-			Segments: null,
-			Stub: [],
-			Filter: [
-			{
-				DatasetId: structureLightDsId,
-				DimensionId: goalDimId,
-				DimensionName: "Goal - Name",
-				Members: []
-			}]
-		};
 
-		$.post(host + '/api/1.0/data/details', detailDesc, function (data) {
+	function populateData($div, isEditor) {
+		$div.busy(getAllDetailData(function (data) {
 			if (data) {
 				updateIndexesByDetailsColumns(data.columns);
 				detailsData = data;
@@ -317,13 +312,35 @@ $(function () {
 					return element[indexOfGoalOrderColumn];
 				});
 				populateTarget(groupByGoal[goal.no], goal, isEditor);
+				//populateTarget(lists, goal, isEditor);
 			}
-
-		});
+		}));
 	};
 
-	var goalToEdit;
-	var goalItemsToEdit;
+	function getAllDetailData(callback) {
+		var detailDesc = {
+			Dataset: structureLightDsId,
+			Frequencies: [],
+			Header: [],
+			MeasureAggregations: null,
+			Segments: null,
+			Stub: [],
+			Filter: [
+		{
+			DatasetId: structureLightDsId,
+			DimensionId: goalDimId,
+			DimensionName: "Goal - Name",
+			Members: []
+		}]
+		};
+
+		return $.post(baseDomain + "/api/1.0/data/details", detailDesc, callback);
+	};
+
+	var goalToEdit,
+	goalItemsToEdit,
+	datasetId;
+
 	if ($('#sdg-editor').length) {
 		if ($('#edit-wiki-button').length)
 			$('#edit-wiki-button').hide();
@@ -337,8 +354,9 @@ $(function () {
 		$('#detail-page').show();
 		$('#detail-page .goal-header .text').text(goal.name);
 		$('#detail-page').addClass('goal-' + goal.no);
-		populateData($('#sdg-editor'), true);
 
+		datasetId = structureLightDsId;
+		populateData($('#sdg-editor'), true);
 
 		$('body').on('click', '.edit-data', function () {
 
@@ -516,8 +534,6 @@ $(function () {
 			});
 		});
 
-		var datasetId = structureDsId;
-
 		function createCSV() {
 			var row = "";
 
@@ -532,13 +548,17 @@ $(function () {
 				var group = groupByGoal[i];
 				for (var k = 0; k < group.length; k++) {
 					for (var j = 0; j < group[k].length; j++) {
-						var val = group[k][j] && typeof group[k][j] == "string" ? group[k][j].replace(/,/g, " ") : group[k][j];
+						var val = group[k][j];
+						if (val === null)
+							val = "";
+						val = '"' + val + '"';
 						row = row + val + ",";
 					}
 					row = row + '\r\n';
 				}
 			}
 
+			//console.log(row);
 			return row;
 		};
 
@@ -611,7 +631,7 @@ $(function () {
 						var http = location.protocol;
 						var slashes = http.concat("//");
 						var host = slashes.concat(window.location.hostname);
-						window.location.href = host.concat('/sdg');
+						window.location.href = host.concat(sdgPageLink);
 					}, 3000);
 				}
 				else {
@@ -647,7 +667,7 @@ $(function () {
 						var http = location.protocol;
 						var slashes = http.concat("//");
 						var host = slashes.concat(window.location.hostname);
-						window.location.href = host.concat('/sdg');
+						window.location.href = host.concat(sdgPageLink);
 
 					},
 					"No": function () {
