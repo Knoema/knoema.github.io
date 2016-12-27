@@ -26,6 +26,8 @@ var Infrastructure;
 	var ptipIndex = -1;
 	var sectorIndex = -1;
 	var budgetIndex = -1;
+	var topRegionId = 'ZM';
+	var topRegionLatLon = { lat: -15.411899, lng: 28.285805 };
 
 	var axes = {
 		'1': 'Section 1. Economic and Social Developments',
@@ -332,9 +334,9 @@ var Infrastructure;
 				var $rhp = $('#right-hand-panel');
 				var $srhp = $('#senegal-right-hand-panel');
 
-				if (regionId == 'NA' || regionId == -1) {
+				if (regionId == topRegionId || regionId == -1) {
 
-					_this.map.setCenter({ lat: -22.4904, lng: 18.9576 });
+					_this.map.setCenter(topRegionLatLon);
 					_this.map.setZoom(6);
 					if (_this.infoWindow)
 						_this.infoWindow.close();
@@ -342,7 +344,7 @@ var Infrastructure;
 					_this.map.data.revertStyle();
 					_this.map.data.setStyle(function (feature) {
 
-						if (regionId == 'NA')
+						if (regionId == topRegionId)
 							return {
 								fillColor: '#fff',
 								fillOpacity: '0.3',
@@ -356,7 +358,7 @@ var Infrastructure;
 							};
 					});
 
-					if (regionId == 'NA') {
+					if (regionId == topRegionId) {
 						_this.showSenegalPanel();
 						_this.currentLayerName = 'none';
 
@@ -1081,45 +1083,58 @@ var Infrastructure;
 			return "rgb(" + r + "," + g + "," + b + ")";
 		};
 
-		Application.prototype.getDataSenedalGlobal = function () {
+		Application.prototype.getDataZambiaIndicators1 = function () {
 
-			var url = 'http://knoema.com/api/1.0/data/details?client_id=EZj54KGFo3rzIvnLczrElvAitEyU28DGw9R73tif&page_id=SECPI2016';
-			var descriptor = {
-				"Header": [{
-					"DimensionId": "Time",
-					"Members": ["2014"],
-					"UiMode": "individualMembers"
-				}],
-				"Stub": [{
-					"DimensionId": "indicator",
-					"Members": ["1000020", "1000030", "1000040", "1000050", "1000060", "1000070", "1000360", "1000370", "1000380", "1000710", "1000720", "1000730", "1000740", "1000800", "1000810", "1000820", "1001100", "1001110", "1001120", "1001130"]
-				}],
-				"Filter": [{
-					"DimensionId": "measure",
-					"Members": ["1000000"]
-				}],
-				"Frequencies": ["A"],
-				"Dataset": "SECPI2016"
-			};
-
-			return $.post(url, descriptor);
+			return $.post('http://zambiagpt.knoema.com//api/1.0/data/pivot?client_id=EZj54KGFo3rzIvnLczrElvAitEyU28DGw9R73tif&page_id=PSEIDS2016V1', {
+				"Header": [
+				   {
+				   	"DimensionId": "Time",
+				   	"Members": [],
+				   	"DimensionName": "Time",
+				   	"UiMode": "last",
+				   	"UiParams": "3"
+				   }
+				],
+				"Stub": [
+				   {
+				   	"DimensionId": "indicator",
+				   	"Members": [
+					   { "Name": "Total GDP at Market Prices", "Key": "-1001930", "Formula": ["1001930"] },
+					   { "Name": "Growth Rates", "Key": "-1001940", "Formula": ["1001940"] }
+				   	],
+				   	"DimensionName": "Indicator"
+				   }
+				],
+				"Filter": [],
+				"Frequencies": [
+				   "A",
+				   "Q"
+				],
+				"Calendar": 0,
+				"Dataset": "yceopwb"
+			}, 'json');
 		};
 
-		Application.prototype.getDataSenegalRealisation = function () {
+		Application.prototype.getDataZambiaIndicators2 = function () {
 
-			return $.post('http://namibia.opendataforafrica.org/api/1.0/data/details?client_id=EZj54KGFo3rzIvnLczrElvAitEyU28DGw9R73tif&page_id=PSEIDS2016V1', {
+			return $.post('http://zambiagpt.knoema.com//api/1.0/data/pivot?client_id=EZj54KGFo3rzIvnLczrElvAitEyU28DGw9R73tif&page_id=PSEIDS2016V1', {
 				"Header": [{
-					"DimensionId": "Time",
-					"Members": ["2011", "2012"],
-					"UiMode": "individualMembers"
+					"DimensionId": "Time", "Members": [], "DimensionName": "Time", "UiMode": "last", "UiParams": "3"
 				}],
 				"Stub": [{
 					"DimensionId": "indicator",
-					"Members": ["1003690", "1000290", "1000100", "1001000"]
+					"Members": [
+						{ "Name": "External Debit", "Key": "-1001510", "Formula": ["1001510"] },
+						{ "Name": "Domestic Debit", "Key": "-1001500", "Formula": ["1001500"] },
+						{ "Name": "Commercial Banks, number", "Key": "-1000130", "Formula": ["1000130"] },
+						{ "Name": "Crop production, Cotton", "Key": "-1000980", "Formula": ["1000980"] },
+						{ "Name": "Crop production, Rice", "Key": "-1001040", "Formula": ["1001040"] },
+						{ "Name": "Crop production, Maize", "Key": "-1001000", "Formula": ["1001000"] },
+						{ "Name": "Crop production, Irish Potatoes", "Key": "-1000990", "Formula": ["1000990"] }],
+					"DimensionName": "Indicator"
 				}],
 				"Filter": [],
-				"Frequencies": ["A"],
-				"Dataset": "NANA2015"
+				"Frequencies": ["A", "Q", "M"], "Calendar": 0, "Dataset": "inumplc"
 			});
 		};
 
@@ -1225,76 +1240,48 @@ var Infrastructure;
 		Application.prototype.showSenegalPanel = function () {
 
 			var _this = this;
-			$.when(this.getDataSenedalGlobal(), this.getDataSenegalRealisation()).done(function (globalPivot, realisationPivot) {
+			$.when(this.getDataZambiaIndicators1(), this.getDataZambiaIndicators2()).done(function (realisationPivot1, realisationPivot2) {
 
-				//_this.globalData = globalPivot[0];
+				function addRealizeData(dataRel) {
 
-				var nameIndex = -1;
-				var valueIndex = -1;
+					_this.realizeData = dataRel;
+					var realizeData = [];
+					var years = [];
 
-				//for (var i = 0; i < _this.globalData.columns.length; i++) {
-				//	if (_this.globalData.columns[i].dimensionId == 'indicator' && _this.globalData.columns[i].name == 'EnglishName')
-				//		nameIndex = i;
+					for (var i = 0; i < dataRel.data.length; i++) {
+						var tuple = dataRel.data[i];
+						var indicator = tuple.indicator;
+						if (!realizeData[indicator])
+						realizeData[indicator] = {};
 
-				//	if (_this.globalData.columns[i].name == 'Value')
-				//		valueIndex = i;
-				//}
+						var year = tuple.Time.split("-")[0];
 
-				//var globalData = {};
+						realizeData[indicator][year] = tuple.Value;
+						if ($.inArray(year, years) == -1)
+							years.push(year);
+					}
 
-				//var rowCount = Math.floor(_this.globalData.data.length / _this.globalData.columns.length);
-				//for (var rowIndex = 0; rowIndex < rowCount; rowIndex++) {
-				//	var rowOffset = rowIndex * _this.globalData.columns.length;
+					years.sort();
 
-				//	globalData[_this.globalData.data[rowOffset + nameIndex]] = _this.globalData.data[rowOffset + valueIndex];
-				//}
-
-				//var globalT = doT.template($('#senegal-profile').html());
-				//$('#senegal-right-hand-panel .global-indicators tbody').html(globalT(globalData));
-
-
-				_this.realizeData = realisationPivot[0];
-
-				nameIndex = -1;
-				valueIndex = -1;
-				var dateIndex = -1;
-
-				for (var i = 0; i < _this.realizeData.columns.length; i++) {
-					if (_this.realizeData.columns[i].dimensionId == 'indicator' && _this.realizeData.columns[i].name == 'Indicator')
-						nameIndex = i;
-
-					if (_this.realizeData.columns[i].name == 'Value')
-						valueIndex = i;
-
-					if (_this.realizeData.columns[i].name == 'Date')
-						dateIndex = i;
+					var realizeTData = [];
+					for (var indicator in realizeData) {
+						var coeff = (((parseFloat(realizeData[indicator][years[years.length - 1]]) - parseFloat(realizeData[indicator][years[years.length - 2]])) / parseFloat(realizeData[indicator][years[years.length - 1]])) * 100).toFixed(2);
+						var num = realizeData[indicator][years[years.length - 1]];
+						realizeTData.push($('<tr>')
+							.append($('<td>', { text: indicator }))
+							.append($('<td>', { text: num ? _this.formatNumberUS(num.toFixed(2)) : "NA" }))
+							.append($('<td>', { text: isNaN(coeff) ? "NA" : _this.formatNumberUS(coeff) }))
+						);
+					}
+					$('#senegal-right-hand-panel .realisation-indicators tbody').append(realizeTData);
 				}
 
-				var realizeData = [];
-				_this.loop(_this.realizeData.data, _this.realizeData.columns, null, function (i, item) {
+				$('#senegal-right-hand-panel .realisation-indicators tbody').empty();
 
-					if (!realizeData[item[nameIndex]])
-						realizeData[item[nameIndex]] = {};
+				addRealizeData(realisationPivot1[0]);
+				addRealizeData(realisationPivot2[0]);
 
-					var year = item[dateIndex].value.split('/')[2];
-
-					realizeData[item[nameIndex]][year] = item[valueIndex];
-				});
-
-				var realizeTData = [];
-				for (var indicator in realizeData) {
-					var coeff = (((parseFloat(realizeData[indicator]['2012']) - parseFloat(realizeData[indicator]['2011'])) / parseFloat(realizeData[indicator]['2012'])) * 100).toFixed(2);
-
-					realizeTData.push($('<tr>')
-						.append($('<td>', { text: indicator }))
-						.append($('<td>', { text: _this.formatNumberUS(realizeData[indicator]['2012'].toFixed(2)) }))
-						.append($('<td>', { text: _this.formatNumberUS(coeff) }))
-        			);
-				}
-				$('#senegal-right-hand-panel .realisation-indicators tbody').empty().append(realizeTData);
-
-
-				var axeData = { '1': 0, '2': 0, '3': 0, '4': 0, '5': 0 };
+				var axeData = { '1': 0, '2': 0, '3': 0, '4': 0, '5': 0 , '6': 0, '7': 0};
 				var unicNames = [];
 				_this.loop(_this.projectData, _this.projectColumns, null, function (i, item) {
 
@@ -1308,11 +1295,14 @@ var Infrastructure;
 				});
 
 				var axeTrs = [];
-				axeTrs.push($('<tr>').append($('<td>', { text: axes['1'] })).append($('<td>', { text: axeData['1'] })));
-				axeTrs.push($('<tr>').append($('<td>', { text: axes['2'] })).append($('<td>', { text: axeData['2'] })));
-				axeTrs.push($('<tr>').append($('<td>', { text: axes['3'] })).append($('<td>', { text: axeData['3'] })));
-				axeTrs.push($('<tr>').append($('<td>', { text: axes['4'] })).append($('<td>', { text: axeData['4'] })));
-				axeTrs.push($('<tr>').append($('<td>', { text: axes['5'] })).append($('<td>', { text: axeData['5'] })));
+				for(var i in axeData)
+					axeTrs.push($('<tr>').append($('<td>', { text: axes[i] })).append($('<td>', { text: axeData[i] })));
+
+				//axeTrs.push($('<tr>').append($('<td>', { text: axes['1'] })).append($('<td>', { text: axeData['1'] })));
+				//axeTrs.push($('<tr>').append($('<td>', { text: axes['2'] })).append($('<td>', { text: axeData['2'] })));
+				//axeTrs.push($('<tr>').append($('<td>', { text: axes['3'] })).append($('<td>', { text: axeData['3'] })));
+				//axeTrs.push($('<tr>').append($('<td>', { text: axes['4'] })).append($('<td>', { text: axeData['4'] })));
+				//axeTrs.push($('<tr>').append($('<td>', { text: axes['5'] })).append($('<td>', { text: axeData['5'] })));
 				$('#senegal-right-hand-panel .axe-summ tbody').empty().append(axeTrs);
 
 
@@ -1335,8 +1325,8 @@ var Infrastructure;
 				});
 
 				var PPSortedData = [];
-				for (var i = 1; i <= 15; i++) {
-					var pp = 'HPP' + i;
+				for (var i = 1; i <= 22; i++) {
+					var pp = 'SNDP' + i;
 
 					if (!PPData[pp] && !budgetData[pp])
 						continue;
@@ -1344,9 +1334,9 @@ var Infrastructure;
 					PPSortedData.push([pp, PPData[pp], budgetData[pp], (i < 10 ? '0' + i : i)]);
 				}
 
-				PPSortedData.sort(function (n1, n2) {
-					return n2[2] - n1[2];
-				});
+				//PPSortedData.sort(function (n1, n2) {
+				//	return n2[2] - n1[2];
+				//});
 
 				var ppTrs = [];
 				for (var i = 0; i < PPSortedData.length; i++) {
