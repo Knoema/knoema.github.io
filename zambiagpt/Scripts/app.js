@@ -472,14 +472,17 @@ var Infrastructure;
 									case 'population':
 										dataLoader = _this.getDataLayerPopulation();
 										break;
-									case 'area':
-										dataLoader = _this.getDataLayerArea();
-										break;
-									case 'density':
-										dataLoader = _this.getDataLayerDensity();
-										break;
 									case 'houshold':
 										dataLoader = _this.getDataLayerHoushold();
+										break;
+									case 'population-water':
+										dataLoader = _this.getDataLayerPopulationWater();
+										break;
+									case 'population-employed':
+										dataLoader = _this.getDataLayerPopulationEmployed();
+										break;
+									case 'population-active':
+										dataLoader = _this.getDataLayerPopulationActive();
 										break;
 								}
 
@@ -916,84 +919,45 @@ var Infrastructure;
 		Application.prototype.getDataLayerPopulation = function () {
 
 			return $.post('https://knoema.com' + '/api/1.0/data/details?client_id=EZj54KGFo3rzIvnLczrElvAitEyU28DGw9R73tif&page_id=SERSSD2011', {
-				"Header": [{
-					"DimensionId": "Time",
-					"Members": ["2011"],
-					"UiMode": "individualMembers"
-				}],
-				"Stub": [{
-					"DimensionId": "region",
-					"Members": ["1000010", "1000080", "1000160", "1000230", "1000300", "1000400", "1000510", "1000580", "1000700", "1000780", "1000910", "1001020", "1001130"]
-				}],
-				"Filter": [{
-					"DimensionId": "variable",
-					"Members": ["1000010"]
-				}],
-				"Frequencies": ["A"],
-				"Dataset": "dcrhbbb"
+				"Header": [{ "DimensionId": "indicator", "Members": ["1000390"], "DimensionName": "Indicator", "DatasetId": "btzorfe", "Order": 0 }],
+				"Stub": [{ "DimensionId": "region", "Members": ["1000010", "1000080", "1000190", "1000270", "1000350", "1000400", "1000460", "1000550", "1000630", "1000750"], "DimensionName": "Region", "DatasetId": "btzorfe", "Order": 0, "IsGeo": true }],
+				"Filter": [{ "DimensionId": "Time", "Members": ["2010"], "DimensionName": "Time", "DatasetId": "btzorfe", "Order": 0, "UiMode": "individualMembers" }],
+				"Frequencies": ["A"], "Dataset": "btzorfe", "Segments": null, "MeasureAggregations": null, "Calendar": 0, "RegionIdsRequired": true, "RegionDimensionId": "region"
 			});
 		};
 
-		Application.prototype.getDataLayerArea = function () {
+		Application.prototype.getDataLayerPopulationWater = function () {
 
 			return $.post('https://knoema.com' + '/api/1.0/data/details?client_id=EZj54KGFo3rzIvnLczrElvAitEyU28DGw9R73tif&page_id=SERSSD2011', {
-				"Header": [{
-					"DimensionId": "Time",
-					"Members": ["2011"],
-					"UiMode": "individualMembers"
-				}],
-				"Stub": [{
-					"DimensionId": "region",
-					"Members": ["1000010", "1000080", "1000160", "1000230", "1000300", "1000400", "1000510", "1000580", "1000700", "1000780", "1000910", "1001020", "1001130"]
-				}],
-				"Filter": [{
-					"DimensionId": "variable",
-					"Members": ["1000060"]
-				}],
-				"Frequencies": ["A"],
-				"Dataset": "dcrhbbb"
+				"Header": [{ "DimensionId": "indicator", "Members": ["1000040"], "DimensionName": "Indicator", "DatasetId": "btzorfe", "Order": 0 }],
+				"Stub": [{ "DimensionId": "region", "Members": ["1000010", "1000080", "1000190", "1000270", "1000350", "1000400", "1000460", "1000550", "1000630", "1000750"], "DimensionName": "Region", "DatasetId": "btzorfe", "Order": 0, "IsGeo": true }],
+				"Filter": [{ "DimensionId": "Time", "Members": ["2010"], "DimensionName": "Time", "DatasetId": "btzorfe", "Order": 0, "UiMode": "individualMembers" }],
+				"Frequencies": ["A"], "Dataset": "btzorfe", "Segments": null, "MeasureAggregations": null, "Calendar": 0, "RegionIdsRequired": true, "RegionDimensionId": "region"
 			});
 		};
+		Application.prototype.getDataLayerPopulationEmployed = function () {
 
-		Application.prototype.getDataLayerDensity = function () {
-
-			return $.post('https://knoema.com' + '/api/1.0/data/details?client_id=EZj54KGFo3rzIvnLczrElvAitEyU28DGw9R73tif&page_id=SEDHSMI2011', {
-				"Header": [{
-					"DimensionId": "Time",
-					"Members": ["2011"],
-					"UiMode": "individualMembers"
-				}],
-				"Stub": [{
-					"DimensionId": "region",
-					"Members": ["1000010", "1000080", "1000160", "1000230", "1000300", "1000400", "1000510", "1000580", "1000700", "1000780", "1000910", "1001020", "1001130"]
-				}],
-				"Filter": [{
-					"DimensionId": "variable",
-					"Members": ["1000070"]
-				}],
-				"Frequencies": ["A"],
-				"Dataset": "dcrhbbb"
+			return $.post('https://knoema.com' + '/api/1.0/data/details?client_id=EZj54KGFo3rzIvnLczrElvAitEyU28DGw9R73tif&page_id=SERSSD2011', {
+				"Header": [{ "DimensionId": "indicator", "Members": ["1000150"], "DimensionName": "Indicator" }],
+				"Stub": [{ "DimensionId": "region", "Members": ["1000010", "1000020", "1000030", "1000040", "1000050", "1000060", "1000070", "1000080", "1000090", "1000100"], "DimensionName": "Region" }],
+				"Filter": [{ "DimensionId": "Time", "Members": ["2012"], "DimensionName": "Time", "UiMode": "individualMembers" }], "Frequencies": ["A"], "Calendar": 0, "Dataset": "tjdgmge"
 			});
 		};
+		Application.prototype.getDataLayerPopulationActive = function () {
 
+			return $.post('https://knoema.com' + '/api/1.0/data/details?client_id=EZj54KGFo3rzIvnLczrElvAitEyU28DGw9R73tif&page_id=SERSSD2011', {
+				"Header": [{ "DimensionId": "indicator", "Members": ["1000050"], "DimensionName": "Indicator" }],
+				"Stub": [{ "DimensionId": "region", "Members": ["1000010", "1000020", "1000030", "1000040", "1000050", "1000060", "1000070", "1000080", "1000090", "1000100"], "DimensionName": "Region" }],
+				"Filter": [{ "DimensionId": "Time", "Members": ["2012"], "DimensionName": "Time", "UiMode": "individualMembers" }], "Frequencies": ["A"], "Calendar": 0, "Dataset": "tjdgmge"
+			});
+		};
 		Application.prototype.getDataLayerHoushold = function () {
 
 			return $.post('https://knoema.com' + '/api/1.0/data/details?client_id=EZj54KGFo3rzIvnLczrElvAitEyU28DGw9R73tif&page_id=SEIPC2006', {
-				"Header": [{
-					"DimensionId": "Time",
-					"Members": ["2011"],
-					"UiMode": "individualMembers"
-				}],
-				"Stub": [{
-					"DimensionId": "region",
-					"Members": ["1000010", "1000080", "1000160", "1000230", "1000300", "1000400", "1000510", "1000580", "1000700", "1000780", "1000910", "1001020", "1001130"]
-				}],
-				"Filter": [{
-					"DimensionId": "variable",
-					"Members": ["1000130"]
-				}],
-				"Frequencies": ["A"],
-				"Dataset": "dcrhbbb"
+				"Header": [{ "DimensionId": "indicator", "Members": ["1000280"], "DimensionName": "Indicator", "DatasetId": "btzorfe", "Order": 0 }],
+				"Stub": [{ "DimensionId": "region", "Members": ["1000010", "1000080", "1000190", "1000270", "1000350", "1000400", "1000460", "1000550", "1000630", "1000750"], "DimensionName": "Region", "DatasetId": "btzorfe", "Order": 0, "IsGeo": true }],
+				"Filter": [{ "DimensionId": "Time", "Members": ["2010"], "DimensionName": "Time", "DatasetId": "btzorfe", "Order": 0, "UiMode": "individualMembers" }],
+				"Frequencies": ["A"], "Dataset": "btzorfe", "Segments": null, "MeasureAggregations": null, "Calendar": 0, "RegionIdsRequired": true, "RegionDimensionId": "region"
 			});
 		};
 
