@@ -127,9 +127,9 @@ var Infrastructure;
 		'ZM-02': { lat: -14.311226, lng: 28.299435 },
 		'ZM-08': { lat: -13.057007, lng: 27.549585 },
 		'ZM-03': { lat: -13.805619, lng: 31.992808 },
-		'ZM-04': { lat: -11.564831, lng: 29.045993 },
-		'ZM-09': { lat: -15.416667, lng: 28.28333299999997 },
-		'ZM-10': { lat: -15.378073, lng: 28.257916 },
+		'ZM-04': {lat: -10.642051, lng: 28.943481}, //{ lat: -11.564831, lng: 29.045993 },
+		'ZM-09': { lat: -15.338657, lng: 29.209900 }, //{ lat: -15.416667, lng: 28.28333299999997 },
+		'ZM-10': { lat: -11.411548, lng: 31.758728 }, //{ lat: -15.378073, lng: 28.257916 },
 		'ZM-05': { lat: -9.767018, lng: 30.895824 },
 		'ZM-06': { lat: -13.005026, lng: 24.904221 },
 		'ZM-07': { lat: -16.962063, lng: 26.419389 },
@@ -137,16 +137,16 @@ var Infrastructure;
 	};
 
 	var RegionsZoom = {
-		'ZM-02': 9,
-		'ZM-08': 8,
+		'ZM-02': 8,
+		'ZM-08': 9,
 		'ZM-03': 8,
 		'ZM-04': 8,
-		'ZM-09': 8,
+		'ZM-09': 9,
 		'ZM-10': 8,
 		'ZM-05': 8,
 		'ZM-06': 8,
 		'ZM-07': 8,
-		'ZM-01': 9
+		'ZM-01': 8
 	};
 
 	var Application = (function () {
@@ -1226,6 +1226,7 @@ var Infrastructure;
 					}
 
 					years.sort();
+					years.splice(-1, 1); //remove last year as it don't have data for some indicators
 
 					var realizeTData = [];
 					for (var indicator in realizeData) {
@@ -1262,11 +1263,6 @@ var Infrastructure;
 				for(var i in axeData)
 					axeTrs.push($('<tr>').append($('<td>', { text: axes[i] })).append($('<td>', { text: axeData[i] })));
 
-				//axeTrs.push($('<tr>').append($('<td>', { text: axes['1'] })).append($('<td>', { text: axeData['1'] })));
-				//axeTrs.push($('<tr>').append($('<td>', { text: axes['2'] })).append($('<td>', { text: axeData['2'] })));
-				//axeTrs.push($('<tr>').append($('<td>', { text: axes['3'] })).append($('<td>', { text: axeData['3'] })));
-				//axeTrs.push($('<tr>').append($('<td>', { text: axes['4'] })).append($('<td>', { text: axeData['4'] })));
-				//axeTrs.push($('<tr>').append($('<td>', { text: axes['5'] })).append($('<td>', { text: axeData['5'] })));
 				$('#senegal-right-hand-panel .axe-summ tbody').empty().append(axeTrs);
 
 
@@ -1292,10 +1288,10 @@ var Infrastructure;
 				for (var i = 1; i <= 22; i++) {
 					var pp = 'SNDP' + i;
 
-					if (!PPData[pp] && !budgetData[pp])
-						continue;
+					//if (!PPData[pp] && !budgetData[pp]) //force show all 22 SNDPs
+					//	continue;
 
-					PPSortedData.push([pp, PPData[pp], budgetData[pp], (i < 10 ? '0' + i : i)]);
+					PPSortedData.push([pp, PPData[pp] || "0", budgetData[pp] || "0", (i < 10 ? '0' + i : i)]);
 				}
 
 				//PPSortedData.sort(function (n1, n2) {

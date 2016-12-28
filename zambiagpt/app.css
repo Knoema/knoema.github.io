@@ -137,6 +137,10 @@ body.loading > .ajax-loader
     text-shadow: -1px -1px 0 #d75f05, 1px -1px 0 #d75f05, -1px 1px 0 #d75f05, 1px 1px 0 #d75f05;
 }*/
 
+.bootstrap-select.ppp-projects-container .text{
+	white-space: pre;
+}
+
 .bootstrap-select .text,
 .bootstrap-select .filter-option
 {
@@ -312,7 +316,7 @@ body.loading > .ajax-loader
 {
 	position: relative;
 	height: 550px;
-	width: 995px;
+	width: 1010px;
 	margin: auto;
 }
 
