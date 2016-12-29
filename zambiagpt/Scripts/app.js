@@ -981,7 +981,7 @@ var Infrastructure;
 			var valueIndex = -1;
 
 			for (var i = 0; i < data.columns.length; i++) {
-				if (data.columns[i].name == 'RegionId')
+				if (data.columns[i].name == 'Region')
 					regionIdIndex = i;
 
 				if (data.columns[i].name == 'Value')
@@ -997,7 +997,7 @@ var Infrastructure;
 
 				var value = item[valueIndex];
 
-				rawData[item[regionIdIndex]] = value;
+				rawData[nameToRegionId[item[regionIdIndex].replace(" Province", "")]] = value;
 
 				if (value < minValue)
 					minValue = value;
