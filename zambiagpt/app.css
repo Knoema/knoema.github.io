@@ -178,6 +178,7 @@ body.loading > .ajax-loader
 	box-shadow: 0px 1px 2px rgba(0,0,0,0.3);
 	z-index: 10;
 	background: url(./img/headbg.png);
+	background-size: cover;
 }
 
 	.main-menu .logo-title
