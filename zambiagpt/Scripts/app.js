@@ -124,16 +124,16 @@ var Infrastructure;
 	};
 
 	var RegionsCenters = {
-		'ZM-02': { lat: -14.311226, lng: 28.299435 },
-		'ZM-08': { lat: -13.057007, lng: 27.549585 },
-		'ZM-03': { lat: -13.805619, lng: 31.992808 },
-		'ZM-04': { lat: -10.642051, lng: 28.943481 },
-		'ZM-09': { lat: -15.338657, lng: 29.209900 },
-		'ZM-10': { lat: -11.411548, lng: 31.758728 },
-		'ZM-05': { lat: -9.767018, lng: 30.895824 },
-		'ZM-06': { lat: -13.005026, lng: 24.904221 },
-		'ZM-07': { lat: -16.962063, lng: 26.419389 },
-		'ZM-01': { lat: -15.945491, lng: 23.382355 }
+		"ZM-02": { "lat": -13.966054081318301, "lng": 29.146728515625 },
+		"ZM-08": { "lat": -13.028641818911012, "lng": 28.30078125 },
+		"ZM-03": { "lat": -13.373587513919768, "lng": 32.8765869140625 },
+		"ZM-04": { "lat": -10.579621910034726, "lng": 29.322509765625 },
+		"ZM-09": { "lat": -15.308028681690018, "lng": 29.69329833984375 },
+		"ZM-10": { "lat": -11.388494275632903, "lng": 33.1402587890625 },
+		"ZM-05": { "lat": -9.606166114941969, "lng": 32.0965576171875 },
+		"ZM-06": { "lat": -12.892134549572589, "lng": 25.8343505859375 },
+		"ZM-07": { "lat": -16.583552354072005, "lng": 28.1195068359375 },
+		"ZM-01": { "lat": -15.702374676104428, "lng": 25.0213623046875 }
 	};
 
 	var RegionsZoom = {
@@ -1529,15 +1529,16 @@ var Infrastructure;
 
 			var regionId = event.feature.getId();
 
-			//test code to improve RegionCenters by click position update
 			if (regionId) {
-				RegionsCenters[regionId] = {
-					lat: event.latLng.lat(),
-					lng: event.latLng.lng()
-				};
+				//start test code to improve RegionCenters by click position update
+				//RegionsCenters[regionId] = {
+				//	lat: event.latLng.lat(),
+				//	lng: event.latLng.lng()
+				//};
 
-				this.map.setCenter(RegionsCenters[regionId]);
-				this.map.setZoom(RegionsZoom[regionId]);
+				//this.map.setCenter(RegionsCenters[regionId]);
+				//this.map.setZoom(RegionsZoom[regionId]);
+				//end test code to improve RegionCenters by click position update
 
 				if (this.layerDataForTooltip[this.currentLayerName]) {
 					var value = this.formatNumberUS(this.layerDataForTooltip[this.currentLayerName][regionId]);
