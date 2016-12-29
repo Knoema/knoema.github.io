@@ -149,6 +149,20 @@ var Infrastructure;
 		'ZM-01': 8
 	};
 
+	var nameToRegionId = {
+		Zambia: "ZM",
+		Central: "ZM-02",
+		Copperbelt: "ZM-08",
+		Eastern: "ZM-03",
+		Luapula: "ZM-04",
+		Lusaka: "ZM-09",
+		Muchinga: "ZM-10",
+		Northern: "ZM-05",
+		"North-Western": "ZM-06",
+		Southern: "ZM-07",
+		Western: "ZM-01"
+	};
+
 	var Application = (function () {
 		function Application() {
 		}
@@ -280,7 +294,7 @@ var Infrastructure;
 					if (name == 'Database Code') _this.databaseCodeIndex_O = i;
 					if (name == 'Latitude') _this.latIndex = i;
 					if (name == 'Longitude') _this.lngIndex = i;
-					if (name == 'RegionId') _this.regionIdIndex = i;
+					if (name == 'Region') _this.regionIdIndex = i;
 				}
 
 				_this.hideNonPresentedProjectsButtons(_this.projectData);
@@ -808,13 +822,13 @@ var Infrastructure;
 
 					self.loop(regionData1[0].data, regionData1[0].columns, null, function (i, item) {
 
-						self.regionData.push({ regionId: item[5], indicator: item[0], value: item[6] * 1 });
+						self.regionData.push({ regionId: nameToRegionId[item[4].replace(" Province", "")], indicator: item[0], value: item[6] * 1 });
 						//console.log(item[4], item[5]);
 					});
 
 					self.loop(regionData2[0].data, regionData2[0].columns, null, function (i, item) {
 
-						self.regionData.push({ regionId: item[2], indicator: item[3], value: item[6] * 1 });
+						self.regionData.push({ regionId: nameToRegionId[item[1].replace(" Province", "")], indicator: item[3], value: item[6] * 1 });
 						//console.log(item[1], item[2]);
 					});
 
@@ -1110,7 +1124,7 @@ var Infrastructure;
 
 			_this.loop(_this.objectData, _this.objectColumns, null, function (i, item) {
 
-				if (regionId != item[_this.regionIdIndex])
+				if (regionId != nameToRegionId[item[_this.regionIdIndex]])
 					return;
 
 				var code = item[_this.databaseCodeIndex_O];
