@@ -1527,25 +1527,30 @@ var Infrastructure;
 			if (this.infoWindow != null)
 				this.infoWindow.close();
 
-			//test code to improve RegionCenters by click position update
-			RegionsCenters[regionId] = {
-				lat: event.latLng.lat(),
-				lng: event.latLng.lng()
-			};
-
-			this.map.setCenter(RegionsCenters[regionId]);
-			this.map.setZoom(RegionsZoom[regionId]);
-
 			var regionId = event.feature.getId();
-			var value = this.formatNumberUS(this.layerDataForTooltip[this.currentLayerName][regionId]);
-			var content = '<b>Region:&nbsp;</b>' + event.feature.getProperty('name') + '<br /><b>Value:&nbsp;</b>' + value;
 
-			this.infoWindow = new google.maps.InfoWindow({
-				content: content,
-				position: event.latLng
-			});
+			//test code to improve RegionCenters by click position update
+			if (regionId) {
+				RegionsCenters[regionId] = {
+					lat: event.latLng.lat(),
+					lng: event.latLng.lng()
+				};
 
-			this.infoWindow.open(this.map);
+				this.map.setCenter(RegionsCenters[regionId]);
+				this.map.setZoom(RegionsZoom[regionId]);
+
+				if (this.layerDataForTooltip[this.currentLayerName]) {
+					var value = this.formatNumberUS(this.layerDataForTooltip[this.currentLayerName][regionId]);
+					var content = '<b>Region:&nbsp;</b>' + event.feature.getProperty('name') + '<br /><b>Value:&nbsp;</b>' + value;
+
+					this.infoWindow = new google.maps.InfoWindow({
+						content: content,
+						position: event.latLng
+					});
+
+					this.infoWindow.open(this.map);
+				}
+			}
 		};
 
 		Application.prototype.formatNumberUS = function (number) {
