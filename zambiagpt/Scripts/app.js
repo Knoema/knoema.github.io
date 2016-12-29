@@ -12,11 +12,13 @@ var Infrastructure;
 	var projectColumns = [];
 	var objectData = [];
 	var objectColumms = [];
+	var objectNomProjectItems = null;
 
 	var objectTypeIndex = -1;
 	var pseIndex = -1;
 	var databaseCodeIndex = -1;
 	var databaseCodeIndex_O = -1;
+	var nomProjetIndex = -1;
 	var latIndex = -1;
 	var lngIndex = -1;
 	var regionIdIndex = -1;
@@ -101,26 +103,6 @@ var Infrastructure;
 		'Operational': '05',
 		'6': '06-Complete',
 		'7': '07-Finalise'
-	};
-
-
-
-	var PPNameToObjectType = {
-		"100-150 aggregation projects focused on livestock and high value added agriculture sectors": ["Farms"],
-		"3-4 grain development corridors": ["Agriculture"],
-		"3-6 integrated tourist areas": ["Tourism"],
-		"Accelerated development of aquaculture": ["Factories and Industrial Parks"],
-		"Air recovery plan": ["Airports"],
-		"Business park for regional headquarters and bases": ["Factories and Industrial Parks"],
-		"Commercial infrastructure": ["Highway"],
-		"Dakar medical city": ["Hospital"],
-		"Dakar regional reference campus": ["School"],
-		"Integrated industrial hubs": ["Factories and Industrial Parks"],
-		"Integrated logistics hubs": ["Bus stations", "Ports", "Train"],
-		"Iron ore recovery project - Faleme mine": ["Energy and Mining"],
-		"Social housing acceleration program": ["Housing"],
-		"Electrified Villages": ["Undefined"],
-		"Undefined": ["Undefined"]
 	};
 
 	var RegionsCenters = {
@@ -262,7 +244,7 @@ var Infrastructure;
 			});
 			this.map.data.addListener('click', $.proxy(this.clickDataLayerListener, this));
 
-			$.when(this.getProjects(), this.getObjects()).done(function (projectData, objectData) {
+			$.when(this.getProjects(), this.getObjects(), this.getObjectsNomProjectItems()).done(function (projectData, objectData, objectNomProjectItems) {
 
 				_this.projectData = projectData[0].data;
 				_this.projectColumns = projectData[0].columns;
@@ -295,7 +277,10 @@ var Infrastructure;
 					if (name == 'Latitude') _this.latIndex = i;
 					if (name == 'Longitude') _this.lngIndex = i;
 					if (name == 'Region') _this.regionIdIndex = i;
+					if (name == 'Nom Projet') _this.nomProjetIndex = i;
 				}
+
+				_this.objectNomProjectItems = objectNomProjectItems[0];
 
 				_this.hideNonPresentedProjectsButtons(_this.projectData);
 
@@ -544,24 +529,27 @@ var Infrastructure;
 				var locales = {};
 				_this.loop(_this.objectData, _this.objectColumns, null, function (i, item) {
 
-					if (!locales[item[_this.databaseCodeIndex_O]])
-						locales[item[_this.databaseCodeIndex_O]] = [];
+					var code = item[_this.databaseCodeIndex_O] || _this.getDatabaseCode(item[_this.nomProjetIndex]);
 
-					locales[item[_this.databaseCodeIndex_O]].push(item[_this.latIndex] + ', ' + item[_this.lngIndex]);
+					if (!locales[code])
+						locales[code] = [];
+
+					locales[code].push(item[_this.latIndex] + ', ' + item[_this.lngIndex]);
 				});
 
 				_this.loop(_this.objectData, _this.objectColumns, null, function (i, item) {
 
-					var tooltip = filtredProjects[item[_this.databaseCodeIndex_O]];
+					var code = item[_this.databaseCodeIndex_O] || _this.getDatabaseCode(item[_this.nomProjetIndex]);
+					var tooltip = filtredProjects[code];
 					if (tooltip) {
 
-						tooltip['locales'] = locales[item[_this.databaseCodeIndex_O]].join('; ');
+						tooltip['locales'] = locales[code].join('; ');
 
 						filtredObjects.push({
 							lat: item[_this.latIndex],
 							lng: item[_this.lngIndex],
 							tooltip: tooltip,
-							code: item[_this.databaseCodeIndex_O]
+							code: code
 						});
 					}
 				});
@@ -672,6 +660,21 @@ var Infrastructure;
 				});
 				this.markers = null;
 			}
+		};
+
+		Application.prototype.getDatabaseCode = function (nomProjetName) {
+			var code = null;
+
+			if (this.objectNomProjectItems)
+				for (var i = 0; i < this.objectNomProjectItems.items.length; i++) {
+					var item = this.objectNomProjectItems.items[i];
+					if (item.name == nomProjetName) {
+						code = item.fields["database-code"];
+						break;
+					}
+				}
+
+			return code;
 		};
 
 		Application.prototype.addObjectsToMap = function (map, data) {
@@ -889,6 +892,12 @@ var Infrastructure;
 				"Calendar": 0,
 				"Dataset": "btzorfe"
 			});
+		};
+
+		Application.prototype.getObjectsNomProjectItems = function () {
+
+			var url = host + "/api/1.0/meta/dataset/dhcdzof/dimension/nom-projet?client_id=EZj54KGFo3rzIvnLczrElvAitEyU28DGw9R73tif&page_id=dhcdzof";
+			return $.get(url);
 		};
 
 		Application.prototype.getObjects = function () {
@@ -1127,7 +1136,7 @@ var Infrastructure;
 				if (regionId != nameToRegionId[item[_this.regionIdIndex]])
 					return;
 
-				var code = item[_this.databaseCodeIndex_O];
+				var code = item[_this.databaseCodeIndex_O] || _this.getDatabaseCode(item[_this.nomProjetIndex]);
 				if ($.inArray(code, dbCodes) == -1)
 					dbCodes.push(code);
 			});
@@ -1139,6 +1148,9 @@ var Infrastructure;
 				//only for projects
 				if (item[_this.objectTypeIndex] != 'P')
 					return;
+
+				//if (regionId != nameToRegionId[item[_this.localeIndex]])
+				//	return;
 
 				if ($.inArray(dbcode, dbCodes) == -1)
 					return;
