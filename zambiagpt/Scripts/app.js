@@ -127,9 +127,9 @@ var Infrastructure;
 		'ZM-02': { lat: -14.311226, lng: 28.299435 },
 		'ZM-08': { lat: -13.057007, lng: 27.549585 },
 		'ZM-03': { lat: -13.805619, lng: 31.992808 },
-		'ZM-04': {lat: -10.642051, lng: 28.943481}, //{ lat: -11.564831, lng: 29.045993 },
-		'ZM-09': { lat: -15.338657, lng: 29.209900 }, //{ lat: -15.416667, lng: 28.28333299999997 },
-		'ZM-10': { lat: -11.411548, lng: 31.758728 }, //{ lat: -15.378073, lng: 28.257916 },
+		'ZM-04': { lat: -10.642051, lng: 28.943481 },
+		'ZM-09': { lat: -15.338657, lng: 29.209900 },
+		'ZM-10': { lat: -11.411548, lng: 31.758728 },
 		'ZM-05': { lat: -9.767018, lng: 30.895824 },
 		'ZM-06': { lat: -13.005026, lng: 24.904221 },
 		'ZM-07': { lat: -16.962063, lng: 26.419389 },
@@ -238,7 +238,7 @@ var Infrastructure;
 			});
 
 			this.map = new google.maps.Map(document.getElementById('map-canvas'), {
-				center: { lat: -22.4904, lng: 18.9576 },
+				center: topRegionLatLon,
 				zoom: 6,
 				streetViewControl: false,
 				zoomControlOptions: {
@@ -1526,6 +1526,15 @@ var Infrastructure;
 
 			if (this.infoWindow != null)
 				this.infoWindow.close();
+
+			//test code to improve RegionCenters by click position update
+			RegionsCenters[regionId] = {
+				lat: event.latLng.lat(),
+				lng: event.latLng.lng()
+			};
+
+			this.map.setCenter(RegionsCenters[regionId]);
+			this.map.setZoom(RegionsZoom[regionId]);
 
 			var regionId = event.feature.getId();
 			var value = this.formatNumberUS(this.layerDataForTooltip[this.currentLayerName][regionId]);
