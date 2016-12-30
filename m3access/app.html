@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>m3access</title>
+    <link rel="shortcut icon" href="favicon.ico">
+    <link rel="stylesheet" type="text/css" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="deps/bootstrap-select.min.css">
+    <link rel="stylesheet" type="text/css" href="deps/jquery-ui.min.css">
+    <link rel="stylesheet" type="text/css" href="deps/malihu-custom-scrollbar-plugin-3.1.3/jquery.mCustomScrollbar.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,700" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+<body>
+
+    <div class="main-menu-holder">
+        <div class="main-menu pull-right">
+            <a href="#">Access alerts</a>
+            <a href="//yale.knoema.com/ireepyd/africa-pharmaceutical-industry-overview">Pharmaceutical Sector Profile</a>
+            <a href="#">Disease profiles</a>
+            <a href="#" class="active">Data catalog</a>
+        </div>
+    </div>
+
+    <header class="container-fluid">
+
+        <div class="pull-left">
+            <div class="combined-logo">
+            </div>
+        </div>
+
+        <div class="pull-right">
+            <a class="logo_uincd" href="//www.uincd.org/"></a>
+            <a class="logo_yp-cdn" href="//www.ncdaction.org/"></a>
+        </div>
+
+    </header>
+
+    <div class="container-fluid">
+
+        <div id="right-panel">
+            <button type="button" class="close pull-right" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h3>Prices Comparison Tool</h3>
+            <button class="btn week-button">
+                Week of <span id="week-of">TODO Paste real data here</span>
+            </button>
+
+            <div class="right-panel-info">
+                <p>Prices in USh</p>
+                <p>Total Urban facilities: 19</p>
+                <p>Total Rural facilities: 4</p>
+            </div>
+
+            <div class="table-holder">
+
+                <table class="table table-condensed table-striped">
+                    <tr>
+                        <td class="header">
+                            Diabetes</td>
+                        <td>Urban</td>
+                        <td>Rural</td>
+                    </tr>
+                    <tr>
+                        <td>Metformin
+                            500mg per tablet
+                        </td>
+                        <td>4 / 325</td>
+                        <td>NA</td>
+                    </tr>
+                    <tr>
+                        <td>Glibenclamide
+                            5mg per tablet
+                        </td>
+                        <td>4 / 283</td>
+                        <td>1 / 50</td>
+                    </tr>
+                    <tr>
+                        <td>Insulin soluble (regular)
+                            <br />
+                            100IU/mL per unit vial
+                        </td>
+                        <td>4 / 10,750</td>
+                        <td>NA</td>
+                    </tr>
+                    <tr>
+                        <td>Insulin isophane (NPH)
+                            <br />
+                            100IU/mL per unit vial
+                        </td>
+                        <td>3 / 20,000</td>
+                        <td>NA</td>
+                    </tr>
+                    <tr>
+                        <td>Insulin Mixtard
+                            <br />
+                            (30% soluble/70% isophane)
+                            <br />
+                            100IU/mL per unit vial
+                        </td>
+                        <td>4 / 10,750</td>
+                        <td>NA</td>
+                    </tr>
+
+                    <tr>
+                        <td class="header">
+                            Cardiovascular Disease
+                        </td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Nifedipine
+                            20mg per tablet
+                        </td>
+                        <td>12 / 371</td>
+                        <td>NA</td>
+                    </tr>
+                    <tr>
+                        <td>Atenolol
+                            100mg per tablet
+                        </td>
+                        <td>5 / 260</td>
+                        <td>1 / 100</td>
+                    </tr>
+                    <tr>
+                        <td>Propranolol
+                            40 mg per tablet
+                        </td>
+                        <td>6 / 158</td>
+                        <td>1 / 50</td>
+                    </tr>
+                    <tr>
+                        <td>Captopril
+                            25mg per tablet
+                        </td>
+                        <td>2 / 150</td>
+                        <td>NA</td>
+                    </tr>
+                    <tr>
+                        <td>Enalapril
+                            5mg per tablet
+                        </td>
+                        <td>NA</td>
+                        <td>NA</td>
+                    </tr>
+                    <tr>
+                        <td>Lisinopril
+                            10mg per tablet
+                        </td>
+                        <td>1 / Free</td>
+                        <td>NA</td>
+                    </tr>
+                    <tr>
+                        <td>Losartan
+                            50mg per tablet
+                        </td>
+                        <td>5 / 960</td>
+                        <td>1 / 1,000</td>
+                    </tr>
+                    <tr>
+                        <td>Simvastatin
+                            20mg per tablet
+                        </td>
+                        <td>2 / 1,500</td>
+                        <td>NA</td>
+                    </tr>
+
+                    <tr>
+                        <td class="header">COPD/Asthma</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Beclomethasone
+                            inhaler per item
+                        </td>
+                        <td>NA</td>
+                        <td>NA</td>
+                    </tr>
+                    <tr>
+                        <td>Salbutamol
+                            inhaler per item
+                        </td>
+                        <td>5 / 12,600</td>
+                        <td>1 / 13,500</td>
+                    </tr>
+                    <tr>
+                        <td>Salbutamol
+                            4mg per tablet
+                        </td>
+                        <td>8 / 130</td>
+                        <td>1 / 100</td>
+                    </tr>
+
+                    <tr>
+                        <td class="header">Mental
+                            Health
+                        </td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Fluoxetine
+                            20mg per tablet
+                        </td>
+                        <td>4 / 225</td>
+                        <td>NA</td>
+                    </tr>
+                    <tr>
+                        <td>Amitriptyline
+                            25mg per tablet
+                        </td>
+                        <td>8 / 400</td>
+                        <td>1 / 200</td>
+                    </tr>
+                    <tr>
+                        <td>Diazepam
+                            5mg per tablet
+                        </td>
+                        <td>11 / 193</td>
+                        <td>1 / 150</td>
+                    </tr>
+
+                    <tr>
+                        <td class="header">Pain/Fever</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Codeine
+                            30mg per tablet
+                        </td>
+                        <td>2 / 1,100</td>
+                        <td>NA</td>
+                    </tr>
+                    <tr>
+                        <td>Paracetamol
+                            500mg per tablet
+                        </td>
+                        <td>10 / 117</td>
+                        <td>1 / 100</td>
+                    </tr>
+
+                    <tr>
+                        <td class="header">Antibiotic</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Amoxicillin
+                            250mg per tablet
+                        </td>
+                        <td>11 / 236</td>
+                        <td>1 / 100</td>
+                    </tr>
+
+                    <tr>
+                        <td class="header">Malaria</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Artemether
+                            <br />
+                            20mg/Lumefantrine 120mg per tablet
+                        </td>
+                        <td>10 / 1,160</td>
+                        <td>1 / 200</td>
+                    </tr>
+
+                    <tr>
+                        <td class="header">Dehydration</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Oral
+                            rehydration solution packets
+                        </td>
+                        <td>11 / 786</td>
+                        <td>1 / 600</td>
+                    </tr>
+                </table>
+
+            </div><!--.table-holder-->
+
+        </div>
+
+        <div class="row">
+            <div class="col-xs-2 col-md-2">
+                <div id="tooltip-holder"></div>
+                <div id="side-bar">
+                    <a class="reset" href="#">
+                        <i class="glyphicon glyphicon-remove"></i> Reset
+                    </a>
+                </div>
+            </div>
+            <div class="col-xs-10 col-md-10">
+
+                <div id="search-panel">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="form-group">
+                                    <label for="search-input">Enter hospital or pharmacy name or an address</label>
+                                    <input id="search-input" type="text" class="form-control" placeholder="Type hospital or pharmacy name">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-4">
+                                <div class="form-group">
+                                    <label>Health Service Delivery Indicators</label>
+                                    <br />
+                                    <select id="service-delivery-indicators" title="Choose an indicator..." class="selectpicker form-control" data-selected-text-format="count" data-actions-box="true">
+                                        <option selected>Essential Medicines</option>
+                                        <optgroup label="Human Resources for Health">
+                                            <option disabled>Medical providers</option>
+                                            <option disabled>Nurses</option>
+                                            <option disabled>Laboratory Technicians</option>
+                                            <option disabled>Radiology Technicians</option>
+                                            <option disabled>Counsellors</option>
+                                        </optgroup>
+                                        <optgroup label="Equipment">
+                                            <option disabled>Equipment</option>
+                                        </optgroup>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-xs-4">
+                                <div class="form-group">
+                                    <label>Select Health Service</label>
+                                    <br />
+                                    <select id="select-medicine" title="Choose a medicine..." class="selectpicker form-control" multiple data-selected-text-format="count" data-actions-box="true">
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-xs-4">
+                                <div class="form-group">
+                                    <label>Price</label>
+                                    <br />
+                                    <input id="min" class="form-control slider-limit" disabled />
+                                    <input id="max" class="form-control slider-limit pull-right" disabled />
+                                </div>
+                                <div id="slider"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="map-canvas"></div>
+
+                <div id="timeline">
+                    <div class="time-members">
+                        <div class="scroll-content">
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!--Modal-->
+    <div class="modal fade" tabindex="-1" role="dialog" id="modal-dialog-holder">
+        <div class="modal-dialog" role="document">
+        </div>
+    </div>
+    <!--/Modal-->
+
+    <script src="deps/jquery-2.1.3.min.js"></script>
+    <script src="deps/jquery-ui.min.js" type="text/javascript"></script>
+    <script src="deps/lodash.min.js"></script>
+    <script src="deps/bootstrap.min.js"></script>
+
+    <script src="deps/globalize.js"></script>
+
+    <script src="//maps.googleapis.com/maps/api/js?v=3.exp&libraries=visualization,drawing,geometry"></script>
+
+    <script src="deps/jquery.tmpl.js"></script>
+    <script src="//yale.knoema.com/app-script?version=2.0" type="text/javascript" ></script>
+    <script src="//yale.knoema.com/geoplayground/2.0/sdk.min.js"></script>
+
+    <script src="deps/malihu-custom-scrollbar-plugin-3.1.3/jquery.mCustomScrollbar.concat.min.js"></script>
+    <script src="deps/bootstrap-select.min.js"></script>
+
+    <script src="dataDescriptors.js"></script>
+    <script src="weeks2016.js"></script>
+    <script src="App.js"></script>
+
+</body>
+</html>
