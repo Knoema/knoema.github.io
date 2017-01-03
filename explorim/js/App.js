@@ -692,10 +692,9 @@ App.prototype.populateSidebar2 = function(regionId, layerData) {
 
         if ($table1) {
             $sideBarContent.append($table1);
-            $sideBarContent.append('<br />');
         }
 
-        $sideBarContent.append($('<h4>Projets Actuels</h4>'));
+        $sideBarContent.append($('<h5>Projets Actuels</h5>'));
 
         $sideBarContent.append($table2);
 
