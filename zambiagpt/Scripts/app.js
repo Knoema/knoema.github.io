@@ -689,7 +689,7 @@ var Infrastructure;
 
 				html += '<div class="img-block">';
 				html += '<img src="./img/nophoto.png" />';
-				html += '<div class="data-block s"><img src="./img/status/' + statusIcons[status] + '.png"/><div><label>Statut:</label><br />' + (status == null ? '' : status) + '</div></div>';
+				html += '<div class="data-block s"><img src="./img/status/' + statusIcons[status] + '.png"/><div><label>Status:</label><br />' + (status == null ? '' : status) + '</div></div>';
 				html += '</div>';
 
 				html += '<div class="data-block">';
