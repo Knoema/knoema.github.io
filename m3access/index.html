@@ -89,7 +89,7 @@
             text-decoration: none;
             padding: 10px 50px;
             font-size: 1.5em;
-            margin: 0 auto 30px auto;
+            margin: 10px auto 30px auto;
             display: block;
             color: white;
             width: 150px;
@@ -103,7 +103,7 @@
         .member-login {
             text-decoration: none;
             color: #325085;
-            font-size: 1.1em;
+            font-size: 1.05em;
         }
         .member-login:hover {
             color: #213b5e;
@@ -113,21 +113,32 @@
             background:rgba(255,255,255,0.9);
             top: 50%;
             left: 50%;
-            width: 800px;
+            width: 920px;
             height: 400px;
             padding: 20px;
             position: absolute;
             /*margin: (-height/2 + padding) 0 0 (-width/2 + padding); */
-            margin: -220px 0 0 -420px;
+            margin: -220px 0 0 -460px;
             text-align: center;
         }
 
         .splash-screen p {
-            margin: 20px 0;
+            margin: 10px 0;
+            color: #325085;
         }
 
         .splash-screen h2 {
             color: #325085;
+            font-size: 2.3em;
+            font-weight: normal;
+        }
+
+        .splash-screen .logo {
+            width: 218px;
+            height: 36px;
+            display: inline-block;
+            background-size: contain;
+            background-image: url('./img/logo-m3access-x2.png');
         }
 
         .cells {
@@ -146,6 +157,13 @@
             background-size: contain;
             margin: 0 auto;
             margin-bottom: 20px;
+        }
+        .cell .title {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .cell .text {
+            font-size: 0.95em;
         }
         .measuring .icon {
             background-image: url('img/landing-images/icon-measuring.png');
@@ -174,7 +192,7 @@
         </nav>
         <div class="splash-screen">
 
-            <h2>M3Access - Uganda</h2>
+            <h2><span class="logo">&nbsp;</span> &ndash; Uganda:</h2>
 
             <p>
                 Measuring, Mapping and Monitoring Access to Health Services
@@ -183,19 +201,26 @@
             <div class="cells">
                 <div class="measuring cell">
                     <div class="icon"></div>
-                    <span>
+                    <div class="title">Measuring</div>
+                    <span class="text">
                         Incorporating near real-time health services data from multiple sources
                     </span>
                 </div>
 
                 <div class="mapping cell">
                     <div class="icon"></div>
-                    <span>Visualizing these data to support the deployment of limited resources by policymakers and health system planners</span>
+                    <div class="title">Mapping</div>
+                    <span class="text">
+                        Visualizing these data to support the deployment of limited resources by policymakers and health system planners
+                    </span>
                 </div>
 
                 <div class="monitoring cell">
                     <div class="icon"></div>
-                    <span>Monitoring changes in access over time to track successes and failures</span>
+                    <div class="title">Monitoring</div>
+                    <span class="text">
+                        Monitoring changes in access over time to track successes and failures
+                    </span>
                 </div>
             </div>
 
