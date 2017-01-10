@@ -1186,7 +1186,7 @@ p.value
 	font-size: 12pt;
 	color: #fff;
 	font-weight: bold;
-	background-color: #3172bb;
+	background-color: #179800;
 	padding: 10px 40px;
 	text-transform: uppercase;
 	margin-top: 50px;
@@ -1730,7 +1730,7 @@ h3
 
 	.map-tooltip .opp-button
 	{
-		background-color: #0e1c5b;
+		background-color: #179800;
 		text-transform: uppercase;
 		font-weight: bold;
 		padding: 8px 14px;
@@ -3242,6 +3242,7 @@ ul.subtopic-content
 		margin: 5px;
 		cursor: pointer;
 		position: relative;
+		width: 72px;
 	}
 
 		.icon-contianer .icon-item .cap
