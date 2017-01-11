@@ -13,7 +13,7 @@ body.landing
 	padding-top: 150px;
 }
 .logo-container {
-	width: 720px;
+	width: 740px;
 	margin: 0 auto 100px;
 }
 .logo-container .left-part {
@@ -38,7 +38,7 @@ img.v-line {
 	vertical-align: top;
 }
 .logo-container .right-title {
-	width: 300px;
+	width: 333px;
 	vertical-align: top;
 	margin: 10px 0 0 50px;
 }
@@ -158,7 +158,7 @@ body.loading > .ajax-loader {
     margin: 10px 20px 0 20px;
 }
 .main-menu .logo-hpp {
-	width: 100px;
+	width: 132px;
     float: left;
     margin: 10px 0 0 0;
 }
