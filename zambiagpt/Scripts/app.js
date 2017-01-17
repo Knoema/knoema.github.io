@@ -6,7 +6,7 @@ var Infrastructure;
 	var host = 'http://zambiagpt.knoema.com';
 
 	var projectsDataset = 'lrsnuag';
-	var objectsDataset = 'dhcdzof';
+	var objectsDataset = 'zytcrbd';
 
 	var projectData = [];
 	var projectColumns = [];
@@ -896,7 +896,7 @@ var Infrastructure;
 
 		Application.prototype.getObjectsNomProjectItems = function () {
 
-			var url = host + "/api/1.0/meta/dataset/dhcdzof/dimension/nom-projet?client_id=EZj54KGFo3rzIvnLczrElvAitEyU28DGw9R73tif&page_id=dhcdzof";
+			var url = host + "/api/1.0/meta/dataset/" + objectsDataset + "/dimension/nom-projet?client_id=EZj54KGFo3rzIvnLczrElvAitEyU28DGw9R73tif&page_id=" + objectsDataset;
 			return $.get(url);
 		};
 
