@@ -466,7 +466,7 @@ Application.prototype.loadLayer = function () {
                 Type: e.data.tooltip.Type,
                 Category: e.data.tooltip.Category,
                 Capacity: e.data.tooltip['Capacity (MW)'],
-                Status: e.data.tooltip['Status, Notes']
+                Status: e.data.tooltip['Status']
             };
 
             var $tooltipContent = $('#tmpl-tooltip').tmpl({
