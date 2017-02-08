@@ -17,7 +17,8 @@ function Application(options) {
     this.countries = []; //{ name: 'Algeria', regionId: 'DZ' }
     
     this.filterSettings = {
-        showCategories: ['Renewable', 'Non-renewable', 'Other'],
+    	showCategories: ['Renewable', 'Non-renewable', 'Other'],
+    	showStatus: ['Non operational', 'Operational', 'Planned', 'Under Construction', 'Construction'],
         showTypes: ['Coal', 'Fuel Oil', 'Gas', 'Hydro', 'Nuclear', 'Solar', 'Wind', 'Geothermal', 'Other'],
         capacity: {}
     };
@@ -330,15 +331,6 @@ Application.prototype.extendBoundsByGeometry = function (bounds, geometry) {
     }
 };
 
-/*
-options = {
-    title: '',
-    countryId: ''
-    region: '', //SADC, COMESA, ECOWAS, EAC, AMU, ECCAS, Africa
-    stations: '' //stations is used for selected area
-}
- */
-
 Application.prototype.updateOverview = function (options) {
 
     var self = this;
@@ -454,7 +446,7 @@ Application.prototype.loadLayer = function () {
 
                 $('#sidebar-holder').html($sideBarContent.html());
 
-                $('#type-filter, #category-filter').on('click', 'input', function(e) {
+                $('#type-filter, #category-filter, #status-filter').on('click', 'input', function(e) {
                     self.refreshFilterSettings();
                 });
 
@@ -516,6 +508,12 @@ Application.prototype.onBeforeDraw = function (event, callback) {
         return;
     }
 
+    var status = event.data.content.Status;
+    if ($.inArray(status, self.filterSettings.showStatus) == -1) {
+    	event.data.visible = false;
+    	return;
+    }
+
     if (self.filterSettings.capacity) {
         if (!event.data.content['Capacity (MW)']) {
             event.data.visible = false;
@@ -570,6 +568,13 @@ Application.prototype.refreshFilterSettings = function () {
         }
     });
     self.filterSettings.showCategories = newCategories;
+
+    var newStatus = [];
+    $('#status-filter').find('input:checked').each(function (i, item) {
+
+    	newStatus.push(item.value);
+    });
+    self.filterSettings.showStatus = newStatus;
 
     self.loadLayer();
 };
