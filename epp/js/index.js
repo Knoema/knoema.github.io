@@ -18,7 +18,7 @@ function Application(options) {
     
     this.filterSettings = {
     	showCategories: ['Renewable', 'Non-renewable', 'Other'],
-    	showStatus: ['Non operational', 'Operational', 'Planned', 'Under Construction', 'Construction'],
+    	showStatus: ['Non operational', 'Operational', 'Planned', 'Under Construction', 'Other'],
         showTypes: ['Coal', 'Fuel Oil', 'Gas', 'Hydro', 'Nuclear', 'Solar', 'Wind', 'Geothermal', 'Other'],
         capacity: {}
     };
