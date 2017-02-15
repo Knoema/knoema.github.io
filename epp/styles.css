@@ -221,10 +221,7 @@ ul.SideBar
 	{
 		list-style-type: none;
 		padding: 2px 0;
-		-webkit-user-select: none;
-		-moz-user-select: none;
-		-ms-user-select: none;
-		user-select: none;
+		cursor: pointer;
 	}
 
 		ul.SideBar li .checkbox
@@ -236,7 +233,6 @@ ul.SideBar
 	ul.SideBar span
 	{
 		padding: 5px 10px 4px 30px;
-		text-decoration: none;
 	}
 
 #sidebar-holder
@@ -259,18 +255,43 @@ ul.SideBar
 	overflow-y: auto;
 }
 
-	.layers-holder h5
-	{
-		font-weight: bold;
-		margin-bottom: 0;
-		margin: 10px 0;
+.layers-holder h5{
+	cursor: pointer;
+}
+	.layers-holder .group-checkbox {
+		display: inline-block;
+		background-image: url(img/01.png);
+		height: 12px;
+		width: 12px;
 	}
+	.layers-holder .group-checkbox.checked {
+		background-image: url(img/03.png);
+	}
+	.layers-holder .group-checkbox.incomplete {
+		background-image: url(img/02.png);
+	}
+	.layers-holder .checkbox {
+		display: inline-block;
+		background-image: url(img/01.png);
+		height: 12px;
+		width: 12px;
+		margin-left: 15px;
+	}
+	.layers-holder .checkbox.checked {
+		background-image: url(img/03.png);
+	}
+
+.layers-holder h5
+{
+	font-weight: bold;
+	margin-bottom: 0;
+	margin: 10px 0;
+}
 /* --- end sidebar -- */
 
 /* --- overview -- */
 #overview-holder
 {
-	//display: none;
 	position: absolute;
 	top: 50px;
 	bottom: 0;

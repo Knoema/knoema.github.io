@@ -141,78 +141,28 @@
     <script id="tmpl-side-bar" type="text/x-jQuery-tmpl">
         <div class="side-bar">
             <div class="layers-holder">
-
-                <h5>Energy Source</h5>
+				<h5><div class="group-checkbox checked" data-id="type-filter"></div> Energy Source</h5>
                 <ul class="SideBar" id="type-filter">
                     {{each sideBarItems}}
                         <li>
-                            <div class="checkbox">
-                                <label>
-                                    <input type="checkbox" value="" data-type-filter checked data-type="${name}"> <span class="icon ${className}" href="#">${name}</span>
-                                </label>
-                            </div>
+							<div class="checkbox checked" data-value="${name}"></div>
+                            <span class="icon ${className}">${name}</span>
                         </li>
                     {{/each}}
                 </ul>
 
-                <h5>Filter by Category</h5>
+				<h5><div class="group-checkbox checked" data-id="category-filter"></div> Filter by Category</h5>
                 <ul class="SideBar" id="category-filter">
-                        <li>
-                            <div class="checkbox">
-                                <label>
-                                    <input type="checkbox" value="" data-category-filter data-type="Renewable" checked> Renewable
-                                </label>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="checkbox">
-                                <label>
-                                    <input type="checkbox" value="" data-category-filter data-type="Non-renewable" checked> Non - Renewable
-                                </label>
-                            </div>
-                        </li>
+                        <li><div class="checkbox checked" data-value="Renewable"></div> Renewable</li>
+                        <li><div class="checkbox checked" data-value="Non-renewable"></div> Non - Renewable</li>
                 </ul>
 
-				<div class="form-group status">
-					<h5>Filter by Status</h5>
-					<ul class="SideBar" id="status-filter">
-						<li>
-							<div class="checkbox">
-								<label>
-									<input type="checkbox" value="Non operational" checked> Non operational
-								</label>
-							</div>
-						</li>
-						<li>
-							<div class="checkbox">
-								<label>
-									<input type="checkbox" value="Operational" checked> Operational
-								</label>
-							</div>
-						</li>
-						<li>
-							<div class="checkbox">
-								<label>
-									<input type="checkbox" value="Planned" checked> Planned
-								</label>
-							</div>
-						</li>
-						<li>
-							<div class="checkbox">
-								<label>
-									<input type="checkbox" value="Under Construction" checked> Under Construction
-								</label>
-							</div>
-						</li>
-						<li>
-							<div class="checkbox">
-								<label>
-									<input type="checkbox" value="Other" checked> Other
-								</label>
-							</div>
-						</li>
-					</ul>
-				</div>
+				<h5><div class="group-checkbox checked" data-id="status-filter"></div> Filter by Status</h5>
+				<ul class="SideBar" id="status-filter">
+					{{each(k, v) statusValues}}
+						<li><div class="checkbox checked" data-value="${v}"></div> ${v}</li>
+					{{/each}}
+				</ul>
 
                 <div class="form-group capacity">
                     <h5>Filter by Capacity</h5>
@@ -221,9 +171,7 @@
                     <div class="slider"></div>
                 </div>
 
-                <div class="form-group">
-                    <button class="area-profile-button">Filter by Area</button>
-                </div>
+				<button class="area-profile-button">Filter by Area</button>
             </div>
         </div>
     </script>

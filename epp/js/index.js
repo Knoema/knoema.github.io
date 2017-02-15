@@ -23,6 +23,8 @@ function Application(options) {
         capacity: {}
     };
 
+    this.statusValues = ['Non operational', 'Operational', 'Planned', 'Under Construction', 'Other'];
+
     this.sideBarLoaded = false;
 
     this.currentRegion = '';
@@ -441,13 +443,37 @@ Application.prototype.loadLayer = function () {
             if (!self.sideBarLoaded) {
 
                 var $sideBarContent = $('#tmpl-side-bar').tmpl({
-                    sideBarItems: self.energySources
+                	sideBarItems: self.energySources,
+                	statusValues: self.statusValues
                 });
 
                 $('#sidebar-holder').html($sideBarContent.html());
 
-                $('#type-filter, #category-filter, #status-filter').on('click', 'input', function(e) {
+                $('#type-filter, #category-filter, #status-filter').on('click', 'li', function () {
+
+                	var checkbox = $(this).find('.checkbox');
+                	if (checkbox.hasClass('checked'))
+                		checkbox.removeClass('checked');
+                	else
+                		checkbox.addClass('checked');
+
+                	self.setGroupCheckboxStatus($(this).parent().prop('id'));
                     self.refreshFilterSettings();
+                });
+
+                $('h5').on('click', function () {
+                	var id = $(this).find('.group-checkbox').data('id');
+
+                	if ($(this).find('.group-checkbox').hasClass('checked'))
+                		$('#' + id).find('.checkbox').removeClass('checked');
+                	else
+                		$('#' + id).find('.checkbox').each(function (i, item) {
+                			if (!$(item).hasClass('checked'))
+                				$(item).addClass('checked');
+                		});
+
+                	self.setGroupCheckboxStatus(id);
+                	self.refreshFilterSettings();
                 });
 
                 self.initCapacityFilter();
@@ -548,31 +574,34 @@ Application.prototype.onBeforeDraw = function (event, callback) {
     callback(event.data);
 };
 
+Application.prototype.setGroupCheckboxStatus = function (id) {
+	var checkedItems = $('#' + id).find('.checkbox.checked').length;
+	var allItems = $('#' + id).find('.checkbox').length;
+
+	$('[data-id=' + id + ']')
+		.removeClass()
+		.addClass('group-checkbox')
+		.addClass(checkedItems == 0 ? '' : (checkedItems == allItems ? 'checked' : 'incomplete'));
+};
+
 Application.prototype.refreshFilterSettings = function () {
     var self = this;
 
     var newTypes = [];
-    $('#type-filter').find('[data-type-filter]').each(function() {
-        var $elem = $(this);
-        if ($elem.is(':checked')) {
-            newTypes.push($elem.data('type'));
-        }
+    $('#type-filter').find('.checkbox.checked').each(function() {
+    	newTypes.push($(this).data('value'));
     });
     self.filterSettings.showTypes = newTypes;
 
     var newCategories = [];
-    $('#category-filter').find('[data-category-filter]').each(function() {
-        var $elem = $(this);
-        if ($elem.is(':checked')) {
-            newCategories.push($elem.data('type'));
-        }
+    $('#category-filter').find('.checkbox.checked').each(function () {
+    	newCategories.push($(this).data('value'));
     });
     self.filterSettings.showCategories = newCategories;
 
     var newStatus = [];
-    $('#status-filter').find('input:checked').each(function (i, item) {
-
-    	newStatus.push(item.value);
+    $('#status-filter').find('.checkbox.checked').each(function () {
+    	newStatus.push($(this).data('value'));
     });
     self.filterSettings.showStatus = newStatus;
 
