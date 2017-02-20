@@ -1,0 +1,56 @@
+﻿<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>Oman Government Projects Tracker</title>
+    <link rel='stylesheet' type='text/css' href='https://fonts.googleapis.com/css?family=Ubuntu'>
+	<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="app.css"/>	
+</head>
+<body class="landing">
+
+	<div class="wrapper">
+		<div class="menu">
+			<div class="logo-container">
+				<img id="logo-title" src="./img/logo-start-x2.png" />
+			</div>
+			<div class="item s1" data-link="overview">
+				<img src="./img/ico-start-01-x2.png"/>
+				<div class="title">Country<br/>Overview</div>
+			</div>
+			<div class="item s1" data-link="portfolio">
+				<img src="./img/ico-start-02-x2.png" />
+				<div class="title">Projects<br />Portfolio</div>
+			</div>
+			<div class="item s1" data-link="reformsTracker">
+				<img src="./img/ico-start-03-x2.png"/>
+				<div class="title">Reform<br/>Tracker</div>
+			</div>
+			<div class="item s2" data-link="sectorMonitor">
+				<img src="./img/ico-start-04-x2.png"/>
+				<div class="title">Main Indicators<br />Monitoring</div>
+			</div>
+			<!--<div class="item s1" data-link="globalStanding">
+				<img src="./img/ico-start-05-x2.png"/>
+				<div class="title">Global<br/>Standing</div>
+			</div>
+			<div class="item s2" data-link="sdg">
+				<img src="./img/ico-start-06-x2.png"/>
+				<div class="title">Monitoring Sustainable<br/>Development Goals</div>
+			</div>-->
+		</div>
+	</div>
+
+	<script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
+	<script>
+		(function () {
+			$('.menu .item').on('click', function () {
+
+				window.location = './' + $(this).data('link') + '.html';
+			});
+		})();
+	</script>
+
+</body>
+</html>

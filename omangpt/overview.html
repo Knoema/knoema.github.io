@@ -1,0 +1,916 @@
+﻿<!DOCTYPE html>
+
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<title>Oman Government Projects Tracker</title>
+	<link rel='stylesheet' type='text/css' href='https://fonts.googleapis.com/css?family=Ubuntu'>
+	<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.7.3/css/bootstrap-select.min.css" />
+	<link rel="stylesheet" type="text/css" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+	<link rel="stylesheet" type="text/css" href="app.css" />
+</head>
+<body class="loading">
+
+	<form id="export-form" action="http://knoema.com/api/1.0/utils/export?client_id=EZj54KGFo3rzIvnLczrElvAitEyU28DGw9R73tif" method="POST">
+		<input type="hidden" name="content" value="" />
+		<input type="hidden" name="fileName" value="" />
+		<input type="hidden" name="landscape" value="FALSE" />
+	</form>
+
+	<div class="ajax-loader"></div>
+
+	<div class="main-menu">
+		<a href="index.html">
+			<img src="./img/logo-x2.png" class="logo-title" />
+		</a>
+		<ul class="items">
+			<li class="active">
+				<a href="overview.html" class="s2" title="Country Overview">
+					<img src="./img/icons-banner-01-x2.png">
+					Country Overview
+				</a>
+			</li><!--
+		--><li>
+				<a href="portfolio.html" class="s1" title="Projects Portfolio">
+					<img src="./img/icons-banner-02-x2.png">
+				</a>
+			</li><!--
+		--><li>
+				<a href="reformsTracker.html" class="s1" title="Reforms Tracker">
+					<img src="./img/icons-banner-03-x2.png">
+				</a>
+			</li><!--
+		--><li>
+				<a href="sectorMonitor.html" class="s1" title="Main Indicators Monitoring">
+					<img src="./img/icons-banner-04-x2.png">
+				</a>
+			</li><!--
+		--><!--<li>
+				<a href="globalStanding.html" class="s1" title="Global Standing">
+					<img src="./img/icons-banner-05-x2.png">
+				</a>
+			</li>--><!--
+		--><!--<li>
+				<a href="sdg.html" class="s1" title="Monitoring Sustainable Development Goals">
+					<img src="./img/icons-banner-06-x2.png">
+				</a>
+			</li>--><!--
+		--></ul>
+	</div>
+
+	<div class="tab-content">
+		<!-- COUNTRY OVERVIEW -->
+		<div id="overview" class="tab-pane active">
+			<form id="overviewFilter" class="filter-form">
+				<h2>Section:</h2>
+				<label><input type="checkbox" name="pse" value="1" />Economic and Social Developments</label>
+				<label><input type="checkbox" name="pse" value="2" />Infrastructure</label>
+				<label><input type="checkbox" name="pse" value="3" />Human Development</label>
+				<label><input type="checkbox" name="pse" value="4" />Growth Sectors</label>
+				<label><input type="checkbox" name="pse" value="5" />Support Sectors</label>
+				<label><input type="checkbox" name="pse" value="6" />Regional Development</label>
+				<label><input type="checkbox" name="pse" value="7" />Monitoring and Evaluation Institutional Arrangement</label>
+
+				<h2>The 22 NDP Goals:</h2>
+				<select class="form-control input-sm ppp-projects-container" id="ppp-projects" multiple title="Nothing selected">
+					<option value="SNDP1">NDP1    Macroeconomic Policies and Structural Reforms</option>
+					<option value="SNDP2">NDP2    Cross-cutting Issues</option>
+					<option value="SNDP3">NDP3    Financing</option>
+					<option value="SNDP4">NDP4    Transport</option>
+					<option value="SNDP5">NDP5    Energy</option>
+					<option value="SNDP6">NDP6    Housing</option>
+					<option value="SNDP7">NDP7    Health</option>
+					<option value="SNDP8">NDP8    Education and Skills Development</option>
+					<option value="SNDP9">NDP9    Water and Sanitation</option>
+					<option value="SNDP10">NDP10  Child, Youth and Sports Development</option>
+					<option value="SNDP11">NDP11  Agriculture, Livestock And Fisheries</option>
+					<option value="SNDP12">NDP12  Mining</option>
+					<option value="SNDP13">NDP13  Tourism</option>
+					<option value="SNDP14">NDP14  Manufacturing</option>
+					<option value="SNDP15">NDP15  Commerce and Trade</option>
+					<option value="SNDP16">NDP16  Science, Technology and Innovation</option>
+					<option value="SNDP17">NDP17  Information and Communications Technology</option>
+					<option value="SNDP18">NDP18  Natural Resources</option>
+					<option value="SNDP19">NDP19  Local Government and Decentralisation</option>
+					<option value="SNDP20">NDP20  Social Protection</option>
+					<option value="SNDP21">NDP21  Regional Development</option>
+					<option value="SNDP22">NDP22  Implementation, Monitoring and Evaluation Institutional Arrangement</option>
+				</select>
+				<button id="ppp-select-button">Select</button>
+
+				<!--<h2>PTIP "Three years investment plan"</h2>
+				<label><input type="checkbox" name="plan" value="yes" />Yes</label>
+				<label><input type="checkbox" name="plan" value="no" />No</label>-->
+
+				<h2>Budget total</h2>
+				<input type="text" name="budget-min" id="budget-min" class="budget-input" value="0" />
+				<input type="text" name="budget-max" id="budget-max" class="budget-input" value="100" />
+				<div id="slider-range"></div>
+
+				<h2>Spending gap</h2>
+				<label><input type="checkbox" name="ecart" value="10" /><img src="./img/bullet-circle-green.png" />10% or less of total</label>
+				<label><input type="checkbox" name="ecart" value="25" /><img src="./img/bullet-circle-yellow.png" />25% to 11%</label>
+				<label><input type="checkbox" name="ecart" value="100" /><img src="./img/bullet-circle-red.png" />exceeds 25%</label>
+
+				<h2>Status</h2>
+				<label class="status"><input type="checkbox" name="status" value="Announced" /><img src="./img/status/02.png" class="status" />Announced</label>
+				<label class="status"><input type="checkbox" name="status" value="In progress" /><img src="./img/status/04.png" class="status" />In progress</label>
+				<label class="status"><input type="checkbox" name="status" value="Complete" /><img src="./img/status/07.png" class="status" />Completed</label>
+				<label class="status"><input type="checkbox" name="status" value="Operational" /><img src="./img/status/05.png" class="status" />Operational</label>
+
+				<h2>Global indicators</h2>
+				<label><input type="radio" name="layer" value="none" checked> None</label>
+				<label><input type="radio" name="layer" value="total-population" /> Total Population</label>
+				<label><input type="radio" name="layer" value="mid-years-estimate" /> Mid Years Estimate</label>
+				<label><input type="radio" name="layer" value="general-census" /> General Census of Population</label>
+				<label><input type="radio" name="layer" value="population-density" /> Population Density (Capita per km2)</label>
+				<label><input type="radio" name="layer" value="moh-hospital-units" /> No.of  MOH Hospital  Units</label>
+				<label><input type="radio" name="layer" value="moh-extended-health-centre-units" /> No.of  MOH Extended Health  Centre Units</label>
+				<label><input type="radio" name="layer" value="clinics-units-under-private-sector" /> No. of Clinics Units Under  Private Sector</label>
+				<label><input type="radio" name="layer" value="beds" /> Number of Beds</label>
+				<label><input type="radio" name="layer" value="outpatient-visits" /> No.of Outpatient Visits</label>
+				<label><input type="radio" name="layer" value="new-visits-to-birth-spacing-clinics" /> No.of New visits to Birth Spacing Clinics</label>
+
+				<!--<label><input type="radio" name="layer" value="population" /> Oman Total Population</label>
+				<label><input type="radio" name="layer" value="houshold" /> Number of Households</label>
+				<label><input type="radio" name="layer" value="population-water" /> Proportion of population using an improved drinking water source</label>
+				<label><input type="radio" name="layer" value="population-employed" /> Employed Population</label>
+				<label><input type="radio" name="layer" value="population-active" /> Economically Active Population</label>-->
+
+				<div id="legend" style="display: none;">
+					<img src="img/legend.png">
+					<div id="legend_low">Low</div>
+					<div id="legend_high">High</div>
+				</div>
+			</form>
+			<div id="map-canvas" class="filtered-content"></div>
+
+			<div id="regions-control" class="form-inline">
+				<div class="input-group">
+					<span class="input-group-addon">Regions:</span>
+					<select id="regions">
+						<option value="-1">Select a region</option>
+						<option value="OM">Oman</option>
+						<option value="OM-MA">Muscat</option>
+						<option value="OM-ZU">Dhofar</option>
+						<option value="OM-MU">Musandam</option>
+						<option value="OM-BU">Al Buraymi</option>
+						<option value="OM-DA">Ad Dakhliyah</option>
+						<option value="OM-BA-NO">Al Batinah North</option>
+						<option value="OM-BA-SO">Al Batinah South</option>
+						<option value="OM-SH-NO">Ash Sharqiyah North</option>
+						<option value="OM-SH-SO">Ash Sharqiyah South</option>
+						<option value="OM-ZA">Adh Dhahirah</option>
+						<option value="OM-WU">Al Wusta</option>
+					</select>
+				</div>
+
+				<!--div class="input-group" style="background-color: transparent;">
+					<button class="region-profile-button">Voir le profil régional</button>
+				</div-->
+			</div>
+
+			<div id="pdf-frame-popup" class="passport-popup">
+				<div class="passport__close"></div>
+				<div class="passport__content"></div>
+			</div>
+
+			<div id="senegal-frame-popup" class="passport-popup">
+				<div class="passport__close"></div>
+				<div class="passport__content"></div>
+			</div>
+
+			<div id="new-project-passport" class="passport-popup-new">
+				<div class="passport__tabs__new">
+					<ul>
+						<li class="passport-tab active" data-name="passport">Passport</li>
+						<li class="passport-tab" data-name="budgetting">Budget</li>
+					</ul>
+				</div>
+				<div class="passport__close__new"><img src="./img/icon_close_hover.png" />Close</div>
+				<div class="passport__content__new"></div>
+				<div class="passport__content__new__b"></div>
+			</div>
+
+			<div id="ppp-frame-popup" class="passport2-popup">
+				<div class="inner-content">
+					<div class="passport__title" style="text-transform: uppercase;">THE 22 NDP PROJECTS</div>
+					<div class="passport__close"></div>
+					<div class="passport2__content">
+						<div class="ppp-item" data-value="SNDP1">
+							<div class="pp-title"><div class="checkbox"></div>NDP1<div class="pp-icon i01"></div></div>
+							<div class="pp-name">Macroeconomic Policies and Structural Reforms</div>
+						</div>
+						<div class="ppp-item" data-value="SNDP2">
+							<div class="pp-title"><div class="checkbox"></div>NDP2<div class="pp-icon i02"></div></div>
+							<div class="pp-name">Cross-cutting Issues</div>
+						</div>
+						<div class="ppp-item" data-value="SNDP3">
+							<div class="pp-title"><div class="checkbox"></div>NDP3<div class="pp-icon i03"></div></div>
+							<div class="pp-name">Financing</div>
+						</div>
+						<div class="ppp-item" data-value="SNDP4">
+							<div class="pp-title"><div class="checkbox"></div>NDP4<div class="pp-icon i04"></div></div>
+							<div class="pp-name">Transport</div>
+						</div>
+						<div class="ppp-item" data-value="SNDP5">
+							<div class="pp-title"><div class="checkbox"></div>NDP5<div class="pp-icon i05"></div></div>
+							<div class="pp-name">Energy</div>
+						</div>
+						<div class="ppp-item" data-value="SNDP6">
+							<div class="pp-title"><div class="checkbox"></div>NDP6<div class="pp-icon i06"></div></div>
+							<div class="pp-name">Housing</div>
+						</div>
+						<div class="ppp-item" data-value="SNDP7">
+							<div class="pp-title"><div class="checkbox"></div>NDP7<div class="pp-icon i07"></div></div>
+							<div class="pp-name">Health</div>
+						</div>
+						<div class="ppp-item" data-value="SNDP8">
+							<div class="pp-title"><div class="checkbox"></div>NDP8<div class="pp-icon i08"></div></div>
+							<div class="pp-name">Education and Skills Development</div>
+						</div>
+						<div class="ppp-item" data-value="SNDP9">
+							<div class="pp-title"><div class="checkbox"></div>NDP9<div class="pp-icon i09"></div></div>
+							<div class="pp-name">Water and Sanitation</div>
+						</div>
+						<div class="ppp-item" data-value="SNDP10">
+							<div class="pp-title"><div class="checkbox"></div>NDP10<div class="pp-icon i10"></div></div>
+							<div class="pp-name">Child, Youth and Sports Development</div>
+						</div>
+						<div class="ppp-item" data-value="SNDP11">
+							<div class="pp-title"><div class="checkbox"></div>NDP11<div class="pp-icon i11"></div></div>
+							<div class="pp-name">Agriculture, Livestock And Fisheries</div>
+						</div>
+						<div class="ppp-item" data-value="SNDP12">
+							<div class="pp-title"><div class="checkbox"></div>NDP12<div class="pp-icon i12"></div></div>
+							<div class="pp-name">Mining</div>
+						</div>
+						<div class="ppp-item" data-value="SNDP13">
+							<div class="pp-title"><div class="checkbox"></div>NDP13<div class="pp-icon i13"></div></div>
+							<div class="pp-name">Tourism</div>
+						</div>
+						<div class="ppp-item" data-value="SNDP14">
+							<div class="pp-title"><div class="checkbox"></div>NDP14<div class="pp-icon i14"></div></div>
+							<div class="pp-name">Manufacturing</div>
+						</div>
+						<div class="ppp-item" data-value="SNDP15">
+							<div class="pp-title"><div class="checkbox"></div>NDP15<div class="pp-icon i15"></div></div>
+							<div class="pp-name">Commerce and Trade</div>
+						</div>
+						<div class="ppp-item" data-value="SNDP16">
+							<div class="pp-title"><div class="checkbox"></div>NDP16<div class="pp-icon i16"></div></div>
+							<div class="pp-name">Science, Technology and Innovation</div>
+						</div>
+						<div class="ppp-item" data-value="SNDP17">
+							<div class="pp-title"><div class="checkbox"></div>NDP17<div class="pp-icon i17"></div></div>
+							<div class="pp-name">Information and Communications Technology</div>
+						</div>
+						<div class="ppp-item" data-value="SNDP18">
+							<div class="pp-title"><div class="checkbox"></div>NDP18<div class="pp-icon i18"></div></div>
+							<div class="pp-name">Natural Resources</div>
+						</div>
+						<div class="ppp-item" data-value="SNDP19">
+							<div class="pp-title"><div class="checkbox"></div>NDP19<div class="pp-icon i19"></div></div>
+							<div class="pp-name">Local Government and Decentralisation</div>
+						</div>
+						<div class="ppp-item" data-value="SNDP20">
+							<div class="pp-title"><div class="checkbox"></div>NDP20<div class="pp-icon i20"></div></div>
+							<div class="pp-name">Social Protection</div>
+						</div>
+						<div class="ppp-item" data-value="SNDP21">
+							<div class="pp-title"><div class="checkbox"></div>NDP21<div class="pp-icon i21"></div></div>
+							<div class="pp-name">Regional Development</div>
+						</div>
+						<div class="ppp-item" data-value="SNDP22">
+							<div class="pp-title"><div class="checkbox"></div>NDP22<div class="pp-icon i22"></div></div>
+							<div class="pp-name">Implementation, Monitoring and Evaluation Institutional Arrangement</div>
+						</div>
+					</div>
+					<div class="passport__buttons">
+						<button class="pp-btn" id="pp-select-all">Select all</button>
+						<button class="pp-btn" id="pp-deselect-all">Deselect all</button>
+						<button class="pp-btn" id="pp-ok">Ok</button>
+						<button class="pp-btn" id="pp-cancel">Cancel</button>
+					</div>
+				</div>
+			</div>
+
+			<div id="right-hand-panel">
+				<div class="panel-title">
+					<h2 class="region-name"></h2>
+					<img src="./img/ico-pdf.png" class="export" />
+					<div class="close-button"><img src="./img/icon-close.png" />Close</div>
+				</div>
+
+				<div id="region-data"></div>
+
+				<div class="table-container clicable">
+					<table>
+						<thead>
+							<tr>
+								<th colspan="3">Project</th>
+								<th>Status</th>
+							</tr>
+						</thead>
+						<tbody></tbody>
+					</table>
+				</div>
+			</div>
+
+			<div id="senegal-right-hand-panel">
+				<div class="panel-title">
+					<h2 class="region-name">Oman</h2>
+					<img src="./img/ico-pdf.png" class="export" />
+					<div class="close-button"><img src="./img/icon-close.png" />Close</div>
+				</div>
+
+				<table class="global-indicators">
+					<tbody></tbody>
+				</table>
+
+				<table class="realisation-indicators">
+					<thead>
+						<tr>
+							<th colspan="3">Global Indicators</th>
+						</tr>
+						<tr>
+							<th>Indicator Name</th>
+							<th>Value in 2015</th>
+							<th>Percentage change</th>
+						</tr>
+					</thead>
+					<tbody></tbody>
+				</table>
+
+				<h3>Select a region for a detailed list of projects.</h3>
+
+				<table class="axe-summ">
+					<thead>
+						<tr>
+							<th colspan="2">Number of projects by the NDP sections</th>
+						</tr>
+					</thead>
+					<tbody></tbody>
+				</table>
+
+				<table class="pp-summ" style="width: 100%">
+					<thead>
+						<tr>
+							<th colspan="4">Number of projects and total budget</th>
+						</tr>
+						<tr>
+							<th colspan="2">NDP</th>
+							<th>Projects</th>
+							<th>Budget</th>
+						</tr>
+					</thead>
+					<tbody></tbody>
+				</table>
+
+				<table class="reforms-groups">
+					<thead>
+						<tr>
+							<th>Summary of Reforms</th>
+						</tr>
+					</thead>
+					<tbody></tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+
+	<div id="timeline">
+		<div class="play-btn"></div>
+		<div class="year-item" data-year="2014">
+			<p class="year">2014</p>
+		</div>
+		<div class="year-item" data-year="2015">
+			<p class="year">2015</p>
+		</div>
+		<div class="year-item active" data-year="2016">
+			<p class="year">2016</p>
+		</div>
+		<div class="v-arrow left"></div>
+	</div>
+
+	<div id="footer">
+		<!--<span>Office of the President</span>-->
+	</div>
+
+	<script id="new-object-passport" type="text/x-handlebars-template">
+		<div class="top-panel">
+			<table style="width: 100%">
+				<tbody>
+					<tr>
+						<td style="width: 20%"><p class="title">Project Name</p><p class="value">{{=it.name}}</p></td>
+						<td style="width: 20%"><p class="title">Coordinates</p><p class="value">{{=it.locale}}</p></td>
+						<td style="width: 30%"><p class="title">The Strategy Vision code</p><p class="value">{{=it.axe}}</p></td>
+						<td style="width: 30%"><p class="title">Sixth National Development Plan</p><p class="value">{{=it.number}}</p></td>
+					</tr>
+					<tr>
+						<td class="status"><img src="./img/status/{{=it.statusIcon}}-x2.png" /><div><p class="title">Status</p><p class="value">{{=it.status}}</p></div></td>
+						<td><p class="title">Total Planned Budget</p><p class="value">{{=it.budget}}</p></td>
+						<td><p class="title">NDP Target</p><p class="value">{{=it.sour}}</p></td>
+						<td><p class="title">Code NDP</p><p class="value">{{=it.ptip}}</p></td>
+
+						<td></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<div class="g map-panel">
+			<img src="./img/map.jpg" />
+		</div>
+		<div class="g carousel-panel">
+			<img src="./img/photos.jpg" />
+		</div>
+		<div class="g chart-panel">
+			<img src="./img/score.png" />
+			<div class="status-button">Status report</div>
+		</div>
+	</script>
+
+	<script id="new-object-budgetting" type="text/x-handlebars-template">
+		<img src="./img/budgeting-x2.png" width="1421" />
+	</script>
+
+	<script id="region-profile" type="text/x-handlebars-template">
+
+		<table style="width: 100%">
+			<thead>
+				<tr>
+					<th colspan="3">Population and Demography</th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>Total Population</td>
+					<td>{{=it.indicatorData["Total Population"]}}</td>
+				</tr>
+				<tr>
+					<td>Population Density (Capita per km2)</td>
+					<td>{{=it.indicatorData["Population Density (Capita per km2)"]}}</td>
+				</tr>
+
+				<!--<tr>
+					<td>Total Population</td>
+					<td>{{=it.indicatorData["Total Population"]}}</td>
+				</tr>
+				<tr>
+					<td>Population Density (Capita per km2)</td>
+					<td>{{=it.indicatorData["Population Density (Capita per km2)"]}}</td>
+				</tr>
+				<tr>
+					<td>Live Births</td>
+					<td>{{=it.indicatorData["Live Births"]}}</td>
+				</tr>
+				<tr>
+					<td>Natural Growth Rate (%)</td>
+					<td>{{=it.indicatorData["Natural Growth Rate (%)"]}}</td>
+				</tr>-->
+			</tbody>
+		</table>
+
+		<table style="width: 100%">
+			<thead>
+				<tr>
+					<th colspan="3">Communication</th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>Post Offices</td>
+					<td>{{=it.indicatorData["Post Offices"]}}</td>
+				</tr>
+				<tr>
+					<td>Mail Distributing Agencies</td>
+					<td>{{=it.indicatorData["Mail Distributing  Agencies"]}}</td>
+				</tr>
+				<tr>
+					<td>Letter Depositing Boxes</td>
+					<td>{{=it.indicatorData["Letter Depositing Boxes"]}}</td>
+				</tr>
+				<tr>
+					<td>Private & Mobile Post Boxes</td>
+					<td>{{=it.indicatorData["Private &Mobile Post Boxes"]}}</td>
+				</tr>
+				<!--<tr>
+					<td>Post Offices</td>
+					<td>{{=it.indicatorData["Post Offices"]}}</td>
+				</tr>
+				<tr>
+					<td>Mail Distributing Agencies</td>
+					<td>{{=it.indicatorData["Mail Distributing  Agencies"]}}</td>
+				</tr>
+				<tr>
+					<td>Letter Depositing Boxes</td>
+					<td>{{=it.indicatorData["Letter Depositing Boxes"]}}</td>
+				</tr>
+				<tr>
+					<td>Private & Mobile Post Boxes</td>
+					<td>{{=it.indicatorData["Private &Mobile Post Boxes"]}}</td>
+				</tr>
+				<tr>
+					<td>Total Fixed Telephones Lines</td>
+					<td>{{=it.indicatorData["Total Fixed Telephones Lines"]}}</td>
+				</tr>-->
+			</tbody>
+		</table>
+
+	</script>
+
+	<script id="senegal-profile" type="text/x-handlebars-template">
+		<tr><td colspan="3">Macroeconomic Framework</td></tr>
+		<tr><td>Total GDP at Market Prices		</td><td>{{=it["Total GDP at Market Prices"			]}}</td><td>%</td></tr>
+		<tr><td>Growth rates					</td><td>{{=it["Growth rates"						]}}</td><td>%</td></tr>
+		<tr><td>External Debit					</td><td>{{=it["External Debit"						]}}</td><td>%</td></tr>
+		<tr><td>Domestic Debit					</td><td>{{=it["Domestic Debit"						]}}</td><td>%</td></tr>
+		<tr><td>Commercial Banks, number		</td><td>{{=it["Commercial Banks, number"			]}}</td><td>%</td></tr>
+		<tr><td>Crop production, Cotton			</td><td>{{=it["Crop production, Cotton"			]}}</td><td>%</td></tr>
+		<tr><td>Crop production, Rice			</td><td>{{=it["Crop production, Rice"				]}}</td><td>%</td></tr>
+		<tr><td>Crop production, Maize			</td><td>{{=it["Crop production, Maize"				]}}</td><td>%</td></tr>
+		<tr><td>Crop production, Irish Potatoes	</td><td>{{=it["Crop production, Irish Potatoes"	]}}</td><td>%</td></tr>
+	</script>
+
+	<script id="senegal-region-profile" type="text/x-handlebars-template">
+
+	</script>
+
+	<script id="pdf-frame" type="text/x-handlebars-template">
+		<iframe src="./pdf/{{=it.name}}.pdf" width="100%" height="100%" />
+	</script>
+
+	<script id="area-profile-template" type="text/x-handlebars-template">
+		<div class="area-profile">
+			<h4>Area Profile</h4>
+			<div class="row">
+				<div class="col-md-6">
+					<div><label>Region:</label> {{=it.region}}</div>
+					<div><label>Village(s):</label> {{=it.village}}</div>
+				</div>
+				<div class="col-md-6">
+					<div><label>Population:</label> {{=it.population}}</div>
+					<div><label>Incidence of poverty:</label> {{=it.incidence}}</div>
+				</div>
+			</div>
+			<hr>
+			<div><label>Access to electricity:</label> {{=it.access}}</div>
+			<div><label>Electricity consumption (average per capita):</label> {{=it.consumption}}</div>
+			<div><label>Cost of electricity:</label> {{=it.cost}}</div>
+			<div><label>National grid connection:</label> {{=it.grid}}</div>
+			<div><label>Primary electricity source:</label> {{=it.source}}</div>
+			<br />
+			<div><label>Nearest hospital:</label> {{=it.hospital}}</div>
+			<div><label>Number of local shools:</label> {{=it.schools}}</div>
+			<br />
+			<div>
+				<label>Ongoing investment project:</label>
+				<ul>
+					<li>Name: {{=it.investmentProject.name}}</li>
+					<li>Location: {{=it.investmentProject.location}}</li>
+					<li>End date: {{=it.investmentProject.endDate}}</li>
+				</ul>
+			</div>
+			<div><label>Investor:</label> {{=it.investor}}</div>
+		</div>
+	</script>
+
+	<script id="export-content" type="text/x-handlebars-template">
+		<html>
+		<head>
+			<title>Export</title>
+			<link rel='stylesheet' type='text/css' href='https://fonts.googleapis.com/css?family=Roboto'>
+			<link rel='stylesheet' type='text/css' href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,700'>
+		</head>
+		<body>
+			<style>
+				#right-hand-panel, #senegal-right-hand-panel
+				{
+					width: 650px;
+					background-color: #f4ece1;
+					padding: 5px 10px;
+					font-family: 'Roboto', sans-serif;
+					font-size: 12px;
+				}
+				.panel-title img.export
+				{
+					margin: 0 0 5px 10px;
+				}
+				.panel-title .region-name
+				{
+					display: inline-block;
+				}
+				#senegal-right-hand-panel .panel-title .region-name
+				{
+					font-size: 15pt;
+				}
+				#senegal-right-hand-panel .panel-title img.export
+				{
+					float: right;
+				}
+				.panel-title .close-button
+				{
+					color: #472001;
+					margin: 20px 10px 0 0;
+					float: right;
+					cursor: pointer;
+				}
+				.panel-title .close-button img
+				{
+					margin-right: 5px;
+					vertical-align: baseline;
+				}
+				.panel-title
+				{
+					border-bottom: 1px solid #9b7c4f;
+				}
+				#right-hand-panel table,
+				#senegal-right-hand-panel table
+				{
+					width: 100%;
+					margin-top: 20px;
+				}
+				#right-hand-panel table thead tr th,
+				#senegal-right-hand-panel table thead tr th
+				{
+					padding: 2px 5px;
+					font-size: 10pt;
+					text-align: left;
+				}
+				#right-hand-panel table tbody tr td,
+				#senegal-right-hand-panel table tbody tr td
+				{
+					padding: 7px 5px;
+					vertical-align: top;
+				}
+				img.pp-image-small
+				{
+					height: 30px;
+					margin-top: -7px;
+				}
+				#right-hand-panel table tbody tr:nth-child(2n),
+				#senegal-right-hand-panel table tbody tr:nth-child(2n)
+				{
+					background-color: #f3f0ec;
+				}
+				#right-hand-panel table tbody tr,
+				#senegal-right-hand-panel table tbody tr
+				{
+					cursor: pointer;
+				}
+				#right-hand-panel h2
+				{
+					font-size: 15pt;
+					font-weight: bold;
+				}
+				#senegal-right-hand-panel h3
+				{
+					font-size: 10pt;
+					font-weight: bold;
+				}
+
+
+
+				.passport__content__new, .passport__content__new__b
+				{
+					padding: 20px;
+					background-color: #f3ece1;
+					border: solid 1px #9b7c4f;
+					width: 1200px;
+				}
+				.passport2__content {
+					position: absolute;
+					left: 10px;
+					right: 10px;
+					top: 50px;
+					bottom: 40px;
+					padding: 20px;
+					background-color: #f4ece1;
+					overflow: auto;
+				}
+				.passport__buttons
+				{
+					position: absolute;
+					left: 10px;
+					right: 10px;
+					bottom: 10px;
+					padding: 20px;
+					background-color: #f4ece1;
+					overflow: auto;
+				}
+				.passport__title
+				{
+					position: absolute;
+					top: 10px;
+					left: 10px;
+					right: 10px;
+					padding: 20px;
+					background-color: #f4ece1;
+					overflow: auto;
+				}
+				.passport__content hr {
+					margin: 20px 0;
+					border-top: 1px solid #e6e6e6;
+				}
+				.passport__close {
+					position: absolute;
+					right: 30px;
+					top: 30px;
+					width: 40px;
+					height: 40px;
+					background: #fff url(./img/icon_close.png) no-repeat center center;
+					cursor: pointer;
+					z-index: 1;
+					border-radius: 50%;
+					box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.15);
+				}
+				.passport__close__new {
+					padding: 10px 20px;
+					position: absolute;
+					right: 10px;
+					top: 10px;
+					width: 110px;
+					height: 40px;
+					background-color: #f4ece1;
+					cursor: pointer;
+					z-index: 5;
+
+					font-size: 11pt;
+					text-transform: uppercase;
+					color: #472001;
+				}
+				.passport__close__new img
+				{
+					margin-right: 10px;
+					margin-top: -3px;
+				}
+				.passport__close:hover {
+					background-image: url(./img/icon_close_hover.png);
+				}
+				.passport__map {
+					width: 240px;
+					height: 240px;
+					background-color: #e6e6e6;
+				}
+				.passport__title {
+					font-family: 'Roboto', sans-serif;
+					font-size: 18px;
+					font-weight: bold;
+					margin-bottom: 15px;
+				}
+				.passport__fields {
+				}
+				.passport__fields__column {
+					float: left;
+					width: 33%;
+				}
+				.passport__field__title {
+					display: block;
+					font-family: 'Roboto', sans-serif;
+					font-size: 11px;
+					font-weight: normal;
+					text-transform: uppercase;
+					color: #646e82;
+				}
+				.passport__field__value {
+					font-family: 'Roboto', sans-serif;
+					font-size: 16px;
+				}
+				.passport__images {
+					float: left;
+					width: 240px;
+				}
+				.passport__image {
+					width: 100%;
+				}
+				.passport__image_mini {
+					float: left;
+					width: 57px;
+					height: 57px;
+					margin: 4px 0 0 4px;
+					font-family: 'Roboto', sans-serif;
+					font-size: 12px;
+					color: #fff !important;
+					background-color: #0078c8;
+					text-decoration: none;
+					line-height: 1.2em;
+				}
+				.passport__image_mini.first {
+					margin-left: 0;
+				}
+				.passport__chart_left {
+					margin-left: 20px;
+					float: left;
+				}
+				.passport__chart_right {
+					float: left;
+				}
+
+				.top-panel
+				{
+					margin-top: 30px;
+				}
+				.top-panel table tr td
+				{
+					padding: 3px 10px;
+					vertical-align: top;
+				}
+				.top-panel table tr td.status img
+				{
+					display: inline-block;
+					vertical-align: top;
+					margin-right: 20px;
+				}
+				.top-panel table tr td.status div
+				{
+					display: inline-block;
+				}
+				p.title
+				{
+					font-family: 'Roboto', sans-serif;
+					font-size: 12pt;
+					color: #9b7c4f;
+					font-weight: bold;
+				}
+				p.value
+				{
+					font-family: 'Roboto', sans-serif;
+					font-size: 16pt;
+					color: #000;
+					margin-bottom: 20px;
+				}
+				.g
+				{
+					display: inline-block;
+				}
+				.map-panel
+				{
+					margin: 30px 20px 20px 0;
+				}
+				.carousel-panel
+				{
+					margin: 30px 200px 0 0;
+				}
+				.chart-panel
+				{
+					vertical-align: top;
+					margin: 30px 0;
+					padding-top: 30px;
+				}
+				.chart-panel img
+				{
+					vertical-align:top;
+				}
+				.status-button
+				{
+					font-family: 'Roboto', sans-serif;
+					font-size: 12pt;
+					color: #f4ece1;
+					font-weight: bold;
+					background-color: #472001;
+					padding: 10px 40px;
+					text-transform: uppercase;
+					margin-top: 50px;
+					margin-left: -20px;
+				}
+
+				.area-profile {
+					font-size: 12px;
+					width: 380px;
+					overflow: hidden;
+					line-height: 1.1em;
+				}
+				.area-profile ul > li {
+					line-height: 1.5em;
+				}
+				.area-profile hr {
+					margin: 17px 0;
+				}
+				.area-profile h4 {
+					font-size: 17px;
+				}
+				.area-profile label {
+					color: rgb(38, 174, 208);
+				}
+			</style>
+			{{=it.content}}
+		</body>
+	</html>
+</script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+<script src="bootstrap/js/bootstrap.min.js"></script>
+<script src="bootstrap/js/bootstrap-select.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDW5mB0UdDWi7EdcoH3eE-IunlT7nISRuA&v=3.exp&libraries=visualization,drawing"></script>
+<script src="http://code.jquery.com/ui/1.11.4/jquery-ui.min.js" type="text/javascript"></script>
+<script src="http://code.highcharts.com/highcharts.js"></script>
+<script src="https://omangpt.knoema.com/app-script?version=2.0" type="text/javascript"></script>
+<script src="Scripts/marketwithlabel.js"></script>
+<script src="Scripts/doT.min.js"></script>
+<script src="Scripts/auth.js"></script>
+<script src="Scripts/app.js"></script>
+</body>
+</html>
