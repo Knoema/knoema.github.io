@@ -3268,7 +3268,7 @@ ul.subtopic-content
 	{
 		color: #fff;
 		display: inline-block;
-		background-color: #139401;
+		background-color: #00a89c; /*#139401;*/
 		text-align: center;
 		padding: 15px 10px 0 10px;
 		margin: 5px;
@@ -3297,7 +3297,7 @@ ul.subtopic-content
 
 		.icon-contianer .icon-item.active
 		{
-			background-color: #117400;;
+			background-color: #0c827a; /*#117400;*/
 		}
 
 .content-container
@@ -3344,7 +3344,7 @@ ul.subtopic-content
 
 			.content-container ul li.active
 			{
-				background-color: #139401;
+				background-color: #00a89c; /*#139401;*/
 				color: #fff;
 			}
 /*portfolio: end*/
