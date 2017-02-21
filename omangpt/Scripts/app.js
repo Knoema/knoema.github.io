@@ -426,6 +426,10 @@ var Infrastructure;
 				}
 
 				var selectedPPName = $('#ppp-projects').val() || [];
+				for (var i = 0; i < selectedPPName.length; i++) {
+					if (selectedPPName[i] == 'SNDP0')
+						selectedPPName[i] = '';
+				}
 
 				_this.loop(_this.projectData, _this.projectColumns, _this.year, function (i, item, columns) {
 
@@ -505,22 +509,6 @@ var Infrastructure;
 									case 'new-visits-to-birth-spacing-clinics':
 										dataLoader = _this.getHealthDataLayer(1000650);
 										break;
-
-									//case 'population':
-									//	dataLoader = _this.getDataLayerPopulation();
-									//	break;
-									//case 'houshold':
-									//	dataLoader = _this.getDataLayerHoushold();
-									//	break;
-									//case 'population-water':
-									//	dataLoader = _this.getDataLayerPopulationWater();
-									//	break;
-									//case 'population-employed':
-									//	dataLoader = _this.getDataLayerPopulationEmployed();
-									//	break;
-									//case 'population-active':
-									//	dataLoader = _this.getDataLayerPopulationActive();
-									//	break;
 								}
 
 								if (_this.layerData[layerName]) {
@@ -678,7 +666,7 @@ var Infrastructure;
 			$('#ppp-projects option').each(function (index, item) {
 				var pp = $(this).val();
 
-				if ($.inArray(pp, presented) == -1)
+				if ($.inArray(pp, presented) == -1 && pp != 'SNDP0')
 					$(this).prop('disabled', true);
 			});
 			$('#ppp-projects').selectpicker('refresh');
@@ -686,7 +674,7 @@ var Infrastructure;
 			$('#ppp-frame-popup .ppp-item').each(function (index, item) {
 				var pp = $(this).data('value');
 
-				if ($.inArray(pp, presented) == -1)
+				if ($.inArray(pp, presented) == -1 && pp != 'SNDP0')
 					$(this).prepend($('<div>', { 'class': 'cap' }));
 			});
 		};
@@ -966,29 +954,6 @@ var Infrastructure;
 				"MeasureAggregations": null,
 				"Calendar": 0
 			});
-
-			//return $.post('http://knoema.com/api/1.0/data/details?client_id=EZj54KGFo3rzIvnLczrElvAitEyU28DGw9R73tif', {
-			//	"Header": [{
-			//		"DimensionId": "Time",
-			//		"Members": [],
-			//		"DimensionName": "Time",
-			//		"UiMode": "last",
-			//		"UiParams": "3"
-			//	}],
-			//	"Stub": [{
-			//		"DimensionId": "indicator",
-			//		"Members": ["1000050", "1000100", "1000150", "1000200", "1000250", "1000300"],
-			//		"DimensionName": "Indicator"
-			//	}],
-			//	"Filter": [{
-			//		"DimensionId": "region",
-			//		"Members": [], //all regions
-			//		"DimensionName": "Region"
-			//	}],
-			//	"Frequencies": ["A"],
-			//	"Calendar": 0,
-			//	"Dataset": "tjdgmge"
-			//});
 		};
 		Application.prototype.getRegionsData2 = function () {
 
@@ -1040,29 +1005,6 @@ var Infrastructure;
 				"MeasureAggregations": null,
 				"Calendar": 0
 			});
-
-			//return $.post('http://knoema.com/api/1.0/data/details?client_id=EZj54KGFo3rzIvnLczrElvAitEyU28DGw9R73tif', {
-			//	"Header": [{
-			//		"DimensionId": "Time",
-			//		"Members": [],
-			//		"DimensionName": "Time",
-			//		"UiMode": "last",
-			//		"UiParams": "3"
-			//	}],
-			//	"Stub": [{
-			//		"DimensionId": "indicator",
-			//		"Members": ["1000280", "1000390", "1000400", "1000410", "1000430", "1000420", "1000040"],
-			//		"DimensionName": "Indicator"
-			//	}],
-			//	"Filter": [{
-			//		"DimensionId": "region",
-			//		"Members": ["1000010", "1000080", "1000190", "1000270", "1000350", "1000400", "1000460", "1000550", "1000630", "1000750", "1000000"],
-			//		"DimensionName": "Region"
-			//	}],
-			//	"Frequencies": ["A"],
-			//	"Calendar": 0,
-			//	"Dataset": "btzorfe"
-			//});
 		};
 
 		Application.prototype.getObjectsNomProjectItems = function () {
@@ -1129,51 +1071,6 @@ var Infrastructure;
 				"Frequencies": ["A"], "Dataset": "inifoj", "Segments": null, "MeasureAggregations": null, "Calendar": 0
 			});
 		};
-
-		//Application.prototype.getDataLayerPopulation = function () {
-
-		//	return $.post('https://knoema.com' + '/api/1.0/data/details?client_id=EZj54KGFo3rzIvnLczrElvAitEyU28DGw9R73tif&page_id=SERSSD2011', {
-		//		"Header": [{ "DimensionId": "indicator", "Members": ["1000390"], "DimensionName": "Indicator", "DatasetId": "btzorfe", "Order": 0 }],
-		//		"Stub": [{ "DimensionId": "region", "Members": ["1000010", "1000080", "1000190", "1000270", "1000350", "1000400", "1000460", "1000550", "1000630", "1000750"], "DimensionName": "Region", "DatasetId": "btzorfe", "Order": 0, "IsGeo": true }],
-		//		"Filter": [{ "DimensionId": "Time", "Members": ["2010"], "DimensionName": "Time", "DatasetId": "btzorfe", "Order": 0, "UiMode": "individualMembers" }],
-		//		"Frequencies": ["A"], "Dataset": "btzorfe", "Segments": null, "MeasureAggregations": null, "Calendar": 0, "RegionIdsRequired": true, "RegionDimensionId": "region"
-		//	});
-		//};
-
-		//Application.prototype.getDataLayerPopulationWater = function () {
-
-		//	return $.post('https://knoema.com' + '/api/1.0/data/details?client_id=EZj54KGFo3rzIvnLczrElvAitEyU28DGw9R73tif&page_id=SERSSD2011', {
-		//		"Header": [{ "DimensionId": "indicator", "Members": ["1000040"], "DimensionName": "Indicator", "DatasetId": "btzorfe", "Order": 0 }],
-		//		"Stub": [{ "DimensionId": "region", "Members": ["1000010", "1000080", "1000190", "1000270", "1000350", "1000400", "1000460", "1000550", "1000630", "1000750"], "DimensionName": "Region", "DatasetId": "btzorfe", "Order": 0, "IsGeo": true }],
-		//		"Filter": [{ "DimensionId": "Time", "Members": ["2010"], "DimensionName": "Time", "DatasetId": "btzorfe", "Order": 0, "UiMode": "individualMembers" }],
-		//		"Frequencies": ["A"], "Dataset": "btzorfe", "Segments": null, "MeasureAggregations": null, "Calendar": 0, "RegionIdsRequired": true, "RegionDimensionId": "region"
-		//	});
-		//};
-		//Application.prototype.getDataLayerPopulationEmployed = function () {
-
-		//	return $.post('https://knoema.com' + '/api/1.0/data/details?client_id=EZj54KGFo3rzIvnLczrElvAitEyU28DGw9R73tif&page_id=SERSSD2011', {
-		//		"Header": [{ "DimensionId": "indicator", "Members": ["1000150"], "DimensionName": "Indicator" }],
-		//		"Stub": [{ "DimensionId": "region", "Members": ["1000010", "1000020", "1000030", "1000040", "1000050", "1000060", "1000070", "1000080", "1000090", "1000100"], "DimensionName": "Region" }],
-		//		"Filter": [{ "DimensionId": "Time", "Members": ["2012"], "DimensionName": "Time", "UiMode": "individualMembers" }], "Frequencies": ["A"], "Calendar": 0, "Dataset": "tjdgmge"
-		//	});
-		//};
-		//Application.prototype.getDataLayerPopulationActive = function () {
-
-		//	return $.post('https://knoema.com' + '/api/1.0/data/details?client_id=EZj54KGFo3rzIvnLczrElvAitEyU28DGw9R73tif&page_id=SERSSD2011', {
-		//		"Header": [{ "DimensionId": "indicator", "Members": ["1000050"], "DimensionName": "Indicator" }],
-		//		"Stub": [{ "DimensionId": "region", "Members": ["1000010", "1000020", "1000030", "1000040", "1000050", "1000060", "1000070", "1000080", "1000090", "1000100"], "DimensionName": "Region" }],
-		//		"Filter": [{ "DimensionId": "Time", "Members": ["2012"], "DimensionName": "Time", "UiMode": "individualMembers" }], "Frequencies": ["A"], "Calendar": 0, "Dataset": "tjdgmge"
-		//	});
-		//};
-		//Application.prototype.getDataLayerHoushold = function () {
-
-		//	return $.post('https://knoema.com' + '/api/1.0/data/details?client_id=EZj54KGFo3rzIvnLczrElvAitEyU28DGw9R73tif&page_id=SEIPC2006', {
-		//		"Header": [{ "DimensionId": "indicator", "Members": ["1000280"], "DimensionName": "Indicator", "DatasetId": "btzorfe", "Order": 0 }],
-		//		"Stub": [{ "DimensionId": "region", "Members": ["1000010", "1000080", "1000190", "1000270", "1000350", "1000400", "1000460", "1000550", "1000630", "1000750"], "DimensionName": "Region", "DatasetId": "btzorfe", "Order": 0, "IsGeo": true }],
-		//		"Filter": [{ "DimensionId": "Time", "Members": ["2010"], "DimensionName": "Time", "DatasetId": "btzorfe", "Order": 0, "UiMode": "individualMembers" }],
-		//		"Frequencies": ["A"], "Dataset": "btzorfe", "Segments": null, "MeasureAggregations": null, "Calendar": 0, "RegionIdsRequired": true, "RegionDimensionId": "region"
-		//	});
-		//};
 
 		Application.prototype.displayLayerData = function (layer, data, needToNorm) {
 
@@ -1326,35 +1223,6 @@ var Infrastructure;
 				"Calendar": 0,
 				"Dataset": "ghrumrc"
 			});
-
-			//return $.post('http://omangpt.knoema.com//api/1.0/data/pivot?client_id=EZj54KGFo3rzIvnLczrElvAitEyU28DGw9R73tif&page_id=PSEIDS2016V1', {
-			//	"Header": [
-			//	   {
-			//	   	"DimensionId": "Time",
-			//	   	"Members": [],
-			//	   	"DimensionName": "Time",
-			//	   	"UiMode": "last",
-			//	   	"UiParams": "3"
-			//	   }
-			//	],
-			//	"Stub": [
-			//	   {
-			//	   	"DimensionId": "indicator",
-			//	   	"Members": [
-			//		   { "Name": "Total GDP at Market Prices", "Key": "-1001930", "Formula": ["1001930"] },
-			//		   { "Name": "Growth Rates", "Key": "-1001940", "Formula": ["1001940"] }
-			//	   	],
-			//	   	"DimensionName": "Indicator"
-			//	   }
-			//	],
-			//	"Filter": [],
-			//	"Frequencies": [
-			//	   "A",
-			//	   "Q"
-			//	],
-			//	"Calendar": 0,
-			//	"Dataset": "yceopwb"
-			//}, 'json');
 		};
 
 		Application.prototype.getDataZambiaIndicators2 = function () {
@@ -1410,26 +1278,6 @@ var Infrastructure;
 				"MeasureAggregations": null,
 				"Calendar": 0
 			});
-
-			//return $.post('http://omangpt.knoema.com//api/1.0/data/pivot?client_id=EZj54KGFo3rzIvnLczrElvAitEyU28DGw9R73tif&page_id=PSEIDS2016V1', {
-			//	"Header": [{
-			//		"DimensionId": "Time", "Members": [], "DimensionName": "Time", "UiMode": "last", "UiParams": "3"
-			//	}],
-			//	"Stub": [{
-			//		"DimensionId": "indicator",
-			//		"Members": [
-			//			{ "Name": "External Debit", "Key": "-1001510", "Formula": ["1001510"] },
-			//			{ "Name": "Domestic Debit", "Key": "-1001500", "Formula": ["1001500"] },
-			//			{ "Name": "Commercial Banks, number", "Key": "-1000130", "Formula": ["1000130"] },
-			//			{ "Name": "Crop production, Cotton", "Key": "-1000980", "Formula": ["1000980"] },
-			//			{ "Name": "Crop production, Rice", "Key": "-1001040", "Formula": ["1001040"] },
-			//			{ "Name": "Crop production, Maize", "Key": "-1001000", "Formula": ["1001000"] },
-			//			{ "Name": "Crop production, Irish Potatoes", "Key": "-1000990", "Formula": ["1000990"] }],
-			//		"DimensionName": "Indicator"
-			//	}],
-			//	"Filter": [],
-			//	"Frequencies": ["A", "Q", "M"], "Calendar": 0, "Dataset": "inumplc"
-			//});
 		};
 
 		Application.prototype.getProjectByRegion = function (regionId) {

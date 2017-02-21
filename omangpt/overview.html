@@ -74,6 +74,7 @@
 
 				<h2>The 22 NDP Goals:</h2>
 				<select class="form-control input-sm ppp-projects-container" id="ppp-projects" multiple title="Nothing selected">
+					<option value="SNDP0">Undefined</option>
 					<option value="SNDP1">NDP1    Macroeconomic Policies and Structural Reforms</option>
 					<option value="SNDP2">NDP2    Cross-cutting Issues</option>
 					<option value="SNDP3">NDP3    Financing</option>
@@ -131,12 +132,6 @@
 				<label><input type="radio" name="layer" value="beds" /> Number of Beds</label>
 				<label><input type="radio" name="layer" value="outpatient-visits" /> No.of Outpatient Visits</label>
 				<label><input type="radio" name="layer" value="new-visits-to-birth-spacing-clinics" /> No.of New visits to Birth Spacing Clinics</label>
-
-				<!--<label><input type="radio" name="layer" value="population" /> Oman Total Population</label>
-				<label><input type="radio" name="layer" value="houshold" /> Number of Households</label>
-				<label><input type="radio" name="layer" value="population-water" /> Proportion of population using an improved drinking water source</label>
-				<label><input type="radio" name="layer" value="population-employed" /> Employed Population</label>
-				<label><input type="radio" name="layer" value="population-active" /> Economically Active Population</label>-->
 
 				<div id="legend" style="display: none;">
 					<img src="img/legend.png">
@@ -198,6 +193,10 @@
 					<div class="passport__title" style="text-transform: uppercase;">THE 22 NDP PROJECTS</div>
 					<div class="passport__close"></div>
 					<div class="passport2__content">
+						<div class="ppp-item" data-value="SNDP0">
+							<div class="pp-title"><div class="checkbox"></div>Undefined<div class="pp-icon i00"></div></div>
+							<div class="pp-name"></div>
+						</div>
 						<div class="ppp-item" data-value="SNDP1">
 							<div class="pp-title"><div class="checkbox"></div>NDP1<div class="pp-icon i01"></div></div>
 							<div class="pp-name">Macroeconomic Policies and Structural Reforms</div>
@@ -432,7 +431,7 @@
 	</script>
 
 	<script id="new-object-budgetting" type="text/x-handlebars-template">
-		<img src="./img/budgeting-x2.png" width="1421" />
+		<img src="./img/budgeting.png" width="1421" />
 	</script>
 
 	<script id="region-profile" type="text/x-handlebars-template">
@@ -453,23 +452,6 @@
 					<td>Population Density (Capita per km2)</td>
 					<td>{{=it.indicatorData["Population Density (Capita per km2)"]}}</td>
 				</tr>
-
-				<!--<tr>
-					<td>Total Population</td>
-					<td>{{=it.indicatorData["Total Population"]}}</td>
-				</tr>
-				<tr>
-					<td>Population Density (Capita per km2)</td>
-					<td>{{=it.indicatorData["Population Density (Capita per km2)"]}}</td>
-				</tr>
-				<tr>
-					<td>Live Births</td>
-					<td>{{=it.indicatorData["Live Births"]}}</td>
-				</tr>
-				<tr>
-					<td>Natural Growth Rate (%)</td>
-					<td>{{=it.indicatorData["Natural Growth Rate (%)"]}}</td>
-				</tr>-->
 			</tbody>
 		</table>
 
@@ -497,26 +479,6 @@
 					<td>Private & Mobile Post Boxes</td>
 					<td>{{=it.indicatorData["Private &Mobile Post Boxes"]}}</td>
 				</tr>
-				<!--<tr>
-					<td>Post Offices</td>
-					<td>{{=it.indicatorData["Post Offices"]}}</td>
-				</tr>
-				<tr>
-					<td>Mail Distributing Agencies</td>
-					<td>{{=it.indicatorData["Mail Distributing  Agencies"]}}</td>
-				</tr>
-				<tr>
-					<td>Letter Depositing Boxes</td>
-					<td>{{=it.indicatorData["Letter Depositing Boxes"]}}</td>
-				</tr>
-				<tr>
-					<td>Private & Mobile Post Boxes</td>
-					<td>{{=it.indicatorData["Private &Mobile Post Boxes"]}}</td>
-				</tr>
-				<tr>
-					<td>Total Fixed Telephones Lines</td>
-					<td>{{=it.indicatorData["Total Fixed Telephones Lines"]}}</td>
-				</tr>-->
 			</tbody>
 		</table>
 

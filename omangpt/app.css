@@ -436,8 +436,8 @@ body.loading > .ajax-loader
 .ppp-item .pp-icon
 {
 	float: right;
-	height: 30px;
-	width: 30px;
+	height: 40px;
+	width: 40px;
 	display: inline-block;
 }
 
@@ -946,7 +946,7 @@ body.loading > .ajax-loader
 			text-transform: uppercase;
 			cursor: pointer;
 			background-color: #dcdcdc;
-			color: #3172bb;
+			color: #3373d5;
 		}
 
 			.passport__tabs__new ul li:first-child
@@ -1046,7 +1046,7 @@ body.loading > .ajax-loader
 	z-index: 5;
 	font-size: 11pt;
 	text-transform: uppercase;
-	color: #3172bb;
+	color: #3373b5;
 }
 
 	.passport__close__new img
@@ -2013,9 +2013,14 @@ ul.subtopic-content
 			-moz-box-shadow: 0px -2px 3px 0px rgba(0,0,0,0.3);
 			box-shadow: 0px -2px 3px 0px rgba(0,0,0,0.3);
 			width: 280px;
-			background-color: #fff;
+			background-color: #f5f5f5;
 			cursor: pointer;
 		}
+
+			.reforms-container ul li:hover
+			{
+				background-color: #fff;
+			}
 
 			.reforms-container ul li img
 			{
@@ -2041,6 +2046,7 @@ ul.subtopic-content
 			{
 				border-bottom: none;
 				padding-bottom: 35px;
+				background-color: #fff;
 			}
 
 .reforms-table
@@ -2076,7 +2082,7 @@ ul.subtopic-content
 
 		.reforms-table .left-part table thead
 		{
-			background-color: #3172bb;
+			background-color: #b5e2df;
 			text-transform: uppercase;
 		}
 
@@ -2099,7 +2105,7 @@ ul.subtopic-content
 
 			.reforms-table .left-part table tbody tr.active
 			{
-				background-color: #ffd83a !important;
+				background-color: #f7f9df !important;
 			}
 
 			.reforms-table .left-part table tbody tr td img.arrow-icon
@@ -2114,7 +2120,7 @@ ul.subtopic-content
 
 	.reforms-table .right-part .title
 	{
-		background-color: #3172bb;
+		background-color: #b5e2df;
 		text-transform: uppercase;
 		font-size: 12pt;
 		padding: 3px 10px;
@@ -2139,14 +2145,14 @@ ul.subtopic-content
 
 		.reforms-table .right-part table.period
 		{
-			border: 1px solid #3172bb;
+			border: 1px solid #b5e2df;
 			font-size: 12pt;
 		}
 
 			.reforms-table .right-part table.period thead th
 			{
 				border: 0;
-				background-color: #3172bb;
+				background-color: #b5e2df;
 				color: #fff;
 				font-weight: bold;
 				width: 25%;
@@ -2191,12 +2197,12 @@ ul.subtopic-content
 
 				.reforms-table .right-part table.period tbody tr td.non
 				{
-					background-color: #FEF8D8;
+					background-color: #e5f6f5; /*#FEF8D8;*/
 				}
 
 				.reforms-table .right-part table.period tbody tr:nth-child(2n) td.non
 				{
-					background-color: #F9F0D1;
+					background-color: #ddeeed; /*#F9F0D1;*/
 				}
 
 				.reforms-table .right-part table.period tbody tr:nth-child(2n)
@@ -3286,7 +3292,7 @@ ul.subtopic-content
 		.icon-contianer .icon-item img
 		{
 			display: block;
-			margin: 9px;
+			margin: 5px 9px;
 		}
 
 		.icon-contianer .icon-item.active
