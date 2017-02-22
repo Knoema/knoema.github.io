@@ -87,7 +87,7 @@ img.v-line
 	{
 		display: inline-block;
 		cursor: pointer;
-		padding: 20px 15px;
+		padding: 20px 5px;
 		margin-top: 20px;
 	}
 
@@ -108,12 +108,12 @@ img.v-line
 
 		.menu .item.s1
 		{
-			width: 140px;
+			width: 150px;
 		}
 
 			.menu .item.s1 .title
 			{
-				width: 110px;
+				width: 140px;
 			}
 
 		.menu .item.s2
@@ -201,8 +201,8 @@ body.loading > .ajax-loader
 	.main-menu .logo-title
 	{
 		float: left;
-		height: 64px;
-    margin: 3px 0 0 20px;
+		height: 62px;
+		margin: 3px 0 0 20px;
 	}
 
 	.main-menu .items
@@ -696,7 +696,7 @@ body.loading > .ajax-loader
 	left: 0;
 	top: 70px;
 	right: 0;
-	bottom: 45px;
+	bottom: 2px; /*45px;*/
 }
 
 	.tab-content.target-profile
@@ -1527,6 +1527,7 @@ p.value
 
 #footer
 {
+	display: none;
 	position: absolute;
 	height: 45px;
 	background: #dddddd; /*#eaebee;*/
@@ -1605,9 +1606,20 @@ p.value
 		padding: 7px 5px;
 	}
 
+	#senegal-right-hand-panel table.realisation-indicators tbody tr td:nth-child(2),
+	#senegal-right-hand-panel table.realisation-indicators tbody tr td:nth-child(3),
+	#senegal-right-hand-panel table.axe-summ tbody tr td:nth-child(2),
+	#senegal-right-hand-panel table.pp-summ tbody tr td:nth-child(3),
+	#senegal-right-hand-panel table.pp-summ tbody tr td:nth-child(4),
+	#senegal-right-hand-panel table.reforms-groups tbody tr td:nth-child(2),
+	#right-hand-panel #region-data table tbody tr td:nth-child(2)
+	{
+		text-align: right;
+	}
+
 img.pp-image-small
 {
-	height: 16px;
+	height: 20px;
 }
 
 #right-hand-panel table tbody tr:nth-child(2n),
@@ -1646,7 +1658,7 @@ h3
 	position: absolute;
 	height: 45px;
 	background: #ebebeb;
-	bottom: 45px;
+	bottom: 2px; /*45px;*/
 	left: 320px;
 	right: 0;
 	box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.25);
@@ -3315,7 +3327,7 @@ ul.subtopic-content
 	.content-container .right-part
 	{
 		width: 940px;
-		height: 610px;
+		height: 830px;
 		margin-left: 90px;
 		display: inline-block;
 		vertical-align: top;

@@ -304,6 +304,8 @@
 
 						$($(item).find('td')[1]).text(data[index]);
 					});
+
+					break;
 				}
 			};
 

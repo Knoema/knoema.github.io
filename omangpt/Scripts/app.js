@@ -1467,7 +1467,7 @@ var Infrastructure;
 
 				var PPSortedData = [];
 				for (var i = 1; i <= 22; i++) {
-					var pp = 'NDP' + i;
+					var pp = 'SNDP' + i;
 
 					//if (!PPData[pp] && !budgetData[pp]) //force show all 22 NDPs
 					//	continue;
@@ -1483,7 +1483,7 @@ var Infrastructure;
 				for (var i = 0; i < PPSortedData.length; i++) {
 					ppTrs.push($('<tr>')
 						.append($('<td>').append($('<img src="./img/right-panel/' + PPSortedData[i][3] + '.png" class="pp-image-small">')))
-						.append($('<td>', { text: PPSortedData[i][0] }))
+						.append($('<td>', { text: PPSortedData[i][0].substring(1) }))
 						.append($('<td>', { text: PPSortedData[i][1] }))
 						.append($('<td>', { text: _this.formatNumberUS(PPSortedData[i][2]) }))
 					);
@@ -1581,14 +1581,14 @@ var Infrastructure;
 				for (var i = 0; i < projects.length; i++) {
 
 					var ppNumber = '00';
-					if (projects[i].pp.length == 4)
-						ppNumber = projects[i].pp.substr(2, 3);
-					else if (projects[i].pp.length == 3)
-						ppNumber = '0' + projects[i].pp.substr(2, 3);
+					if (projects[i].pp.length == 6)
+						ppNumber = projects[i].pp.substr(4, 6);
+					else if (projects[i].pp.length == 5)
+						ppNumber = '0' + projects[i].pp.substr(4, 5);
 
 					$trs.push($('<tr>', { 'data-name': projects[i].name })
-						.append($('<td>').append($('<img>', { src: './img/right-panel/icons-' + ppNumber + '.png', 'class': 'pp-image-small' })))
-						.append($('<td>', { text: projects[i].pp }))
+						.append($('<td>').append($('<img>', { src: './img/right-panel/' + ppNumber + '.png', 'class': 'pp-image-small' })))
+						.append($('<td>', { text: projects[i].pp.substring(1) }))
 						.append($('<td>', { text: projects[i].name }))
 						.append($('<td>', { text: projects[i].status }))
 					);
