@@ -16,7 +16,7 @@ body
 	/*index page*/
 	body.landing
 	{
-		background: url(./img/bg-start.png) no-repeat;
+		background: url(./img/bg-start.jpg) no-repeat;
 		background-size: 100%;
 		/*padding-top: 150px;*/
 		display: table
@@ -31,12 +31,13 @@ body
 
 .logo-container
 {
-	display: inline-block;
+	/*display: inline-block;
 	width: 200px;
-	height: 110px;
+	height: 110px;*/
 	/*margin: 0 auto 100px;*/
-	vertical-align: top;
-	margin: 45px 20px 0;
+	/*vertical-align: top;*/
+	/*margin: 45px 20px 0;*/
+	margin: 0 auto;
 }
 
 #logo
@@ -49,9 +50,10 @@ body
 
 #logo-title
 {
-	display: inline-block;
-	width: 200px;
-	height: 110px;
+	display: block;
+	width: 290px;
+	height: 195px;
+	margin: auto;
 }
 
 img.v-line
@@ -71,14 +73,14 @@ img.v-line
 {
 	/*display: table-cell;
 	vertical-align: middle;*/
-	margin: 0 auto;
+	margin: 80px auto 0;
 	font-size: 18px;
 	/*font-weight: bold;*/
 	/*color: #fff;*/
 	color: #00a89c;
 	text-align: center;
 	background-color: rgba(255,255,255,0.5);
-	width: 1400px;
+	/*width: 1400px;*/
 	height: 200px;
 	/*border-radius: 100px;*/
 }
@@ -201,8 +203,8 @@ body.loading > .ajax-loader
 	.main-menu .logo-title
 	{
 		float: left;
-		height: 62px;
-		margin: 3px 0 0 20px;
+		height: 55px;
+		margin: 8px 0 0 20px;
 	}
 
 	.main-menu .items
