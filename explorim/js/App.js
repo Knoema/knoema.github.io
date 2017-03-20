@@ -2,7 +2,7 @@ var access_token = '';
 
 var params = Knoema.Helpers.parseHashParams();
 if (params == null) {
-	Knoema.Helpers.getAccessToken('Ysyd9Tw', window.location, false, 'publish');
+	Knoema.Helpers.getAccessToken('cV03FzkMGB1YzQ', window.location, false, 'publish');
 }
 else {
 	if (typeof params["access_token"] !== 'undefined') {
