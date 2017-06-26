@@ -38,8 +38,8 @@ body
 #logo-title
 {
 	display: block;
-	width: 613px;
-	height: 124px;
+	width: 610px;
+	height: 122px;
 }
 
 img.v-line
@@ -185,7 +185,7 @@ body.loading > .ajax-loader
 	{
 		float: left;
 		height: 64px;
-    margin: 3px 0 0 20px;
+		margin: 3px 0 0 20px;
 	}
 
 	.main-menu .items

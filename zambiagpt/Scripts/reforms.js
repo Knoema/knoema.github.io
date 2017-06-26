@@ -304,6 +304,8 @@
 
 						$($(item).find('td')[1]).text(data[index]);
 					});
+
+					break;
 				}
 			};
 
@@ -324,12 +326,13 @@
 			var data = {
 				'Header': [],
 				'Stub': [],
-				'Filter': [{
-					'DimensionId': 'measure',
-					'DimensionName': 'Measure',
-					'DatasetId': projectsDataset,
-					'Members': ['5679690', '5679700', '5679710']
-				}],
+				'Filter': [],
+				//'Filter': [{
+				//	'DimensionId': 'measure',
+				//	'DimensionName': 'Measure',
+				//	'DatasetId': projectsDataset,
+				//	'Members': ['6144510', '6144520', '6144530']
+				//}],
 				'Frequencies': [],
 				'Dataset': projectsDataset,
 				'Segments': null,
