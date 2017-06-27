@@ -87,7 +87,8 @@
         };
 
         //http://knoema.com/cltckhb/tanzania-health-monitor
-        this.geoPlaygroundId = 'cltckhb';
+        //this.geoPlaygroundId = 'cltckhb';
+        this.geoPlaygroundId = 'hwnnaxg';
 
         this.layers = {};
         this.view = 'map';
