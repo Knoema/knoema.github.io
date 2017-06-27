@@ -88,7 +88,8 @@
 
         //http://knoema.com/cltckhb/tanzania-health-monitor
         //this.geoPlaygroundId = 'cltckhb';
-        this.geoPlaygroundId = 'hwnnaxg';
+        //this.geoPlaygroundId = 'hwnnaxg';
+        this.geoPlaygroundId = 'xexprg';
 
         this.layers = {};
         this.view = 'map';
@@ -98,12 +99,12 @@
 
         this.map = new google.maps.Map(document.getElementById('map-canvas'), {
             //Tanzania
-            // center: {lat: -6, lng: 35},
-            // zoom: 6,
+            center: {lat: -6, lng: 35},
+            zoom: 6,
 
             //proper center for demo
-            center: {lat: -3, lng: 33},
-            zoom: 9,
+            // center: {lat: -3, lng: 33},
+            // zoom: 9,
 
             streetViewControl: false,
             zoomControlOptions: {
@@ -199,7 +200,12 @@
             return;
         }
 
-        var dataTuple = _.find(self.byTime[self.activeTimelineMember], function(tuple) {return tuple.RegionId == regionId});
+        var dataTuple;
+
+        if (!_.isUndefined(self.activeTimelineMember) && !_.isNull(self.byTime)) {
+            dataTuple = _.find(self.byTime[self.activeTimelineMember], function(tuple) {return tuple.RegionId == regionId});
+        }
+
         var value = (_.isUndefined(dataTuple) || !_.isUndefined(dataTuple) && _.isNull(dataTuple.Value)) ? 'No data' : Globalize.format(dataTuple.Value);
 
         var $content = $.tmpl('infowindow-content-template.html', {
@@ -227,10 +233,15 @@
 
         self[self.geoJsonLayer].forEach(function(feature) {
             var regionId = feature.getId();
-            var currentRegionData = _.find(self.byTime[self.activeTimelineMember], function(tuple) {
-                return tuple.RegionId === regionId;
-            });
+
+            var currentRegionData;
+            if (!_.isUndefined(self.activeTimelineMember) && !_.isNull(self.byTime)) {
+                currentRegionData = _.find(self.byTime[self.activeTimelineMember], function(tuple) {
+                    return tuple.RegionId === regionId;
+                });
+            }
             var color = (_.isUndefined(currentRegionData) || !_.isUndefined(currentRegionData) && _.isNull(currentRegionData.Value)) ? self.noDataColor : self.getColor(currentRegionData.Value);
+
             self[self.geoJsonLayer].overrideStyle(feature, {
                 fillColor: color,
                 fillOpacity: 0.7
@@ -248,9 +259,11 @@
         var self = this;
         this.removeTimeline();
 
-        $('#timeline').off();
+        var $timeline = $('#timeline');
 
-        $('#timeline').on('click', '.timepoint', function(e) {
+        $timeline.off();
+
+        $timeline.on('click', '.timepoint', function(e) {
             self.infoWindow.close();
             self.activeTimelineMember =   $(e.target).data('time');
             $('#timeline').find('.active').removeClass('active');
@@ -258,7 +271,7 @@
             self.updateFeatures();
         });
 
-        $('#timeline').on('click', '.play-button', function(e) {
+        $timeline.on('click', '.play-button', function(e) {
             self.infoWindow.close();
             $('#timeline').find('.timepoint').each(function(i, element) {
 
@@ -276,11 +289,11 @@
 
         });
 
-        $('#timeline').append($.tmpl('timeline-template.html', {
+        $timeline.append($.tmpl('timeline-template.html', {
             timeMembers: timeMembers
         }));
 
-        $('#timeline').find('.scroll-content').mCustomScrollbar({
+        $timeline.find('.scroll-content').mCustomScrollbar({
             theme: "dark",
             axis:"x",
             advanced:{
@@ -288,7 +301,7 @@
             }
         });
 
-        $('#timeline').css({
+        $timeline.css({
             visibility: 'visible'
         });
 
@@ -306,18 +319,16 @@
         var minColor = self.getColor(min);
         var maxColor = self.getColor(max);
 
-        $('#color-legend').find('.min').html(Globalize.format(min));
-        $('#color-legend').find('.max').html(Globalize.format(max));
+        var $colorLegend = $('#color-legend');
 
-        $('#color-legend').find('.palette').css({
-            "background": 'linear-gradient(90deg, ' + minColor + ', ' + maxColor + ')'
-        });
-        $('#color-legend').show();
+        $colorLegend.find('.min').html(Globalize.format(min));
+        $colorLegend.find('.max').html(Globalize.format(max));
+        $colorLegend.find('.palette').css({ "background": 'linear-gradient(90deg, ' + minColor + ', ' + maxColor + ')' });
+        $colorLegend.show();
     };
 
     app.prototype.loadTimeSeries = function (selectedIndicator) {
         var self = this;
-
         if (selectedIndicator == null) {
 
             $('#region-switcher').hide();
@@ -367,12 +378,14 @@
 
                     self.addTimeline(timelineMembers);
 
-                    self.updateFeatures();
-
                 } else {
                     //console.log('%cNO DATA FOR ' + selectedIndicator, 'color:red;font-size:200%;');
                     self.hideLegend();
+                    self.removeTimeline();
+                    self.infoWindow.close();
                 }
+
+                self.updateFeatures();
 
             });
         }
@@ -454,8 +467,12 @@
     };
 
     app.prototype.initSideBar = function () {
-        var self = this;
+        this.initIndicatorsList();
+        this.initPriorityForList();
+    };
 
+    app.prototype.initIndicatorsList = function() {
+        var self = this;
         Knoema.Helpers.get('//knoema.com/api/1.0/meta/dataset/TANSATR2016R/dimension/indicator', function(response) {
 
             self.items = response.items;
@@ -480,18 +497,20 @@
 
             _.each(self.items, populateChildren);
 
-            $('#indicator-list-holder').html($.tmpl('indicator-list-template.html', {
+            var $indicatorsHolder = $('#indicator-list-holder');
+
+            $indicatorsHolder.html($.tmpl('indicator-list-template.html', {
                 items: self.items
             }));
 
-            $('#indicator-list-holder')
+            $indicatorsHolder
                 .find('.side-bar-list')
                 .mCustomScrollbar({
                     theme: "dark"
                 });
 
 
-            $('#indicator-list-holder').on('click', '.has-data', function(e) {
+            $indicatorsHolder.on('click', '.has-data', function(e) {
                 $('#indicator-list-holder').find('.active').removeClass('active');
                 $(e.target).addClass('active');
                 self.loadTimeSeries($(e.target).data('key'));
@@ -511,7 +530,10 @@
             // });
 
         });
+    };
 
+    app.prototype.initPriorityForList = function () {
+        var self = this;
         Knoema.Helpers.get('//knoema.com/api/1.0/meta/dataset/znxktgc/dimension/cadre-type', function(response) {
 
             $('#priority-for').append($.tmpl('vacancies-list-template.html', {
